@@ -1,0 +1,426 @@
+[
+    {
+        "id": "bda90b8ea72678cc",
+        "type": "inject",
+        "z": "d6c1d9dcd114e681",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "a0a089fa745184fc",
+                "61ba6afa3cbd5dc4"
+            ]
+        ]
+    },
+    {
+        "id": "f6977b3bdf4f359a",
+        "type": "influxdb in",
+        "z": "d6c1d9dcd114e681",
+        "influxdb": "3bca187f56a227bf",
+        "name": "B01_INV2",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 530,
+        "y": 140,
+        "wires": [
+            [
+                "efef380d246ce472"
+            ]
+        ]
+    },
+    {
+        "id": "9e054811b138d696",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "PR",
+        "func": "let plantObj\nplantObj = []\n\n\n     for (i =0; i < msg.payload.cum.length;i++)\n     for(j =0; j < msg.payload.radiation.length;j++)\n\n        {      \n    var  edctime= new Date(msg.payload.cum[i].time).getTime();\n      var soltime= new Date(msg.payload.radiation[j].time).getTime();\n      if (edctime==soltime)\n      {\n       var CUM_EDC=msg.payload.cum[i].cumulative_sum\n       var CUM_RADIATION=msg.payload.radiation[j].last\n       var pr = \"PR\" +\"_\" + msg.payload.cum[i].f;\n var PR;\n    if (CUM_RADIATION==0)\n    { \n        PR =0;\n    }\n    else\n    {\n        PR = ((CUM_EDC)/(1717.2 *CUM_RADIATION))*100;\n    }\n//node.send(obj);\nvar obj={\n            edctime,\n            CUM_EDC,\n            CUM_RADIATION,\n            pr,\n            PR,\n            field:msg.payload.cum[i].f,\n            device:msg.payload.cum[i].d,\n            \n\n}\n\nplantObj.push(obj)\n}\n}\nmsg.payload =plantObj\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 200,
+        "wires": [
+            [
+                "9a0ad86c9ed87cd4"
+            ]
+        ]
+    },
+    {
+        "id": "a0a089fa745184fc",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "solar radiation",
+        "func": "\n\n var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate());\n d.setHours(0,0,0,0);\n \n var $tommarow = new Date();\n var d1 = new Date($tommarow);\n d1.setDate($tommarow.getDate());\n d1.setHours(23,59,0,0);\n \n  var tstart=d.getTime();\n  var tend= d1.getTime();\n  var q = \"SELECT last(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'RADIATION_CUM') AND time >= \"+ tstart +\"ms and time <= \"+ tend + \"ms GROUP BY time(5m),d,f fill(0);\";\n \n msg.query = q\n msg.topic=\"radiation\";\n\n// msg.payload=tend\n return msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 200,
+        "wires": [
+            [
+                "6bc66676ef4303ab"
+            ]
+        ]
+    },
+    {
+        "id": "6bc66676ef4303ab",
+        "type": "influxdb in",
+        "z": "d6c1d9dcd114e681",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "RADIATION",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "efef380d246ce472"
+            ]
+        ]
+    },
+    {
+        "id": "61ba6afa3cbd5dc4",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "cum_edc",
+        "func": "\n var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate());\n d.setHours(0,0,0,0);\n \n var $tommarow = new Date();\n var d1 = new Date($tommarow);\n d1.setDate($tommarow.getDate());\n d1.setHours(23,59,0,0);\n \n  var tstart=d.getTime();\n  var tend= d1.getTime();\n  \n  var q = \"SELECT cumulative_sum(sum(value)) FROM energydc_test WHERE (d = 'B01_INV2' AND f !~ /.*PR_EDC*./ AND f != 'UB_ALARM') AND time >= \"+ tstart +\"ms and time <= \"+ tend + \"ms GROUP BY time(5m),d,f fill(0);\";\n // var q1=\"SELECT last(value) FROM energydc_test WHERE (d = 'B01_INV2') AND time >= \"+ tstart +\"ms and time <= \"+ tend + \"ms GROUP BY time(1m),d,f fill(0);\";\n \n msg.query = q\nmsg.topic=\"cum\";\n //msg.payload=tend\n return msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "f6977b3bdf4f359a"
+            ]
+        ]
+    },
+    {
+        "id": "efef380d246ce472",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"cum\":\n        context.data.cum = msg.payload;\n        msg = null;\n        break;\n    case \"radiation\":\n        context.data.radiation = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.cum != null && context.data.radiation != null){\n    var data_combine = {\n        \"cum\": context.data.cum,\n        \"radiation\": context.data.radiation\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 180,
+        "wires": [
+            [
+                "9e054811b138d696",
+                "d821974a25b0f263"
+            ]
+        ]
+    },
+    {
+        "id": "36c23e58bc518661",
+        "type": "influxdb batch",
+        "z": "d6c1d9dcd114e681",
+        "influxdb": "ccc431de9f0d8ff2",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "EDC OUT",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1180,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9a0ad86c9ed87cd4",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "INFLUX OUT",
+        "func": "\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar obj={};\nobj.payload=\n\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].PR\n        \n        },\n        tags:{\n         \n        \n           f:msg.payload[i].pr,\n           d:msg.payload[i].device\n        \n        },\n        \n        timestamp:new Date(msg.payload[i].edctime)\n    }\n];\n\nnode.send(obj);\n}\n\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 180,
+        "wires": [
+            [
+                "36c23e58bc518661"
+            ]
+        ]
+    },
+    {
+        "id": "d821974a25b0f263",
+        "type": "debug",
+        "z": "d6c1d9dcd114e681",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "26eb98892670fe48",
+        "type": "inject",
+        "z": "d6c1d9dcd114e681",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "05cfc0af6d5ba02f"
+            ]
+        ]
+    },
+    {
+        "id": "05cfc0af6d5ba02f",
+        "type": "influxdb in",
+        "z": "d6c1d9dcd114e681",
+        "influxdb": "a26a60a1b0efa0e4",
+        "name": "B01_INV2",
+        "query": "SELECT last(\"value\"),d FROM \"energydc_test\" WHERE (\"d\" = 'B01_INV2' AND \"f\" =~ /.*PR_EDC*./) AND time >= now() - 5m GROUP BY time(5m), \"f\" fill(none)",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "fd2f023001af6fd8"
+            ]
+        ]
+    },
+    {
+        "id": "e9377360cfa681b0",
+        "type": "influxdb batch",
+        "z": "d6c1d9dcd114e681",
+        "influxdb": "7c33df7798517679",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "EDC OUT",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1160,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "81db097f954a8711",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "UB_ALARM",
+        "func": "\n//let plantObj\n//plantObj = []\n\n\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar obj={};\nobj.payload=\n\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].REMARKS\n        \n        },\n        tags:{\n         \n        \n           f:\"UB_ALARM\",\n           d:msg.payload[i].d\n    \n        },\n        \n        timestamp:msg.payload[i].time\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 460,
+        "wires": [
+            [
+                "d42bd8079d2a898b",
+                "e9377360cfa681b0"
+            ]
+        ]
+    },
+    {
+        "id": "d42bd8079d2a898b",
+        "type": "debug",
+        "z": "d6c1d9dcd114e681",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "5a786d02e22be03f",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "STANDARD DEVIATION",
+        "func": "let plantObj\n\nplantObj = []\nvar array= msg.payload;\nvar sum=0\nfor(var i = 0; i < array.length; i++)\n{ \n    var AVG= array[(array.length)-1].avg\n    var MAX=array[(array.length)-1].max\n    var max_70 =0.7*MAX;\n    var PR=array[i].PR\n    var Std_deviation =Math.pow((AVG-PR),2);\n     sum +=Std_deviation\n    var  SD_MEAN =sum/array.length\n      var SD=Math.sqrt(SD_MEAN)\n      var REMARKS;\n       if(SD<1)\n       {REMARKS=0}// BALENCED\n       else{REMARKS=1}//UNBALENCED\n    var sd_field =array[i].SD\n    obj={\n    time:array[i].time,    \n    AVG,\n    MAX,\n    PR,\n    max_70,\n    Std_deviation,\n    sum,\n    sd_field,\n    SD_MEAN,\n    SD,\n    d:array[i].d,\n    REMARKS\n    }\n    plantObj.push(obj)\n}\n msg.payload=plantObj;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 460,
+        "wires": [
+            [
+                "81db097f954a8711"
+            ]
+        ]
+    },
+    {
+        "id": "fd2f023001af6fd8",
+        "type": "function",
+        "z": "d6c1d9dcd114e681",
+        "name": "mean and max",
+        "func": "let plantObj\n\nplantObj = []\n\nvar grades = msg.payload\nvar total = 0;\nvar max =grades[0].last\nfor(var i = 0; i < grades.length; i++)\n{  var time=grades[i].time\n    {\n    var RESULT;\n    var PR = grades[i].last\n    total += PR;\n    if (PR>max)\n    {max=PR}\n\nvar avg = total / grades.length;\n\nRESULT=grades[i].f.split(\"PR_EDC\");\n  var SD=\"SD\"+RESULT[1]\n\n\nOBJ={time,avg,max,PR,\n    SD,\n    d:grades[i].d\n    \n}\n\nplantObj.push(OBJ)\n}\n}\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "5a786d02e22be03f"
+            ]
+        ]
+    },
+    {
+        "id": "53b622fd1772b7cd",
+        "type": "comment",
+        "z": "d6c1d9dcd114e681",
+        "name": "PR CALCULATION",
+        "info": "",
+        "x": 310,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "3ee3953aaa668621",
+        "type": "comment",
+        "z": "d6c1d9dcd114e681",
+        "name": "STANDARD DEVIATION FOR UNBALANCED ALARM",
+        "info": "",
+        "x": 380,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3bca187f56a227bf",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "EDC",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "705b30eaab2edcd3",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "SIRICILLA_30MW",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "ccc431de9f0d8ff2",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "EDC",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "a26a60a1b0efa0e4",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "EDC",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "7c33df7798517679",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "EDC",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    }
+]

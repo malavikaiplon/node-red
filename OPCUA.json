@@ -1,0 +1,983 @@
+[
+    {
+        "id": "39bb936b.c6446c",
+        "type": "tab",
+        "label": "IGSS OPC UA Tests"
+    },
+    {
+        "id": "95c94d51.0c6be",
+        "type": "OpcUa-Client",
+        "z": "39bb936b.c6446c",
+        "endpoint": "cb178fa3f456c069",
+        "action": "readmultiple",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "3",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "IPLON OPC",
+        "x": 470,
+        "y": 460,
+        "wires": [
+            [
+                "26357084e92477d3"
+            ]
+        ]
+    },
+    {
+        "id": "c340a1bb.9c55f",
+        "type": "debug",
+        "z": "39bb936b.c6446c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "284db5d9.84d21a",
+        "type": "catch",
+        "z": "39bb936b.c6446c",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 560,
+        "y": 360,
+        "wires": [
+            [
+                "f84f422d.76b1d"
+            ]
+        ]
+    },
+    {
+        "id": "f84f422d.76b1d",
+        "type": "debug",
+        "z": "39bb936b.c6446c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1de590136535e44b",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Read multiple items",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "5",
+        "topic": "readmultiple",
+        "payloadType": "str",
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [
+                "95c94d51.0c6be"
+            ]
+        ]
+    },
+    {
+        "id": "26357084e92477d3",
+        "type": "join",
+        "z": "39bb936b.c6446c",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic.nodeId",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "11",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 790,
+        "y": 460,
+        "wires": [
+            [
+                "611b61f6292ef170"
+            ]
+        ]
+    },
+    {
+        "id": "611b61f6292ef170",
+        "type": "change",
+        "z": "39bb936b.c6446c",
+        "name": "fix topic",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "schmid-preclean-1",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 460,
+        "wires": [
+            [
+                "c340a1bb.9c55f"
+            ]
+        ]
+    },
+    {
+        "id": "b8229e3c3b252536",
+        "type": "link in",
+        "z": "39bb936b.c6446c",
+        "name": "IPLONOPC IN",
+        "links": [
+            "c771c83137c7b564"
+        ],
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "95c94d51.0c6be"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "c771c83137c7b564",
+        "type": "link out",
+        "z": "39bb936b.c6446c",
+        "name": "IPLONOPC",
+        "mode": "link",
+        "links": [
+            "b8229e3c3b252536"
+        ],
+        "x": 770,
+        "y": 580,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "5c05ecde52d409b0",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_AC_VOLTAGE_R",
+        "datatype": "Double Array",
+        "value": "",
+        "name": "B01_INV1_AC_VOLTAGE_R",
+        "x": 420,
+        "y": 560,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "7d9828b746e5b221",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 560,
+        "wires": [
+            [
+                "5c05ecde52d409b0"
+            ]
+        ]
+    },
+    {
+        "id": "d127eddb90e13f6a",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_AC_CURRENT_B",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_AC_CURRENT_B",
+        "x": 410,
+        "y": 760,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "0bdc9aa981772c9c",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3.5",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 760,
+        "wires": [
+            [
+                "d127eddb90e13f6a"
+            ]
+        ]
+    },
+    {
+        "id": "219cb867b390fc38",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_ACTIVE_POWER",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_ACTIVE_POWER",
+        "x": 400,
+        "y": 800,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "95876276de300def",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "4",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 800,
+        "wires": [
+            [
+                "219cb867b390fc38"
+            ]
+        ]
+    },
+    {
+        "id": "2f256ba9a2aef6c3",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_AC_VOLATGE_Y  ",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_AC_VOLTAGE_Y  ",
+        "x": 420,
+        "y": 600,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "08a6668f100d967a",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1.5",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 600,
+        "wires": [
+            [
+                "2f256ba9a2aef6c3"
+            ]
+        ]
+    },
+    {
+        "id": "1e46001da905faca",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_AC_VOLTAGE_B",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_AC_VOLTAGE_B ",
+        "x": 420,
+        "y": 640,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "43c70abad30ff144",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 640,
+        "wires": [
+            [
+                "1e46001da905faca"
+            ]
+        ]
+    },
+    {
+        "id": "e6841374fdc96bbc",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_AC_CURRENT_R",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_AC_CURRENT_R ",
+        "x": 410,
+        "y": 680,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "b736ffb6127668f6",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2.5",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 680,
+        "wires": [
+            [
+                "e6841374fdc96bbc"
+            ]
+        ]
+    },
+    {
+        "id": "e3957ffbec697988",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_AC_CURRENT_Y",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_AC_CURRENT_Y",
+        "x": 410,
+        "y": 720,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "40e8cea4cf8ea84c",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 720,
+        "wires": [
+            [
+                "e3957ffbec697988"
+            ]
+        ]
+    },
+    {
+        "id": "7a638a1db8d3a959",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_FREQUENCY ",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_FREQUENCY ",
+        "x": 390,
+        "y": 840,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "3580385bd5287fc6",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "4.5",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 840,
+        "wires": [
+            [
+                "7a638a1db8d3a959"
+            ]
+        ]
+    },
+    {
+        "id": "ba968def5961fb3e",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_REACTIVE_POWER",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_REACTIVE_POWER",
+        "x": 390,
+        "y": 880,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "814a4f5c0d17be0c",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 880,
+        "wires": [
+            [
+                "ba968def5961fb3e"
+            ]
+        ]
+    },
+    {
+        "id": "32201bd134c2835e",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_DC_CURRENT ",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_DC_CURRENT ",
+        "x": 380,
+        "y": 920,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "36763732535d1226",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5.5",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 920,
+        "wires": [
+            [
+                "32201bd134c2835e"
+            ]
+        ]
+    },
+    {
+        "id": "74822d85954c1cfb",
+        "type": "OpcUa-Item",
+        "z": "39bb936b.c6446c",
+        "item": "ns=2;s=B01_INV1_POWER_DC",
+        "datatype": "Double",
+        "value": "",
+        "name": "B01_INV1_POWER_DC",
+        "x": 390,
+        "y": 960,
+        "wires": [
+            [
+                "c771c83137c7b564"
+            ]
+        ]
+    },
+    {
+        "id": "e49294bceec2a63e",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Add item",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "6",
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 160,
+        "y": 960,
+        "wires": [
+            [
+                "74822d85954c1cfb"
+            ]
+        ]
+    },
+    {
+        "id": "e51017af58c218d0",
+        "type": "inject",
+        "z": "39bb936b.c6446c",
+        "name": "Clear nodeId array",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "clearitems",
+        "payloadType": "str",
+        "x": 270,
+        "y": 500,
+        "wires": [
+            [
+                "95c94d51.0c6be"
+            ]
+        ]
+    },
+    {
+        "id": "bfecce5329b283fc",
+        "type": "string",
+        "z": "39bb936b.c6446c",
+        "name": "",
+        "methods": [
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_AC_VOLATGE_Y"
+                    },
+                    {
+                        "type": "str",
+                        "value": "B01_INV1_UAC2"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_AC_VOLTAGE_B"
+                    },
+                    {
+                        "type": "str",
+                        "value": "B01_INV1_UAC3"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_AC_CURRENT_R"
+                    },
+                    {
+                        "type": "str",
+                        "value": "B01_INV1_IAC1"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_AC_CURRENT_Y"
+                    },
+                    {
+                        "type": "str",
+                        "value": "B01_INV1_IAC2"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_AC_CURRENT_B"
+                    },
+                    {
+                        "type": "str",
+                        "value": "B01_INV1_IAC3"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_ACTIVE_POWER"
+                    },
+                    {
+                        "type": "str",
+                        "value": "PAC"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_AC_VOLTAGE_R"
+                    },
+                    {
+                        "type": "str",
+                        "value": "B01_INV1_UAC1"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_FREQUENCY "
+                    },
+                    {
+                        "type": "str",
+                        "value": "FAC"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_REACTIVE_POWER"
+                    },
+                    {
+                        "type": "str",
+                        "value": "QAC"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_DC_CURRENT "
+                    },
+                    {
+                        "type": "str",
+                        "value": "IDC"
+                    }
+                ]
+            },
+            {
+                "name": "replaceAll",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "ns=2;s=B01_INV1_POWER_DC"
+                    },
+                    {
+                        "type": "str",
+                        "value": "PDC"
+                    }
+                ]
+            }
+        ],
+        "prop": "topic.nodeId",
+        "propout": "topic.nodeId",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 650,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b27faf21e46826a6",
+        "type": "ui_template",
+        "z": "39bb936b.c6446c",
+        "group": "57e89fdc.43d9e",
+        "name": "Browse",
+        "order": 0,
+        "width": "6",
+        "height": "12",
+        "format": "<div layout=\"row\" layout-align=\"space-between\">\n    <select ng-model=\"item\" ng-options=\"items.item.displayName.text for items in msg.payload\">\n        <option value=\"\">-- Objects Root --</option>\n    </select>\n    <button ng-click=\"send({payload: {actiontype: 'browse', root: item}})\">\n        Browse\n    </button>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <ul>\n        <li ng-repeat=\"items in msg.payload\">\n          {{items.item.displayName.text}}: {{items.item.nodeId}}\n        </li>\n    </ul>\n</div>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": false,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "e363308665e77243",
+                "986b6ca387d9f681",
+                "8d09f92fd2776fab"
+            ]
+        ]
+    },
+    {
+        "id": "e363308665e77243",
+        "type": "ui_toast",
+        "z": "39bb936b.c6446c",
+        "position": "top right",
+        "displayTime": "2",
+        "highlight": "",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "Browsing...",
+        "name": "Action",
+        "x": 619.5000152587891,
+        "y": 78.19999694824219,
+        "wires": []
+    },
+    {
+        "id": "986b6ca387d9f681",
+        "type": "OpcUa-Browser",
+        "z": "39bb936b.c6446c",
+        "endpoint": "cb178fa3f456c069",
+        "item": "",
+        "datatype": "",
+        "topic": "ns=0;s=B01_INV1_PR",
+        "items": [],
+        "name": "",
+        "x": 340.40003967285156,
+        "y": 185.60000610351562,
+        "wires": [
+            [
+                "b27faf21e46826a6"
+            ]
+        ]
+    },
+    {
+        "id": "8d09f92fd2776fab",
+        "type": "debug",
+        "z": "39bb936b.c6446c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 609.5000152587891,
+        "y": 138.1999969482422,
+        "wires": []
+    },
+    {
+        "id": "cb178fa3f456c069",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://iplonopcua.com:4441/iSolar/scaback_csv/[SignAndEncrypt:Basic256Sha256:Binary]",
+        "secpol": "Basic256Sha256",
+        "secmode": "SignAndEncrypt",
+        "none": false,
+        "login": true,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "57e89fdc.43d9e",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "a5c3b771.b035f",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "a5c3b771.b035f",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

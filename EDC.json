@@ -1,0 +1,618 @@
+[
+    {
+        "id": "0cf7e50204409bd6",
+        "type": "tab",
+        "label": "edc",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5a0f66ba39ef76b4",
+        "type": "inject",
+        "z": "0cf7e50204409bd6",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "d96c85e364fccba6"
+            ]
+        ]
+    },
+    {
+        "id": "d96c85e364fccba6",
+        "type": "influxdb in",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "B01",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B01' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B01' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "0d68db5027dad796",
+                "3f6f1b2d620d7dc8"
+            ]
+        ]
+    },
+    {
+        "id": "8421bb323ead46d0",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 140,
+        "wires": [
+            [
+                "8cdc397f043187b2"
+            ]
+        ]
+    },
+    {
+        "id": "8cdc397f043187b2",
+        "type": "influxdb batch",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "5f6549efa9805b44",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "EDC OUT",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1140,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "59e0494188fe6eea",
+        "type": "influxdb in",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "B02",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B02' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B02' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "9c11502b05b214aa",
+                "dd2dea0b1d9f0c74"
+            ]
+        ]
+    },
+    {
+        "id": "427c29f1809ecc4b",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice,\n           \n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 200,
+        "wires": [
+            [
+                "8cdc397f043187b2"
+            ]
+        ]
+    },
+    {
+        "id": "f7198ae571be2962",
+        "type": "influxdb in",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "B03",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B03' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B03' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "b1e562b1ec5cd169",
+                "e52708c039fd33a0"
+            ]
+        ]
+    },
+    {
+        "id": "50698a4c014215e0",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 280,
+        "wires": [
+            [
+                "8cdc397f043187b2"
+            ]
+        ]
+    },
+    {
+        "id": "417f5e862144baa5",
+        "type": "influxdb in",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "B04",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B04' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B04' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 390,
+        "y": 360,
+        "wires": [
+            [
+                "a023d11349fdf984",
+                "5197f965f3aa4942"
+            ]
+        ]
+    },
+    {
+        "id": "417dea1904494029",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 360,
+        "wires": [
+            [
+                "8cdc397f043187b2"
+            ]
+        ]
+    },
+    {
+        "id": "bb2af05d20418051",
+        "type": "influxdb in",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "B05",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B05' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B05' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "21b21b310de4bec6",
+                "c02e6a9972ea823c"
+            ]
+        ]
+    },
+    {
+        "id": "172ca9b5e8441339",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "8cdc397f043187b2"
+            ]
+        ]
+    },
+    {
+        "id": "94a18d85bf2c7417",
+        "type": "influxdb in",
+        "z": "0cf7e50204409bd6",
+        "influxdb": "5f6549efa9805b44",
+        "name": "B06",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B06' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B06' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 390,
+        "y": 500,
+        "wires": [
+            [
+                "0258e6a34f4f6ca6",
+                "cf55765f21b7859c"
+            ]
+        ]
+    },
+    {
+        "id": "e65bd474ca6c98ac",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 500,
+        "wires": [
+            [
+                "8cdc397f043187b2"
+            ]
+        ]
+    },
+    {
+        "id": "dd2dea0b1d9f0c74",
+        "type": "debug",
+        "z": "0cf7e50204409bd6",
+        "name": "B02",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "b1e562b1ec5cd169",
+        "type": "debug",
+        "z": "0cf7e50204409bd6",
+        "name": "B03",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "a023d11349fdf984",
+        "type": "debug",
+        "z": "0cf7e50204409bd6",
+        "name": "B04",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "21b21b310de4bec6",
+        "type": "debug",
+        "z": "0cf7e50204409bd6",
+        "name": "B05",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "cf55765f21b7859c",
+        "type": "debug",
+        "z": "0cf7e50204409bd6",
+        "name": "B06",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "d231d745fb4b2221",
+        "type": "inject",
+        "z": "0cf7e50204409bd6",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "59e0494188fe6eea"
+            ]
+        ]
+    },
+    {
+        "id": "11bad93a9ab54c4e",
+        "type": "inject",
+        "z": "0cf7e50204409bd6",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "f7198ae571be2962"
+            ]
+        ]
+    },
+    {
+        "id": "1f8620d350dc2690",
+        "type": "inject",
+        "z": "0cf7e50204409bd6",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "417f5e862144baa5"
+            ]
+        ]
+    },
+    {
+        "id": "32f80b3eb0d2782b",
+        "type": "inject",
+        "z": "0cf7e50204409bd6",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 420,
+        "wires": [
+            [
+                "bb2af05d20418051"
+            ]
+        ]
+    },
+    {
+        "id": "b373e9f1c0cba3cf",
+        "type": "inject",
+        "z": "0cf7e50204409bd6",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 500,
+        "wires": [
+            [
+                "94a18d85bf2c7417"
+            ]
+        ]
+    },
+    {
+        "id": "9c11502b05b214aa",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "B02",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 200,
+        "wires": [
+            [
+                "427c29f1809ecc4b"
+            ]
+        ]
+    },
+    {
+        "id": "0d68db5027dad796",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "B01",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 140,
+        "wires": [
+            [
+                "8421bb323ead46d0"
+            ]
+        ]
+    },
+    {
+        "id": "e52708c039fd33a0",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "B03",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 280,
+        "wires": [
+            [
+                "50698a4c014215e0"
+            ]
+        ]
+    },
+    {
+        "id": "5197f965f3aa4942",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "B04",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 360,
+        "wires": [
+            [
+                "417dea1904494029"
+            ]
+        ]
+    },
+    {
+        "id": "c02e6a9972ea823c",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "B05",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 420,
+        "wires": [
+            [
+                "172ca9b5e8441339"
+            ]
+        ]
+    },
+    {
+        "id": "0258e6a34f4f6ca6",
+        "type": "function",
+        "z": "0cf7e50204409bd6",
+        "name": "B06",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 500,
+        "wires": [
+            [
+                "e65bd474ca6c98ac"
+            ]
+        ]
+    },
+    {
+        "id": "3f6f1b2d620d7dc8",
+        "type": "debug",
+        "z": "0cf7e50204409bd6",
+        "name": "B01",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "705b30eaab2edcd3",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "SIRICILLA_30MW",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "5f6549efa9805b44",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "EDC",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    }
+]
