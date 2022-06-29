@@ -1,0 +1,1689 @@
+[
+    {
+        "id": "37a24a420fbe81c3",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "Generating MASTER CSV FILE",
+        "info": "",
+        "x": 330,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b5e8e63ca95f60e2",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "00 10 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "b11eb4660af2d8bf"
+            ]
+        ]
+    },
+    {
+        "id": "b11eb4660af2d8bf",
+        "type": "influxdb in",
+        "z": "92c698c50ec82821",
+        "influxdb": "fc0688ed8ddba681",
+        "name": "MASTER",
+        "query": "\nSELECT last(\"value\") FROM \"v\" WHERE (\"iid\" =~ /.*10*./ AND \"f\" =~ /^kWhD_lifetime$/) AND  time  >= now() - 30d  GROUP BY time(15m), \"p\", \"b\", \"d\", \"f\", \"iid\" fill(none);\n\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 320,
+        "y": 140,
+        "wires": [
+            [
+                "7d2ace30068be6a0"
+            ]
+        ]
+    },
+    {
+        "id": "b31b8183d533d259",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1d4a15655152e82e",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 610,
+        "y": 140,
+        "wires": [
+            [
+                "e4146ad5c5ff5a56"
+            ]
+        ]
+    },
+    {
+        "id": "f7185e5cfc8cecde",
+        "type": "file",
+        "z": "92c698c50ec82821",
+        "name": "MASTER",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 960,
+        "y": 140,
+        "wires": [
+            [
+                "b31b8183d533d259"
+            ]
+        ]
+    },
+    {
+        "id": "7d2ace30068be6a0",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "all values",
+        "func": "let plantObj\nplantObj = []\n    \nfor (var i = 0; i < msg.payload.length;i++)\n{\n        if(i!=0)\n   {\n var time=msg.payload[i-1].time\n var iid0=msg.payload[i].iid\n var iid1=msg.payload[i-1].iid\n if(iid0!=iid1)\n\n {\n         \n   obj = {\n       \n   timestamp: time,\n    iid: iid1\n    \n    }\n   plantObj.push(obj)\n}\nelse if (i== (msg.payload.length)-1)\n    {\n         \n   obj = {\n       \n    timestamp:msg.payload[i].time,\n    iid:msg.payload[i].iid\n    \n    }\n   plantObj.push(obj)\n}\n}\n}\nmsg.payload = plantObj\n\nreturn msg;\n\n  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "1d4a15655152e82e"
+            ]
+        ]
+    },
+    {
+        "id": "d1463cd23c27c401",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "35 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "ce503334924c0b50"
+            ]
+        ]
+    },
+    {
+        "id": "ce503334924c0b50",
+        "type": "influxdb in",
+        "z": "92c698c50ec82821",
+        "influxdb": "107e6f53b21faa51",
+        "name": "LIVE-6HR",
+        "query": "\nSELECT last(\"value\") FROM \"v\" WHERE (\"iid\" =~ /.*10*./ AND \"f\" =~ /^kWhD_lifetime$/) AND  time >= now() - 6h  GROUP BY time(15m), \"p\", \"b\", \"d\", \"f\", \"iid\" fill(null);\n\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "6af750376906f3b9"
+            ]
+        ]
+    },
+    {
+        "id": "1ff2c625e0b44395",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "25707871bc68a4ad",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "Generating LIVE CSV FILE",
+        "info": "",
+        "x": 310,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "8a76ee72c424313c",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 650,
+        "y": 240,
+        "wires": [
+            [
+                "6d6bdc621e9de3ca"
+            ]
+        ]
+    },
+    {
+        "id": "6af750376906f3b9",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "all values",
+        "func": "let plantObj\nplantObj = []\n    \nfor (var i = 0; i < msg.payload.length;i++)\n{\n        if(i!=0)\n   {\n var time=msg.payload[i-1].time\n var iid0=msg.payload[i].iid\n var iid1=msg.payload[i-1].iid\n if(iid0!=iid1)\n\n\n {\n         \n   obj = {\n       \n   timestamp: time,\n    iid: iid1\n    \n    }\n   plantObj.push(obj)\n}\nelse if (i== (msg.payload.length)-1)\n    {\n         \n   obj = {\n       \n    timestamp:msg.payload[i].time,\n    iid:msg.payload[i].iid\n    \n    }\n   plantObj.push(obj)\n}\n}\n}\nmsg.payload = plantObj\n\nreturn msg;\n\n  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 240,
+        "wires": [
+            [
+                "8a76ee72c424313c"
+            ]
+        ]
+    },
+    {
+        "id": "6d6bdc621e9de3ca",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/LIVE_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 240,
+        "wires": [
+            [
+                "268a9cc96ce9143d"
+            ]
+        ]
+    },
+    {
+        "id": "268a9cc96ce9143d",
+        "type": "file",
+        "z": "92c698c50ec82821",
+        "name": "LIVE",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1010,
+        "y": 240,
+        "wires": [
+            [
+                "1ff2c625e0b44395"
+            ]
+        ]
+    },
+    {
+        "id": "c8401911cd939f65",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "45 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 90,
+        "y": 360,
+        "wires": [
+            [
+                "cce08ef04dea3472",
+                "02c57127dd22e3a5"
+            ]
+        ]
+    },
+    {
+        "id": "07db87d66e8402e6",
+        "type": "file in",
+        "z": "92c698c50ec82821",
+        "name": "LIVE",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 390,
+        "y": 360,
+        "wires": [
+            [
+                "c809fc3412613857"
+            ]
+        ]
+    },
+    {
+        "id": "8c57b91344bda94b",
+        "type": "file in",
+        "z": "92c698c50ec82821",
+        "name": "MASTER",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 420,
+        "wires": [
+            [
+                "18fbf0855315cbc3"
+            ]
+        ]
+    },
+    {
+        "id": "316cb7c5ff833bbf",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "bcd9764d48f203ae",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "let found1 = []\nlet device1\n var Length = msg.payload.length\nfor (var i = 0; i<msg.payload.length;i++)\n    \n{  \n \n           device1 = {};\n           device1.payload = {\n           \n             iid:msg.payload[i].iid,\n             Length\n           \n       \n                         }\n   \n   \nfound1.push( device1 )\n}\nmsg.payload = found1;\nmsg.topic = \"live\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 360,
+        "wires": [
+            [
+                "9326bbe79f1a45a8"
+            ]
+        ]
+    },
+    {
+        "id": "f261e41d43248da8",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "let found1 = []\nlet device1\n var Length1 = msg.payload.length\nfor (var i = 0; i<msg.payload.length;i++)\n    \n{  \n \n           device1 = {};\n           device1.payload = {\n           \n             iid1:msg.payload[i].iid,\n             last_comm:msg.payload[i].timestamp,\n             Length1\n           \n       \n                         }\n   \n   \nfound1.push( device1 )\n}\nmsg.payload = found1;\nmsg.topic = \"master\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 420,
+        "wires": [
+            [
+                "9326bbe79f1a45a8"
+            ]
+        ]
+    },
+    {
+        "id": "f4bdab2a8891cb05",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "comparing master file with live id",
+        "info": "",
+        "x": 310,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "3cf06ef9a7fcf25f",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "var LIVE_LENGTH = msg.payload.live[0].payload.Length\n \nvar MASTER_LENGTH = msg.payload.master[0].payload.Length1\n \nfor (var i = 0; i<LIVE_LENGTH;i++)\n \n{  \n    for (var j = 0; j<MASTER_LENGTH;j++)\n \n{  \n   \n var ID_LIVE = msg.payload.live[i].payload.iid\n var  ID_STORED = msg.payload.master[j].payload.iid1\n var LAST_COMM =msg.payload.master[j].payload.last_comm\n  if(ID_LIVE == ID_STORED)\n  {\n           var device2 = {};\n           device2.payload = {\n           \n             \n                LIVE_LENGTH,\n                MASTER_LENGTH,\n                ID_LIVE,\n                ID_STORED,\n                LAST_COMM\n       \n                             }\n   \n   node.send(device2);\n//found2.push( device2 )\n}\n}\n }\n//msg.payload = found2;\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 400,
+        "wires": [
+            [
+                "d31b2d97586689fc"
+            ]
+        ]
+    },
+    {
+        "id": "9326bbe79f1a45a8",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"live\":\n        context.data.live = msg.payload;\n        msg = null;\n        break;\n    case \"master\":\n        context.data.master = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.live != null && context.data.master != null){\n    var data_combine = {\n        \"live\": context.data.live,\n        \"master\": context.data.master\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 400,
+        "wires": [
+            [
+                "3cf06ef9a7fcf25f"
+            ]
+        ]
+    },
+    {
+        "id": "d31b2d97586689fc",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "2be9d1e43a19dd63"
+            ]
+        ]
+    },
+    {
+        "id": "ae49e8bc6da708c6",
+        "type": "file",
+        "z": "92c698c50ec82821",
+        "name": "LAST COMM",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1210,
+        "y": 440,
+        "wires": [
+            [
+                "316cb7c5ff833bbf"
+            ]
+        ]
+    },
+    {
+        "id": "c809fc3412613857",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 510,
+        "y": 360,
+        "wires": [
+            [
+                "bcd9764d48f203ae"
+            ]
+        ]
+    },
+    {
+        "id": "18fbf0855315cbc3",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 490,
+        "y": 420,
+        "wires": [
+            [
+                "f261e41d43248da8"
+            ]
+        ]
+    },
+    {
+        "id": "2be9d1e43a19dd63",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/LC_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 400,
+        "wires": [
+            [
+                "ae49e8bc6da708c6"
+            ]
+        ]
+    },
+    {
+        "id": "e4146ad5c5ff5a56",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/MASTER_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 140,
+        "wires": [
+            [
+                "f7185e5cfc8cecde"
+            ]
+        ]
+    },
+    {
+        "id": "b2ba39eba01ad0f6",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "FINAL FILE (24HR)",
+        "info": "",
+        "x": 290,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "cce08ef04dea3472",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/LIVE_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 360,
+        "wires": [
+            [
+                "07db87d66e8402e6"
+            ]
+        ]
+    },
+    {
+        "id": "ede947f085bb1215",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.data",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "bbf307a0b8a67fe9"
+            ]
+        ]
+    },
+    {
+        "id": "538a36615d36a138",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "29e9adc3182bc3f5",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "SFTP push",
+        "info": "",
+        "x": 200,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "bbf307a0b8a67fe9",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "filename",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\n\nmsg.payload.data = \"C:/Users/NODE-RED/Documents/ARRAY METER/solarlog_\"+c+\".csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\nmsg.payload.filename=\"solarlog_\"+c+\".csv\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 780,
+        "wires": [
+            [
+                "76cf506330570e63"
+            ]
+        ]
+    },
+    {
+        "id": "76cf506330570e63",
+        "type": "sftp in",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sftp": "",
+        "operation": "list",
+        "filename": "",
+        "localFilename": "",
+        "workdir": "",
+        "x": 510,
+        "y": 780,
+        "wires": [
+            [
+                "538a36615d36a138"
+            ]
+        ]
+    },
+    {
+        "id": "f82321d4e14033b9",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "50 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 580,
+        "wires": [
+            [
+                "0487bdde8c0bc111"
+            ]
+        ]
+    },
+    {
+        "id": "bd8d6576b06ef4c0",
+        "type": "file in",
+        "z": "92c698c50ec82821",
+        "name": "LAST_COMM",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 460,
+        "y": 580,
+        "wires": [
+            [
+                "9682ee918f4026b2"
+            ]
+        ]
+    },
+    {
+        "id": "9682ee918f4026b2",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 630,
+        "y": 580,
+        "wires": [
+            [
+                "c876fe2928984831"
+            ]
+        ]
+    },
+    {
+        "id": "c876fe2928984831",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "\n \nfor (var i = 0; i<msg.payload.length; i++)\n\n {\n var ID_LIVE = msg.payload[i].ID_LIVE\n\n var LAST_COMM =msg.payload[i].LAST_COMM.replace(/[\"]+/g, '')\n\n {\n var device2 = {};\n device2.payload = {\n \n \n \n ID_LIVE,\n LAST_COMM\n \n }\n \n node.send(device2);\n\n}\n}\n\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 580,
+        "wires": [
+            [
+                "34d82d3d53c57ff5"
+            ]
+        ]
+    },
+    {
+        "id": "34d82d3d53c57ff5",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "query condition",
+        "func": "\n var iid=msg.payload.ID_LIVE\n var tstart=new Date(msg.payload.LAST_COMM).getTime();//.getTime();\n var tend=new Date().getTime();\n var d = \"SELECT last(value) FROM v WHERE (iid = '\"+ iid + \"' AND f ='kWhD_lifetime') AND time >= \" + tstart + \"ms and time <= \" + tend + \"ms GROUP BY time(15m),f, iid fill(previous);\";\n var r = \"SELECT last(value) FROM v WHERE (iid = '\"+ iid + \"' AND f ='kWhR_lifetime') AND time >= \" + tstart + \"ms and time <= \" + tend + \"ms GROUP BY time(15m),f, iid fill(previous);\";\n \n \n var q=d+r\n msg.query = q\n\nreturn msg;\n\n\n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 580,
+        "wires": [
+            [
+                "36083b9f38e4da8b"
+            ]
+        ]
+    },
+    {
+        "id": "36083b9f38e4da8b",
+        "type": "influxdb in",
+        "z": "92c698c50ec82821",
+        "influxdb": "55252e6ffdcfcdc7",
+        "name": "EST 24HR",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 1130,
+        "y": 580,
+        "wires": [
+            [
+                "258fad90eb668bb8"
+            ]
+        ]
+    },
+    {
+        "id": "258fad90eb668bb8",
+        "type": "delay",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 420,
+        "y": 640,
+        "wires": [
+            [
+                "4eb37c987fe5d807"
+            ]
+        ]
+    },
+    {
+        "id": "e20881b025b12001",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "8f674630edb4095f",
+        "type": "file",
+        "z": "92c698c50ec82821",
+        "name": "solarlog",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1020,
+        "y": 640,
+        "wires": [
+            [
+                "e20881b025b12001"
+            ]
+        ]
+    },
+    {
+        "id": "9d040179c5c655c1",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 730,
+        "y": 640,
+        "wires": [
+            [
+                "b0a315d0f8be24d2"
+            ]
+        ]
+    },
+    {
+        "id": "4eb37c987fe5d807",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "let plantObj\n\n\nplantObj = []\n\n \nfor (var i = 0; i <msg.payload[0].length ;i++)\n{ \nvar utcTime = new Date(msg.payload[0][i].time);\nconsole.log('UTC Time: ' + utcTime.toISOString());\nvar usaTime = utcTime.toLocaleString(\"en-US\", {timeZone: \"America/New_York\"});\nconsole.log('USA time: '+ usaTime)\nvar kwhd_lifetime= msg.payload[0][i].last;\nvar kwhr_lifetime= msg.payload[1][i].last;\nvar iid=msg.payload[0][i].iid\n{\n    if ((iid==10677693)||(iid==10677696)||(iid==10677750)||(iid==10677719)||(iid==10677695)||(iid==10677720)||(iid==10677694)||(iid==10677689)||(iid==10586404))\n{kwhd_lifetime=kwhr_lifetime}\n\n\n var obj1 = {\n \n \n timestamp:usaTime,\n kwh_lifetime:kwhd_lifetime,\n iid\n \n }\n plantObj.push(obj1)\n}\n}\n\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 640,
+        "wires": [
+            [
+                "9d040179c5c655c1"
+            ]
+        ]
+    },
+    {
+        "id": "0487bdde8c0bc111",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/LC_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 580,
+        "wires": [
+            [
+                "bd8d6576b06ef4c0"
+            ]
+        ]
+    },
+    {
+        "id": "b0a315d0f8be24d2",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/solarlog_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 640,
+        "wires": [
+            [
+                "8f674630edb4095f"
+            ]
+        ]
+    },
+    {
+        "id": "02c57127dd22e3a5",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "yesterday date",
+        "func": "//var today = new Date().toISOString().slice(0, 10);\n//var d = new Date();\n//d.setDate(d.getDate() - 1);\n\n//yesterday.setDate(yesterday.getDate() - 1)\n\n//today.toDateString()\n//yesterday.toDateString().slice(0, 10);\n\n\n//console.log(formatDate(today));\n//function getYesterdaysDate() {\n$today = new Date();\n$yesterday = new Date($today);\n$yesterday.setDate($today.getDate() - 1);\n    var $dd = $yesterday.getDate();\nvar $mm = $yesterday.getMonth()+1; //January is 0!\n\nvar $yyyy = $yesterday.getFullYear();\nif($dd<10){$dd='0'+$dd} if($mm<10){$mm='0'+$mm} $yesterday = $yyyy+'-'+$mm+'-'+$dd;\nvar c =$yesterday;\n    \n\n    //var c =date;\n\n\n//context.set('c',c)\n\npath= \"/home/iplon/Documents/MASTER_\"+c+\".csv\"\n\nmsg.filename = path\n//msg.payload=c\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 420,
+        "wires": [
+            [
+                "8c57b91344bda94b"
+            ]
+        ]
+    },
+    {
+        "id": "464a92a92304826b",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/Time_Stamp_Value_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 880,
+        "wires": [
+            [
+                "dbd580e028817471"
+            ]
+        ]
+    },
+    {
+        "id": "c5fde6c92bd0a553",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 880,
+        "wires": [
+            [
+                "eed92af2379ab5cd"
+            ]
+        ]
+    },
+    {
+        "id": "eed92af2379ab5cd",
+        "type": "influxdb in",
+        "z": "92c698c50ec82821",
+        "influxdb": "55252e6ffdcfcdc7",
+        "name": "influx",
+        "query": "\nSELECT last(\"value\") FROM \"v\" WHERE (\"iid\" =~ /.*10*./ AND \"f\" =~ /^kWhD_lifetime$/) AND  time >= now() - 12h  GROUP BY time(15m), \"p\", \"b\", \"d\", \"f\", \"iid\" fill(null);\n\nSELECT last(\"value\") FROM \"v\" WHERE (\"iid\" =~ /.*10*./ AND \"f\" =~ /^Time_Stamp_Value$/) AND  time >= now() - 12h  GROUP BY time(15m), \"p\", \"b\", \"d\", \"f\", \"iid\" fill(null);\n\n\n\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 880,
+        "wires": [
+            [
+                "2511d20951f81684"
+            ]
+        ]
+    },
+    {
+        "id": "2511d20951f81684",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "let plantObj\n\n\nplantObj = []\n\n \nfor (var i = 0; i <msg.payload[0].length ;i++)\n{ \nvar utcTime = new Date(msg.payload[0][i].time);\nconsole.log('UTC Time: ' + utcTime.toISOString());\nvar usaTime_kwh = utcTime.toLocaleString(\"en-US\", {timeZone: \"America/New_York\"});\n//console.log('USA time: '+ usaTime)\nvar utcTime1 = new Date((msg.payload[1][i].last)*1000);\nconsole.log('UTC Time: ' + utcTime1.toISOString());\nvar usaTime_timestamp = utcTime1.toLocaleString(\"en-US\", {timeZone: \"America/New_York\"});\n//console.log('USA time: '+ usaTime)\nvar kwhd_lifetime= msg.payload[0][i].last;\nvar Time_Stamp_Value= msg.payload[1][i].last;\nvar iid=msg.payload[0][i].iid\n\n\n var obj1 = {\n \n \n timestamp:usaTime_kwh,\n timestamp2:usaTime_timestamp,\n kwh_lifetime:kwhd_lifetime,\n Time_Stamp_Value,\n iid\n \n }\n plantObj.push(obj1)\n}\n\n\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 880,
+        "wires": [
+            [
+                "39a8b0b812072853"
+            ]
+        ]
+    },
+    {
+        "id": "39a8b0b812072853",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 730,
+        "y": 880,
+        "wires": [
+            [
+                "464a92a92304826b"
+            ]
+        ]
+    },
+    {
+        "id": "a8a917275f63c809",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1230,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "dbd580e028817471",
+        "type": "file",
+        "z": "92c698c50ec82821",
+        "name": "timestamp_value",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1050,
+        "y": 880,
+        "wires": [
+            [
+                "a8a917275f63c809"
+            ]
+        ]
+    },
+    {
+        "id": "4cdf6a476b75e40d",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 10 * * *",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 190,
+        "y": 1040,
+        "wires": [
+            [
+                "4bca8cd676a73694"
+            ]
+        ]
+    },
+    {
+        "id": "738940bbf04ada84",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "fd3b5fb2ea8919fb",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "all values",
+        "func": "\n    for (var i = 0; i < msg.payload.length;i++)\n{    // var serial=msg.payload[i][\"Serial Number\"]\n      // var capacity=msg.payload[i][\"Reporting Agency\"]\n       // var inv=msg.payload[i][\"Inverter Direction\"]\n        //if(inv==0)\n           // {serial=msg.payload[i][\"Serial Number\"]}\n        \n    var newMsg = {};\n    newMsg.payload = {\n       serial:msg.payload[i][\"Serial Number\"],\n       inv:msg.payload[i][\"Invert Direction\"],\n       RA:msg.payload[i][\"Reporting Agency\"]\n    }\n    node.send(newMsg);\n        \n}\n\nreturn null;\n\n  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 1040,
+        "wires": [
+            [
+                "26d9d4b10089c1ad"
+            ]
+        ]
+    },
+    {
+        "id": "a824946c6291290a",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 590,
+        "y": 1040,
+        "wires": [
+            [
+                "fd3b5fb2ea8919fb"
+            ]
+        ]
+    },
+    {
+        "id": "ffb6ebec72022ae6",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "b3c15f406e461934",
+        "type": "postgres",
+        "z": "92c698c50ec82821",
+        "postgresdb": "8ccb50a36ea75bb9",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 820,
+        "y": 1100,
+        "wires": [
+            [
+                "ffb6ebec72022ae6"
+            ]
+        ]
+    },
+    {
+        "id": "97b6238b3ec95744",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "create table",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "CREATE TABLE public.agency ( serial float PRIMARY KEY, reporting_agency text ) WITH  (   OIDS=FALSE )",
+        "payloadType": "str",
+        "x": 450,
+        "y": 1100,
+        "wires": [
+            [
+                "b3c15f406e461934"
+            ]
+        ]
+    },
+    {
+        "id": "26d9d4b10089c1ad",
+        "type": "template",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO public.agency(serial,reporting_agency)\nVALUES ( '{{payload.serial}}', '{{payload.RA}}')\n      ON CONFLICT (serial) \n      DO NOTHING;\n      \n    ",
+        "output": "str",
+        "x": 960,
+        "y": 1040,
+        "wires": [
+            [
+                "738940bbf04ada84",
+                "b3c15f406e461934"
+            ]
+        ]
+    },
+    {
+        "id": "2c58f585e0c74c03",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "create and insert report agency data to table",
+        "info": "",
+        "x": 430,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "4bca8cd676a73694",
+        "type": "http request",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://arraymeter.com/usaportal/production/exportData.php",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "senderr": false,
+        "x": 410,
+        "y": 1040,
+        "wires": [
+            [
+                "a824946c6291290a"
+            ]
+        ]
+    },
+    {
+        "id": "3fc656070f5d0aab",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "create and insert report agency data to table",
+        "info": "",
+        "x": 290,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "d202dc1c5491aee3",
+        "type": "inject",
+        "z": "92c698c50ec82821",
+        "name": "READ",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 90,
+        "y": 1240,
+        "wires": [
+            [
+                "d62e1bf22be149c5",
+                "165475fd570870f8"
+            ]
+        ]
+    },
+    {
+        "id": "d62e1bf22be149c5",
+        "type": "template",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "select * from public.agency\n      \n    ",
+        "output": "str",
+        "x": 260,
+        "y": 1240,
+        "wires": [
+            [
+                "982ab913b8ad63ab"
+            ]
+        ]
+    },
+    {
+        "id": "982ab913b8ad63ab",
+        "type": "postgres",
+        "z": "92c698c50ec82821",
+        "postgresdb": "8ccb50a36ea75bb9",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 420,
+        "y": 1240,
+        "wires": [
+            [
+                "edbf3b78aac9543d"
+            ]
+        ]
+    },
+    {
+        "id": "9cc8a68b6894fa14",
+        "type": "file in",
+        "z": "92c698c50ec82821",
+        "name": "MASTER",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 320,
+        "y": 1300,
+        "wires": [
+            [
+                "0ad652746ef4a723"
+            ]
+        ]
+    },
+    {
+        "id": "513e732073e84e2d",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "let found1 = []\nlet device1\n  var Solarlog_Length = msg.payload.length \nfor (var i = 0; i<msg.payload.length;i++)\n    \n{  \n \n           device1 = {};\n           device1.payload = {\n           \n             timestamp:msg.payload[i].timestamp,\n             kwh_lifetime:msg.payload[i].kwh_lifetime,\n             iid:msg.payload[i].iid,\n             Solarlog_Length\n           \n       \n                         }\n   \n   \nfound1.push( device1 )\n}\nmsg.payload = found1;\nmsg.topic = \"solarlog\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1300,
+        "wires": [
+            [
+                "d8335438f741e0ac"
+            ]
+        ]
+    },
+    {
+        "id": "0ad652746ef4a723",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 470,
+        "y": 1300,
+        "wires": [
+            [
+                "513e732073e84e2d"
+            ]
+        ]
+    },
+    {
+        "id": "1c24e32e4d82d06f",
+        "type": "comment",
+        "z": "92c698c50ec82821",
+        "name": "To take a specific reporting agency data only",
+        "info": "",
+        "x": 310,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "d8335438f741e0ac",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"postgres\":\n        context.data.postgres = msg.payload;\n        msg = null;\n        break;\n    case \"solarlog\":\n        context.data.solarlog = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.postgres != null && context.data.solarlog != null){\n    var data_combine = {\n        \"postgres\": context.data.postgres,\n        \"solarlog\": context.data.solarlog\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 1260,
+        "wires": [
+            [
+                "64e7ae372e650f52"
+            ]
+        ]
+    },
+    {
+        "id": "165475fd570870f8",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/Documents/solarlog_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 1300,
+        "wires": [
+            [
+                "9cc8a68b6894fa14"
+            ]
+        ]
+    },
+    {
+        "id": "64e7ae372e650f52",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "func": "let plantObj\n\n\nplantObj = []\nvar POSTGRES_Length = msg.payload.postgres.length\n \nvar Solarlog_Length = msg.payload.solarlog.length\n \nfor (var i = 0; i<POSTGRES_Length;i++)\n \n{  \n    for (var j = 0; j<Solarlog_Length;j++)\n \n   {\n var ID_postgres= msg.payload.postgres[i].payload.serial\n var  ID_solarlog = msg.payload.solarlog[j].payload.iid\n  if(ID_postgres == ID_solarlog)\n  {\n            var obj1 = {\n             timestamp:msg.payload.solarlog[j].payload.timestamp,\n             ID_solarlog,\n             kwh_lifetime:msg.payload.solarlog[j].payload.kwh_lifetime,\n                \n       \n                             }\n   \n  // node.send(device2);\n//found2.push( device2 )\n\n\n\n plantObj.push(obj1)\n}\n}\n}\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 1260,
+        "wires": [
+            [
+                "57e41084429c1a88"
+            ]
+        ]
+    },
+    {
+        "id": "edbf3b78aac9543d",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "all values",
+        "func": "let found1 = []\nlet device1\n//var POSTGRES_Length=msg.payload.POSTGRES_Length\n    for (var i = 0; i < msg.payload.length;i++)\n{    var Reporting_Agency=msg.payload[i].reporting_agency\n        if(Reporting_Agency==\"PTS\")\n            \n         {\n        device1 = {};\n           device1.payload = {\n       serial:msg.payload[i].serial,\n       //Installer_Name:msg.payload[i][\"Installer Name\"],\n       Reporting_Agency,\n       \n               \n           }\n           \n       //Reporting_Agency_ID:msg.payload[i][\"Reporting Agency ID\"],\n       //Start_Time:msg.payload[i].start_time,\n       //PlantName:msg.payload[i].PlantName,\n       //Capacity:msg.payload[i].Capacity,\n       //start_Date:msg.payload[i][\"start Date\"],\n       //Today_Generation_kWh:msg.payload[i][\"Today Generation (kWh)\"],\n      // Monthly_Generation:msg.payload[i][\"Monthly Generation (kWh)\"],\n      // Yearly_Generation_MWh:msg.payload[i][\"Yearly Generation (MWh)\"],\n      // Lifetime_Generation_MWh:msg.payload[i][\"Lifetime Generation (MWh)\"],\n      // Plant_Address:msg.payload[i][\"Plant Address\"],\n       //City:msg.payload[i].City,\n       //State:msg.payload[i].State,\n       //Zipcode:msg.payload[i].Zipcode,\n       //Invert_Direction:msg.payload[i][\"Invert Direction\"],\n       //End_Time:new Date()\n       \n        //  }\nfound1.push( device1 )\n}\n}\nmsg.payload = found1;\nmsg.topic = \"postgres\";\nreturn msg;\n  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 1240,
+        "wires": [
+            [
+                "d8335438f741e0ac"
+            ]
+        ]
+    },
+    {
+        "id": "de2a77082129c71e",
+        "type": "switch",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "property": "payload.RA",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "PTS",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 270,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "163caa9bc0070c68",
+        "type": "function",
+        "z": "92c698c50ec82821",
+        "name": "all values",
+        "func": "\n    for (var i = 0; i < msg.payload.length;i++)\n{    // var serial=msg.payload[i][\"Serial Number\"]\n      // var capacity=msg.payload[i][\"Reporting Agency\"]\n       // var inv=msg.payload[i][\"Inverter Direction\"]\n        //if(inv==0)\n           // {serial=msg.payload[i][\"Serial Number\"]}\n        \n    var newMsg = {};\n    newMsg.payload = {\n       serial:msg.payload[i].serial,\n       POSTGRES_Length:msg.payload.length,\n       RA:msg.payload[i].reporting_agency\n    }\n    node.send(newMsg);\n        \n}\nmsg.topic = \"postgres\";\nreturn null;\n\n  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 140,
+        "y": 1100,
+        "wires": [
+            [
+                "de2a77082129c71e"
+            ]
+        ]
+    },
+    {
+        "id": "afa956118b817fa6",
+        "type": "file",
+        "z": "92c698c50ec82821",
+        "name": "reporting agency",
+        "filename": "/home/iplon/Documents/pts.csv",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1190,
+        "y": 1260,
+        "wires": [
+            [
+                "ba007f96d075e1db"
+            ]
+        ]
+    },
+    {
+        "id": "57e41084429c1a88",
+        "type": "csv",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 1030,
+        "y": 1260,
+        "wires": [
+            [
+                "afa956118b817fa6"
+            ]
+        ]
+    },
+    {
+        "id": "ba007f96d075e1db",
+        "type": "debug",
+        "z": "92c698c50ec82821",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "fc0688ed8ddba681",
+        "type": "influxdb",
+        "hostname": "arraymeter.com",
+        "port": "8086",
+        "protocol": "http",
+        "database": "visioniportingtest",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://arraymeter.com:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "107e6f53b21faa51",
+        "type": "influxdb",
+        "hostname": "arraymeter.com",
+        "port": "8086",
+        "protocol": "http",
+        "database": "visioniportingtest",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://arraymeter.com:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "55252e6ffdcfcdc7",
+        "type": "influxdb",
+        "hostname": "arraymeter.com",
+        "port": "8086",
+        "protocol": "http",
+        "database": "visioniportingtest",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://arraymeter.com:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "8ccb50a36ea75bb9",
+        "type": "postgresdb",
+        "cfgname": "",
+        "hostname": "localhost",
+        "port": "5432",
+        "db": "postgres",
+        "ssl": false
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
