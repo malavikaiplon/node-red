@@ -1,0 +1,129 @@
+[
+    {
+        "id": "a112a27809351f31",
+        "type": "http response",
+        "z": "a0d24007b1724270",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1210,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "bad6572b58d33d39",
+        "type": "http in",
+        "z": "a0d24007b1724270",
+        "name": "",
+        "url": "/api",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "48e3f93a15cdb515"
+            ]
+        ]
+    },
+    {
+        "id": "48e3f93a15cdb515",
+        "type": "influxdb in",
+        "z": "a0d24007b1724270",
+        "influxdb": "94ba6d41848c0871",
+        "name": "IYYERMALAI-CR",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai' AND \"d\" = 'CR_EM01' AND \"f\" = 'EAE') AND time >= now() - 30m GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai' AND \"d\" = 'CR_EM01' AND \"f\" = 'EAI') AND time >= now() - 30m GROUP BY time(5m) fill(null);\n\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 240,
+        "wires": [
+            [
+                "d2d3142e9b4aaa08"
+            ]
+        ]
+    },
+    {
+        "id": "4dcb06afa5c89579",
+        "type": "json",
+        "z": "a0d24007b1724270",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": true,
+        "x": 770,
+        "y": 240,
+        "wires": [
+            [
+                "fd1eea07ccf72220"
+            ]
+        ]
+    },
+    {
+        "id": "d2d3142e9b4aaa08",
+        "type": "function",
+        "z": "a0d24007b1724270",
+        "name": "",
+        "func": "let plantObj\nplantObj = {}\nplantObj.plant_id = msg.payload[0][1].p\nplantObj.device_name = msg.payload[0][1].d\nplantObj.data = []\n//for (var j = 0; j < 2 ;j++)\n\nfor (var i = 1; i < 7 ;i++)\n{var myDate=new Date((msg.payload[0][i].time).getTime())\nmyDateFormat = myDate.getFullYear()+\"-\"+(\"0\" + (myDate.getMonth() + 1)).slice(-2)+\"-\"+(\"0\" + myDate.getDate()).slice(-2)+\" \"+(\"0\" + myDate.getHours()).slice(-2)+\":\"+(\"0\" + myDate.getMinutes()).slice(-2)+\":\"+(\"0\" + myDate.getSeconds()).slice(-2)\n\n    obj = {\n        \n       TIME:myDateFormat,\n       EAE:msg.payload[0][i].last,\n       EAI:msg.payload[1][i].last\n      }\n   plantObj.data.push(obj)\n}\n\n//node.warn(arr)\nmsg.payload = plantObj\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "4dcb06afa5c89579"
+            ]
+        ]
+    },
+    {
+        "id": "fd1eea07ccf72220",
+        "type": "node-red-contrib-basicauth",
+        "z": "a0d24007b1724270",
+        "name": "",
+        "realm": "",
+        "username": "iplon",
+        "password": "iplon321",
+        "x": 1000,
+        "y": 240,
+        "wires": [
+            [
+                "a112a27809351f31"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "94ba6d41848c0871",
+        "type": "influxdb",
+        "hostname": "192.168.5.125",
+        "port": "30086",
+        "protocol": "http",
+        "database": "TATA_CCRA",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
