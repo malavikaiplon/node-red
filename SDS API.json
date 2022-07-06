@@ -1,12 +1,5 @@
 [
     {
-        "id": "57d5c984.a0e7b",
-        "type": "tab",
-        "label": "SDS API",
-        "disabled": false,
-        "info": "You can your example application with IBM Cloud Code Engine\n\nhttps://thomassuedbroecker.github.io/ce-cns"
-    },
-    {
         "id": "fb38595.4c5b428",
         "type": "http request",
         "z": "57d5c984.a0e7b",
@@ -256,6 +249,109 @@
         "wires": [
             [
                 "6023edcb.a62c0c"
+            ]
+        ]
+    },
+    {
+        "id": "524b5cfcc1c1129b",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "Build header and payload",
+        "func": "msg.headers = {\n  'Authorization' : flow.get(\"bearer_token\")\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "1718d97f389ae41a"
+            ]
+        ]
+    },
+    {
+        "id": "c6fcb111a05d4d56",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 460,
+        "wires": [
+            [
+                "524b5cfcc1c1129b"
+            ]
+        ]
+    },
+    {
+        "id": "1718d97f389ae41a",
+        "type": "http request",
+        "z": "57d5c984.a0e7b",
+        "name": "https://WEB_API-SERVICE/articles",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.enerest.world/api/v1/iplon/visualization/plant/622a8cd2-e3d1-11eb-a4c6-960000a1d181/channels?channelNames[]=ProdPac&dateFrom=today&dateTo=today",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 660,
+        "y": 460,
+        "wires": [
+            [
+                "45822538e7721beb"
+            ]
+        ]
+    },
+    {
+        "id": "3836ac37f05ea7b1",
+        "type": "debug",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "45822538e7721beb",
+        "type": "json",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 890,
+        "y": 460,
+        "wires": [
+            [
+                "3836ac37f05ea7b1"
             ]
         ]
     }
