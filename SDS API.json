@@ -41,34 +41,6 @@
         ]
     },
     {
-        "id": "dc69b490.8d60d",
-        "type": "inject",
-        "z": "57d5c984.a0e7b",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 160,
-        "wires": [
-            [
-                "62853da9.a9c70c"
-            ]
-        ]
-    },
-    {
         "id": "88563b76.bca528",
         "type": "comment",
         "z": "57d5c984.a0e7b",
@@ -83,7 +55,7 @@
         "type": "debug",
         "z": "57d5c984.a0e7b",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -201,7 +173,7 @@
         "id": "bfde2608.8101b",
         "type": "http request",
         "z": "57d5c984.a0e7b",
-        "name": "https://WEB_API-SERVICE/articles",
+        "name": "GET Plant",
         "method": "GET",
         "ret": "txt",
         "paytoqs": "ignore",
@@ -211,7 +183,7 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 660,
+        "x": 590,
         "y": 360,
         "wires": [
             [
@@ -232,7 +204,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1030,
+        "x": 990,
         "y": 360,
         "wires": []
     },
@@ -244,7 +216,7 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 890,
+        "x": 790,
         "y": 360,
         "wires": [
             [
@@ -304,9 +276,9 @@
         "id": "1718d97f389ae41a",
         "type": "http request",
         "z": "57d5c984.a0e7b",
-        "name": "https://WEB_API-SERVICE/articles",
+        "name": "GET Production Today",
         "method": "GET",
-        "ret": "txt",
+        "ret": "obj",
         "paytoqs": "ignore",
         "url": "https://api.enerest.world/api/v1/iplon/visualization/plant/622a8cd2-e3d1-11eb-a4c6-960000a1d181/channels?channelNames[]=ProdPac&dateFrom=today&dateTo=today",
         "tls": "",
@@ -314,11 +286,11 @@
         "proxy": "",
         "authType": "",
         "senderr": false,
-        "x": 660,
+        "x": 580,
         "y": 460,
         "wires": [
             [
-                "45822538e7721beb"
+                "a78c696c7901dbcf"
             ]
         ]
     },
@@ -335,24 +307,340 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1050,
+        "x": 970,
         "y": 460,
         "wires": []
     },
     {
-        "id": "45822538e7721beb",
+        "id": "42d912b0b5e9292f",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "array of urls",
+        "func": "msg.url=[\n    \"https://api.enerest.world/api/v1/iplon/visualization/plant/622a8cd2-e3d1-11eb-a4c6-960000a1d181/channels?channelNames[]=ProdPac&dateFrom=today&dateTo=today\",\n    \"https://api.enerest.world/api/v1/iplon/visualization/plant/c18022f8-8d26-11eb-a8be-001e6799788c/channels?channelNames[]=ProdPac&dateFrom=today&dateTo=today\",\n]\nfor(var i = 0; i <msg.url.length; i++)\n{ \n    var url=msg.url[i]\n \n    var obj={\n    url\n}\nnode.send(obj);\n}\nreturn null\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 640,
+        "wires": [
+            [
+                "04fa9912910b3998"
+            ]
+        ]
+    },
+    {
+        "id": "659813364ba7f914",
+        "type": "http request",
+        "z": "57d5c984.a0e7b",
+        "name": "GET Production Today",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 600,
+        "y": 640,
+        "wires": [
+            [
+                "653c222e61ff7de1"
+            ]
+        ]
+    },
+    {
+        "id": "1139e95d1fdf11a1",
+        "type": "debug",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "75100aeca690d368",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 640,
+        "wires": [
+            [
+                "42d912b0b5e9292f"
+            ]
+        ]
+    },
+    {
+        "id": "04fa9912910b3998",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "url and token",
+        "func": "msg.url\nmsg.headers = {\n  'Authorization' : flow.get(\"bearer_token\")\n};\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 640,
+        "wires": [
+            [
+                "659813364ba7f914"
+            ]
+        ]
+    },
+    {
+        "id": "bf3cce8cd6edd955",
+        "type": "comment",
+        "z": "57d5c984.a0e7b",
+        "name": "reading multiple url's",
+        "info": "",
+        "x": 170,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "653c222e61ff7de1",
+        "type": "merge",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "timeout": "5",
+        "x": 770,
+        "y": 640,
+        "wires": [
+            [
+                "bfc0f9a8f37dfdb3"
+            ]
+        ]
+    },
+    {
+        "id": "f89a67d05c11aafa",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "62853da9.a9c70c"
+            ]
+        ]
+    },
+    {
+        "id": "6040797a85f1d89b",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "iteraton",
+        "func": "let plantObj\n\nplantObj = []\n//for(j =0; j < msg.payload.length;j++)\nfor (i =0; i < msg.payload[0].timestamp.length;i++)\n{\nvar obj={\n    Timestamp:msg.payload[0].timestamp[i],\n\"Swelect API_Test_Plant\":msg.payload[0].value[i],\n\"Swelect SBI_Admin_Office_Vizag\":msg.payload[1].value[i]\n}\n\nplantObj.push(obj)\n}\nmsg.payload =plantObj\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 640,
+        "wires": [
+            [
+                "614ce874b13915fe",
+                "1139e95d1fdf11a1"
+            ]
+        ]
+    },
+    {
+        "id": "614ce874b13915fe",
+        "type": "csv",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 730,
+        "y": 680,
+        "wires": [
+            [
+                "163b1a6a76f8b566"
+            ]
+        ]
+    },
+    {
+        "id": "bfc0f9a8f37dfdb3",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "object to array",
+        "func": "\n let plantObj\n\nplantObj = []\n\nfor (i =0; i < msg.payload.length;i++)\n{\n var sds=msg.payload[i].payload[0].dataPoints\n var keys=Object.keys(sds);\n var values=Object.values(sds);\nvar obj={\n  timestamp:keys,\n            value:values\n\n}\n\nplantObj.push(obj)\n}\nmsg.payload =plantObj\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 640,
+        "wires": [
+            [
+                "6040797a85f1d89b"
+            ]
+        ]
+    },
+    {
+        "id": "163b1a6a76f8b566",
+        "type": "file",
+        "z": "57d5c984.a0e7b",
+        "name": "sdsapi.csv",
+        "filename": "/usr/src/node-red/sdsapi.csv",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 890,
+        "y": 680,
+        "wires": [
+            [
+                "1139e95d1fdf11a1"
+            ]
+        ]
+    },
+    {
+        "id": "a78c696c7901dbcf",
         "type": "json",
         "z": "57d5c984.a0e7b",
         "name": "",
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 890,
+        "x": 770,
         "y": 460,
         "wires": [
             [
                 "3836ac37f05ea7b1"
             ]
         ]
+    },
+    {
+        "id": "ff34b1d23d3b14a1",
+        "type": "file in",
+        "z": "57d5c984.a0e7b",
+        "name": "sdsapi.csv",
+        "filename": "/usr/src/node-red/sdsapi.csv",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "f7f88c84995ebdf4"
+            ]
+        ]
+    },
+    {
+        "id": "ed1dd64ed33d5435",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "1) Insert nodeId items",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 260,
+        "y": 760,
+        "wires": [
+            [
+                "ff34b1d23d3b14a1"
+            ]
+        ]
+    },
+    {
+        "id": "f7f88c84995ebdf4",
+        "type": "csv",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": true,
+        "x": 610,
+        "y": 760,
+        "wires": [
+            [
+                "1026bb46b2b631bd"
+            ]
+        ]
+    },
+    {
+        "id": "1026bb46b2b631bd",
+        "type": "debug",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 760,
+        "wires": []
     }
 ]
