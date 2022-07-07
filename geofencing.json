@@ -1,0 +1,330 @@
+[
+    {
+        "id": "8ceef469ead1fdd0",
+        "type": "tab",
+        "label": "geo fencing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5585ae50ad263f96",
+        "type": "debug",
+        "z": "8ceef469ead1fdd0",
+        "name": "state",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8ae0f407cd48e71e",
+        "type": "api-current-state",
+        "z": "8ceef469ead1fdd0",
+        "name": "",
+        "server": "d3b0765d.432cd8",
+        "version": 2,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "entity_id": "person.malavika",
+        "state_type": "str",
+        "blockInputOverrides": false,
+        "outputProperties": [
+            {
+                "property": "payload",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "entityState"
+            },
+            {
+                "property": "data",
+                "propertyType": "msg",
+                "value": "",
+                "valueType": "triggerId"
+            }
+        ],
+        "override_topic": false,
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "x": 470,
+        "y": 520,
+        "wires": [
+            [
+                "5585ae50ad263f96"
+            ]
+        ]
+    },
+    {
+        "id": "c5dfa8a6b6d4c9d3",
+        "type": "inject",
+        "z": "8ceef469ead1fdd0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 520,
+        "wires": [
+            [
+                "8ae0f407cd48e71e"
+            ]
+        ]
+    },
+    {
+        "id": "f602b8a51193c37e",
+        "type": "debug",
+        "z": "8ceef469ead1fdd0",
+        "name": "life360",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7a696436c994d94b",
+        "type": "inject",
+        "z": "8ceef469ead1fdd0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 180,
+        "wires": [
+            [
+                "d0abb8285ae6b9af"
+            ]
+        ]
+    },
+    {
+        "id": "d0abb8285ae6b9af",
+        "type": "api-get-history",
+        "z": "8ceef469ead1fdd0",
+        "name": "",
+        "server": "d3b0765d.432cd8",
+        "version": 0,
+        "startdate": "2020-12-05T13:00:00+00:00",
+        "enddate": "2018-12-05T13:00:00+00:00",
+        "entityid": "device_tracker.life360_malavika_kv",
+        "entityidtype": "is",
+        "useRelativeTime": true,
+        "relativeTime": "5m",
+        "flatten": true,
+        "output_type": "split",
+        "output_location_type": "msg",
+        "output_location": "payload",
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "f602b8a51193c37e",
+                "3cf1ba191af8b9c0"
+            ]
+        ]
+    },
+    {
+        "id": "3cf1ba191af8b9c0",
+        "type": "change",
+        "z": "8ceef469ead1fdd0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"lat\":payload.attributes.latitude,\t   \"lon\":payload.attributes.longitude\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 280,
+        "wires": [
+            [
+                "c9fd487b75d581c1",
+                "65f51998c2dfb804"
+            ]
+        ]
+    },
+    {
+        "id": "c9fd487b75d581c1",
+        "type": "geofence",
+        "z": "8ceef469ead1fdd0",
+        "name": "my hostel",
+        "mode": "polyline",
+        "inside": "both",
+        "rad": 0,
+        "points": [
+            {
+                "latitude": 13.038372093695227,
+                "longitude": 80.26269419620803
+            },
+            {
+                "latitude": 13.039919020083016,
+                "longitude": 80.26269419620803
+            },
+            {
+                "latitude": 13.039919020083016,
+                "longitude": 80.26401384304336
+            },
+            {
+                "latitude": 13.038372093695227,
+                "longitude": 80.26401384304336
+            }
+        ],
+        "centre": {},
+        "floor": "",
+        "ceiling": "",
+        "worldmap": false,
+        "outputs": 1,
+        "x": 460,
+        "y": 280,
+        "wires": [
+            [
+                "71663778c83f38dc"
+            ]
+        ]
+    },
+    {
+        "id": "71663778c83f38dc",
+        "type": "debug",
+        "z": "8ceef469ead1fdd0",
+        "name": "hostel area",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "{   \"inarea\":location.inarea\t    \t}",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "65f51998c2dfb804",
+        "type": "geofence",
+        "z": "8ceef469ead1fdd0",
+        "name": "iplon",
+        "mode": "polyline",
+        "inside": "both",
+        "rad": 0,
+        "points": [
+            {
+                "latitude": 13.036119792302621,
+                "longitude": 80.26141659918721
+            },
+            {
+                "latitude": 13.036893263746157,
+                "longitude": 80.26141659918721
+            },
+            {
+                "latitude": 13.036893263746157,
+                "longitude": 80.26252435151036
+            },
+            {
+                "latitude": 13.036119792302621,
+                "longitude": 80.26252435151036
+            }
+        ],
+        "centre": {},
+        "floor": "",
+        "ceiling": "",
+        "worldmap": false,
+        "outputs": 1,
+        "x": 450,
+        "y": 340,
+        "wires": [
+            [
+                "02c561282ae2ad55"
+            ]
+        ]
+    },
+    {
+        "id": "02c561282ae2ad55",
+        "type": "debug",
+        "z": "8ceef469ead1fdd0",
+        "name": "iplon area",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "{   \"inarea\":location.inarea\t    \t}",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "f2b74e5cc74b470a",
+        "type": "comment",
+        "z": "8ceef469ead1fdd0",
+        "name": "geo fencing using home assistant",
+        "info": "",
+        "x": 260,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "d3b0765d.432cd8",
+        "type": "server",
+        "name": "ha",
+        "version": 2,
+        "addon": false,
+        "rejectUnauthorizedCerts": false,
+        "ha_boolean": "",
+        "connectionDelay": false,
+        "cacheJson": false,
+        "heartbeat": false,
+        "heartbeatInterval": ""
+    }
+]
