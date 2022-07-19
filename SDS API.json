@@ -1,5 +1,205 @@
 [
     {
+        "id": "88096981.88df6",
+        "type": "comment",
+        "z": "57d5c984.a0e7b",
+        "name": "2) Request protected data",
+        "info": "",
+        "x": 170,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "88142578.39a2c",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "Build header and payload",
+        "func": "msg.headers = {\n  'Authorization' : flow.get(\"bearer_token\")\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 360,
+        "wires": [
+            [
+                "bfde2608.8101b"
+            ]
+        ]
+    },
+    {
+        "id": "1abbf619.6524ca",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 360,
+        "wires": [
+            [
+                "88142578.39a2c"
+            ]
+        ]
+    },
+    {
+        "id": "bfde2608.8101b",
+        "type": "http request",
+        "z": "57d5c984.a0e7b",
+        "name": "GET Plant",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.enerest.world/api/v1/iplon/administration/plant/622a8cd2-e3d1-11eb-a4c6-960000a1d181",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 590,
+        "y": 360,
+        "wires": [
+            [
+                "a8295408.7a4ea8"
+            ]
+        ]
+    },
+    {
+        "id": "6023edcb.a62c0c",
+        "type": "debug",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a8295408.7a4ea8",
+        "type": "json",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 790,
+        "y": 360,
+        "wires": [
+            [
+                "6023edcb.a62c0c"
+            ]
+        ]
+    },
+    {
+        "id": "524b5cfcc1c1129b",
+        "type": "function",
+        "z": "57d5c984.a0e7b",
+        "name": "Build header and payload",
+        "func": "msg.headers = {\n  'Authorization' : flow.get(\"bearer_token\")\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "1718d97f389ae41a"
+            ]
+        ]
+    },
+    {
+        "id": "c6fcb111a05d4d56",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 460,
+        "wires": [
+            [
+                "524b5cfcc1c1129b"
+            ]
+        ]
+    },
+    {
+        "id": "1718d97f389ae41a",
+        "type": "http request",
+        "z": "57d5c984.a0e7b",
+        "name": "GET Production Today",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.enerest.world/api/v1/iplon/visualization/plant/622a8cd2-e3d1-11eb-a4c6-960000a1d181/channels?channelNames[]=ProdPac&dateFrom=today&dateTo=today",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 580,
+        "y": 460,
+        "wires": [
+            [
+                "a78c696c7901dbcf"
+            ]
+        ]
+    },
+    {
+        "id": "3836ac37f05ea7b1",
+        "type": "debug",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 460,
+        "wires": []
+    },
+    {
         "id": "42d912b0b5e9292f",
         "type": "function",
         "z": "57d5c984.a0e7b",
@@ -176,6 +376,100 @@
                 "305c8a66d2f86186"
             ]
         ]
+    },
+    {
+        "id": "a78c696c7901dbcf",
+        "type": "json",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 770,
+        "y": 460,
+        "wires": [
+            [
+                "3836ac37f05ea7b1"
+            ]
+        ]
+    },
+    {
+        "id": "ff34b1d23d3b14a1",
+        "type": "file in",
+        "z": "57d5c984.a0e7b",
+        "name": "opcua.csv",
+        "filename": "/usr/src/node-red/sdsapi.csv",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 380,
+        "y": 780,
+        "wires": [
+            [
+                "f7f88c84995ebdf4"
+            ]
+        ]
+    },
+    {
+        "id": "ed1dd64ed33d5435",
+        "type": "inject",
+        "z": "57d5c984.a0e7b",
+        "name": "1) Insert nodeId items",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 180,
+        "y": 780,
+        "wires": [
+            [
+                "ff34b1d23d3b14a1"
+            ]
+        ]
+    },
+    {
+        "id": "f7f88c84995ebdf4",
+        "type": "csv",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": true,
+        "x": 530,
+        "y": 780,
+        "wires": [
+            [
+                "1026bb46b2b631bd"
+            ]
+        ]
+    },
+    {
+        "id": "1026bb46b2b631bd",
+        "type": "debug",
+        "z": "57d5c984.a0e7b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "url",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 780,
+        "wires": []
     },
     {
         "id": "bd9b5a552840651d",
