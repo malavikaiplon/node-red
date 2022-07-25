@@ -1,0 +1,599 @@
+[
+    {
+        "id": "afbf34c209990579",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV01",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV01' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV01' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 430,
+        "y": 140,
+        "wires": [
+            [
+                "f4bf453da69960fb"
+            ]
+        ]
+    },
+    {
+        "id": "4fddb2fb89aa0fd5",
+        "type": "cronplus",
+        "z": "3d5d752c1ecdf981",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "*/1 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "afbf34c209990579",
+                "deb2934fdeaa42be",
+                "104e2e771fe81d28",
+                "1b247a0bdc7c791e",
+                "e1ea06ea5932335e",
+                "76595f7868e86059",
+                "edbb2ec57396e292",
+                "9ca517a2effcdba6",
+                "db222dd1d3de311b"
+            ]
+        ]
+    },
+    {
+        "id": "f4bf453da69960fb",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60);\n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 140,
+        "wires": [
+            [
+                "9d7f0936c001e056"
+            ]
+        ]
+    },
+    {
+        "id": "9d7f0936c001e056",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 140,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "38c1ef4d2b065fec",
+        "type": "influxdb batch",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "5f6549efa9805b44",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "EDC OUT",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1160,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "deb2934fdeaa42be",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV02",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV02' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV02' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 220,
+        "wires": [
+            [
+                "143c584a184dfa15"
+            ]
+        ]
+    },
+    {
+        "id": "143c584a184dfa15",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "b96f072f1896187f"
+            ]
+        ]
+    },
+    {
+        "id": "b96f072f1896187f",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 220,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "104e2e771fe81d28",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV03",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV03' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV03' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 280,
+        "wires": [
+            [
+                "0dfd0f6752bb9a83"
+            ]
+        ]
+    },
+    {
+        "id": "0dfd0f6752bb9a83",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60);\n     \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 280,
+        "wires": [
+            [
+                "e4feb1ecfa490b57"
+            ]
+        ]
+    },
+    {
+        "id": "e4feb1ecfa490b57",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 280,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "1b247a0bdc7c791e",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV04",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV04' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV04' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 340,
+        "wires": [
+            [
+                "9b76f4507c47046c"
+            ]
+        ]
+    },
+    {
+        "id": "9b76f4507c47046c",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60);\n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "fa9dd04eae757489"
+            ]
+        ]
+    },
+    {
+        "id": "fa9dd04eae757489",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 340,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "e1ea06ea5932335e",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV05",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV05' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV05' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 400,
+        "wires": [
+            [
+                "42a6c40123f64a69"
+            ]
+        ]
+    },
+    {
+        "id": "42a6c40123f64a69",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60);\n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "1104ec642197420e"
+            ]
+        ]
+    },
+    {
+        "id": "1104ec642197420e",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 400,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "76595f7868e86059",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV06",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV06' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV06' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 460,
+        "wires": [
+            [
+                "e15eaa10c13a01f7"
+            ]
+        ]
+    },
+    {
+        "id": "e15eaa10c13a01f7",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60);\n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 460,
+        "wires": [
+            [
+                "30ac824715621a26"
+            ]
+        ]
+    },
+    {
+        "id": "30ac824715621a26",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 460,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "edbb2ec57396e292",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV07",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV07' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV07' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 520,
+        "wires": [
+            [
+                "8e406857a1eaf780"
+            ]
+        ]
+    },
+    {
+        "id": "8e406857a1eaf780",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60); \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 520,
+        "wires": [
+            [
+                "5c4dba31c58a7e11"
+            ]
+        ]
+    },
+    {
+        "id": "5c4dba31c58a7e11",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 520,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "9ca517a2effcdba6",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV08",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV08' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV08' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 580,
+        "wires": [
+            [
+                "e78a3cb13bfdaf63"
+            ]
+        ]
+    },
+    {
+        "id": "e78a3cb13bfdaf63",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60); \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 580,
+        "wires": [
+            [
+                "5f87dd64b3dab914"
+            ]
+        ]
+    },
+    {
+        "id": "5f87dd64b3dab914",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 580,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "db222dd1d3de311b",
+        "type": "influxdb in",
+        "z": "3d5d752c1ecdf981",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "INV09",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV09' AND \"f\" =~ /.*String_IDC*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'arken_900kW' AND \"d\" = 'INV09' AND \"f\" = 'UDC')AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 640,
+        "wires": [
+            [
+                "313b6ff42938959a"
+            ]
+        ]
+    },
+    {
+        "id": "313b6ff42938959a",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "edc calculation",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = PDC*(5/60); \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC13\",\n\"EDC14\",\n\"EDC15\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 640,
+        "wires": [
+            [
+                "499914470c406058"
+            ]
+        ]
+    },
+    {
+        "id": "499914470c406058",
+        "type": "function",
+        "z": "3d5d752c1ecdf981",
+        "name": "measurement",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"edc_arken\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 640,
+        "wires": [
+            [
+                "38c1ef4d2b065fec"
+            ]
+        ]
+    },
+    {
+        "id": "705b30eaab2edcd3",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "8086",
+        "protocol": "http",
+        "database": "arken",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "5f6549efa9805b44",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "8086",
+        "protocol": "http",
+        "database": "arken",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    }
+]
