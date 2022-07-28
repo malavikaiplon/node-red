@@ -1,0 +1,12 @@
+SELECT
+  "DATE" AS "time",
+  "POWER_CUT" AS "POWER_CUT",
+  "START_TIME" AS "START_TIME",
+  "END_TIME" AS "END_TIME",
+  "Duration (hr)" AS "Duration (hr)",
+  "Gen1(kwh)" AS "Gen1(kwh)",
+  "Gen2(kwh)" AS "Gen2(kwh)",
+  "Total_solar(kwh)" AS "Total_solar(kwh)",
+  "Total_Load(kwh)" AS "Total_Load(kwh)"
+FROM dimo1
+ORDER BY 1
