@@ -1,8 +1,78 @@
 [
     {
-        "id": "29f7b21fe561aa67",
+        "id": "ffb6ebec72022ae6",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b3c15f406e461934",
+        "type": "postgres",
+        "z": "f6f2187d.f17ca8",
+        "postgresdb": "8ccb50a36ea75bb9",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 500,
+        "y": 260,
+        "wires": [
+            [
+                "ffb6ebec72022ae6"
+            ]
+        ]
+    },
+    {
+        "id": "97b6238b3ec95744",
         "type": "inject",
-        "z": "7a51e8c6c7e1e96e",
+        "z": "f6f2187d.f17ca8",
+        "name": "create table",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "CREATE TABLE public.DIMO( \"DATE\" numeric PRIMARY KEY, \"POWER_CUT\" numeric,\"START_TIME\" numeric,\"END_TIME\" numeric,\"Duration (hr)\" numeric,\"Gen1(kwh)\" numeric,\"Gen2(kwh)\" numeric,\"Total_solar(kwh)\" numeric,\"Total_Load(kwh)\" numeric) WITH  (   OIDS=FALSE )",
+        "payloadType": "str",
+        "x": 230,
+        "y": 260,
+        "wires": [
+            [
+                "b3c15f406e461934"
+            ]
+        ]
+    },
+    {
+        "id": "a2370b4a2ccbefce",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "props": [
             {
@@ -21,17 +91,17 @@
         "payload": "",
         "payloadType": "date",
         "x": 260,
-        "y": 180,
+        "y": 420,
         "wires": [
             [
-                "1727b68e75e556c8"
+                "d5761a15b7d298db"
             ]
         ]
     },
     {
-        "id": "a5d5e4dcfbaa3565",
+        "id": "78f22fb1724a1c48",
         "type": "debug",
-        "z": "7a51e8c6c7e1e96e",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -42,13 +112,13 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 990,
-        "y": 180,
+        "y": 420,
         "wires": []
     },
     {
-        "id": "4f4df93371e248de",
+        "id": "f20143ca6ab69009",
         "type": "function",
-        "z": "7a51e8c6c7e1e96e",
+        "z": "f6f2187d.f17ca8",
         "name": "function 1",
         "func": "let plantObj\n\nplantObj = []\nvar Power_cut = 0;\nvar Start_Time = 0;\nvar End_Time=0;\n for (var i =1; i < msg.payload[0].length;i++)\n {\n   var Time = msg.payload[0][i].time\n   var Grid_EM_UAC12 = msg.payload[0][i].last\n   var Grid_EM_UAC23 = msg.payload[1][i].last\n   var Grid_EM_UAC31 = msg.payload[2][i].last\n  // var DG2_EAE = msg.payload[3][i].last\n   //var DG1_EAE = msg.payload[4][i].last\n   //var SOLAR_EM_EAE = msg.payload[5][i].last       \n   var AVG = (Grid_EM_UAC12 + Grid_EM_UAC23 + Grid_EM_UAC31)/3\n   \n\n if ((AVG <405)&&(Start_Time==0))\n \n {\n\n   Start_Time = Time\n   Power_cut=Power_cut+1\n   var Solar_Initial = msg.payload[5][i].last \n   var DG1_Initial = msg.payload[4][i].last\n   var DG2_Intial = msg.payload[3][i].last\n   End_Time=0\n   }\n if((AVG>410)&&(End_Time==0))\n\n {\n  End_Time = Time\n   var Solar_final = msg.payload[5][i].last \n   var DG1_final = msg.payload[4][i].last\n   var DG2_final = msg.payload[3][i].last\n  Start_Time=0\n}     \n   \n\n//node.send(obj);\nvar obj={\nTime,\nGrid_EM_UAC12,\nGrid_EM_UAC23,\nGrid_EM_UAC31,\nAVG,\nPower_cut,\nStart_Time,\nEnd_Time,\nDG1_Initial,\nDG1_final,\nDG2_Intial,\nDG2_final,\nSolar_Initial,\nSolar_final\n////DG1_EAE,\n//DG2_EAE,\n//SOLAR_EM_EAE\n}\n\nplantObj.push(obj)\n\n }\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
         "outputs": 1,
@@ -57,50 +127,96 @@
         "finalize": "",
         "libs": [],
         "x": 620,
-        "y": 180,
+        "y": 420,
         "wires": [
             [
-                "fe318e59453ecde1"
+                "d561fdcd3fbf1f0d"
             ]
         ]
     },
     {
-        "id": "1727b68e75e556c8",
+        "id": "d5761a15b7d298db",
         "type": "influxdb in",
-        "z": "7a51e8c6c7e1e96e",
+        "z": "f6f2187d.f17ca8",
         "influxdb": "8a27bede3cf9f811",
         "name": "dimo",
-        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'GRID_EM' AND \"f\" = 'UAC12') AND time >= now() - 12h GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'GRID_EM' AND \"f\" = 'UAC23') AND time >= now() - 12h GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'GRID_EM' AND \"f\" = 'UAC31') AND time >= now() - 12h GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'DG2' AND \"f\" = 'EAE') AND time >= now() - 12h GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'DG1' AND \"f\" = 'EAE') AND time >= now() - 12h GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'SOLAR_EM' AND \"f\" = 'EAE') AND time >= now() - 12h GROUP BY time(1m), \"d\", \"f\" fill(none)",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'GRID_EM' AND \"f\" = 'UAC12') AND time >= now() - 1d GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'GRID_EM' AND \"f\" = 'UAC23') AND time >= now() - 1d GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'GRID_EM' AND \"f\" = 'UAC31') AND time >= now() - 1d GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'DG2' AND \"f\" = 'EAE') AND time >= now() - 1d GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'DG1' AND \"f\" = 'EAE') AND time >= now() - 1d GROUP BY time(1m), \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'dimo_700W' AND \"d\" = 'SOLAR_EM' AND \"f\" = 'EAE') AND time >= now() - 1d GROUP BY time(1m), \"d\", \"f\" fill(none)",
         "rawOutput": false,
         "precision": "",
         "retentionPolicy": "",
         "org": "organisation",
         "x": 450,
-        "y": 180,
+        "y": 420,
         "wires": [
             [
-                "4f4df93371e248de"
+                "f20143ca6ab69009"
             ]
         ]
     },
     {
-        "id": "fe318e59453ecde1",
+        "id": "acfe0e65c52a5488",
         "type": "function",
-        "z": "7a51e8c6c7e1e96e",
+        "z": "f6f2187d.f17ca8",
         "name": "function 4",
-        "func": "let plantObj\n\nplantObj = []\n\nfor (var i = 1; i < msg.payload.length; i++)\n {\n   var time = msg.payload[i].Time\n    var i_time = msg.payload[i-1].Start_Time\n    var j_time = msg.payload[i].End_Time\n   var DG1_Initial=msg.payload[i-1].DG1_Initial\n   var DG1_final=msg.payload[i].DG1_final\n   var DG2_Initial=msg.payload[i-1].DG2_Intial\n   var DG2_final= msg.payload[i].DG2_final\n   var Solar_Initial = msg.payload[i-1].Solar_Initial\n   var Solar_final = msg.payload[i].Solar_final\n   if ((i_time != 0) && (j_time != 0))\n    {var start_time= i_time \n      var end_time = j_time\n      var s_epo = new Date(i_time).getTime()\n      var e_epo = new Date(j_time).getTime()\n      var diff = (new Date(j_time).getTime())-(new Date(i_time).getTime())\n      var d = parseFloat(Math.floor(diff) / 36e5).toFixed(1)\n   var duration=d+\"hrs\"\n   \n   \n     var DG1;\n     var DG2;\n     var SOLAR;\n     if (DG1_Initial > DG1_final)\n     { DG1 = DG1_Initial - DG1_final}\n     else {DG1= DG1_final - DG1_Initial}\n\n     if (DG2_Initial > DG2_final) \n     { DG2 = DG2_Initial - DG2_final}\n     else { DG2=DG2_final - DG2_Initial}\n\n     if (Solar_Initial > Solar_final)\n     { SOLAR = Solar_Initial - Solar_final}\n     else { SOLAR = Solar_final-Solar_Initial}\n    var TOTAL=DG1+DG2+SOLAR\n\n \n   var obj = {\n      time,\n      avg:msg.payload[i].AVG,\n      start_time,\n      end_time,\n      s_epo,\n      e_epo,\n      duration,\n      p:msg.payload[i].Power_cut,\n      DG1_Initial,\n      DG1_final,\n      DG1,\n      DG2_Initial,\n      DG2_final,\n      DG2,\n      Solar_Initial,\n      Solar_final,\n      SOLAR,\n      TOTAL\n      //Duration\n\n   }\n\n   plantObj.push(obj)\n    }  \n }\nmsg.payload = plantObj\n//return null;\nreturn msg;",
+        "func": "//let plantObj\n\n//plantObj = []\n\nfor (var i = 1; i < msg.payload.length; i++)\n {\n  var time = (msg.payload[i].Time).toLocaleDateString()\n    var i_time = msg.payload[i-1].Start_Time\n    var j_time = msg.payload[i].End_Time\n   var DG1_Initial=msg.payload[i-1].DG1_Initial\n   var DG1_final=msg.payload[i].DG1_final\n   var DG2_Initial=msg.payload[i-1].DG2_Intial\n   var DG2_final= msg.payload[i].DG2_final\n   var Solar_Initial = msg.payload[i-1].Solar_Initial\n   var Solar_final = msg.payload[i].Solar_final\n   if ((i_time != 0) && (j_time != 0))\n   {\n     var start_time = new Date(i_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n     var end_time = new Date(j_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n      var s_epo = new Date(i_time).getTime()\n      var e_epo = new Date(j_time).getTime()\n      var diff = (new Date(j_time).getTime())-(new Date(i_time).getTime())\n      var d = parseFloat(Math.floor(diff) / 36e5).toFixed(1)\n   \n   \n     var DG1;\n     var DG2;\n     var SOLAR;\n     if (DG1_Initial > DG1_final)\n     { DG1 = DG1_Initial - DG1_final}\n     else {DG1= DG1_final - DG1_Initial}\n\n     if (DG2_Initial > DG2_final) \n     { DG2 = DG2_Initial - DG2_final}\n     else { DG2=DG2_final - DG2_Initial}\n\n     if (Solar_Initial > Solar_final)\n     { SOLAR = Solar_Initial - Solar_final}\n     else { SOLAR = Solar_final-Solar_Initial}\n    var TOTAL=DG1+DG2+SOLAR\n     \n      var obj = {};\n      obj.payload ={\n       time,\n      avg:msg.payload[i].AVG,\n      start_time,\n      end_time,\n      s_epo,\n      e_epo,\n      d,\n      p:msg.payload[i].Power_cut,\n      DG1_Initial,\n      DG1_final,\n      DG1,\n      DG2_Initial,\n      DG2_final,\n      DG2,\n      Solar_Initial,\n      Solar_final,\n      SOLAR,\n      TOTAL\n      //Duration\n\n   }\n\n      node.send(obj);\n   }\n \n }\n//msg.payload = plantObj\nreturn null;\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 180,
+        "x": 1080,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b65bff1d906a57e",
+        "type": "template",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO public.DIMO(\"DATE\",\"POWER_CUT\", \"START_TIME\", \"END_TIME\", \"Duration (hr)\", \"Gen1(kwh)\", \"Gen2(kwh)\", \"Total_solar(kwh)\", \"Total_Load(kwh)\")\nVALUES ( '{{payload.time}}', '{{payload.p}}', '{{payload.s_epo}}', '{{payload.e_epo}}', '{{payload.d}}', '{{payload.DG1}}', '{{payload.DG2}}', '{{payload.SOLAR}}', '{{payload.TOTAL}}')\n      \n    \n    ",
+        "output": "str",
+        "x": 700,
+        "y": 340,
         "wires": [
             [
-                "a5d5e4dcfbaa3565"
+                "b3c15f406e461934"
             ]
         ]
+    },
+    {
+        "id": "d561fdcd3fbf1f0d",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 5",
+        "func": "//let plantObj\n\n//plantObj = []\n\nfor (var i = 1; i < msg.payload.length; i++)\n {\n  var time = new Date(msg.payload[i].Time).getTime()\n    var i_time = msg.payload[i-1].Start_Time\n    var j_time = msg.payload[i].End_Time\n   var DG1_Initial=msg.payload[i-1].DG1_Initial\n   var DG1_final=msg.payload[i].DG1_final\n   var DG2_Initial=msg.payload[i-1].DG2_Intial\n   var DG2_final= msg.payload[i].DG2_final\n   var Solar_Initial = msg.payload[i-1].Solar_Initial\n   var Solar_final = msg.payload[i].Solar_final\n   if ((i_time != 0) && (j_time != 0))\n   {\n     var start_time = new Date(i_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n     var end_time = new Date(j_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n      var s_epo = new Date(i_time).getTime()\n      var e_epo = new Date(j_time).getTime()\n      var diff = (new Date(j_time).getTime())-(new Date(i_time).getTime())\n      var d = parseFloat(Math.floor(diff) / 36e5).toFixed(1)\n   \n   \n     var DG1;\n     var DG2;\n     var SOLAR;\n     if (DG1_Initial > DG1_final)\n     { DG1 = DG1_Initial - DG1_final}\n     else {DG1= DG1_final - DG1_Initial}\n\n     if (DG2_Initial > DG2_final) \n     { DG2 = DG2_Initial - DG2_final}\n     else { DG2=DG2_final - DG2_Initial}\n\n     if (Solar_Initial > Solar_final)\n     { SOLAR = Solar_Initial - Solar_final}\n     else { SOLAR = Solar_final-Solar_Initial}\n    var TOTAL=DG1+DG2+SOLAR\n     \n      var obj = {};\n      obj.payload ={\n       time,\n      avg:msg.payload[i].AVG,\n      start_time,\n      end_time,\n      s_epo,\n      e_epo,\n      d,\n      p:msg.payload[i].Power_cut,\n      DG1_Initial,\n      DG1_final,\n      DG1,\n      DG2_Initial,\n      DG2_final,\n      DG2,\n      Solar_Initial,\n      Solar_final,\n      SOLAR,\n      TOTAL\n      //Duration\n\n   }\n\n      node.send(obj);\n   }\n \n }\n//msg.payload = plantObj\nreturn null;\n//return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "78f22fb1724a1c48",
+                "9b65bff1d906a57e"
+            ]
+        ]
+    },
+    {
+        "id": "8ccb50a36ea75bb9",
+        "type": "postgresdb",
+        "cfgname": "",
+        "hostname": "iplon-pvindia.com",
+        "port": "5432",
+        "db": "iplon",
+        "ssl": false
     },
     {
         "id": "8a27bede3cf9f811",
