@@ -1,6 +1,6 @@
 [
     {
-        "id": "ffb6ebec72022ae6",
+        "id": "8390fea526686cdb",
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -12,12 +12,12 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
-        "y": 260,
+        "x": 710,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "b3c15f406e461934",
+        "id": "a4bfba3a21878a60",
         "type": "postgres",
         "z": "f6f2187d.f17ca8",
         "postgresdb": "8ccb50a36ea75bb9",
@@ -32,16 +32,16 @@
         "limit_drop_intermediate": false,
         "limit_drop_if_in_queue": false,
         "outputs": true,
-        "x": 500,
-        "y": 260,
+        "x": 480,
+        "y": 280,
         "wires": [
             [
-                "ffb6ebec72022ae6"
+                "8390fea526686cdb"
             ]
         ]
     },
     {
-        "id": "97b6238b3ec95744",
+        "id": "2c1ab7013eeb9898",
         "type": "inject",
         "z": "f6f2187d.f17ca8",
         "name": "create table",
@@ -61,16 +61,16 @@
         "topic": "",
         "payload": "CREATE TABLE public.DIMO( \"DATE\" numeric PRIMARY KEY, \"POWER_CUT\" numeric,\"START_TIME\" numeric,\"END_TIME\" numeric,\"Duration (hr)\" numeric,\"Gen1(kwh)\" numeric,\"Gen2(kwh)\" numeric,\"Total_solar(kwh)\" numeric,\"Total_Load(kwh)\" numeric) WITH  (   OIDS=FALSE )",
         "payloadType": "str",
-        "x": 230,
-        "y": 260,
+        "x": 210,
+        "y": 280,
         "wires": [
             [
-                "b3c15f406e461934"
+                "a4bfba3a21878a60"
             ]
         ]
     },
     {
-        "id": "a2370b4a2ccbefce",
+        "id": "ef05a2f2ce404d08",
         "type": "inject",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -84,22 +84,22 @@
             }
         ],
         "repeat": "",
-        "crontab": "",
+        "crontab": "59 11 * * *",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 260,
-        "y": 420,
+        "x": 250,
+        "y": 440,
         "wires": [
             [
-                "d5761a15b7d298db"
+                "e970391a8ce31e69"
             ]
         ]
     },
     {
-        "id": "78f22fb1724a1c48",
+        "id": "502ade0c421668f7",
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -111,12 +111,12 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 990,
-        "y": 420,
+        "x": 970,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "f20143ca6ab69009",
+        "id": "7c134c32edc50d7c",
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "function 1",
@@ -126,16 +126,16 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
-        "y": 420,
+        "x": 600,
+        "y": 440,
         "wires": [
             [
-                "d561fdcd3fbf1f0d"
+                "7c0284fc86071111"
             ]
         ]
     },
     {
-        "id": "d5761a15b7d298db",
+        "id": "e970391a8ce31e69",
         "type": "influxdb in",
         "z": "f6f2187d.f17ca8",
         "influxdb": "8a27bede3cf9f811",
@@ -145,33 +145,16 @@
         "precision": "",
         "retentionPolicy": "",
         "org": "organisation",
-        "x": 450,
-        "y": 420,
+        "x": 430,
+        "y": 440,
         "wires": [
             [
-                "f20143ca6ab69009"
+                "7c134c32edc50d7c"
             ]
         ]
     },
     {
-        "id": "acfe0e65c52a5488",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "function 4",
-        "func": "//let plantObj\n\n//plantObj = []\n\nfor (var i = 1; i < msg.payload.length; i++)\n {\n  var time = (msg.payload[i].Time).toLocaleDateString()\n    var i_time = msg.payload[i-1].Start_Time\n    var j_time = msg.payload[i].End_Time\n   var DG1_Initial=msg.payload[i-1].DG1_Initial\n   var DG1_final=msg.payload[i].DG1_final\n   var DG2_Initial=msg.payload[i-1].DG2_Intial\n   var DG2_final= msg.payload[i].DG2_final\n   var Solar_Initial = msg.payload[i-1].Solar_Initial\n   var Solar_final = msg.payload[i].Solar_final\n   if ((i_time != 0) && (j_time != 0))\n   {\n     var start_time = new Date(i_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n     var end_time = new Date(j_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n      var s_epo = new Date(i_time).getTime()\n      var e_epo = new Date(j_time).getTime()\n      var diff = (new Date(j_time).getTime())-(new Date(i_time).getTime())\n      var d = parseFloat(Math.floor(diff) / 36e5).toFixed(1)\n   \n   \n     var DG1;\n     var DG2;\n     var SOLAR;\n     if (DG1_Initial > DG1_final)\n     { DG1 = DG1_Initial - DG1_final}\n     else {DG1= DG1_final - DG1_Initial}\n\n     if (DG2_Initial > DG2_final) \n     { DG2 = DG2_Initial - DG2_final}\n     else { DG2=DG2_final - DG2_Initial}\n\n     if (Solar_Initial > Solar_final)\n     { SOLAR = Solar_Initial - Solar_final}\n     else { SOLAR = Solar_final-Solar_Initial}\n    var TOTAL=DG1+DG2+SOLAR\n     \n      var obj = {};\n      obj.payload ={\n       time,\n      avg:msg.payload[i].AVG,\n      start_time,\n      end_time,\n      s_epo,\n      e_epo,\n      d,\n      p:msg.payload[i].Power_cut,\n      DG1_Initial,\n      DG1_final,\n      DG1,\n      DG2_Initial,\n      DG2_final,\n      DG2,\n      Solar_Initial,\n      Solar_final,\n      SOLAR,\n      TOTAL\n      //Duration\n\n   }\n\n      node.send(obj);\n   }\n \n }\n//msg.payload = plantObj\nreturn null;\n//return msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1080,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9b65bff1d906a57e",
+        "id": "2c86114e3e85df5c",
         "type": "template",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -179,33 +162,33 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "INSERT INTO public.DIMO(\"DATE\",\"POWER_CUT\", \"START_TIME\", \"END_TIME\", \"Duration (hr)\", \"Gen1(kwh)\", \"Gen2(kwh)\", \"Total_solar(kwh)\", \"Total_Load(kwh)\")\nVALUES ( '{{payload.time}}', '{{payload.p}}', '{{payload.s_epo}}', '{{payload.e_epo}}', '{{payload.d}}', '{{payload.DG1}}', '{{payload.DG2}}', '{{payload.SOLAR}}', '{{payload.TOTAL}}')\n      \n    \n    ",
+        "template": "INSERT INTO public.DIMO(\"DATE\",\"POWER_CUT\", \"START_TIME\", \"END_TIME\", \"Duration (hr)\", \"Gen1(kwh)\", \"Gen2(kwh)\", \"Total_solar(kwh)\", \"Total_Load(kwh)\")\nVALUES ( '{{payload.time}}', '{{payload.p}}', '{{payload.s_epo}}', '{{payload.e_epo}}', '{{payload.d}}', '{{payload.dg1}}', '{{payload.dg2}}', '{{payload.solar}}', '{{payload.total}}')\n      \n    \n    ",
         "output": "str",
-        "x": 700,
-        "y": 340,
+        "x": 680,
+        "y": 360,
         "wires": [
             [
-                "b3c15f406e461934"
+                "a4bfba3a21878a60"
             ]
         ]
     },
     {
-        "id": "d561fdcd3fbf1f0d",
+        "id": "7c0284fc86071111",
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "function 5",
-        "func": "//let plantObj\n\n//plantObj = []\n\nfor (var i = 1; i < msg.payload.length; i++)\n {\n  var time = new Date(msg.payload[i].Time).getTime()\n    var i_time = msg.payload[i-1].Start_Time\n    var j_time = msg.payload[i].End_Time\n   var DG1_Initial=msg.payload[i-1].DG1_Initial\n   var DG1_final=msg.payload[i].DG1_final\n   var DG2_Initial=msg.payload[i-1].DG2_Intial\n   var DG2_final= msg.payload[i].DG2_final\n   var Solar_Initial = msg.payload[i-1].Solar_Initial\n   var Solar_final = msg.payload[i].Solar_final\n   if ((i_time != 0) && (j_time != 0))\n   {\n     var start_time = new Date(i_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n     var end_time = new Date(j_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n      var s_epo = new Date(i_time).getTime()\n      var e_epo = new Date(j_time).getTime()\n      var diff = (new Date(j_time).getTime())-(new Date(i_time).getTime())\n      var d = parseFloat(Math.floor(diff) / 36e5).toFixed(1)\n   \n   \n     var DG1;\n     var DG2;\n     var SOLAR;\n     if (DG1_Initial > DG1_final)\n     { DG1 = DG1_Initial - DG1_final}\n     else {DG1= DG1_final - DG1_Initial}\n\n     if (DG2_Initial > DG2_final) \n     { DG2 = DG2_Initial - DG2_final}\n     else { DG2=DG2_final - DG2_Initial}\n\n     if (Solar_Initial > Solar_final)\n     { SOLAR = Solar_Initial - Solar_final}\n     else { SOLAR = Solar_final-Solar_Initial}\n    var TOTAL=DG1+DG2+SOLAR\n     \n      var obj = {};\n      obj.payload ={\n       time,\n      avg:msg.payload[i].AVG,\n      start_time,\n      end_time,\n      s_epo,\n      e_epo,\n      d,\n      p:msg.payload[i].Power_cut,\n      DG1_Initial,\n      DG1_final,\n      DG1,\n      DG2_Initial,\n      DG2_final,\n      DG2,\n      Solar_Initial,\n      Solar_final,\n      SOLAR,\n      TOTAL\n      //Duration\n\n   }\n\n      node.send(obj);\n   }\n \n }\n//msg.payload = plantObj\nreturn null;\n//return msg;",
+        "func": "//let plantObj\n\n//plantObj = []\n\nfor (var i = 1; i < msg.payload.length; i++)\n {\n  var time = new Date(msg.payload[i].Time).getTime()\n    var i_time = msg.payload[i-1].Start_Time\n    var j_time = msg.payload[i].End_Time\n   var DG1_Initial=msg.payload[i-1].DG1_Initial\n   var DG1_final=msg.payload[i].DG1_final\n   var DG2_Initial=msg.payload[i-1].DG2_Intial\n   var DG2_final= msg.payload[i].DG2_final\n   var Solar_Initial = msg.payload[i-1].Solar_Initial\n   var Solar_final = msg.payload[i].Solar_final\n   if ((i_time != 0) && (j_time != 0))\n   {\n     var start_time = new Date(i_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n     var end_time = new Date(j_time).toLocaleTimeString(\"en-US\", { timeZone: 'Asia/Kolkata' })\n      var s_epo = new Date(i_time).getTime()\n      var e_epo = new Date(j_time).getTime()\n      var diff = (new Date(j_time).getTime())-(new Date(i_time).getTime())\n      var d = Number(parseFloat(Math.floor(diff) / 36e5).toFixed(1))\n   \n   \n     var DG1;\n     var DG2;\n     var SOLAR;\n     if (DG1_Initial > DG1_final)\n     { DG1 = DG1_Initial - DG1_final}\n     else {DG1= DG1_final - DG1_Initial}\n\n     if (DG2_Initial > DG2_final) \n     { DG2 = DG2_Initial - DG2_final}\n     else { DG2=DG2_final - DG2_Initial}\n\n     if (Solar_Initial > Solar_final)\n     { SOLAR = Solar_Initial - Solar_final}\n     else { SOLAR = Solar_final-Solar_Initial}\n    var TOTAL=DG1+DG2+SOLAR\n     var dg1 = Number(DG1.toFixed(2))\n     var dg2 = Number(DG2.toFixed(2))\n     var solar = Number(SOLAR.toFixed(2))\n     var total = Number(TOTAL.toFixed(2))\n     \n      var obj = {};\n      obj.payload ={\n       time,\n      avg:msg.payload[i].AVG,\n      start_time,\n      end_time,\n      s_epo,\n      e_epo,\n      d,\n      p:msg.payload[i].Power_cut,\n      DG1_Initial,\n      DG1_final,\n        dg1,\n      DG2_Initial,\n      DG2_final,\n        dg2,\n      Solar_Initial,\n      Solar_final,\n        solar,\n        total\n      //Duration\n\n   }\n\n      node.send(obj);\n   }\n \n }\n//msg.payload = plantObj\nreturn null;\n//return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 800,
-        "y": 420,
+        "x": 780,
+        "y": 440,
         "wires": [
             [
-                "78f22fb1724a1c48",
-                "9b65bff1d906a57e"
+                "502ade0c421668f7",
+                "2c86114e3e85df5c"
             ]
         ]
     },
