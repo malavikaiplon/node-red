@@ -8,5 +8,5 @@ SELECT
   "Gen2(kwh)" AS "Gen2(kwh)",
   "Total_solar(kwh)" AS "Total_solar(kwh)",
   "Total_Load(kwh)" AS "Total_Load(kwh)"
-FROM dimo1
+FROM dimo
 ORDER BY 1
