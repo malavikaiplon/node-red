@@ -1,0 +1,285 @@
+[
+    {
+        "id": "345db1daa841c148",
+        "type": "influxdb in",
+        "z": "420699d848fb05ff",
+        "influxdb": "53316db39eaf20d7",
+        "name": "",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "iplon",
+        "x": 710,
+        "y": 240,
+        "wires": [
+            [
+                "22fbc0b47cac09e1"
+            ]
+        ]
+    },
+    {
+        "id": "991494a816a1ddda",
+        "type": "inject",
+        "z": "420699d848fb05ff",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 240,
+        "wires": [
+            [
+                "3cb78d26da0308df"
+            ]
+        ]
+    },
+    {
+        "id": "22fbc0b47cac09e1",
+        "type": "debug",
+        "z": "420699d848fb05ff",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "aa10b40f1d08df73",
+        "type": "inject",
+        "z": "420699d848fb05ff",
+        "name": "INJECT",
+        "props": [],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 360,
+        "wires": [
+            [
+                "e131fb8a0e58034c"
+            ]
+        ]
+    },
+    {
+        "id": "e131fb8a0e58034c",
+        "type": "influxdb in",
+        "z": "420699d848fb05ff",
+        "influxdb": "705b30eaab2edcd3",
+        "name": "B01",
+        "query": "SELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B01' AND \"f\" =~ /.*SCB*./) AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\") FROM \"scaback_csv\" WHERE (\"b\" = 'B01' AND \"f\" = 'UDC') AND time >= now() - 10m GROUP BY time(1m), \"b\", \"d\", \"f\" fill(none);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 360,
+        "wires": [
+            [
+                "60e63ba256420308"
+            ]
+        ]
+    },
+    {
+        "id": "5869c09f614a29f6",
+        "type": "function",
+        "z": "420699d848fb05ff",
+        "name": "multiple measurement points",
+        "func": "\n//let plantObj\n//plantObj = []\nvar j=0;\nfor (i =0; i < msg.payload.length ;i++)\n{\nvar f =msg.payload[0].f\n\nvar field=msg.payload[i].f[j];\nj=j+1;\nif(j==f.length)\n{j=0;}\nvar obj={};\nobj.payload=\n[\n    {\n        measurement: \"energydc_test\",\n        \n fields: {\n            \n           value:msg.payload[i].edc\n        \n        },\n        tags:{\n         \n           f:field,\n           d:msg.payload[i].udevice\n        \n        },\n        \n        timestamp:msg.payload[i].TIME\n    }\n];\n\n//plantObj.push(obj)\nnode.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 360,
+        "wires": [
+            [
+                "01d2f1cccf9a76d0"
+            ]
+        ]
+    },
+    {
+        "id": "60e63ba256420308",
+        "type": "function",
+        "z": "420699d848fb05ff",
+        "name": "B01",
+        "func": "let plantObj\n\nplantObj = []\n\nfor (j =0; j < msg.payload[1].length;j++)\n for (i =0; i < msg.payload[0].length;i++)\n {\n     var itime= new Date(msg.payload[0][i].time).getTime();\n       var utime= new Date(msg.payload[1][j].time).getTime();\n       var idevice=msg.payload[0][i].d\n       var udevice=msg.payload[1][j].d  \n         \n if ((itime==utime)&&(idevice==udevice))\n\n \n {\n     var time=utime\n    var IDC=msg.payload[0][i].last;\n    var UDC= msg.payload[1][j].last;\n        \n    var PDC=IDC*UDC\n     var EDC = (PDC*60)/(60*60*1000);\n \n \n var field_idc= msg.payload[0][i].f;\n  var field_udc= msg.payload[1][j].f;\n//node.send(obj);\nvar obj={\nTIME:new Date(time),\nIDC,\nUDC,\nedc:EDC,\nf:[\"EDC01\",\n\"EDC10\",\n\"EDC11\",\n\"EDC12\",\n\"EDC02\",\n\"EDC03\",\n\"EDC04\",\n\"EDC05\",\n\"EDC06\",\n\"EDC07\",\n\"EDC08\",\n\"EDC09\"\n],\nudevice,\nidevice,\nfield_idc\n\n//field_new\n//TOTAL\n}\n\nplantObj.push(obj)\n}\n}\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 360,
+        "wires": [
+            [
+                "5869c09f614a29f6"
+            ]
+        ]
+    },
+    {
+        "id": "01d2f1cccf9a76d0",
+        "type": "influxdb batch",
+        "z": "420699d848fb05ff",
+        "influxdb": "53316db39eaf20d7",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "iplon",
+        "bucket": "iplon",
+        "x": 1110,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3cb78d26da0308df",
+        "type": "function",
+        "z": "420699d848fb05ff",
+        "name": "cum_edc",
+        "func": "\n var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate());\n d.setHours(0,0,0,0);\n \n var $tommarow = new Date();\n var d1 = new Date($tommarow);\n d1.setDate($tommarow.getDate());\n d1.setHours(23,59,0,0);\n \n  var tstart=new Date(d).toISOString();\n  var tend= new Date(d1).toISOString();\n  \n // var q = SELECT cumulative_sum(sum(value)) FROM energydc_test WHERE (d = 'B01_INV2' AND f !~ /.*PR_EDC*./ AND f != 'UB_ALARM') AND time >= + tstart +ms and time <= + tend + ms GROUP BY time(5m),d,f fill(0);;\n // var q1=SELECT last(value) FROM energydc_test WHERE (d = 'B01_INV2') AND time >= + tstart +ms and time <= + tend + ms GROUP BY time(1m),d,f fill(0);;\n var q='from(bucket: \"iplon\")|> range(start:'+ tstart +' , stop:'+ tend +' )|> filter(fn: (r) => r[\"_measurement\"] == \"energydc_test\")|>filter(fn: (r) => r._field == \"value\")|> filter(fn: (r) => r[\"d\"] == \"B01_INV2\")|>filter(fn: (r) => r[\"f\"] == \"EDC01\")|>aggregateWindow(every: 5m, fn: last, createEmpty: true)|>yield(name: \"last\")'\nmsg.query = q\n//msg.topic=cum;\n //msg.payload=tstart\n return msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "345db1daa841c148"
+            ]
+        ]
+    },
+    {
+        "id": "5e791c716163d111",
+        "type": "influxdb in",
+        "z": "420699d848fb05ff",
+        "influxdb": "53316db39eaf20d7",
+        "name": "",
+        "query": "\n  from(bucket: \"iplon\")\n  |> range(start: 2022-06-20T09:00:00.000Z\t, stop: 2022-06-20T09:55:00.000Z\t)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"energydc_test\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"d\"] == \"B01_INV2\")\n  |> filter(fn: (r) => r[\"f\"] == \"EDC01\")\n  |> aggregateWindow(every: 5m, fn: last, createEmpty: false)\n  |> yield(name: \"last\")",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "iplon",
+        "x": 710,
+        "y": 300,
+        "wires": [
+            [
+                "31631c1d6a6ba507"
+            ]
+        ]
+    },
+    {
+        "id": "adda6053692b74c3",
+        "type": "inject",
+        "z": "420699d848fb05ff",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 300,
+        "wires": [
+            [
+                "5e791c716163d111"
+            ]
+        ]
+    },
+    {
+        "id": "31631c1d6a6ba507",
+        "type": "debug",
+        "z": "420699d848fb05ff",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "53316db39eaf20d7",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true,
+        "credentials": {}
+    },
+    {
+        "id": "705b30eaab2edcd3",
+        "type": "influxdb",
+        "hostname": "iplon-pvindia.com",
+        "port": "30086",
+        "protocol": "http",
+        "database": "SIRICILLA_30MW",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
