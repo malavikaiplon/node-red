@@ -1,6 +1,6 @@
 [
     {
-        "id": "8390fea526686cdb",
+        "id": "9011d01aa06ffaf6",
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -12,36 +12,12 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 280,
+        "x": 730,
+        "y": 320,
         "wires": []
     },
     {
-        "id": "a4bfba3a21878a60",
-        "type": "postgres",
-        "z": "f6f2187d.f17ca8",
-        "postgresdb": "8ccb50a36ea75bb9",
-        "name": "",
-        "output": true,
-        "perrow": false,
-        "rowspermsg": "1",
-        "return_on_error": false,
-        "limit_queries": "0",
-        "limit_by": "payload",
-        "limit_value": "1",
-        "limit_drop_intermediate": false,
-        "limit_drop_if_in_queue": false,
-        "outputs": true,
-        "x": 480,
-        "y": 280,
-        "wires": [
-            [
-                "8390fea526686cdb"
-            ]
-        ]
-    },
-    {
-        "id": "2c1ab7013eeb9898",
+        "id": "45e220ca1e4ebee2",
         "type": "inject",
         "z": "f6f2187d.f17ca8",
         "name": "create table",
@@ -59,47 +35,18 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "CREATE TABLE public.DIMO( \"DATE\" numeric PRIMARY KEY, \"POWER_CUT\" numeric,\"START_TIME\" numeric,\"END_TIME\" numeric,\"Duration (hr)\" numeric,\"Gen1(kwh)\" numeric,\"Gen2(kwh)\" numeric,\"Total_solar(kwh)\" numeric,\"Total_Load(kwh)\" numeric) WITH  (   OIDS=FALSE )",
+        "payload": "CREATE TABLE public.DIMO( \"DATE\" numeric PRIMARY KEY, \"POWER_CUT\" numeric,\"START_TIME\" text,\"END_TIME\" text,\"Duration (hr)\" numeric,\"Gen1(kwh)\" numeric,\"Gen2(kwh)\" numeric,\"Total_solar(kwh)\" numeric,\"Total_Load(kwh)\" numeric) WITH  (   OIDS=FALSE )",
         "payloadType": "str",
-        "x": 210,
-        "y": 280,
+        "x": 230,
+        "y": 320,
         "wires": [
             [
-                "a4bfba3a21878a60"
+                "ce95307ab7621876"
             ]
         ]
     },
     {
-        "id": "ef05a2f2ce404d08",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "59 11 * * *",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 250,
-        "y": 440,
-        "wires": [
-            [
-                "e970391a8ce31e69"
-            ]
-        ]
-    },
-    {
-        "id": "502ade0c421668f7",
+        "id": "c8358b1762cd0a50",
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -111,31 +58,31 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
-        "y": 440,
+        "x": 990,
+        "y": 480,
         "wires": []
     },
     {
-        "id": "7c134c32edc50d7c",
+        "id": "4aebce133175972e",
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "function 1",
-        "func": "let plantObj\n\nplantObj = []\nvar Power_cut = 0;\nvar Start_Time = 0;\nvar End_Time=0;\n for (var i =1; i < msg.payload[0].length;i++)\n {\n   var Time = msg.payload[0][i].time\n   var Grid_EM_UAC12 = msg.payload[0][i].last\n   var Grid_EM_UAC23 = msg.payload[1][i].last\n   var Grid_EM_UAC31 = msg.payload[2][i].last\n  // var DG2_EAE = msg.payload[3][i].last\n   //var DG1_EAE = msg.payload[4][i].last\n   //var SOLAR_EM_EAE = msg.payload[5][i].last       \n   var AVG = (Grid_EM_UAC12 + Grid_EM_UAC23 + Grid_EM_UAC31)/3\n   \n\n if ((AVG <405)&&(Start_Time==0))\n \n {\n\n   Start_Time = Time\n   Power_cut=Power_cut+1\n   var Solar_Initial = msg.payload[5][i].last \n   var DG1_Initial = msg.payload[4][i].last\n   var DG2_Intial = msg.payload[3][i].last\n   End_Time=0\n   }\n if((AVG>410)&&(End_Time==0))\n\n {\n  End_Time = Time\n   var Solar_final = msg.payload[5][i].last \n   var DG1_final = msg.payload[4][i].last\n   var DG2_final = msg.payload[3][i].last\n  Start_Time=0\n}     \n   \n\n//node.send(obj);\nvar obj={\nTime,\nGrid_EM_UAC12,\nGrid_EM_UAC23,\nGrid_EM_UAC31,\nAVG,\nPower_cut,\nStart_Time,\nEnd_Time,\nDG1_Initial,\nDG1_final,\nDG2_Intial,\nDG2_final,\nSolar_Initial,\nSolar_final\n////DG1_EAE,\n//DG2_EAE,\n//SOLAR_EM_EAE\n}\n\nplantObj.push(obj)\n\n }\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
+        "func": "let plantObj\n\nplantObj = []\nvar Power_cut = 0;\nvar Start_Time = 0;\nvar End_Time=0;\n for (var i =1; i < msg.payload[0].length;i++)\n {\n   var Time = msg.payload[0][i].time\n   var Grid_EM_UAC12 = msg.payload[0][i].last\n   var Grid_EM_UAC23 = msg.payload[1][i].last\n   var Grid_EM_UAC31 = msg.payload[2][i].last\n  // var DG2_EAE = msg.payload[3][i].last\n   //var DG1_EAE = msg.payload[4][i].last\n   //var SOLAR_EM_EAE = msg.payload[5][i].last       \n   var AVG = (Grid_EM_UAC12 + Grid_EM_UAC23 + Grid_EM_UAC31)/3\n   \n\n if ((AVG <50)&&(Start_Time==0))\n \n {\n\n   Start_Time = Time\n   Power_cut=Power_cut+1\n   var Solar_Initial = msg.payload[5][i].last \n   var DG1_Initial = msg.payload[4][i].last\n   var DG2_Intial = msg.payload[3][i].last\n   End_Time=0\n   }\n if((AVG>350)&&(End_Time==0))\n\n {\n  End_Time = Time\n   var Solar_final = msg.payload[5][i].last \n   var DG1_final = msg.payload[4][i].last\n   var DG2_final = msg.payload[3][i].last\n  Start_Time=0\n}     \n   \n\n//node.send(obj);\nvar obj={\nTime,\nGrid_EM_UAC12,\nGrid_EM_UAC23,\nGrid_EM_UAC31,\nAVG,\nPower_cut,\nStart_Time,\nEnd_Time,\nDG1_Initial,\nDG1_final,\nDG2_Intial,\nDG2_final,\nSolar_Initial,\nSolar_final\n////DG1_EAE,\n//DG2_EAE,\n//SOLAR_EM_EAE\n}\n\nplantObj.push(obj)\n\n }\n\nmsg.payload =plantObj\n//return null;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 600,
-        "y": 440,
+        "x": 620,
+        "y": 480,
         "wires": [
             [
-                "7c0284fc86071111"
+                "9028a6ae946dbd97"
             ]
         ]
     },
     {
-        "id": "e970391a8ce31e69",
+        "id": "bdb8a9ee9383591c",
         "type": "influxdb in",
         "z": "f6f2187d.f17ca8",
         "influxdb": "8a27bede3cf9f811",
@@ -145,16 +92,16 @@
         "precision": "",
         "retentionPolicy": "",
         "org": "organisation",
-        "x": 430,
-        "y": 440,
+        "x": 450,
+        "y": 480,
         "wires": [
             [
-                "7c134c32edc50d7c"
+                "4aebce133175972e"
             ]
         ]
     },
     {
-        "id": "2c86114e3e85df5c",
+        "id": "df321d7733a5f537",
         "type": "template",
         "z": "f6f2187d.f17ca8",
         "name": "",
@@ -162,18 +109,18 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "INSERT INTO public.DIMO(\"DATE\",\"POWER_CUT\", \"START_TIME\", \"END_TIME\", \"Duration (hr)\", \"Gen1(kwh)\", \"Gen2(kwh)\", \"Total_solar(kwh)\", \"Total_Load(kwh)\")\nVALUES ( '{{payload.time}}', '{{payload.p}}', '{{payload.s_epo}}', '{{payload.e_epo}}', '{{payload.d}}', '{{payload.dg1}}', '{{payload.dg2}}', '{{payload.solar}}', '{{payload.total}}')\n      \n    \n    ",
+        "template": "INSERT INTO public.DIMO(\"DATE\",\"POWER_CUT\", \"START_TIME\", \"END_TIME\", \"Duration (hr)\", \"Gen1(kwh)\", \"Gen2(kwh)\", \"Total_solar(kwh)\", \"Total_Load(kwh)\")\nVALUES ( '{{payload.time}}', '{{payload.p}}', '{{payload.start_time}}', '{{payload.end_time}}', '{{payload.d}}', '{{payload.dg1}}', '{{payload.dg2}}', '{{payload.solar}}', '{{payload.total}}')\n      \n    \n    ",
         "output": "str",
-        "x": 680,
-        "y": 360,
+        "x": 700,
+        "y": 400,
         "wires": [
             [
-                "a4bfba3a21878a60"
+                "ce95307ab7621876"
             ]
         ]
     },
     {
-        "id": "7c0284fc86071111",
+        "id": "9028a6ae946dbd97",
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "function 5",
@@ -183,23 +130,70 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 440,
+        "x": 800,
+        "y": 480,
         "wires": [
             [
-                "502ade0c421668f7",
-                "2c86114e3e85df5c"
+                "c8358b1762cd0a50",
+                "df321d7733a5f537"
             ]
         ]
     },
     {
-        "id": "8ccb50a36ea75bb9",
-        "type": "postgresdb",
-        "cfgname": "",
-        "hostname": "iplon-pvindia.com",
-        "port": "5432",
-        "db": "iplon",
-        "ssl": false
+        "id": "ce95307ab7621876",
+        "type": "postgres",
+        "z": "f6f2187d.f17ca8",
+        "postgresdb": "5b3dccc565744020",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 500,
+        "y": 320,
+        "wires": [
+            [
+                "9011d01aa06ffaf6"
+            ]
+        ]
+    },
+    {
+        "id": "aaaa273beacfc3db",
+        "type": "cronplus",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 30 18 * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 260,
+        "y": 480,
+        "wires": [
+            [
+                "bdb8a9ee9383591c"
+            ]
+        ]
     },
     {
         "id": "8a27bede3cf9f811",
@@ -214,5 +208,14 @@
         "influxdbVersion": "1.x",
         "url": "http://localhost:8086",
         "rejectUnauthorized": true
+    },
+    {
+        "id": "5b3dccc565744020",
+        "type": "postgresdb",
+        "cfgname": "",
+        "hostname": "iplon-pvindia.com",
+        "port": "5432",
+        "db": "iplon",
+        "ssl": false
     }
 ]
