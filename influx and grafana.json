@@ -1,0 +1,690 @@
+[
+    {
+        "id": "5eb3a9e1621996e8",
+        "type": "tab",
+        "label": "influx db",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "422b7777b72f4ce1",
+        "type": "inject",
+        "z": "5eb3a9e1621996e8",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor",
+        "payloadType": "date",
+        "x": 300,
+        "y": 300,
+        "wires": [
+            [
+                "3018bfaf67dc1f19"
+            ]
+        ]
+    },
+    {
+        "id": "9f17aaf1858ace36",
+        "type": "debug",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "3018bfaf67dc1f19",
+        "type": "random",
+        "z": "5eb3a9e1621996e8",
+        "name": "sensor",
+        "low": 1,
+        "high": 10,
+        "inte": "true",
+        "property": "sensor",
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "771f389948568e66"
+            ]
+        ]
+    },
+    {
+        "id": "771f389948568e66",
+        "type": "function",
+        "z": "5eb3a9e1621996e8",
+        "name": "condition",
+        "func": "var sensor=msg.sensor\nif(sensor>=5)\n{\n    msg.payload =\n    {\n        numvalue: sensor,\n        strvalue:\"high\",\n        valvecond:1\n    }\n}\nelse if(sensor<5)\n{\n    msg.payload =\n    {\n        numvalue: sensor,\n        strvalue:\"low\",\n        valvecond:0\n    }\n    \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 300,
+        "wires": [
+            [
+                "9f17aaf1858ace36",
+                "c2f72fef873788cc",
+                "574f21965bc1b4b2",
+                "1e01be9193d6246d"
+            ]
+        ]
+    },
+    {
+        "id": "c2f72fef873788cc",
+        "type": "influxdb out",
+        "z": "5eb3a9e1621996e8",
+        "influxdb": "ed4f779dff97f1b7",
+        "name": "tank pressure",
+        "measurement": "tank_pressure",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "iplon",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 900,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4d9809d94bf3c9c3",
+        "type": "http request",
+        "z": "5eb3a9e1621996e8",
+        "name": "chennai",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://api.openweathermap.org/data/2.5/weather?q=Chennai&units=metric&appid=7686ad5811fbccaf5cce86a3a237faac",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 520,
+        "y": 560,
+        "wires": [
+            [
+                "5599cefead151fbd",
+                "2baa7f8da17939c9"
+            ]
+        ]
+    },
+    {
+        "id": "5c847e77482329aa",
+        "type": "inject",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "temperature",
+                "vt": "msg"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 560,
+        "wires": [
+            [
+                "4d9809d94bf3c9c3"
+            ]
+        ]
+    },
+    {
+        "id": "5599cefead151fbd",
+        "type": "debug",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "42c3cc1d205e6478",
+        "type": "influxdb out",
+        "z": "5eb3a9e1621996e8",
+        "influxdb": "ed4f779dff97f1b7",
+        "name": "weather",
+        "measurement": "temperature",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "iplon",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 920,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "0d8e996faadba39c",
+        "type": "inject",
+        "z": "5eb3a9e1621996e8",
+        "name": "fetch",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "d8401d7c55739a1d"
+            ]
+        ]
+    },
+    {
+        "id": "d8401d7c55739a1d",
+        "type": "function",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "func": "msg.query='select * from \"tank_pressure\" where time > now()-50s';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 100,
+        "wires": [
+            [
+                "324fea5849b0faee"
+            ]
+        ]
+    },
+    {
+        "id": "324fea5849b0faee",
+        "type": "influxdb in",
+        "z": "5eb3a9e1621996e8",
+        "influxdb": "ed4f779dff97f1b7",
+        "name": "",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 560,
+        "y": 100,
+        "wires": [
+            [
+                "1c5d4c026a51f075"
+            ]
+        ]
+    },
+    {
+        "id": "1c5d4c026a51f075",
+        "type": "debug",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "289ce8541964c897",
+        "type": "comment",
+        "z": "5eb3a9e1621996e8",
+        "name": "reading influx db",
+        "info": "",
+        "x": 120,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "c59aca84adb2974e",
+        "type": "comment",
+        "z": "5eb3a9e1621996e8",
+        "name": "writing influx db",
+        "info": "",
+        "x": 200,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "69706a867bbbc823",
+        "type": "ui_text",
+        "z": "5eb3a9e1621996e8",
+        "group": "efafcf7bab24ccbd",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "pressure",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1100,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "574f21965bc1b4b2",
+        "type": "change",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.strvalue",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 340,
+        "wires": [
+            [
+                "69706a867bbbc823"
+            ]
+        ]
+    },
+    {
+        "id": "75722f2b65e5fae4",
+        "type": "ui_text",
+        "z": "5eb3a9e1621996e8",
+        "group": "efafcf7bab24ccbd",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "value",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1090,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1e01be9193d6246d",
+        "type": "change",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.numvalue",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 880,
+        "y": 400,
+        "wires": [
+            [
+                "75722f2b65e5fae4"
+            ]
+        ]
+    },
+    {
+        "id": "e737856fd3154ebe",
+        "type": "comment",
+        "z": "5eb3a9e1621996e8",
+        "name": "weather monitering using influx db",
+        "info": "",
+        "x": 230,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "a64869a9277fc26f",
+        "type": "influxdb in",
+        "z": "5eb3a9e1621996e8",
+        "influxdb": "ed4f779dff97f1b7",
+        "name": "",
+        "query": "",
+        "rawOutput": true,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 680,
+        "y": 860,
+        "wires": [
+            [
+                "bad349197fbbd428"
+            ]
+        ]
+    },
+    {
+        "id": "bc28ebed542aa2d5",
+        "type": "inject",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "weather",
+        "payloadType": "date",
+        "x": 250,
+        "y": 860,
+        "wires": [
+            [
+                "c9917e5231745c1f"
+            ]
+        ]
+    },
+    {
+        "id": "c9917e5231745c1f",
+        "type": "function",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "func": "msg.query='select * from \"temperature\"where time > now()-20s';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 860,
+        "wires": [
+            [
+                "a64869a9277fc26f"
+            ]
+        ]
+    },
+    {
+        "id": "bad349197fbbd428",
+        "type": "debug",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "2baa7f8da17939c9",
+        "type": "function",
+        "z": "5eb3a9e1621996e8",
+        "name": "condition",
+        "func": "msg.query='select * from \"temperature\"where time > now()-20s';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 620,
+        "wires": [
+            [
+                "42c3cc1d205e6478"
+            ]
+        ]
+    },
+    {
+        "id": "8cc006b9c787c637",
+        "type": "file in",
+        "z": "5eb3a9e1621996e8",
+        "name": "6 months data",
+        "filename": "/home/ubuntu/Downloads/6 months data.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 520,
+        "y": 1180,
+        "wires": [
+            [
+                "6ae379d0fd40c066"
+            ]
+        ]
+    },
+    {
+        "id": "5302cac41bf12a54",
+        "type": "inject",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 1180,
+        "wires": [
+            [
+                "8cc006b9c787c637"
+            ]
+        ]
+    },
+    {
+        "id": "6ae379d0fd40c066",
+        "type": "csv",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 710,
+        "y": 1180,
+        "wires": [
+            [
+                "b2611b96dbe7eec8",
+                "6d6c1a1edb73a002"
+            ]
+        ]
+    },
+    {
+        "id": "b2611b96dbe7eec8",
+        "type": "debug",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "6d6c1a1edb73a002",
+        "type": "function",
+        "z": "5eb3a9e1621996e8",
+        "name": "",
+        "func": "for (var i = 0; i < msg.payload.length;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        generated: msg.payload[i][\"Generation         (MU)\"],\n  \n   }\n    node.send(newMsg);\n\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 1140,
+        "wires": [
+            [
+                "e3cb7089094de172"
+            ]
+        ]
+    },
+    {
+        "id": "e3cb7089094de172",
+        "type": "influxdb out",
+        "z": "5eb3a9e1621996e8",
+        "influxdb": "74084a2821e07143",
+        "name": "",
+        "measurement": "generation1",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1080,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "ed4f779dff97f1b7",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8086",
+        "protocol": "http",
+        "database": "history",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "efafcf7bab24ccbd",
+        "type": "ui_group",
+        "d": true,
+        "name": "Group 2",
+        "tab": "b7554f23e3ef1b79",
+        "order": 2,
+        "disp": true,
+        "width": 7,
+        "collapse": false
+    },
+    {
+        "id": "74084a2821e07143",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8086",
+        "protocol": "http",
+        "database": "history",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "b7554f23e3ef1b79",
+        "type": "ui_tab",
+        "name": "work",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]

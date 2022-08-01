@@ -1,0 +1,265 @@
+[
+    {
+        "id": "ed7835429c1fed17",
+        "type": "http request",
+        "z": "ae09cbd4b0daa342",
+        "name": "GET",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://automatedreporting.masscec-pts.com/ptsstaging/GetSystems?fk_system=7497",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "credentials": {},
+        "x": 810,
+        "y": 140,
+        "wires": [
+            [
+                "0be54abf72d63da0"
+            ]
+        ]
+    },
+    {
+        "id": "dec596686d8562ee",
+        "type": "inject",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "headers",
+                "vt": "msg"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "headers",
+        "payloadType": "msg",
+        "x": 390,
+        "y": 160,
+        "wires": [
+            [
+                "47fddbf700fbf6f1"
+            ]
+        ]
+    },
+    {
+        "id": "0be54abf72d63da0",
+        "type": "debug",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "47fddbf700fbf6f1",
+        "type": "function",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "func": "msg.headers = {};\nmsg.headers[\"Ocp-Apim-Subscription-Key\"] = \"45da725bb1c748cfbc2ecf148426c1b4\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 160,
+        "wires": [
+            [
+                "ed7835429c1fed17"
+            ]
+        ]
+    },
+    {
+        "id": "7e0726a44b36dd96",
+        "type": "http request",
+        "z": "ae09cbd4b0daa342",
+        "name": "POST",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://automatedreporting.masscec-pts.com/ptsstaging/ARPostTest",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "bearer",
+        "senderr": false,
+        "x": 710,
+        "y": 360,
+        "wires": [
+            [
+                "2a7f976490eae05d"
+            ]
+        ]
+    },
+    {
+        "id": "7fd179a7bdf90683",
+        "type": "file in",
+        "z": "ae09cbd4b0daa342",
+        "name": "data",
+        "filename": "/home/ubuntu/Documents/data.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "6c339d039b4bfdd6"
+            ]
+        ]
+    },
+    {
+        "id": "09db904f4e2e21bb",
+        "type": "inject",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "date"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "7fd179a7bdf90683"
+            ]
+        ]
+    },
+    {
+        "id": "6c339d039b4bfdd6",
+        "type": "csv",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "01e07303c4f5d87a"
+            ]
+        ]
+    },
+    {
+        "id": "01e07303c4f5d87a",
+        "type": "function",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "func": "for (var i = 0; i < msg.payload.length;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        sysid: msg.payload[i].SystemId,\n        metervalue:msg.payload[i].MeterValue,\n        meterdate:msg.payload[i].MeterDate\n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 260,
+        "wires": [
+            [
+                "f59723b7df4bad8c",
+                "890e6ec429761f06"
+            ]
+        ]
+    },
+    {
+        "id": "f59723b7df4bad8c",
+        "type": "function",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "func": "msg.headers = {};\nmsg.headers[\"Ocp-Apim-Subscription-Key\"] = \"45da725bb1c748cfbc2ecf148426c1b4\"\nmsg.payload = {\n    \"APIKey\": \"45da725bb1c748cfbc2ecf148426c1b4\",\n    \"systems\" :[{\n        \"fk_System\" : msg.payload.sysid,\n        \"MeterValue\" : msg.payload.metervalue,\n        \"MeterDate\" : msg.payload.meterdate\n    }]\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 360,
+        "wires": [
+            [
+                "7e0726a44b36dd96"
+            ]
+        ]
+    },
+    {
+        "id": "2a7f976490eae05d",
+        "type": "debug",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "890e6ec429761f06",
+        "type": "change",
+        "z": "ae09cbd4b0daa342",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.sysid",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1040,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    }
+]

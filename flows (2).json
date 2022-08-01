@@ -1,0 +1,272 @@
+[
+    {
+        "id": "0ebbd2279c158b54",
+        "type": "comment",
+        "z": "4c61d39da737ece6",
+        "name": "Upload to SQL your table",
+        "info": "",
+        "x": 170,
+        "y": 1660,
+        "wires": []
+    },
+    {
+        "id": "021651760dabb011",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "6c33440155bbaf77",
+        "type": "postgresql",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "query": "DROP TABLE IF EXISTS your_table;\nCREATE TABLE your_table (\n\tid\t\tSERIAL\tNOT NULL,\n\ttime\tTIMESTAMP WITH TIME ZONE\tNOT NULL,\n\tsensor\tTEXT,\n\tdata\tJSONB\n);\n\n\n",
+        "postgreSQLConfig": "20ae1e52d1eef983",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 650,
+        "y": 1700,
+        "wires": [
+            [
+                "021651760dabb011"
+            ]
+        ]
+    },
+    {
+        "id": "82953791da2dac16",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 410,
+        "y": 1700,
+        "wires": [
+            [
+                "6c33440155bbaf77"
+            ]
+        ]
+    },
+    {
+        "id": "fea23852dc882f79",
+        "type": "chunks-to-lines",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "nbLines": "4096",
+        "linesFormat": "csv",
+        "decoder": "UTF-8",
+        "x": 300,
+        "y": 1920,
+        "wires": [
+            [
+                "4e09ffd83f15be68"
+            ]
+        ]
+    },
+    {
+        "id": "cf81158fa8dc4816",
+        "type": "function",
+        "z": "4c61d39da737ece6",
+        "name": "Ready for next lines",
+        "func": "return [\n    msg.complete ? msg : null,\n    { tick: true },\n];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1880,
+        "wires": [
+            [
+                "96d2241a509d6e54",
+                "9eb46df202c6c1bb"
+            ],
+            [
+                "fea23852dc882f79"
+            ]
+        ]
+    },
+    {
+        "id": "4e09ffd83f15be68",
+        "type": "csv",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 450,
+        "y": 1920,
+        "wires": [
+            [
+                "a00a3e4a62dcc158"
+            ]
+        ]
+    },
+    {
+        "id": "a00a3e4a62dcc158",
+        "type": "function",
+        "z": "4c61d39da737ece6",
+        "name": "Format SQL",
+        "func": "if (msg.payload && msg.payload.length > 0) {\n    let payload = 'INSERT INTO your_table(time, sensor, data) VALUES ';\n    \n    for (const line of msg.payload) {\n        payload += `('${line.time}', '${line.sensor}', '${line.data}'),`;\n    }\n    \n    msg.payload = payload.slice(0, - 1) + ';';\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 1920,
+        "wires": [
+            [
+                "845925761e9b47c8"
+            ]
+        ]
+    },
+    {
+        "id": "96d2241a509d6e54",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "Done",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "_parts.lines",
+        "statusType": "msg",
+        "x": 1190,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "ab6e03f8d20b354b",
+        "type": "ui_upload",
+        "z": "4c61d39da737ece6",
+        "d": true,
+        "group": "593aaad02ba9e607",
+        "title": "Generic upload to SQL",
+        "name": "uploadSql",
+        "order": 3,
+        "width": 6,
+        "height": 6,
+        "chunk": "256",
+        "transfer": "binary",
+        "x": 120,
+        "y": 1920,
+        "wires": [
+            [
+                "fea23852dc882f79"
+            ]
+        ]
+    },
+    {
+        "id": "9eb46df202c6c1bb",
+        "type": "ui_text",
+        "z": "4c61d39da737ece6",
+        "group": "593aaad02ba9e607",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Lines uploaded:",
+        "format": "{{msg._parts.lines}}",
+        "layout": "row-spread",
+        "x": 1220,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "845925761e9b47c8",
+        "type": "postgresql",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "query": "{{{ msg.payload }}}",
+        "postgreSQLConfig": "20ae1e52d1eef983",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 750,
+        "y": 1940,
+        "wires": [
+            [
+                "cf81158fa8dc4816"
+            ]
+        ]
+    },
+    {
+        "id": "20ae1e52d1eef983",
+        "type": "postgreSQLConfig",
+        "name": "postgres",
+        "host": "localhost",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "max": "10",
+        "maxFieldType": "num",
+        "min": "1",
+        "minFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres",
+        "userFieldType": "str",
+        "password": "iplon321",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "593aaad02ba9e607",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "5f17e3a3.4c85ac",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "5f17e3a3.4c85ac",
+        "type": "ui_tab",
+        "name": "Generic demo",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

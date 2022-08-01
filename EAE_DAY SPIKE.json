@@ -1,0 +1,1183 @@
+[
+    {
+        "id": "a47c23bb89e240ba",
+        "type": "tab",
+        "label": "EAE_DAY SPIKE",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8642adf2c3e00123",
+        "type": "file",
+        "z": "a47c23bb89e240ba",
+        "name": "inverter",
+        "filename": "C:\\Users\\91735\\Documents\\INVERTER.csv",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 960,
+        "y": 180,
+        "wires": [
+            [
+                "c05ae915516a5654"
+            ]
+        ]
+    },
+    {
+        "id": "e2d63337df8ce2de",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "INVERTER",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_16MW' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_34MW' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_50MW' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Kayathar' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Lomada' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Musiri' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Panchapatty' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Vemulapadu' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Bahera' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Maharashtra' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Neemuch' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab 12MW' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab 20MW' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab4MW' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Savakala' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'TTpet' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka' AND \"d\" =~ /.*INV*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "5ba91e262f14e890"
+            ]
+        ]
+    },
+    {
+        "id": "e697458c4ec77294",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "e2d63337df8ce2de"
+            ]
+        ]
+    },
+    {
+        "id": "4be778429d9b1a27",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "INV>10",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"10.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 140,
+        "wires": [
+            [
+                "13225c73e290b497",
+                "f549806493e722f7",
+                "8642adf2c3e00123"
+            ]
+        ]
+    },
+    {
+        "id": "5ba91e262f14e890",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 140,
+        "wires": [
+            [
+                "4be778429d9b1a27"
+            ]
+        ]
+    },
+    {
+        "id": "13225c73e290b497",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "c05ae915516a5654",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a35b3d9c8e191d56",
+        "type": "file",
+        "z": "a47c23bb89e240ba",
+        "name": "EM-HTP",
+        "filename": "C:\\Users\\91735\\Documents\\EM-HTP.csv",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1020,
+        "y": 400,
+        "wires": [
+            [
+                "b6e83e6dbe0c75f6"
+            ]
+        ]
+    },
+    {
+        "id": "f64fc85f74955e08",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "ENERGY METER",
+        "query": " SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_16MW' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_34MW' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_50MW' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Kayathar' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Lomada' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Musiri' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Panchapatty' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Vemulapadu' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Bahera' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Maharashtra' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Savakala' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'TTpet' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka' AND \"d\" =~ /.*EM_ELITE*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null)",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 410,
+        "y": 340,
+        "wires": [
+            [
+                "d13e3846020895f2"
+            ]
+        ]
+    },
+    {
+        "id": "c2dd17ded135761b",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "f64fc85f74955e08"
+            ]
+        ]
+    },
+    {
+        "id": "d815d9c689e552fa",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "HTP_EM>40",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"40.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 340,
+        "wires": [
+            [
+                "eaca9fc73abf3aee",
+                "a35b3d9c8e191d56",
+                "bc6bb3db76cfae20"
+            ]
+        ]
+    },
+    {
+        "id": "d13e3846020895f2",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "d815d9c689e552fa"
+            ]
+        ]
+    },
+    {
+        "id": "eaca9fc73abf3aee",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "b6e83e6dbe0c75f6",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1190,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "93d65c029f846bf8",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "ENERGY METER",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab 12MW' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab 20MW' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab4MW' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "36c0d2aa2011de40"
+            ]
+        ]
+    },
+    {
+        "id": "75f8ff162666dfa8",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 520,
+        "wires": [
+            [
+                "93d65c029f846bf8"
+            ]
+        ]
+    },
+    {
+        "id": "a4d03d7ec601fd50",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "HTP_EM>20",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"40.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 520,
+        "wires": [
+            [
+                "c342efb126fc2e6f",
+                "a35b3d9c8e191d56",
+                "bc6bb3db76cfae20"
+            ]
+        ]
+    },
+    {
+        "id": "36c0d2aa2011de40",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 520,
+        "wires": [
+            [
+                "a4d03d7ec601fd50"
+            ]
+        ]
+    },
+    {
+        "id": "c342efb126fc2e6f",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "48dc0a96406c2344",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 420,
+        "wires": [
+            [
+                "092d900729cf02b1"
+            ]
+        ]
+    },
+    {
+        "id": "092d900729cf02b1",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "IYYERMALAI-HTP EM",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai' AND \"d\" =~ /.*HTP_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null)\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 400,
+        "y": 420,
+        "wires": [
+            [
+                "dd03f23bc20f3720"
+            ]
+        ]
+    },
+    {
+        "id": "75d9c26792d2939a",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "HTP_EM>60",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nif(EAE_DAY >=\"60.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\n\n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 420,
+        "wires": [
+            [
+                "a35b3d9c8e191d56",
+                "bc6bb3db76cfae20"
+            ]
+        ]
+    },
+    {
+        "id": "dd03f23bc20f3720",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n\n    for (var i = 0; i < msg.payload.length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[i].time),\n        EAE_DAY:msg.payload[i].last,\n        PLANT:msg.payload[i].p,\n        BLOCK:msg.payload[i].b,\n        DEVICE:msg.payload[i].d\n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 420,
+        "wires": [
+            [
+                "75d9c26792d2939a"
+            ]
+        ]
+    },
+    {
+        "id": "3e48b2dac609d398",
+        "type": "comment",
+        "z": "a47c23bb89e240ba",
+        "name": "ENERGY METER SPIKE DATA COLLECTION",
+        "info": "",
+        "x": 280,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "1928c26493019a29",
+        "type": "comment",
+        "z": "a47c23bb89e240ba",
+        "name": "INVERTER SPIKE DATA COLLECTION",
+        "info": "",
+        "x": 170,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8e0b7c616e45ed13",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "CONTROL ROOM",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai'AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Kayathar' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Panchapatty' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "85ab89145ff88eaa"
+            ]
+        ]
+    },
+    {
+        "id": "084d8e95334af19c",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 680,
+        "wires": [
+            [
+                "8e0b7c616e45ed13"
+            ]
+        ]
+    },
+    {
+        "id": "b84d975b165c9016",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "CR>400",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"400.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 680,
+        "wires": [
+            [
+                "85c53198a79fc73f",
+                "97ad2d8d5ef943c0",
+                "cef7d7991e768577"
+            ]
+        ]
+    },
+    {
+        "id": "85ab89145ff88eaa",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 680,
+        "wires": [
+            [
+                "b84d975b165c9016"
+            ]
+        ]
+    },
+    {
+        "id": "aa11b88ee2541582",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "CONTROL ROOM",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_16MW'AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_34MW'AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Savakala' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka' AND \"b\" = 'B91' AND \"d\" = 'ELITE_07' AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Maharashtra' AND \"b\" = 'B91' AND \"d\" = 'SATEC_02' AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null)",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 740,
+        "wires": [
+            [
+                "53066f6512a3e699"
+            ]
+        ]
+    },
+    {
+        "id": "8f0ed057a019235d",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 740,
+        "wires": [
+            [
+                "aa11b88ee2541582"
+            ]
+        ]
+    },
+    {
+        "id": "836f011f095217af",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "CR>200",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"200.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 740,
+        "wires": [
+            [
+                "85c53198a79fc73f",
+                "a413bbdb50224828",
+                "cef7d7991e768577"
+            ]
+        ]
+    },
+    {
+        "id": "53066f6512a3e699",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 740,
+        "wires": [
+            [
+                "836f011f095217af"
+            ]
+        ]
+    },
+    {
+        "id": "1bdf07a7f2ba1f7b",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "CONTROL ROOM",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Karnataka_50MW'AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Musiri' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Vemulapadu' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'TTpet' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 370,
+        "y": 800,
+        "wires": [
+            [
+                "c682891429d05234"
+            ]
+        ]
+    },
+    {
+        "id": "b68a68752d9f10d4",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 800,
+        "wires": [
+            [
+                "1bdf07a7f2ba1f7b"
+            ]
+        ]
+    },
+    {
+        "id": "37cd02b6f8ea7863",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "CR>500",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"500.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 800,
+        "wires": [
+            [
+                "85c53198a79fc73f",
+                "9f46e19b92a02ba5",
+                "cef7d7991e768577"
+            ]
+        ]
+    },
+    {
+        "id": "c682891429d05234",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 800,
+        "wires": [
+            [
+                "37cd02b6f8ea7863"
+            ]
+        ]
+    },
+    {
+        "id": "8a022c914dc46640",
+        "type": "comment",
+        "z": "a47c23bb89e240ba",
+        "name": "CONTROL ROOM SPIKE DATA COLLECTION",
+        "info": "",
+        "x": 200,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "34693a1fd53fd60c",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "CONTROL ROOM",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Neemuch'AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\n\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 350,
+        "y": 860,
+        "wires": [
+            [
+                "516272c8870b73c3"
+            ]
+        ]
+    },
+    {
+        "id": "57e6970a74eb62d9",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "NEEMUCH",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 860,
+        "wires": [
+            [
+                "34693a1fd53fd60c"
+            ]
+        ]
+    },
+    {
+        "id": "e2ffc50c7b4f9ccf",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "CR>750",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"750.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 860,
+        "wires": [
+            [
+                "85c53198a79fc73f",
+                "25d3f2a828d81723",
+                "cef7d7991e768577"
+            ]
+        ]
+    },
+    {
+        "id": "516272c8870b73c3",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 860,
+        "wires": [
+            [
+                "e2ffc50c7b4f9ccf"
+            ]
+        ]
+    },
+    {
+        "id": "99fbdbfd0e6108dc",
+        "type": "influxdb in",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "03603df4c981df55",
+        "name": "CONTROL ROOM",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Bahera'AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab 20MW' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab4MW' AND \"b\" = 'B92' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Punjab 12MW' AND \"b\" = 'B91' AND \"d\" =~ /.*CR_EM*./ AND \"f\" = 'EAE_DAY') AND time >= now() - 24h GROUP BY time(5m) fill(null)\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 350,
+        "y": 920,
+        "wires": [
+            [
+                "b1311a8e06878eb8"
+            ]
+        ]
+    },
+    {
+        "id": "3fda18fbb4157b91",
+        "type": "inject",
+        "z": "a47c23bb89e240ba",
+        "name": "INJECT",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 00 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 920,
+        "wires": [
+            [
+                "99fbdbfd0e6108dc"
+            ]
+        ]
+    },
+    {
+        "id": "0c06dc9beecbe33d",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "CR>150",
+        "func": "\nvar TIME = msg.payload.TIME\nvar EAE_DAY = msg.payload.EAE_DAY\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar FIELD=msg.payload.FIELD\nif(EAE_DAY >=\"150.00\")\n{\n    var newMsg = {};\n    newMsg.payload =\n    {\n        TIME,\n       EAE_DAY,\n       PLANT,\n       BLOCK,\n       DEVICE,\n       FIELD,\n      Issue:\"SPIKE\"\n    }\n     node.send(newMsg); \n}\nreturn null;\n \n \n   \n\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 920,
+        "wires": [
+            [
+                "49b1f795d8d5d23d",
+                "85c53198a79fc73f",
+                "cef7d7991e768577"
+            ]
+        ]
+    },
+    {
+        "id": "b1311a8e06878eb8",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n    \n{\n    var newMsg = {};\n    newMsg.payload = {\n        TIME:new Date(msg.payload[j][i].time),\n        EAE_DAY:msg.payload[j][i].last,\n        PLANT:msg.payload[j][i].p,\n        BLOCK:msg.payload[j][i].b,\n        DEVICE:msg.payload[j][i].d,\n        FIELD:msg.payload[j][i].f\n        \n    }\n    node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 920,
+        "wires": [
+            [
+                "0c06dc9beecbe33d"
+            ]
+        ]
+    },
+    {
+        "id": "49b1f795d8d5d23d",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "85c53198a79fc73f",
+        "type": "file",
+        "z": "a47c23bb89e240ba",
+        "name": "CR",
+        "filename": "C:\\Users\\91735\\Documents\\CR.csv",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 950,
+        "y": 960,
+        "wires": [
+            [
+                "082173fdf0e49ace"
+            ]
+        ]
+    },
+    {
+        "id": "082173fdf0e49ace",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1130,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "97ad2d8d5ef943c0",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "a413bbdb50224828",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9f46e19b92a02ba5",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "25d3f2a828d81723",
+        "type": "debug",
+        "z": "a47c23bb89e240ba",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "cef7d7991e768577",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "tags and fields",
+        "func": "msg.payload = [\n    {\n        measurement: \"CR_SPIKE\",\n        fields: {\n            \n          EAE_DAY : msg.payload.EAE_DAY\n        },\n        tags:{\n            PLANT:msg.payload.PLANT,\n            BLOCK :msg.payload.BLOCK,\n            DEVICE:msg.payload.DEVICE,\n            FIELD:msg.payload.FIELD\n        \n        },\n        \n        timestamp:msg.payload.TIME\n        \n    },\n\n];\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 1020,
+        "wires": [
+            [
+                "3cbd47f6424377cc"
+            ]
+        ]
+    },
+    {
+        "id": "3cbd47f6424377cc",
+        "type": "influxdb batch",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "ed4f779dff97f1b7",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1220,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "bc6bb3db76cfae20",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "tags and fields",
+        "func": "msg.payload = [\n    {\n        measurement: \"EM_SPIKE\",\n        fields: {\n            \n          EAE_DAY : msg.payload.EAE_DAY\n        },\n        tags:{\n            PLANT:msg.payload.PLANT,\n            BLOCK :msg.payload.BLOCK,\n            DEVICE:msg.payload.DEVICE,\n            FIELD:msg.payload.FIELD\n        \n        },\n        \n        timestamp:msg.payload.TIME\n        \n    },\n\n];\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 580,
+        "wires": [
+            [
+                "0d0eefc42e922a71"
+            ]
+        ]
+    },
+    {
+        "id": "0d0eefc42e922a71",
+        "type": "influxdb batch",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "ed4f779dff97f1b7",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1220,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f549806493e722f7",
+        "type": "function",
+        "z": "a47c23bb89e240ba",
+        "name": "tags and fields",
+        "func": "msg.payload = [\n    {\n        measurement: \"INV_SPIKE\",\n        fields: {\n            \n          EAE_DAY : msg.payload.EAE_DAY\n        },\n        tags:{\n            PLANT:msg.payload.PLANT,\n            BLOCK :msg.payload.BLOCK,\n            DEVICE:msg.payload.DEVICE,\n            FIELD:msg.payload.FIELD\n        \n        },\n        \n        timestamp:msg.payload.TIME\n        \n    },\n\n];\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 880,
+        "y": 260,
+        "wires": [
+            [
+                "5cd0c239a6689147"
+            ]
+        ]
+    },
+    {
+        "id": "5cd0c239a6689147",
+        "type": "influxdb batch",
+        "z": "a47c23bb89e240ba",
+        "influxdb": "ed4f779dff97f1b7",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1140,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "03603df4c981df55",
+        "type": "influxdb",
+        "hostname": "192.168.5.125",
+        "port": "30086",
+        "protocol": "http",
+        "database": "TATA_CCRA",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "ed4f779dff97f1b7",
+        "type": "influxdb",
+        "hostname": "192.168.5.125",
+        "port": "30086",
+        "protocol": "http",
+        "database": "Report",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://192.168.5.125:30086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]

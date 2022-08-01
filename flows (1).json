@@ -1,0 +1,2178 @@
+[
+    {
+        "id": "bc8dc321d3fef226",
+        "type": "tab",
+        "label": "my sql",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2a63c806.ae4db8",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 1840,
+        "y": 1360,
+        "wires": [
+            [
+                "3d0af460.41906c",
+                "a03b0066.3ff5a"
+            ]
+        ]
+    },
+    {
+        "id": "86ab4360.50c6c",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "Criteria",
+        "func": "var timeE = msg.payload;\n//Restrict the query to pull the last 24hrs\n//of data instead of the whole db\nmsg.payload = (timeE - (1000*60*60*24));\n    node.status({text:msg.payload});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1680,
+        "y": 1300,
+        "wires": [
+            [
+                "308dd6b1.2a193a"
+            ]
+        ]
+    },
+    {
+        "id": "11c8f8a2.d97147",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "Format query 2",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SELECT\n CEILING(time/3600000)*3600000 AS timestamp,\n AVG(data1) AS `data1`,\n AVG(data2) AS `data2`\nFROM dbasename\nWHERE time > {{payload}}\nGROUP BY `timestamp`;",
+        "output": "str",
+        "x": 1844,
+        "y": 1403,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d0af460.41906c",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 2041,
+        "y": 1349,
+        "wires": []
+    },
+    {
+        "id": "272494b.eb3d36c",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Timestamp",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payloadType": "date",
+        "x": 1540,
+        "y": 1300,
+        "wires": [
+            [
+                "86ab4360.50c6c"
+            ]
+        ]
+    },
+    {
+        "id": "755e08a5.08de88",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "Flow to query database and format for chart",
+        "info": "",
+        "x": 1761,
+        "y": 1250,
+        "wires": []
+    },
+    {
+        "id": "433d9ca4.076774",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 680,
+        "y": 180,
+        "wires": [
+            [
+                "79221a1683361f59"
+            ]
+        ]
+    },
+    {
+        "id": "2b71188f.3e2428",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "Flow to insert data into the table",
+        "info": "",
+        "x": 210,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "308dd6b1.2a193a",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "Format query 1",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SELECT data1,data2,time FROM dbasename WHERE time > {{payload}}",
+        "output": "str",
+        "x": 1840,
+        "y": 1299,
+        "wires": [
+            [
+                "2a63c806.ae4db8"
+            ]
+        ]
+    },
+    {
+        "id": "a03b0066.3ff5a",
+        "type": "change",
+        "z": "bc8dc321d3fef226",
+        "name": "Format data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "(\t  $series := [\t    { \"field\": \"data1\", \"label\": \"data1 label\" },\t    { \"field\": \"data2\", \"label\": \"data2 label\" }\t  ];\t  $xaxis := \"timestamp\";\t  [\t    {\t      \"series\": $series.label,\t      \"data\": $series.[\t        (\t          $yaxis := $.field;\t          $$.payload.{\t            \"x\": $lookup($, $xaxis),\t            \"y\": $lookup($, $yaxis)\t          }\t        )\t      ]\t    }\t  ]\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2044,
+        "y": 1300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "423356ca68eadc83",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "Format data",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO `dbasename` (`data1`,`data2`,`time`) VALUES ({{data1}},{{data2}},{{time}})",
+        "output": "str",
+        "x": 2130,
+        "y": 1440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "324844f0753aba75",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "CREATE TABLE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE steelfactory(   p_Id int NOT NULL AUTO_INCREMENT PRIMARY KEY,   Atime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,   speed1 int  DEFAULT NULL,   speed2 int  DEFAULT NULL,   speed3 int  DEFAULT NULL,   speed4 int  DEFAULT NULL,   speed5 int  DEFAULT NULL,   speed6 int  DEFAULT NULL,   speed7 int  DEFAULT NULL,   speed8 int  DEFAULT NULL )",
+        "payloadType": "date",
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "433d9ca4.076774"
+            ]
+        ]
+    },
+    {
+        "id": "6aabc267d9e5b537",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT DATA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO steelfactory(speed1, speed2, speed3, speed4, speed5, speed6, speed7, speed8) VALUES (?,?,?,?,?,?,?,?)",
+        "payload": "[29, 33, 44, 33, 55, 66, 88, 44]",
+        "payloadType": "json",
+        "x": 310,
+        "y": 260,
+        "wires": [
+            [
+                "433d9ca4.076774"
+            ]
+        ]
+    },
+    {
+        "id": "327fb0e4192003f6",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "READ FROM DATABASE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 270,
+        "y": 340,
+        "wires": [
+            [
+                "26d10cbfa3b5dbd5"
+            ]
+        ]
+    },
+    {
+        "id": "26d10cbfa3b5dbd5",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "msg.topic =\"select*from steelfactory\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "433d9ca4.076774"
+            ]
+        ]
+    },
+    {
+        "id": "88ed53ff88aafed9",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "create table into the database",
+        "info": "",
+        "x": 200,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3cda22eb9cb0cd41",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "reading table from mysql database",
+        "info": "",
+        "x": 200,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "79221a1683361f59",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9f03db5a24e078ef",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 640,
+        "y": 1040,
+        "wires": [
+            [
+                "25531d97f547791f"
+            ]
+        ]
+    },
+    {
+        "id": "811c8760a73e8fbf",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "Flow to insert data into the table",
+        "info": "",
+        "x": 170,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "108249dcaabd4c5f",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "CREATE TABLE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE `test1` (  `blk_dv_fld_id` int(5) NOT NULL,  `insertedts` int(10) NOT NULL,  `value` float DEFAULT NULL,  PRIMARY KEY (`blk_dv_fld_id`,`insertedts`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin DELAY_KEY_WRITE=1 ROW_FORMAT=FIXED",
+        "payloadType": "date",
+        "x": 260,
+        "y": 1040,
+        "wires": [
+            [
+                "9f03db5a24e078ef"
+            ]
+        ]
+    },
+    {
+        "id": "9f8136d42e49032f",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT DATA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO `test1`(blk_dv_fld_id,insertedts,value) VALUES (?,?,?)",
+        "payloadType": "date",
+        "x": 230,
+        "y": 1120,
+        "wires": [
+            [
+                "fc6ea7ac03f77e67"
+            ]
+        ]
+    },
+    {
+        "id": "de078d5b3532f9ff",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "READ FROM DATABASE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 1200,
+        "wires": [
+            [
+                "1c4f435ec8220696"
+            ]
+        ]
+    },
+    {
+        "id": "1c4f435ec8220696",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "msg.topic =\"select*from steelfactory\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1200,
+        "wires": [
+            [
+                "9f03db5a24e078ef"
+            ]
+        ]
+    },
+    {
+        "id": "8164c452018fd09b",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "create table into the database",
+        "info": "",
+        "x": 160,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "caa2e0e84aed9150",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "reading table from mysql database",
+        "info": "",
+        "x": 160,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "25531d97f547791f",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "fc6ea7ac03f77e67",
+        "type": "file in",
+        "z": "bc8dc321d3fef226",
+        "name": "test",
+        "filename": "C:\\Users\\91735\\Documents\\test1.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 420,
+        "y": 1120,
+        "wires": [
+            [
+                "64874d9d62439796"
+            ]
+        ]
+    },
+    {
+        "id": "64874d9d62439796",
+        "type": "csv",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 570,
+        "y": 1120,
+        "wires": [
+            [
+                "35ed7eaf2bb6c806"
+            ]
+        ]
+    },
+    {
+        "id": "35ed7eaf2bb6c806",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "function sleep(ms) {\n  return new Promise(resolve => setTimeout(resolve, ms));\n}\n\nfor (var i = 0; i <msg.payload.length;i++)\n\n    \n \n{\n    var newMsg = {};\n    newMsg.payload = {\n        id:msg.payload[i].col1,\n        date:msg.payload[i].col2,\n        value:msg.payload[i].col3\n        \n    }\n         node.send(newMsg);\n         sleep(2000);\n         \n}\nreturn null; \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1120,
+        "wires": [
+            [
+                "f04aee5a32c61875"
+            ]
+        ]
+    },
+    {
+        "id": "4811d5445b150dad",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "        \n\nINSERT INTO `test1`(blk_dv_fld_id,insertedts,value)\nVALUES (?,?,?)\n\n \n\n",
+        "output": "str",
+        "x": 1000,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "47c0ed9b3296f17d",
+        "type": "file in",
+        "z": "bc8dc321d3fef226",
+        "name": "test",
+        "filename": "C:\\Users\\91735\\Documents\\Book2.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 470,
+        "y": 1640,
+        "wires": [
+            [
+                "590d82d44fed6f5b"
+            ]
+        ]
+    },
+    {
+        "id": "590d82d44fed6f5b",
+        "type": "csv",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 620,
+        "y": 1640,
+        "wires": [
+            [
+                "caf7335d82e29531"
+            ]
+        ]
+    },
+    {
+        "id": "caf7335d82e29531",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "    for (var i = 0; i < 31;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        id:msg.payload[i].col1,\n        date:msg.payload[i].col2,\n        value:msg.payload[i].col3\n        \n    }\n         node.send(newMsg);\n}\nreturn null; \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 1640,
+        "wires": [
+            [
+                "ce1963627cbed07f"
+            ]
+        ]
+    },
+    {
+        "id": "5f36ae0f7c783c2d",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 290,
+        "y": 1640,
+        "wires": [
+            [
+                "47c0ed9b3296f17d"
+            ]
+        ]
+    },
+    {
+        "id": "53997a8edadcdada",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "ce1963627cbed07f",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO 30test(blk_dv_fld_id, insertedts, value)\nVALUES ( '{{payload.id}}', '{{payload.date}}', '{{payload.value}}')\n\n    ",
+        "output": "str",
+        "x": 940,
+        "y": 1640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1748ac1a12638d97",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "var test = msg.payload;\nvar id = msg.payload.id;\nvar date = msg.payload.date;\nvar value = msg.payload.value;\n\n\n\nvar newMsg = {topic: \"INSERT INTO `5minute_data_Dec2021`(blk_dv_fld_id, insertedts, value) VALUES (\" +id +\",\"+date +\",\" +value + \")\"};",
+        "output": "str",
+        "x": 520,
+        "y": 1700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5fc621e0f87a5652",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 620,
+        "y": 1920,
+        "wires": [
+            [
+                "5c619f9735d35b76"
+            ]
+        ]
+    },
+    {
+        "id": "55d14ae391f83835",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "Flow to insert data into the table",
+        "info": "",
+        "x": 150,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "24e44a8af40970b3",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "CREATE TABLE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE `test` (  `blk_dv_fld_id` int(5) NOT NULL,  `insertedts` int(10) NOT NULL,  `value` float DEFAULT NULL,  PRIMARY KEY (`blk_dv_fld_id`,`insertedts`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin DELAY_KEY_WRITE=1 ROW_FORMAT=FIXED",
+        "payloadType": "date",
+        "x": 240,
+        "y": 1920,
+        "wires": [
+            [
+                "5fc621e0f87a5652"
+            ]
+        ]
+    },
+    {
+        "id": "d33653f627fe8d97",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT DATA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 2000,
+        "wires": [
+            [
+                "9a725faf20ceeb2c"
+            ]
+        ]
+    },
+    {
+        "id": "8ab93085aa593b3d",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "READ FROM DATABASE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 2080,
+        "wires": [
+            [
+                "435e2cee7ce2c1d9"
+            ]
+        ]
+    },
+    {
+        "id": "435e2cee7ce2c1d9",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "msg.topic =\"select*from steelfactory\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 2080,
+        "wires": [
+            [
+                "5fc621e0f87a5652"
+            ]
+        ]
+    },
+    {
+        "id": "54d1f2ef0f1ff510",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "create table into the database",
+        "info": "",
+        "x": 180,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "9b50734bafb0d44e",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "reading table from mysql database",
+        "info": "",
+        "x": 140,
+        "y": 2040,
+        "wires": []
+    },
+    {
+        "id": "5c619f9735d35b76",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "9a725faf20ceeb2c",
+        "type": "file in",
+        "z": "bc8dc321d3fef226",
+        "name": "test",
+        "filename": "C:\\Users\\91735\\Documents\\Book2.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 400,
+        "y": 2000,
+        "wires": [
+            [
+                "24ec86db5f2a3eee"
+            ]
+        ]
+    },
+    {
+        "id": "f314e813aa6cf003",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "24ec86db5f2a3eee",
+        "type": "csv",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 550,
+        "y": 2000,
+        "wires": [
+            [
+                "643f669b57011fa5"
+            ]
+        ]
+    },
+    {
+        "id": "643f669b57011fa5",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "    for (var i = 0; i < msg.payload.length;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        id:msg.payload[i].col1,\n        date:msg.payload[i].col2,\n        value:msg.payload[i].col3\n        \n    }\n         node.send(newMsg);\n}\nreturn null; \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 2000,
+        "wires": [
+            [
+                "f314e813aa6cf003",
+                "b7c11fb64e2c1687"
+            ]
+        ]
+    },
+    {
+        "id": "7eda578b8757f125",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "        \n\nINSERT INTO test (blk_dv_fld_id,insertedts,value)\nVALUES ( {{payload.id}}, {{payload.date}}, {{payload.value}});\n \n\n",
+        "output": "str",
+        "x": 980,
+        "y": 1960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e411434cfc4a370",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 2760,
+        "wires": []
+    },
+    {
+        "id": "d04ea3658ef0e40e",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT DATA",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 181,
+        "y": 2757,
+        "wires": [
+            [
+                "1b3dd76b2d983496"
+            ]
+        ]
+    },
+    {
+        "id": "1b3dd76b2d983496",
+        "type": "file in",
+        "z": "bc8dc321d3fef226",
+        "name": "test",
+        "filename": "C:\\Users\\91735\\Documents\\Book2.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 351,
+        "y": 2757,
+        "wires": [
+            [
+                "d53abefcfedad327"
+            ]
+        ]
+    },
+    {
+        "id": "0bc959e55a4d2a54",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "    for (var i = 0; i < msg.payload.length;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        id:msg.payload[i].col1,\n        date:msg.payload[i].col2,\n        value:msg.payload[i].col3\n        \n    }\n         node.send(newMsg);\n}\nreturn null; \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 661,
+        "y": 2757,
+        "wires": [
+            [
+                "1e411434cfc4a370"
+            ]
+        ]
+    },
+    {
+        "id": "d53abefcfedad327",
+        "type": "csv",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 510,
+        "y": 2760,
+        "wires": [
+            [
+                "0bc959e55a4d2a54"
+            ]
+        ]
+    },
+    {
+        "id": "d78584a60c563d54",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 620,
+        "y": 3500,
+        "wires": [
+            [
+                "a8126b05e69cf9ea"
+            ]
+        ]
+    },
+    {
+        "id": "11e12eca95e0c6b8",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "Flow to insert data into the table",
+        "info": "",
+        "x": 150,
+        "y": 3540,
+        "wires": []
+    },
+    {
+        "id": "3f6f1637348c822e",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "CREATE TABLE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE public.test (     blk_dv_fld_id int(5) COLLATE pg_catalog.\"default\" NOT NULL,     insertedts int(10) NOT NULL,     value float DEFAULT NULL   CONSTRAINT test_pkey PRIMARY KEY (insertedts, value) ) WITH (     OIDS = FALSE ) TABLESPACE pg_default;  ALTER TABLE public.test     OWNER to postgres;",
+        "payloadType": "date",
+        "x": 240,
+        "y": 3500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "29914c7be90e392f",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT DATA",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 3580,
+        "wires": [
+            [
+                "cb3c2b266e818bab"
+            ]
+        ]
+    },
+    {
+        "id": "791a2851eda7f47b",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "READ FROM DATABASE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 3660,
+        "wires": [
+            [
+                "728796873239fc51"
+            ]
+        ]
+    },
+    {
+        "id": "728796873239fc51",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "msg.topic =\"select*from steelfactory\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 3660,
+        "wires": [
+            [
+                "d78584a60c563d54"
+            ]
+        ]
+    },
+    {
+        "id": "0a66d7e63f8a136b",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "create table into the database",
+        "info": "",
+        "x": 140,
+        "y": 3460,
+        "wires": []
+    },
+    {
+        "id": "18ec83b62613e91c",
+        "type": "comment",
+        "z": "bc8dc321d3fef226",
+        "name": "reading table from mysql database",
+        "info": "",
+        "x": 140,
+        "y": 3620,
+        "wires": []
+    },
+    {
+        "id": "a8126b05e69cf9ea",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 3500,
+        "wires": []
+    },
+    {
+        "id": "cb3c2b266e818bab",
+        "type": "file in",
+        "z": "bc8dc321d3fef226",
+        "name": "test",
+        "filename": "C:\\Users\\91735\\Documents\\test1.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 400,
+        "y": 3580,
+        "wires": [
+            [
+                "36a91cea38a91139"
+            ]
+        ]
+    },
+    {
+        "id": "7871697e9d55c4d6",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 3640,
+        "wires": []
+    },
+    {
+        "id": "36a91cea38a91139",
+        "type": "csv",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 550,
+        "y": 3580,
+        "wires": [
+            [
+                "4637777fe1f2f895"
+            ]
+        ]
+    },
+    {
+        "id": "4637777fe1f2f895",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "func": "    for (var i = 0; i < msg.payload.length;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        id:msg.payload[i].col1,\n        date:msg.payload[i].col2,\n        value:msg.payload[i].col3\n        \n    }\n         node.send(newMsg);\n}\nreturn null; \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 3580,
+        "wires": [
+            [
+                "ff730308ad9363df"
+            ]
+        ]
+    },
+    {
+        "id": "ff730308ad9363df",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "condition",
+        "func": "\nvar test = msg.payload;\nvar id = msg.payload.id;\nvar date = msg.payload.date;\nvar value = msg.payload.value;\n\n\n\nvar newMsg = {topic: \"INSERT INTO public.test(blk_dv_fld_id, insertedts, value) VALUES (\" +id +\",\"+date +\",\" +value + \")\"};\n\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 3580,
+        "wires": [
+            [
+                "a3b878b711fa9d5f"
+            ]
+        ]
+    },
+    {
+        "id": "cfc04f8c84da4603",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "        \n\nmsg.topic = INSERT INTO `5min_data_Dec_2021`(blk_dv_fld_id,insertedts,value)\nVALUES ( '{{payload.id}}', '{{payload.date}}', '{{payload.value}})\n \n\n",
+        "output": "str",
+        "x": 820,
+        "y": 3700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3b878b711fa9d5f",
+        "type": "postgres",
+        "z": "bc8dc321d3fef226",
+        "postgresdb": "8ccb50a36ea75bb9",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 860,
+        "y": 3640,
+        "wires": [
+            [
+                "7871697e9d55c4d6"
+            ]
+        ]
+    },
+    {
+        "id": "f744f5be6d271216",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "create table",
+        "payload": "CREATE TABLE public.test (     blk_dv_fld_id int(5) NOT NULL,     insertedts int(10) NOT NULL,     value float DEFAULT NULL PRIMARY KEY (`blk_dv_fld_id`,`insertedts`)   ) WITH (     OIDS = FALSE ) TABLESPACE pg_default;  ALTER TABLE public.test     OWNER to postgres;",
+        "payloadType": "str",
+        "x": 630,
+        "y": 3680,
+        "wires": [
+            [
+                "a3b878b711fa9d5f"
+            ]
+        ]
+    },
+    {
+        "id": "d433feb1.6365e",
+        "type": "http in",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "url": "/index",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 3860,
+        "wires": [
+            [
+                "98b6cece.37871"
+            ]
+        ]
+    },
+    {
+        "id": "98b6cece.37871",
+        "type": "template",
+        "z": "bc8dc321d3fef226",
+        "name": "web-template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n   <head>\n      <!-- The jQuery library is a prerequisite for all jqSuite products -->\n      <script type=\"text/ecmascript\" src=\"http://www.guriddo.net/demo/js/jquery.min.js\"></script> \n      <!-- We support more than 40 localizations -->\n      <script type=\"text/ecmascript\" src=\"http://www.guriddo.net/demo/js/trirand/i18n/grid.locale-en.js\"></script>\n      <!-- This is the Javascript file of jqGrid -->   \n      <script type=\"text/ecmascript\" src=\"http://www.guriddo.net/demo/js/trirand/jquery.jqGrid.min.js\"></script>\n      <!-- This is the localization file of the grid controlling messages, labels, etc.\n      <!-- A link to a jQuery UI ThemeRoller theme, more than 22 built-in and many more custom -->\n      <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"http://struts.jgeppert.com/struts2-jquery-grid-showcase/themes/showcase/jquery-ui.css\" />\n      <!-- The link to the CSS that the grid needs -->\n      <link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"http://www.guriddo.net/demo/css/trirand/ui.jqgrid.css\" />\n      <meta charset=\"utf-8\" />\n      <title>Demo CRUD with jqGrid</title>\n      <script type=\"text/javascript\"></script>\n      <link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.guriddo.net/B1D671CF-E532-4481-99AA-19F420D90332/netdefender/hui/ndhui.css\" />\n   </head>\n   <body>\n      <script type=\"text/javascript\" language=\"javascript\" src=\"http://www.guriddo.net/B1D671CF-E532-4481-99AA-19F420D90332/netdefender/hui/ndhui.js?0=0&0=0&0=0\"></script>\n      <table id=\"jqGrid\"></table>\n      <div id=\"jqGridPager\"></div>\n      <script type=\"text/javascript\"> \n         $(document).ready(function () {\n             $(\"#jqGrid\").jqGrid({\n                 url: '/search',\n                 mtype: \"GET\",\n                 datatype: \"json\",\n                 colModel: [\n                     { label: 'ID', name: 'id', key: true, search: false, width: 75 },\n                     { label: 'Name', name: 'name', width: 150, editable: true, formoptions: { colpos: 1, rowpos: 1 }  },\n                     { label: 'Last Name', name: 'lastname', width: 150, editable: true, edittype: \"select\", formoptions: { colpos: 1, rowpos: 2 },\n                       editoptions: {\n                            dataUrl:'/search/lastname',\n                            type:\"GET\",\n                            buildSelect: function(data) {\n                                var response = jQuery.parseJSON(data); //JSON data\n                                var s = '<select>';\n                                if (response && response.length) {\n                                    s += '<option hidden=\"true\">--- Select Lastname ---</option>';\n                                    for (var i = 0, l=response.length; i<l ; i++) {\n                                    var id = response[i].id;\n                                    var val = response[i].value; \n                                    // You can concatenate ID or any other string here\n                                    //For example: var ri = response[i].id + response[i].value; \n                                        s += '<option value=\"'+id+'\">'+val+'</option>';\n                                    }\n                                }\n                                return s + \"</select>\";\n                            } \n                         } \n                     },\n                     { label: 'Code', name: 'code', width: 150, editable: true, formoptions: { colpos: 2, rowpos: 1 } },  \n                     { label: 'Married', name: 'married', width: 150, align: \"center\", search: false, editable: true, edittype: \"checkbox\", formatter: \"checkbox\", editoptions: { value: \"1:0\" }, formoptions: { colpos: 2, rowpos: 2 } }\n                 ],\n                 width: 500,\n                 height: 260,\n                 rowNum: 10,\n                 loadonce: true,\n                 viewrecords: true,\n                 pager: \"#jqGridPager\"\n             });\n             \n             $('#jqGrid').navGrid('#jqGridPager',\n                 // The buttons to appear on the toolbar of the grid\n                 { edit: true, add: true, del: true, search: true, refresh: true, view: true, position: \"left\", cloneToTop: true },\n                 \n                 // Options for the Edit Dialog\n                 {\n                     url: '/update',\n                     editCaption: \"The Edit Dialog\",\n                     recreateForm: true,\n\t\t\t\t\t //checkOnUpdate : true,\n\t\t\t\t\t //checkOnSubmit : true,\n\t\t\t\t\t beforeSubmit : function( postdata, form , oper) {\n\t\t\t\t\t\t if(confirm('Are you sure you want to update this information?') ) {\n\t\t\t\t\t\t\t // Do something\n\t\t\t\t\t\t \t return [true,'/update'];\n\t\t\t\t\t\t } else {\n\t\t\t\t\t\t\treturn [false, 'Update failed!'];\n\t\t\t\t\t\t }\n\t\t\t\t\t },\n                     afterSubmit: function () {\n                         $(this).jqGrid(\"setGridParam\", {datatype: 'json'});\n                         return [true];\n                     },\n                     closeAfterEdit: true,\n                     errorTextFormat: function (data) {\n                         return 'Error: ' + data.responseText\n                     }\n                 },\n                 // Options for the Add Dialog\n                 {\n                     url: '/insert',\n                     addCaption: \"Add Dialog\",\n                     afterSubmit: function () {\n                         $(this).jqGrid(\"setGridParam\", {datatype: 'json'});\n                         return [true];\n                     },\n                     closeAfterAdd: true,\n                     recreateForm: true,\n                     errorTextFormat: function (data) {\n                         return 'Error: ' + data.responseText\n                     }\n                 },\n                 // Options for the Delete Dialog\n                 {   \n                     url: '/delete',\n                     errorTextFormat: function (data) {\n                         return 'Error: ' + data.responseText\n                     }\n             });\n             $(\"#jqGrid\").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: true });\n         });\n      </script>\n   </body>\n</html>",
+        "x": 380,
+        "y": 3860,
+        "wires": [
+            [
+                "3c1830eb.33b9"
+            ]
+        ]
+    },
+    {
+        "id": "3c1830eb.33b9",
+        "type": "http response",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1100,
+        "y": 3860,
+        "wires": []
+    },
+    {
+        "id": "ef285826.0e9738",
+        "type": "http in",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "url": "/search",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 3920,
+        "wires": [
+            [
+                "e396f56a.dcda38"
+            ]
+        ]
+    },
+    {
+        "id": "e396f56a.dcda38",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "search-query",
+        "func": "//msg.topic=\"SELECT CONCAT('M00','',test.id) AS id,test.name AS name,lastname.lastname AS lastname,test.code AS code,test.married AS married FROM test INNER JOIN lastname ON lastname.id = test.lastname ORDER BY test.id DESC\";\nmsg.topic=\"SELECT test.id AS id,test.name AS name,lastname.lastname AS lastname,test.code AS code,test.married AS married FROM test INNER JOIN lastname ON lastname.id = test.lastname ORDER BY test.id DESC\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 3920,
+        "wires": [
+            [
+                "edc80b5fbcb8a6c9"
+            ]
+        ]
+    },
+    {
+        "id": "458b0528.a4d98c",
+        "type": "http response",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1100,
+        "y": 3920,
+        "wires": []
+    },
+    {
+        "id": "d84f16f7.3d9698",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "search-response",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 765,
+        "y": 3920,
+        "wires": [
+            [
+                "2b952c3a.f63884"
+            ]
+        ]
+    },
+    {
+        "id": "2b952c3a.f63884",
+        "type": "json",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 950,
+        "y": 3920,
+        "wires": [
+            [
+                "458b0528.a4d98c"
+            ]
+        ]
+    },
+    {
+        "id": "b7c11fb64e2c1687",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "insert-query",
+        "func": "msg.topic=\"INSERT INTO test (blk_dv_fld_id, insertedts, value) VALUES ('\" + msg.payload.id + \"','\" + msg.payload.date + \"','\" + msg.payload.value + \"')\";\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 2040,
+        "wires": [
+            [
+                "5fc621e0f87a5652"
+            ]
+        ]
+    },
+    {
+        "id": "b2b09f39.2ac5d",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 540,
+        "wires": [
+            [
+                "9b2cfd89.80b03"
+            ]
+        ]
+    },
+    {
+        "id": "9b2cfd89.80b03",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT Data",
+        "func": "msg.topic = \"INSERT INTO ?? (??) VALUES (?)\";\nmsg.payload = [\"Department\",\"Department_name\",\"test\"];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cbf82508.506aa8",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 951,
+        "y": 672,
+        "wires": []
+    },
+    {
+        "id": "e4a98c17.08f2d",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 348,
+        "y": 592,
+        "wires": [
+            [
+                "5addf67b.173138"
+            ]
+        ]
+    },
+    {
+        "id": "5addf67b.173138",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "Update Data",
+        "func": "msg.topic = \"Update Department Set Department_name = ? where Department_id=?\";\nmsg.payload=['Logistics Managers','3']\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 527,
+        "y": 596,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4201ad4.996998",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "warehouse",
+        "payloadType": "str",
+        "x": 350,
+        "y": 760,
+        "wires": [
+            [
+                "be458293.0fb91"
+            ]
+        ]
+    },
+    {
+        "id": "be458293.0fb91",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "SELECT Data",
+        "func": "msg.topic = \"SELECT * FROM department WHERE department_name LIKE '%\" + msg.payload + \"%'\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c203b7a.d31738",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT Bind - via JSON",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "INSERT INTO test (blk_dv_fld_id,insertedts,value) VALUES (?, ?,?)",
+        "payload": "[, \"This is a funny world's end\"]",
+        "payloadType": "str",
+        "x": 369,
+        "y": 657,
+        "wires": [
+            [
+                "404656b9.7048b8"
+            ]
+        ]
+    },
+    {
+        "id": "404656b9.7048b8",
+        "type": "json",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "x": 569,
+        "y": 657,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "421f97c2.5607f8",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go \"Warehouse\"",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "%Warehouse%",
+        "payloadType": "str",
+        "x": 360,
+        "y": 820,
+        "wires": [
+            [
+                "778ca316.16ea8c"
+            ]
+        ]
+    },
+    {
+        "id": "778ca316.16ea8c",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "SELECT Data",
+        "func": "msg.topic = \"SELECT * FROM Department WHERE Department_Name LIKE ?\";\nmsg.payload = [msg.payload];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 560,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "632ef9df.2db478",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go \"MAnagers\"",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "%Managers%",
+        "payloadType": "str",
+        "x": 360,
+        "y": 860,
+        "wires": [
+            [
+                "778ca316.16ea8c"
+            ]
+        ]
+    },
+    {
+        "id": "88f58b45.552b48",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "Delete Bind",
+        "func": "msg.topic = \"Delete From department where Department_id = ?\";\nmsg.payload = [ \"6\"];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 530,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8be8aa44.6b7868",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 350,
+        "y": 700,
+        "wires": [
+            [
+                "88f58b45.552b48"
+            ]
+        ]
+    },
+    {
+        "id": "a2cac161.b5ebf",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "INSERT Data",
+        "func": "msg.topic = \"INSERT INTO department (department_name) VALUES (?)\";\nmsg.payload = [ \"test\"];\nreturn msg;\n\nmsg.topic = \"INSERT INTO ?? (??) VALUES (?)\";\nmsg.payload = [\"Department\",\"Department_name\",\"test\"];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cabc5ca6.c3e37",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "Go",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payloadType": "date",
+        "x": 350,
+        "y": 480,
+        "wires": [
+            [
+                "a2cac161.b5ebf"
+            ]
+        ]
+    },
+    {
+        "id": "edc80b5fbcb8a6c9",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 560,
+        "y": 3920,
+        "wires": [
+            [
+                "d84f16f7.3d9698"
+            ]
+        ]
+    },
+    {
+        "id": "9d39df4ad4559977",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "condition",
+        "func": "\nvar test = msg.payload;\nvar id = msg.payload.id;\nvar date = msg.payload.date;\nvar value = msg.payload.value;\n\n\nfunction sleep(ms) {\n  return new Promise(resolve => setTimeout(resolve, ms));\n}\nvar newMsg = {topic: \"INSERT INTO `test1`(blk_dv_fld_id, insertedts, value) VALUES (\" +id +\",\"+date +\",\" +value + \")\"\n\n};\nsleep(3000);  \nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 1100,
+        "wires": [
+            [
+                "9f03db5a24e078ef"
+            ]
+        ]
+    },
+    {
+        "id": "b2785ad04bbeb972",
+        "type": "function",
+        "z": "bc8dc321d3fef226",
+        "name": "condition",
+        "func": "\n\nvar test = msg.payload;\nvar id = msg.payload.id;\nvar date = msg.payload.date;\nvar value = msg.payload.value;\n\nfunction sleep(milliseconds)\n{\n\nvar msg = { topic: \"INSERT INTO `test1`(blk_dv_fld_id, insertedts, value) VALUES (\" +id +\",\"+date +\",\" +value + \")\"};\nsleep(2000);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1167,
+        "y": 1052,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a57aea94e24e0dc6",
+        "type": "switch",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 480,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f04aee5a32c61875",
+        "type": "split",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 850,
+        "y": 1120,
+        "wires": [
+            [
+                "9d39df4ad4559977"
+            ]
+        ]
+    },
+    {
+        "id": "f641491f9ac06b28",
+        "type": "mysql",
+        "z": "bc8dc321d3fef226",
+        "mydb": "a844720c.608d6",
+        "name": "MYSQL",
+        "x": 640,
+        "y": 2220,
+        "wires": [
+            [
+                "aee064b10f8970e3"
+            ]
+        ]
+    },
+    {
+        "id": "84e87ea1777dd958",
+        "type": "inject",
+        "z": "bc8dc321d3fef226",
+        "name": "CREATE TABLE",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "select*from test",
+        "payloadType": "date",
+        "x": 260,
+        "y": 2220,
+        "wires": [
+            [
+                "f641491f9ac06b28"
+            ]
+        ]
+    },
+    {
+        "id": "aee064b10f8970e3",
+        "type": "debug",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "c91e2b279c22ff05",
+        "type": "ui_numeric",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "label": "block id",
+        "tooltip": "",
+        "group": "6426525.5bfe1ac",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "500",
+        "step": 1,
+        "x": 290,
+        "y": 2400,
+        "wires": [
+            [
+                "1cac4dbeefeaf336"
+            ]
+        ]
+    },
+    {
+        "id": "1cac4dbeefeaf336",
+        "type": "change",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "blk_dv_fld_id",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 2400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10cb76d4bb80b137",
+        "type": "ui_numeric",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "label": "block id",
+        "tooltip": "",
+        "group": "6426525.5bfe1ac",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "500",
+        "step": 1,
+        "x": 320,
+        "y": 2480,
+        "wires": [
+            [
+                "508edfec54e9ec94"
+            ]
+        ]
+    },
+    {
+        "id": "508edfec54e9ec94",
+        "type": "change",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "blk_dv_fld_id",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 2480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e973719838a6ac76",
+        "type": "ui_numeric",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "label": "block id",
+        "tooltip": "",
+        "group": "6426525.5bfe1ac",
+        "order": 1,
+        "width": "6",
+        "height": "1",
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "500",
+        "step": 1,
+        "x": 420,
+        "y": 2540,
+        "wires": [
+            [
+                "86ce8c9d0a608064"
+            ]
+        ]
+    },
+    {
+        "id": "86ce8c9d0a608064",
+        "type": "change",
+        "z": "bc8dc321d3fef226",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "blk_dv_fld_id",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 2540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a844720c.608d6",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "localhost",
+        "port": "3306",
+        "db": "test",
+        "tz": "",
+        "charset": ""
+    },
+    {
+        "id": "8ccb50a36ea75bb9",
+        "type": "postgresdb",
+        "cfgname": "",
+        "hostname": "localhost",
+        "port": "5432",
+        "db": "postgres",
+        "ssl": false
+    },
+    {
+        "id": "6426525.5bfe1ac",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "cb135bc2.cc3d9",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "cb135bc2.cc3d9",
+        "type": "ui_tab",
+        "name": "Anomaly",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

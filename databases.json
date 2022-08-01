@@ -1,0 +1,715 @@
+[
+    {
+        "id": "4c61d39da737ece6",
+        "type": "tab",
+        "label": "databases",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "09a9645d245a7d39",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "12pm",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "https://api.aerisapi.com/conditions/14.13,77.31?format=json&from=2021-10-09 12:00 PM&to=2021-11-01 10:30 AM&plimit=1800&filter=15min&fields=&client_id=iRjwmcoDtj9JzUXz00xdi&client_secret=TtTsxcRBangnGOXKMT09WIXlYrpzGgBXCOhQ8rDZ",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "21",
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 280,
+        "wires": [
+            [
+                "5610bf5ec3549a7d"
+            ]
+        ]
+    },
+    {
+        "id": "d96cb2865f065bd1",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "11am",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "https://api.aerisapi.com/conditions/14.13,77.31?format=json&from=2021-10-09 11:00 AM&to=2021-11-01 10:30 AM&plimit=1800&filter=15min&fields=&client_id=iRjwmcoDtj9JzUXz00xdi&client_secret=TtTsxcRBangnGOXKMT09WIXlYrpzGgBXCOhQ8rDZ",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "18",
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 220,
+        "wires": [
+            [
+                "5610bf5ec3549a7d"
+            ]
+        ]
+    },
+    {
+        "id": "d143684db0b34dad",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "9am",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "https://api.aerisapi.com/conditions/14.13,77.31?format=json&from=2021-10-09 9:00 AM&to=2021-11-01 10:30 AM&plimit=1800&filter=15min&fields=&client_id=iRjwmcoDtj9JzUXz00xdi&client_secret=TtTsxcRBangnGOXKMT09WIXlYrpzGgBXCOhQ8rDZ",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "12",
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 100,
+        "wires": [
+            [
+                "5610bf5ec3549a7d"
+            ]
+        ]
+    },
+    {
+        "id": "4ea170e7bad4c620",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "10am",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "https://api.aerisapi.com/conditions/14.13,77.31?format=json&from=2021-10-09 10:00 AM&to=2021-11-01 10:30 AM&plimit=1800&filter=15min&fields=&client_id=iRjwmcoDtj9JzUXz00xdi&client_secret=TtTsxcRBangnGOXKMT09WIXlYrpzGgBXCOhQ8rDZ",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "15",
+        "topic": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 160,
+        "wires": [
+            [
+                "5610bf5ec3549a7d"
+            ]
+        ]
+    },
+    {
+        "id": "0b23be994d65a4df",
+        "type": "function",
+        "z": "4c61d39da737ece6",
+        "name": "convert 1",
+        "func": "var test = msg.payload;\nvar name1 = msg.payload.response[0].periods[0].timestamp;\nvar val1 = msg.payload.response[0].periods[0].solradWM2;\nvar name2 = msg.payload.response[0].periods[1].timestamp;\nvar val2 = msg.payload.response[0].periods[1].solradWM2;\nvar name3 =msg.payload.response[0].periods[2].timestamp;\nvar val3 = msg.payload.response[0].periods[2].solradWM2;\nvar name4 =msg.payload.response[0].periods[3].timestamp;\nvar val4 = msg.payload.response[0].periods[3].solradWM2;\n\n\nmsg.payload = \"INSERT INTO public.nodered (timestamp1, irr1, timestamp2, irr2, timestamp3, irr3, timestamp4, irr4) VALUES (\" +name1 +\",\"+val1 +\",\" +name2 +\",\" +val2 +\",\" +name3 +\",\" +val3 +\",\" + name4 + \",\" +val4 + \");\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 220,
+        "wires": [
+            [
+                "36839429f4ca0176",
+                "aef04f00ed16463d"
+            ]
+        ]
+    },
+    {
+        "id": "aef04f00ed16463d",
+        "type": "function",
+        "z": "4c61d39da737ece6",
+        "name": "convert 2",
+        "func": "msg.queryParameters = msg.payload;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 280,
+        "wires": [
+            [
+                "b3ebc2c1725d3545"
+            ]
+        ]
+    },
+    {
+        "id": "36839429f4ca0176",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "5610bf5ec3549a7d",
+        "type": "http request",
+        "z": "4c61d39da737ece6",
+        "name": "pavugada-past",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 600,
+        "y": 160,
+        "wires": [
+            [
+                "0b23be994d65a4df"
+            ]
+        ]
+    },
+    {
+        "id": "b3ebc2c1725d3545",
+        "type": "postgres",
+        "z": "4c61d39da737ece6",
+        "postgresdb": "8ccb50a36ea75bb9",
+        "name": "",
+        "output": false,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": false,
+        "x": 840,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "1949d6e610957ebd",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "create table",
+        "payload": "CREATE TABLE stocks.stock ( timestamp1 float,irr1 integer,timestamp2 float,irr2 integer,timestamp3 float, irr3 integer,timestamp4 float,irr4 integer)  WITH (     OIDS=FALSE )",
+        "payloadType": "str",
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "aef04f00ed16463d"
+            ]
+        ]
+    },
+    {
+        "id": "8940d43ea513cddf",
+        "type": "comment",
+        "z": "4c61d39da737ece6",
+        "name": "Data logging http request to PostgreSQL via Node red",
+        "info": "",
+        "x": 440,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "24551bfbf9122b81",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "msft",
+        "payload": "CREATE TABLE stocks.stock (     company text COLLATE pg_catalog.\"default\" NOT NULL,     date date NOT NULL,     open numeric,     high numeric,     low numeric,     close numeric,     volume numeric,     adjclose numeric,     dividend numeric,     split numeric,     CONSTRAINT stock_pkey PRIMARY KEY (company, date) ) WITH (     OIDS = FALSE ) TABLESPACE pg_default;  ALTER TABLE stocks.stock     OWNER to postgres;",
+        "payloadType": "str",
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "df0c5e17cb2336c4"
+            ]
+        ]
+    },
+    {
+        "id": "df0c5e17cb2336c4",
+        "type": "http request",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=MSFT&apikey=demo&datatype=csv",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 290,
+        "y": 480,
+        "wires": [
+            [
+                "5de6ae770114f922"
+            ]
+        ]
+    },
+    {
+        "id": "5de6ae770114f922",
+        "type": "csv",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "1",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 430,
+        "y": 480,
+        "wires": [
+            [
+                "829588df17cdbf7b"
+            ]
+        ]
+    },
+    {
+        "id": "a8fe872b44d58600",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "fae0c57c029f1c33",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "create table",
+        "payload": "CREATE TABLE stocks.stock (     company text COLLATE pg_catalog.\"default\" NOT NULL,     date date NOT NULL,     open numeric,     high numeric,     low numeric,     close numeric,     volume numeric,     adjclose numeric,     dividend numeric,     split numeric,     CONSTRAINT stock_pkey PRIMARY KEY (company, date) ) WITH (     OIDS = FALSE ) TABLESPACE pg_default;  ALTER TABLE stocks.stock     OWNER to postgres;",
+        "payloadType": "str",
+        "x": 190,
+        "y": 600,
+        "wires": [
+            [
+                "0abc18a58a2fc5dd"
+            ]
+        ]
+    },
+    {
+        "id": "a056f2416dc4deca",
+        "type": "comment",
+        "z": "4c61d39da737ece6",
+        "name": "Write time series to postgre sql database",
+        "info": "",
+        "x": 180,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "0fa1028ff5e8cd69",
+        "type": "comment",
+        "z": "4c61d39da737ece6",
+        "name": "Query the database",
+        "info": "",
+        "x": 110,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "0b1d14efcce349b7",
+        "type": "postgres",
+        "z": "4c61d39da737ece6",
+        "postgresdb": "8ccb50a36ea75bb9",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 620,
+        "y": 600,
+        "wires": [
+            [
+                "a8fe872b44d58600"
+            ]
+        ]
+    },
+    {
+        "id": "0abc18a58a2fc5dd",
+        "type": "template",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "select * from stocks.stock",
+        "output": "str",
+        "x": 380,
+        "y": 600,
+        "wires": [
+            [
+                "0b1d14efcce349b7"
+            ]
+        ]
+    },
+    {
+        "id": "829588df17cdbf7b",
+        "type": "template",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO stocks.stock(company, date, open, high, low, close, adjclose, volume, dividend, split)\nVALUES ( '{{topic}}', '{{payload.col1}}', '{{payload.col2}}', '{{payload.col3}}', '{{payload.col4}}', '{{payload.col5}}', '{{payload.col6}}', '{{payload.col7}}', '{{payload.col8}}','{{payload.col9}}')\nON CONFLICT (company, date) \nDO NOTHING;        \n    ",
+        "output": "str",
+        "x": 600,
+        "y": 480,
+        "wires": [
+            [
+                "0b1d14efcce349b7",
+                "12844d41eb818ce7"
+            ]
+        ]
+    },
+    {
+        "id": "12844d41eb818ce7",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "afc90d5b6485b7dc",
+        "type": "mongodb-node",
+        "z": "4c61d39da737ece6",
+        "mongodb": "f2f007ae601827b1",
+        "name": "",
+        "collection": "test",
+        "operation": "store",
+        "upsert": false,
+        "multi": false,
+        "x": 380,
+        "y": 880,
+        "wires": [
+            [
+                "8e65cb5986932303"
+            ]
+        ]
+    },
+    {
+        "id": "4fc507aec87cd1c8",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "6000",
+        "payloadType": "num",
+        "x": 150,
+        "y": 880,
+        "wires": [
+            [
+                "afc90d5b6485b7dc"
+            ]
+        ]
+    },
+    {
+        "id": "8e65cb5986932303",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "aba306c7828628ae",
+        "type": "mongodb-node",
+        "z": "4c61d39da737ece6",
+        "mongodb": "f2f007ae601827b1",
+        "name": "writing to collection",
+        "collection": "test",
+        "operation": "store",
+        "upsert": false,
+        "multi": false,
+        "x": 550,
+        "y": 960,
+        "wires": [
+            [
+                "960df5722cdc24d1"
+            ]
+        ]
+    },
+    {
+        "id": "960df5722cdc24d1",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "9279566827aa66b9",
+        "type": "comment",
+        "z": "4c61d39da737ece6",
+        "name": "writing to mongo db ",
+        "info": "",
+        "x": 210,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "6868ff715d8df73a",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "15",
+        "topic": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 960,
+        "wires": [
+            [
+                "796a88d2eb6ca16c"
+            ]
+        ]
+    },
+    {
+        "id": "796a88d2eb6ca16c",
+        "type": "http request",
+        "z": "4c61d39da737ece6",
+        "name": "pavugada-past",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.aerisapi.com/conditions/14.13,77.31?format=json&from=2021-10-09 10:00 AM&to=2021-11-01 10:30 AM&plimit=1800&filter=15min&fields=&client_id=iRjwmcoDtj9JzUXz00xdi&client_secret=TtTsxcRBangnGOXKMT09WIXlYrpzGgBXCOhQ8rDZ",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 320,
+        "y": 960,
+        "wires": [
+            [
+                "aba306c7828628ae"
+            ]
+        ]
+    },
+    {
+        "id": "02de870255643c89",
+        "type": "comment",
+        "z": "4c61d39da737ece6",
+        "name": "reading from mongo db ",
+        "info": "",
+        "x": 160,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "7381b899375af221",
+        "type": "mongodb-node",
+        "z": "4c61d39da737ece6",
+        "mongodb": "f2f007ae601827b1",
+        "name": "reading to collection",
+        "collection": "test",
+        "operation": "find",
+        "upsert": false,
+        "multi": false,
+        "x": 460,
+        "y": 1140,
+        "wires": [
+            [
+                "af82a490a2cb6288"
+            ]
+        ]
+    },
+    {
+        "id": "af82a490a2cb6288",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "42a4137e2797fbab",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "inject",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "15",
+        "topic": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1140,
+        "wires": [
+            [
+                "7381b899375af221"
+            ]
+        ]
+    },
+    {
+        "id": "8ccb50a36ea75bb9",
+        "type": "postgresdb",
+        "cfgname": "",
+        "hostname": "localhost",
+        "port": "5432",
+        "db": "test",
+        "ssl": false
+    },
+    {
+        "id": "f2f007ae601827b1",
+        "type": "mongodb-config",
+        "hostname": "127.0.0.1",
+        "port": "27017",
+        "db": "admin",
+        "name": ""
+    }
+]

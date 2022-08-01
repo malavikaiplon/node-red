@@ -1,0 +1,427 @@
+[
+    {
+        "id": "29d1852e91e64395",
+        "type": "tab",
+        "label": "sqlite",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "39eb691eed97d661",
+        "type": "inject",
+        "z": "29d1852e91e64395",
+        "name": "create table",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE RANDOMNUM( TIMESTAMP INT PRIMARY KEY NOT NULL, VALUE INT NOT NULL, BOOL INT NOT NULL)",
+        "payloadType": "date",
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "d3b50df53f1a4a8a"
+            ]
+        ]
+    },
+    {
+        "id": "d3b50df53f1a4a8a",
+        "type": "sqlite",
+        "z": "29d1852e91e64395",
+        "mydb": "e396b570c1625410",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "",
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "16c9b8b84413c65b"
+            ]
+        ]
+    },
+    {
+        "id": "16c9b8b84413c65b",
+        "type": "debug",
+        "z": "29d1852e91e64395",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "c5deedbb2be825a6",
+        "type": "inject",
+        "z": "29d1852e91e64395",
+        "name": "insert data",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 220,
+        "y": 320,
+        "wires": [
+            [
+                "659fb1086c439c92"
+            ]
+        ]
+    },
+    {
+        "id": "659fb1086c439c92",
+        "type": "function",
+        "z": "29d1852e91e64395",
+        "name": "",
+        "func": "var randomNum = Math.round(Math.random()*100);\nvar largeBool = (randomNum > 50)?1:0;\nvar newMsg = {\n \"topic\": \"INSERT INTO RANDOMNUM VALUES ( \" + msg.payload + \", \" + randomNum + \", \" + largeBool + \")\"\n}\n\nreturn newMsg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "eafc98638af6aced"
+            ]
+        ]
+    },
+    {
+        "id": "480c10b59609e7fe",
+        "type": "debug",
+        "z": "29d1852e91e64395",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "eafc98638af6aced",
+        "type": "sqlite",
+        "z": "29d1852e91e64395",
+        "mydb": "e396b570c1625410",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "",
+        "x": 550,
+        "y": 320,
+        "wires": [
+            [
+                "480c10b59609e7fe"
+            ]
+        ]
+    },
+    {
+        "id": "874ce955bc2b0c05",
+        "type": "comment",
+        "z": "29d1852e91e64395",
+        "name": "sqlite db read and write",
+        "info": "",
+        "x": 300,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6955175795ab9e96",
+        "type": "inject",
+        "z": "29d1852e91e64395",
+        "name": "read from db",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT * FROM RANDOMNUM",
+        "payloadType": "date",
+        "x": 210,
+        "y": 480,
+        "wires": [
+            [
+                "c60007f44e3d7c76"
+            ]
+        ]
+    },
+    {
+        "id": "c60007f44e3d7c76",
+        "type": "sqlite",
+        "z": "29d1852e91e64395",
+        "mydb": "e396b570c1625410",
+        "sqlquery": "msg.topic",
+        "sql": "",
+        "name": "",
+        "x": 390,
+        "y": 480,
+        "wires": [
+            [
+                "7ed4c85b3ffded72"
+            ]
+        ]
+    },
+    {
+        "id": "47d0872351177103",
+        "type": "debug",
+        "z": "29d1852e91e64395",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "7ed4c85b3ffded72",
+        "type": "function",
+        "z": "29d1852e91e64395",
+        "name": "",
+        "func": "\n    for (var i = 0; i < msg.payload.length;i++)\n{\n    var newMsg = {};\n    newMsg.payload = {\n        timestamp:msg.payload[i].TIMESTAMP,\n        value:msg.payload[i].VALUE,\n        boolean:msg.payload[i].BOOL\n    }\n   \n    \n}\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 480,
+        "wires": [
+            [
+                "47d0872351177103",
+                "65eb4c3c64e38bed",
+                "6fbd49c2e7118fb6"
+            ]
+        ]
+    },
+    {
+        "id": "6fbd49c2e7118fb6",
+        "type": "influxdb out",
+        "z": "29d1852e91e64395",
+        "influxdb": "ed4f779dff97f1b7",
+        "name": "",
+        "measurement": "randomnum",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 870,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "65eb4c3c64e38bed",
+        "type": "ui_table",
+        "z": "29d1852e91e64395",
+        "group": "f0f94831572aed61",
+        "name": "",
+        "order": 7,
+        "width": 8,
+        "height": 9,
+        "columns": [
+            {
+                "field": "TIMESTAMP",
+                "title": "TIMESTAMP",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "VALUE",
+                "title": "Value",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "BOOL",
+                "title": "Boolean",
+                "width": "",
+                "align": "center",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 870,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "53e76b55283984c5",
+        "type": "catch",
+        "z": "29d1852e91e64395",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 320,
+        "y": 780,
+        "wires": [
+            [
+                "9dd9e7ee05fff055",
+                "4125fa31af01af78"
+            ]
+        ]
+    },
+    {
+        "id": "9dd9e7ee05fff055",
+        "type": "debug",
+        "z": "29d1852e91e64395",
+        "name": "error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 510,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "4a78213e605dface",
+        "type": "ui_text",
+        "z": "29d1852e91e64395",
+        "group": "d44d4f44.3219e8",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "text",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 630,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "4125fa31af01af78",
+        "type": "function",
+        "z": "29d1852e91e64395",
+        "name": "sql errors",
+        "func": "var payload=msg.error.message;\nmsg.payload = payload +\" timestamp \"+msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 720,
+        "wires": [
+            [
+                "4a78213e605dface"
+            ]
+        ]
+    },
+    {
+        "id": "e396b570c1625410",
+        "type": "sqlitedb",
+        "db": "test",
+        "mode": "RWC"
+    },
+    {
+        "id": "ed4f779dff97f1b7",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8086",
+        "protocol": "http",
+        "database": "history",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f0f94831572aed61",
+        "type": "ui_group",
+        "name": "sqlite",
+        "tab": "3c839faf1afccb7e",
+        "order": 1,
+        "disp": true,
+        "width": 8,
+        "collapse": false
+    },
+    {
+        "id": "d44d4f44.3219e8",
+        "type": "ui_group",
+        "name": "Sensors",
+        "tab": "34054411.bf9404",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "3c839faf1afccb7e",
+        "type": "ui_tab",
+        "name": "IPLON",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "34054411.bf9404",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

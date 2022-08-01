@@ -1,0 +1,347 @@
+[
+    {
+        "id": "73492fdabf88703a",
+        "type": "tab",
+        "label": "data scrape",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ce5ef9d9697a1f49",
+        "type": "inject",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "f0e16e1fc56efb37"
+            ]
+        ]
+    },
+    {
+        "id": "f0e16e1fc56efb37",
+        "type": "http request",
+        "z": "73492fdabf88703a",
+        "name": "UV forcaste",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://tides4fishing.com/as/india/chennai/forecast/uv-exposure-level",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [
+                "f1ed4c502738d16c"
+            ]
+        ]
+    },
+    {
+        "id": "f1ed4c502738d16c",
+        "type": "html",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "property": "payload",
+        "outproperty": "payload",
+        "tag": "div.f_cont",
+        "ret": "text",
+        "as": "single",
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [
+                "e95f3da8ed7a9a3d"
+            ]
+        ]
+    },
+    {
+        "id": "e95f3da8ed7a9a3d",
+        "type": "debug",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f6903c823278471f",
+        "type": "inject",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "7093ad191c57e5e6"
+            ]
+        ]
+    },
+    {
+        "id": "7093ad191c57e5e6",
+        "type": "http request",
+        "z": "73492fdabf88703a",
+        "name": "bitcoin",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.worldcoinindex.com/coin/bitcoin",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 270,
+        "y": 340,
+        "wires": [
+            [
+                "f1da980ded26074c",
+                "63f240b41c7a9b2e"
+            ]
+        ]
+    },
+    {
+        "id": "63f240b41c7a9b2e",
+        "type": "html",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "property": "payload",
+        "outproperty": "payload",
+        "tag": "div.col-md-3",
+        "ret": "text",
+        "as": "single",
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "59ab6fbdfdf5f98a"
+            ]
+        ]
+    },
+    {
+        "id": "f1da980ded26074c",
+        "type": "html",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "property": "payload",
+        "outproperty": "payload",
+        "tag": "table.coin-markets-table",
+        "ret": "text",
+        "as": "single",
+        "x": 470,
+        "y": 320,
+        "wires": [
+            [
+                "f95fdb516aad95ad"
+            ]
+        ]
+    },
+    {
+        "id": "59ab6fbdfdf5f98a",
+        "type": "debug",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9944d1252a9d72c7",
+        "type": "inject",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 300,
+        "y": 680,
+        "wires": [
+            [
+                "7a88c4081e19511c"
+            ]
+        ]
+    },
+    {
+        "id": "7a88c4081e19511c",
+        "type": "http request",
+        "z": "73492fdabf88703a",
+        "name": "cae dashboard",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://cea.nic.in/dashboard/?lang=en",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 460,
+        "y": 680,
+        "wires": [
+            [
+                "797416938ada2b62"
+            ]
+        ]
+    },
+    {
+        "id": "797416938ada2b62",
+        "type": "html",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "property": "payload",
+        "outproperty": "payload",
+        "tag": "table.highcharts-data-table-0",
+        "ret": "text",
+        "as": "single",
+        "x": 700,
+        "y": 680,
+        "wires": [
+            [
+                "ec526026551d6727"
+            ]
+        ]
+    },
+    {
+        "id": "ec526026551d6727",
+        "type": "debug",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "f95fdb516aad95ad",
+        "type": "csv",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 690,
+        "y": 320,
+        "wires": [
+            [
+                "8a56450f921139c7"
+            ]
+        ]
+    },
+    {
+        "id": "4c6adeaec26b4b79",
+        "type": "comment",
+        "z": "73492fdabf88703a",
+        "name": "data scraping from tides4 fishing.com",
+        "info": "",
+        "x": 340,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "8a56450f921139c7",
+        "type": "debug",
+        "z": "73492fdabf88703a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "88528dc40674a08b",
+        "type": "comment",
+        "z": "73492fdabf88703a",
+        "name": "data scraping from worldcoinindex.com",
+        "info": "",
+        "x": 230,
+        "y": 260,
+        "wires": []
+    }
+]

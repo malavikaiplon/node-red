@@ -1,77 +1,58 @@
 [
     {
-        "id": "f6a9b354c75dd762",
-        "type": "OpcUa-Client",
-        "z": "3755da7abb9eaf07",
-        "endpoint": "cb178fa3f456c069",
-        "action": "read",
-        "deadbandtype": "a",
-        "deadbandvalue": 1,
-        "time": 10,
-        "timeUnit": "s",
-        "certificate": "n",
-        "localfile": "",
-        "localkeyfile": "",
-        "securitymode": "None",
-        "securitypolicy": "None",
-        "folderName4PKI": "",
+        "id": "209dda4a831da887",
+        "type": "tab",
+        "label": "sourcetimestamp_write_csv",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "aea0f6b90c9e8c33",
+        "type": "inject",
+        "z": "209dda4a831da887",
         "name": "",
-        "x": 720,
-        "y": 200,
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 100,
         "wires": [
             [
-                "c895fed2fb567de9"
+                "36afd6ba22e2758f"
             ]
         ]
     },
     {
-        "id": "4d099161bf104b9c",
-        "type": "debug",
-        "z": "3755da7abb9eaf07",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 930,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "c895fed2fb567de9",
-        "type": "function",
-        "z": "3755da7abb9eaf07",
-        "name": "",
-        "func": "//var myDate=new Date(msg.sourceTimestamp).getTime();\nvar dateUTC = new Date(msg.sourceTimestamp).toLocaleString(\"en-US\", {timeZone: 'Asia/Kolkata'})\n//myDateFormat = myDate.getFullYear()+\"-\"+(\"0\" + (myDate.getMonth() + 1)).slice(-2)+\"-\"+(\"0\" + myDate.getDate()).slice(-2)+\" \"+(\"0\" + myDate.getHours()).slice(-2)+\":\"+(\"0\" + myDate.getMinutes()).slice(-2)+\":\"+(\"0\" + myDate.getSeconds()).slice(-2)\nif (msg.payload==null)\n\n{(msg.payload=\"null\")&&(dateUTC=0)}\nvar tag=msg.topic.split(\"ns=2;s=\");\nvar obj ={\nvalue:msg.payload,\ntag:tag[1],\ntime:dateUTC\n    \n}\nmsg.payload=obj\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 880,
-        "y": 200,
-        "wires": [
-            [
-                "87f236d216a701d3"
-            ]
-        ]
-    },
-    {
-        "id": "a3f395e6574f70e5",
+        "id": "36afd6ba22e2758f",
         "type": "change",
-        "z": "3755da7abb9eaf07",
-        "name": "",
+        "z": "209dda4a831da887",
+        "name": "B11_INV1_ON",
         "rules": [
             {
                 "t": "set",
                 "p": "topic",
                 "pt": "msg",
-                "to": "payload.id",
-                "tot": "msg"
+                "to": "ns=2;s=B11_INV1_ON",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "datatype",
+                "pt": "msg",
+                "to": "int64",
+                "tot": "str"
             }
         ],
         "action": "",
@@ -79,112 +60,42 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 550,
-        "y": 200,
+        "x": 320,
+        "y": 100,
         "wires": [
             [
-                "f6a9b354c75dd762"
+                "12e564b1079aa8ab"
             ]
         ]
     },
     {
-        "id": "b6c34341872ca3fb",
-        "type": "function",
-        "z": "3755da7abb9eaf07",
-        "name": "node ids",
-        "func": "var array=[\n  \"ns=2;s=B01_INV1_AC_VOLTAGE_R;datatype=Double\",\n  \"ns=2;s=B01_INV1_AC_VOLTAGE_Y;datatype=Double\",\n  \"ns=2;s=B01_INV1_AC_VOLTAGE_B;datatype=Double\",\n  \"ns=2;s=B01_INV1_AC_CURRENT_R;datatype=Double\",\n  \"ns=2;s=B01_INV1_AC_CURRENT_Y;datatype=Double\",                          \n  \"ns=2;s=B01_INV1_AC_CURRENT_B;datatype=Double\",                         \n  \"ns=2;s=B01_INV1_ACTIVE_POWER;datatype=Double\",                          \n  \"ns=2;s=B01_INV1_FREQUENCY;datatype=Double\",                         \n  \"ns=2;s=B01_INV1_REACTIVE_POWER;datatype=Double\",                        \n  \"ns=2;s=B01_INV1_DC_CURRENT;datatype=Double\",                            \n  \"ns=2;s=B01_INV1_POWER_DC;datatype=Double\",\n  \"ns=2;s=B01_INV1_IGBT_TEMPERATURE;datatype=Double\",                      \n    \"ns=2;s=B01_INV1_INVERTER_FAIL;datatype=Double\" ,                       \n    \"ns=2;s=B01_INV1_INVERTER_ALARM ;datatype=Double\" ,                      \n    \"ns=2;s=B01_INV1_TOTAL_ENERGY_EXPORT_kWh;datatype=Double\",             \n    \"ns=2;s=B01_INV1_TOTAL_ENERGY_EXPORT_MWh;datatype=Double\",\n    \"ns=2;s=B01_INV1_TOTAL_ENERGY_EXPORT_GWh;datatype=Double\",              \n    \"ns=2;s=B01_INV1_TOTAL_ENERGY_EXPORT_DAY;datatype=Double\" ,             \n    \"ns=2;s=B01_INV1_VOLTAGE_DC;datatype=Double\",                            \n    \"ns=2;s=B01_INV1_PV_STATUS;datatype=Double\" ,                          \n    \"ns=2;s=B01_INV1_INVERTER_CONTROL_UNIT_FAULT_CODE_LAST;datatype=Double\",\n    \"ns=2;s=B01_INV1_INVERTER_CONTROL_UNIT_ALARM_1;datatype=Double \"  ,     \n    \"ns=2;s=B01_INV1_PR;datatype=Double\"  ,                            \n    \"ns=2;s=B01_INV1_START_TIME;datatype=Double \"  ,                         \n    \"ns=2;s=B01_INV1_STOP_TIME ;datatype=Double \"  ,                        \n    \"ns=2;s=B01_INV1_SMU01_IDC ;datatype=Double \"  ,                       \n    \"ns=2;s=B01_INV1_SMU02_IDC ;datatype=Double \"  ,                       \n    \"ns=2;s=B01_INV1_SMU03_IDC ;datatype=Double \"  ,                        \n    \"ns=2;s=B01_INV1_SMU04_IDC ;datatype=Double \"  ,                        \n    \"ns=2;s=B01_INV1_SMU05_IDC ;datatype=Double \"  ,                        \n    \"ns=2;s=B01_INV1_SMU06_IDC ;datatype=Double \"  ,                        \n    \"ns=2;s=B01_INV1_SMU07_IDC ;datatype=Double \"   ,                       \n    \"ns=2;s=B01_INV1_SMU08_IDC ;datatype=Double \"   ,                      \n    \"ns=2;s=B01_INV1_SMU33_IDC ;datatype=Double \"\n\n    ]\n   \n    msg.payload=array\n    \n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 200,
+        "id": "12e564b1079aa8ab",
+        "type": "OpcUa-Client",
+        "z": "209dda4a831da887",
+        "endpoint": "3a27b9acba8ce163",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "1",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "name": "",
+        "x": 540,
+        "y": 100,
         "wires": [
             [
-                "41408160fd247044"
+                "875e7d8ed84e71a7"
             ]
         ]
     },
     {
-        "id": "41408160fd247044",
-        "type": "function",
-        "z": "3755da7abb9eaf07",
-        "name": "topic",
-        "func": "for(var i = 0; i < msg.payload.length; i++)\n{\n    var obj={};\n\nobj.payload= {\n   id: msg.payload[i]\n    \n}\n\nnode.send(obj)\n}\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 410,
-        "y": 200,
-        "wires": [
-            [
-                "a3f395e6574f70e5"
-            ]
-        ]
-    },
-    {
-        "id": "a24922c5fc6e335c",
-        "type": "file",
-        "z": "3755da7abb9eaf07",
-        "name": "opcua.csv",
-        "filename": "/usr/src/node-red/opcua1.csv",
-        "appendNewline": false,
-        "createDir": true,
-        "overwriteFile": "false",
-        "encoding": "none",
-        "x": 760,
-        "y": 280,
-        "wires": [
-            [
-                "4d099161bf104b9c"
-            ]
-        ]
-    },
-    {
-        "id": "6b1e0771bd088bbf",
-        "type": "file in",
-        "z": "3755da7abb9eaf07",
-        "name": "opcua.csv",
-        "filename": "/usr/src/node-red/opcua1.csv",
-        "format": "lines",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 440,
-        "y": 380,
-        "wires": [
-            [
-                "dbfeca31519350cf"
-            ]
-        ]
-    },
-    {
-        "id": "cc780d76b9563ec4",
-        "type": "inject",
-        "z": "3755da7abb9eaf07",
-        "name": "1) Insert nodeId items",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 240,
-        "y": 380,
-        "wires": [
-            [
-                "6b1e0771bd088bbf"
-            ]
-        ]
-    },
-    {
-        "id": "e7841cd1fc08d831",
+        "id": "09dba3b59367123d",
         "type": "debug",
-        "z": "3755da7abb9eaf07",
+        "z": "209dda4a831da887",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -194,151 +105,216 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
-        "y": 380,
+        "x": 690,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "dbfeca31519350cf",
-        "type": "csv",
-        "z": "3755da7abb9eaf07",
+        "id": "39b83b49d0bb3ca7",
+        "type": "file",
+        "z": "209dda4a831da887",
         "name": "",
-        "sep": ",",
-        "hdrin": true,
-        "hdrout": "once",
-        "multi": "mult",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": false,
-        "include_null_values": true,
-        "x": 590,
-        "y": 380,
-        "wires": [
-            [
-                "fc3f01b0be51868b"
-            ]
-        ]
-    },
-    {
-        "id": "87f236d216a701d3",
-        "type": "csv",
-        "z": "3755da7abb9eaf07",
-        "name": "",
-        "sep": ",",
-        "hdrin": false,
-        "hdrout": "once",
-        "multi": "mult",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": false,
-        "include_null_values": true,
-        "x": 1050,
+        "filename": "C:\\Users\\HP\\rangini.py",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 280,
         "y": 200,
         "wires": [
             [
-                "a24922c5fc6e335c"
+                "197b45edcccb2b57"
             ]
         ]
     },
     {
-        "id": "1103c4df65924c2f",
-        "type": "catch",
-        "z": "3755da7abb9eaf07",
+        "id": "875e7d8ed84e71a7",
+        "type": "template",
+        "z": "209dda4a831da887",
         "name": "",
-        "scope": [
-            "f6a9b354c75dd762"
-        ],
-        "uncaught": false,
-        "x": 570,
-        "y": 100,
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "python",
+        "syntax": "mustache",
+        "template": "import time\nimport csv\nimport pandas as pd\nimport csv\nimport xlsxwriter\nimport pandas as pd\n\ni =0\nsts_list = []\n\nsts = (\"\"\"{{sourceTimestamp}}\"\"\")\nserver_ts  = (\"\"\"{{serverTimestamp}}\"\"\")\nvalue = (\"\"\"{{payload}}\"\"\")\nsts_list.append(sts)\n#print(\"Value : \",value,\"--------SourceTimestamp : \",sts,\"--------ServerTimestamp : \", server_ts)\nprint(value)\nprint(sts)",
+        "output": "str",
+        "x": 100,
+        "y": 200,
         "wires": [
             [
-                "74625adeea54414d"
+                "39b83b49d0bb3ca7"
             ]
         ]
     },
     {
-        "id": "74625adeea54414d",
+        "id": "197b45edcccb2b57",
+        "type": "exec",
+        "z": "209dda4a831da887",
+        "command": "python3 rangini.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 490,
+        "y": 200,
+        "wires": [
+            [
+                "09dba3b59367123d",
+                "1f57516f35d1c6e5",
+                "54e52e0412acfc8d"
+            ],
+            [
+                "09dba3b59367123d"
+            ],
+            [
+                "09dba3b59367123d"
+            ]
+        ]
+    },
+    {
+        "id": "1f57516f35d1c6e5",
+        "type": "file",
+        "z": "209dda4a831da887",
+        "name": "",
+        "filename": "B11_INV1_ON_OFF_STATUS_1.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 760,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "54e52e0412acfc8d",
+        "type": "file",
+        "z": "209dda4a831da887",
+        "name": "",
+        "filename": "B11_INV1_ON_OFF_STATUS_1.xls",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 770,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b73b37f1683113c0",
+        "type": "inject",
+        "z": "209dda4a831da887",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 400,
+        "wires": [
+            [
+                "3c10aa19a6747c17"
+            ]
+        ]
+    },
+    {
+        "id": "3c10aa19a6747c17",
+        "type": "change",
+        "z": "209dda4a831da887",
+        "name": "B11_INV1_PAC",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ns=2;s=B11_IO_ITF_OTI",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "datatype",
+                "pt": "msg",
+                "to": "int64",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 400,
+        "wires": [
+            [
+                "7c09b2b7fba53465"
+            ]
+        ]
+    },
+    {
+        "id": "7c09b2b7fba53465",
+        "type": "OpcUa-Client",
+        "z": "209dda4a831da887",
+        "endpoint": "3a27b9acba8ce163",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": "1",
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "name": "",
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "ada9309e96e112a5"
+            ]
+        ]
+    },
+    {
+        "id": "ada9309e96e112a5",
         "type": "debug",
-        "z": "3755da7abb9eaf07",
+        "z": "209dda4a831da887",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
-        "y": 100,
+        "x": 750,
+        "y": 400,
         "wires": []
     },
     {
-        "id": "7e0930cb0b22981d",
-        "type": "cronplus",
-        "z": "3755da7abb9eaf07",
-        "name": "",
-        "outputField": "payload",
-        "timeZone": "",
-        "persistDynamic": false,
-        "commandResponseMsgOutput": "output1",
-        "outputs": 1,
-        "options": [
-            {
-                "name": "schedule1",
-                "topic": "topic1",
-                "payloadType": "default",
-                "payload": "",
-                "expressionType": "cron",
-                "expression": " 2,7,12,17,22,27,32,37,42,47,52,57 * * * *",
-                "location": "",
-                "offset": "0",
-                "solarType": "all",
-                "solarEvents": "sunrise,sunset"
-            }
-        ],
-        "x": 100,
-        "y": 200,
-        "wires": [
-            [
-                "b6c34341872ca3fb"
-            ]
-        ]
-    },
-    {
-        "id": "fc3f01b0be51868b",
-        "type": "function",
-        "z": "3755da7abb9eaf07",
-        "name": "topic",
-        "func": "let plantObj\n\nplantObj = []\n\nfor(var i = 0; i < msg.payload.length; i++)\n{ \n        var Time=msg.payload[i].time ;\n        var time;\n         if (Time!=0)\n         \n  {  time=msg.payload[i].time}\n\n\nif ((msg.payload[i].value==\"null\")&&(msg.payload[i].time==0))\n\n   {        \n          Time=time\n       \n   }\n\n\nobj={ \n\n    value:msg.payload[i].value,\n    tag:msg.payload[i].tag,\n    Time\n}\n\nplantObj.push(obj)\n}\n\n\nmsg.payload =plantObj\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 750,
-        "y": 380,
-        "wires": [
-            [
-                "e7841cd1fc08d831"
-            ]
-        ]
-    },
-    {
-        "id": "cb178fa3f456c069",
+        "id": "3a27b9acba8ce163",
         "type": "OpcUa-Endpoint",
-        "endpoint": "opc.tcp://iplonopcua.com:4441/iSolar/scaback_csv/[SignAndEncrypt:Basic256Sha256:Binary]",
-        "secpol": "Basic256Sha256",
-        "secmode": "SignAndEncrypt",
-        "none": false,
-        "login": true,
-        "usercert": false,
-        "usercertificate": "",
-        "userprivatekey": ""
+        "endpoint": "opc.tcp://148.66.133.102:4842/iSolar/scaback_csv/",
+        "secpol": "None",
+        "secmode": "None",
+        "login": false
     }
 ]
