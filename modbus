@@ -1,0 +1,375 @@
+[
+    {
+        "id": "23d8c725f5068b4d",
+        "type": "subflow",
+        "name": "Subflow 1",
+        "info": "",
+        "in": [],
+        "out": [
+            {
+                "x": 320,
+                "y": 80,
+                "wires": []
+            },
+            {
+                "x": 320,
+                "y": 160,
+                "wires": []
+            },
+            {
+                "x": 360,
+                "y": 240,
+                "wires": []
+            },
+            {
+                "x": 360,
+                "y": 320,
+                "wires": []
+            }
+        ]
+    },
+    {
+        "id": "a208e20abbcf38bd",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "float",
+        "func": "var msg0=(msg.payload[1]<<16)+msg.payload[0];\nvar msg1=(msg.payload[3]<<16)+msg.payload[2];\nvar msg2=(msg.payload[5]<<16)+msg.payload[4];\nmsg.payload=[msg0,msg1,msg2];\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 560,
+        "wires": [
+            [
+                "dbd24160056a16e6"
+            ]
+        ]
+    },
+    {
+        "id": "b6201b04d1fb3fb0",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "long",
+        "func": "var msg0=(msg.payload[1]<<16)+msg.payload[0];\nvar msg1=(msg.payload[3]<<16)+msg.payload[2];\nvar msg2=(msg.payload[5]<<16)+msg.payload[4];\nmsg.payload=[msg0,msg1,msg2];\nmsg.topic = \"long\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 680,
+        "wires": [
+            [
+                "f17e2dd7ebeb9d54"
+            ]
+        ]
+    },
+    {
+        "id": "145c0833095d493f",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "sign ",
+        "func": "\nvar msg0= (msg.payload[0] << 16) >> 16;\nvar msg1= (msg.payload[1] << 16) >> 16;\nvar msg2= (msg.payload[2] << 16) >> 16;\nmsg.payload=[msg0,msg1,msg2];\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 600,
+        "wires": [
+            [
+                "017824f24f40e274"
+            ]
+        ]
+    },
+    {
+        "id": "1962e4657c1bf36b",
+        "type": "subflow:23d8c725f5068b4d",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "iPLON MODBUS",
+        "x": 220,
+        "y": 620,
+        "wires": [
+            [
+                "a208e20abbcf38bd"
+            ],
+            [
+                "145c0833095d493f"
+            ],
+            [
+                "3f36eb0c6c6ed1ba"
+            ],
+            [
+                "b6201b04d1fb3fb0"
+            ]
+        ]
+    },
+    {
+        "id": "d698ccbb7d4e017a",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "float ",
+        "func": "let found1 = []\n let device1\n var Time = new Date().toLocaleString();\n// for (var i = 0; i<msg.payload.length;i++)\n \n { \n \n\n device1 = {};\n device1.payload = {\n \n Time,\n PAC:msg.payload[0],\n QAC:msg.payload[1],\n IAC:msg.payload[2],\n \n \n \n }\n \n  found1.push( device1 )\n}\n msg.payload = found1;\n \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 560,
+        "wires": [
+            [
+                "f56f06f3605d9dfb",
+                "1319b584ee8ed231"
+            ]
+        ]
+    },
+    {
+        "id": "166cccede1668612",
+        "type": "file",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "modbus file",
+        "filename": "/home/iplon/Documents/modbus file.csv",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1090,
+        "y": 560,
+        "wires": [
+            [
+                "3dcf2f4f30d65ff0"
+            ]
+        ]
+    },
+    {
+        "id": "74d1d09acd6da572",
+        "type": "csv",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 950,
+        "y": 560,
+        "wires": [
+            [
+                "166cccede1668612"
+            ]
+        ]
+    },
+    {
+        "id": "d7bb175df6100747",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "influx out",
+        "func": "\nmsg.payload = [\n    {\n        measurement: \"modbus\",\n        fields: {\n          \n PAC:msg.payload.PAC,\n QAC:msg.payload.QAC,\n IAC:msg.payload.IAC,\n PAC1:msg.payload.PAC1,\n QAC1:msg.payload.QAC1,\n IAC1:msg.payload.IAC1,\n PAC2:msg.payload.PAC2,\n QAC2:msg.payload.QAC2,\n IAC2:msg.payload.IAC2,\n PAC3:msg.payload.PAC3,\n QAC3:msg.payload.QAC3,\n IAC3:msg.payload.IAC3\n        \n        },\n        tags:{\n            TYPE:\"test\"\n        },\n        \n      \n  timesamp:Math.floor(Date.now())*1000000\n        \n    },\n\n]\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 700,
+        "wires": [
+            [
+                "82648b006e3f3868"
+            ]
+        ]
+    },
+    {
+        "id": "f56f06f3605d9dfb",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"float\":\n        context.data.float = msg.payload;\n        msg = null;\n        break;\n    case \"sign\":\n        context.data.sign = msg.payload;\n        msg = null;\n        break;\n    case \"unsign\":\n        context.data.unsign = msg.payload;\n        msg = null;\n       break;\n    case \"long\":\n        context.data.long = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.float != null && context.data.sign != null&& context.data.unsign != null&& context.data.long != null){\n    var data_combine = {\n        \"float\": context.data.float,\n        \"sign\": context.data.sign,\n        \"unsign\":context.data.unsign,\n       \"long\":context.data.long\n    }\n    context.data = null\n    return {payload: data_combine};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 620,
+        "wires": [
+            [
+                "bc2109ed6c752295"
+            ]
+        ]
+    },
+    {
+        "id": "017824f24f40e274",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "signed",
+        "func": "let found1 = []\n let device1\n var Time = new Date().toLocaleString();\n// for (var i = 0; i<msg.payload.length;i++)\n \n { \n \n\n device1 = {};\n device1.payload = {\n \n Time,\n PAC1:msg.payload[0],\n QAC1:msg.payload[1],\n IAC1:msg.payload[2],\n \n \n \n }\n \n  found1.push( device1 )\n}\n msg.payload = found1;\n \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 600,
+        "wires": [
+            [
+                "f56f06f3605d9dfb"
+            ]
+        ]
+    },
+    {
+        "id": "3f36eb0c6c6ed1ba",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "unsigned",
+        "func": "let found1 = []\n let device1\n var Time = new Date().toLocaleString();\n// for (var i = 0; i<msg.payload.length;i++)\n \n { \n \n\n device1 = {};\n device1.payload = {\n \n Time,\n PAC2:msg.payload[0],\n QAC2:msg.payload[1],\n IAC2:msg.payload[2],\n \n \n \n }\n \n  found1.push( device1 )\n}\n msg.payload = found1;\n \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 640,
+        "wires": [
+            [
+                "f56f06f3605d9dfb"
+            ]
+        ]
+    },
+    {
+        "id": "f17e2dd7ebeb9d54",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "long",
+        "func": "let found1 = []\n let device1\n var Time = new Date().toLocaleString();\n// for (var i = 0; i<msg.payload.length;i++)\n \n { \n \n\n device1 = {};\n device1.payload = {\n \n Time,\n PAC3:msg.payload[0],\n QAC3:msg.payload[1],\n IAC3:msg.payload[2],\n \n \n \n }\n \n  found1.push( device1 )\n}\n msg.payload = found1;\n \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 680,
+        "wires": [
+            [
+                "f56f06f3605d9dfb"
+            ]
+        ]
+    },
+    {
+        "id": "bc2109ed6c752295",
+        "type": "function",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "",
+        "func": "// var arr1 = [];\n //var float_LENGTH = msg.payload.live[0].payload.Length1 \n \n   { \n \n device1 = {};\n device1.payload = {\n TIME:msg.payload.float[0].payload.Time,\n PAC:msg.payload.float[0].payload.PAC,\n QAC:msg.payload.float[0].payload.QAC,\n IAC:msg.payload.float[0].payload.IAC,\n PAC1:msg.payload.sign[0].payload.PAC1,\n QAC1:msg.payload.sign[0].payload.QAC1,\n IAC1:msg.payload.sign[0].payload.IAC1,\n PAC2:msg.payload.unsign[0].payload.PAC2,\n QAC2:msg.payload.unsign[0].payload.QAC2,\n IAC2:msg.payload.unsign[0].payload.IAC2,\n PAC3:msg.payload.long[0].payload.PAC3,\n QAC3:msg.payload.long[0].payload.QAC3,\n IAC3:msg.payload.long[0].payload.IAC3\n }\n \n \n node.send(device1 );\n\n \n }\n \n \n// msg.payload = arr1;\n\n return null;\n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 620,
+        "wires": [
+            [
+                "74d1d09acd6da572"
+            ]
+        ]
+    },
+    {
+        "id": "3dcf2f4f30d65ff0",
+        "type": "debug",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "1319b584ee8ed231",
+        "type": "debug",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "82648b006e3f3868",
+        "type": "influxdb batch",
+        "z": "7a51e8c6c7e1e96e",
+        "influxdb": "9fe2dbe88edc928a",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "local influx",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "",
+        "bucket": "",
+        "x": 1050,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "dbd24160056a16e6",
+        "type": "toFloat",
+        "z": "7a51e8c6c7e1e96e",
+        "name": "",
+        "toFixed": "",
+        "x": 550,
+        "y": 560,
+        "wires": [
+            [
+                "d698ccbb7d4e017a"
+            ]
+        ]
+    },
+    {
+        "id": "9fe2dbe88edc928a",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
