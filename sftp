@@ -1,0 +1,161 @@
+[
+    {
+        "id": "098d26ea2091de72",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "052cb5c4b5732fe0",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "filename_listout",
+        "func": "for (var i =0; i < msg.payload.length ;i++)\n{\n    \nvar obj={};\nobj.payload={\n    path:\"/home/visionUser/test/tolocaltest/\"+msg.payload[i].name,\n    name:msg.payload[i].name\n};\n\n//plantObj.push(obj)\nnode.send(obj);\n\n}\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n\n//msg.payload.data = \"/home/visionUser/test/tolocaltest/10586404_EM01_1650903030_1.unsent\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.payload.filename=\"test12.csv\"\n//return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 280,
+        "wires": [
+            [
+                "098d26ea2091de72",
+                "14c56290c70fa660"
+            ]
+        ]
+    },
+    {
+        "id": "5d261657f4ac8774",
+        "type": "sftp in",
+        "z": "f6f2187d.f17ca8",
+        "name": "pv india",
+        "sftp": "",
+        "operation": "list",
+        "filename": "",
+        "localFilename": "",
+        "workdir": "/home/visionUser/test/tolocaltest/",
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "052cb5c4b5732fe0"
+            ]
+        ]
+    },
+    {
+        "id": "a872f387d542344b",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.data",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 200,
+        "y": 280,
+        "wires": [
+            [
+                "5d261657f4ac8774"
+            ]
+        ]
+    },
+    {
+        "id": "a16d11e467d0a18e",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e3c4a79a5c61095c",
+        "type": "sftp in",
+        "z": "f6f2187d.f17ca8",
+        "name": "pv india",
+        "sftp": "",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "workdir": "/home/iplon/ftp_test",
+        "x": 740,
+        "y": 380,
+        "wires": [
+            [
+                "a16d11e467d0a18e"
+            ]
+        ]
+    },
+    {
+        "id": "14c56290c70fa660",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "func": "msg.payload.data=msg.payload.path\n//flow.set(\"path_test\",  msg.payload.path);\nmsg.payload.filename=msg.payload.name\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 380,
+        "wires": [
+            [
+                "a9d97f4fdb5b0f1a"
+            ]
+        ]
+    },
+    {
+        "id": "a9d97f4fdb5b0f1a",
+        "type": "delay",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 540,
+        "y": 380,
+        "wires": [
+            [
+                "e3c4a79a5c61095c"
+            ]
+        ]
+    }
+]
