@@ -1,0 +1,48 @@
+var DELETE_LENGTH = msg.payload.delete.length
+
+var PUT_LENGTH = msg.payload.put.length
+
+let DELETE = [];
+let PUT = [];
+
+let BALANCE = [];
+if(DELETE_LENGTH != PUT_LENGTH)
+{
+for (var i = 0; i<DELETE_LENGTH;i++)
+
+{  
+     DELETE.push(msg.payload.delete[i].name);
+   
+}
+for (var j = 0; j<PUT_LENGTH;j++)
+{  
+   
+   PUT.push(msg.payload.put[j].name);
+   
+}
+for(var k=0; k<DELETE_LENGTH; k++)
+{
+       flag = 0;
+       for(var l=0; l<PUT_LENGTH; l++)
+       {
+           if(DELETE[k] === PUT[l])
+           {
+             
+               PUT.splice(l,1);
+               l--;
+               flag = 1;
+               
+           }
+       }
+ 
+       if(flag == 0)
+       {
+           
+           BALANCE.push(DELETE[k]);
+       
+       }
+         
+}
+}
+msg.payload = BALANCE;
+return msg;
