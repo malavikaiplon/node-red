@@ -1,158 +1,20 @@
 [
     {
-        "id": "098d26ea2091de72",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 990,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "052cb5c4b5732fe0",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "file_name",
-        "func": "for (var i =0; i < msg.payload.length ;i++)\n{\n    \nvar obj={};\nobj.payload={\n    path:\"/home/visionUser/test/tolocaltest/\"+msg.payload[i].name,\n    name:msg.payload[i].name\n};\n\n//plantObj.push(obj)\nnode.send(obj);\n\n}\n//msg.payload = plantObj\n\n//return msg;\nmsg.topic=\"DELETE\"\nreturn null;\n\n\n//msg.payload.data = \"/home/visionUser/test/tolocaltest/10586404_EM01_1650903030_1.unsent\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.payload.filename=\"test12.csv\"\n//return msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 580,
-        "y": 280,
-        "wires": [
-            [
-                "098d26ea2091de72",
-                "14c56290c70fa660"
-            ]
-        ]
-    },
-    {
-        "id": "5d261657f4ac8774",
-        "type": "sftp in",
-        "z": "f6f2187d.f17ca8",
-        "name": "pv india",
-        "sftp": "",
-        "operation": "list",
-        "filename": "",
-        "localFilename": "",
-        "workdir": "/home/visionUser/test/tolocaltest/",
-        "x": 400,
-        "y": 280,
-        "wires": [
-            [
-                "052cb5c4b5732fe0"
-            ]
-        ]
-    },
-    {
-        "id": "a872f387d542344b",
-        "type": "inject",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload.data",
-                "v": "",
-                "vt": "str"
-            },
-            {
-                "p": "payload.filename",
-                "v": "",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "x": 210,
-        "y": 280,
-        "wires": [
-            [
-                "5d261657f4ac8774"
-            ]
-        ]
-    },
-    {
-        "id": "a16d11e467d0a18e",
-        "type": "debug",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 990,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "e3c4a79a5c61095c",
-        "type": "sftp in",
-        "z": "f6f2187d.f17ca8",
-        "name": "pv india",
-        "sftp": "",
-        "operation": "put",
-        "filename": "",
-        "localFilename": "",
-        "workdir": "/home/visionUser/test/tolocaltest1/",
-        "x": 760,
-        "y": 340,
-        "wires": [
-            [
-                "a16d11e467d0a18e"
-            ]
-        ],
-        "info": "sleep 10"
-    },
-    {
-        "id": "14c56290c70fa660",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "func": "msg.payload.data=msg.payload.path\n//flow.set(\"path_test\",  msg.payload.path);\nmsg.payload.filename=msg.payload.name\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 340,
-        "wires": [
-            [
-                "e3c4a79a5c61095c"
-            ]
-        ]
-    },
-    {
         "id": "1422e4bd3aa099d5",
         "type": "sftp in",
         "z": "f6f2187d.f17ca8",
-        "name": "PUT",
+        "name": "DELETE",
         "sftp": "",
         "operation": "delete",
         "filename": "",
         "localFilename": "",
         "workdir": "",
-        "x": 990,
-        "y": 700,
+        "x": 1020,
+        "y": 640,
         "wires": [
-            []
+            [
+                "e95a76555c61fc44"
+            ]
         ]
     },
     {
@@ -168,28 +30,9 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 990,
+        "x": 1170,
         "y": 640,
         "wires": []
-    },
-    {
-        "id": "6a4b781061ce900e",
-        "type": "function",
-        "z": "f6f2187d.f17ca8",
-        "name": "",
-        "func": "var DELETE_LENGTH = msg.payload.delete.length\n\nvar PUT_LENGTH = msg.payload.put.length\n\n\nfor (var i = 0; i<DELETE_LENGTH;i++)\n\n{  \n    var dlt_file= msg.payload.delete[i].name\n    var filename;\n\nif(DELETE_LENGTH==PUT_LENGTH)\n\n{ var device2 = {};\n           device2.payload = {\n     filename:\"/home/visionUser/test/tolocaltest/\"+dlt_file\n}\n\nnode.send(device2)\n}\n}\nreturn null",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 780,
-        "y": 640,
-        "wires": [
-            [
-                "e95a76555c61fc44"
-            ]
-        ]
     },
     {
         "id": "42610d2796857649",
@@ -217,7 +60,7 @@
         "operation": "list",
         "filename": "",
         "localFilename": "",
-        "workdir": "/home/visionUser/test/tolocaltest1/",
+        "workdir": "/home/iplon/ftp_test",
         "x": 320,
         "y": 560,
         "wires": [
@@ -237,13 +80,13 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
+        "x": 620,
         "y": 520,
         "wires": [
             [
+                "32e94d17bd9ff1b1",
                 "5a7927d428091118",
-                "6a4b781061ce900e",
-                "32e94d17bd9ff1b1"
+                "42635cf4f011d4b4"
             ]
         ]
     },
@@ -282,12 +125,11 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "10",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payloadType": "str",
         "x": 150,
         "y": 480,
         "wires": [
@@ -355,14 +197,14 @@
         "id": "5a7927d428091118",
         "type": "function",
         "z": "f6f2187d.f17ca8",
-        "name": "",
+        "name": "array comparison",
         "func": "var DELETE_LENGTH = msg.payload.delete.length\n\nvar PUT_LENGTH = msg.payload.put.length\n\nlet DELETE = [];\nlet PUT = [];\n\nlet BALANCE = [];\nif(DELETE_LENGTH != PUT_LENGTH)\n{\nfor (var i = 0; i<DELETE_LENGTH;i++)\n\n{  \n     DELETE.push(msg.payload.delete[i].name);\n   \n}\nfor (var j = 0; j<PUT_LENGTH;j++)\n{  \n   \n   PUT.push(msg.payload.put[j].name);\n   \n}\nfor(var k=0; k<DELETE_LENGTH; k++)\n{\n       flag = 0;\n       for(var l=0; l<PUT_LENGTH; l++)\n       {\n           if(DELETE[k] === PUT[l])\n           {\n             \n               PUT.splice(l,1);\n               l--;\n               flag = 1;\n               \n           }\n       }\n \n       if(flag == 0)\n       {\n            var device2 = {};\n           device2.payload = {\n               \n           balance:DELETE[k]\n           }\n       \n       \n    node.send(device2);     \n}\n}\n}\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 820,
+        "x": 830,
         "y": 520,
         "wires": [
             [
@@ -376,7 +218,7 @@
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -384,7 +226,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1150,
+        "x": 1170,
         "y": 580,
         "wires": []
     },
@@ -392,13 +234,13 @@
         "id": "1dadf5d818b3b302",
         "type": "sftp in",
         "z": "f6f2187d.f17ca8",
-        "name": "pv india",
+        "name": "PUT",
         "sftp": "",
         "operation": "put",
         "filename": "",
         "localFilename": "",
-        "workdir": "/home/visionUser/test/tolocaltest1/",
-        "x": 980,
+        "workdir": "/home/iplon/ftp_test",
+        "x": 990,
         "y": 580,
         "wires": [
             [
@@ -411,7 +253,7 @@
         "id": "911d2e66736cff13",
         "type": "function",
         "z": "f6f2187d.f17ca8",
-        "name": "",
+        "name": "insert function",
         "func": "msg.payload.data=\"/home/visionUser/test/tolocaltest/\"+msg.payload.balance\n//flow.set(\"path_test\",  msg.payload.path);\nmsg.payload.filename=msg.payload.balance\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
@@ -446,7 +288,7 @@
         "to": "",
         "reg": false,
         "x": 870,
-        "y": 700,
+        "y": 640,
         "wires": [
             [
                 "1422e4bd3aa099d5"
@@ -458,7 +300,7 @@
         "type": "debug",
         "z": "f6f2187d.f17ca8",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -466,8 +308,27 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 890,
-        "y": 440,
+        "x": 830,
+        "y": 480,
         "wires": []
+    },
+    {
+        "id": "42635cf4f011d4b4",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "delete_function",
+        "func": "var DELETE_LENGTH = msg.payload.delete.length\n\nvar PUT_LENGTH = msg.payload.put.length\n\nfor (var i = 0; i<DELETE_LENGTH;i++)\n{  \nfor (var j = 0; j<PUT_LENGTH;j++)\n   {  \n   \n\n    var dlt_file= msg.payload.delete[i].name\n    var check_file=msg.payload.put[j].name\n    var filename;\n\nif(dlt_file==check_file)\n\n{ var device2 = {};\n           device2.payload = {\n     filename:\"/home/visionUser/test/tolocaltest/\"+dlt_file\n}\n\nnode.send(device2)\n}\n}\n}\nreturn null",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 640,
+        "wires": [
+            [
+                "7f7030c27db83051"
+            ]
+        ]
     }
 ]
