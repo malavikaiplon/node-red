@@ -1,0 +1,251 @@
+[
+    {
+        "id": "ac96ddcf87f93695",
+        "type": "debug",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b885e8e3931030c0",
+        "type": "file",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 700,
+        "y": 180,
+        "wires": [
+            [
+                "ac96ddcf87f93695"
+            ]
+        ]
+    },
+    {
+        "id": "b94d612e484b6959",
+        "type": "function",
+        "z": "afc8d30f374636bc",
+        "name": "todays date",
+        "func": "var today = new Date().toISOString().slice(0, 10);\n\n\n\n//console.log(formatDate(today));\n\nvar c =today;\ncontext.set('c',c)\n\nvar path = \"C:/Users/NODE-RED/Documents/ARRAY METER/epoch_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "b885e8e3931030c0"
+            ]
+        ]
+    },
+    {
+        "id": "4d4287b95e1347da",
+        "type": "file in",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": true,
+        "x": 680,
+        "y": 260,
+        "wires": [
+            [
+                "8b2ea390bf3f8cf3"
+            ]
+        ]
+    },
+    {
+        "id": "5ed3af7c3e8b72a3",
+        "type": "inject",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "900",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "b29172ec87113b4a"
+            ]
+        ]
+    },
+    {
+        "id": "b29172ec87113b4a",
+        "type": "function",
+        "z": "afc8d30f374636bc",
+        "name": "todays date",
+        "func": "$today = new Date();\n$yesterday = new Date($today);\n$yesterday.setDate($today.getDate() - 1);\n    var $dd = $yesterday.getDate();\nvar $mm = $yesterday.getMonth()+1; //January is 0!\n\nvar $yyyy = $yesterday.getFullYear();\nif($dd<10){$dd='0'+$dd} if($mm<10){$mm='0'+$mm} $yesterday = $yyyy+'-'+$mm+'-'+$dd;\nvar c =$yesterday;\n    \n\nvar path = \"C:/Users/NODE-RED/Documents/ARRAY METER/epoch_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 260,
+        "wires": [
+            [
+                "4d4287b95e1347da"
+            ]
+        ]
+    },
+    {
+        "id": "8b2ea390bf3f8cf3",
+        "type": "csv",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 850,
+        "y": 260,
+        "wires": [
+            [
+                "ac96ddcf87f93695"
+            ]
+        ]
+    },
+    {
+        "id": "8c7c53718196af1a",
+        "type": "cronplus",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */15 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "b94d612e484b6959"
+            ]
+        ]
+    },
+    {
+        "id": "8fb4836228049b18",
+        "type": "function",
+        "z": "afc8d30f374636bc",
+        "name": "yesterday",
+        "func": "$today = new Date();\n$yesterday = new Date($today);\n$yesterday.setDate($today.getDate() - 1);\n    var $dd = $yesterday.getDate();\nvar $mm = $yesterday.getMonth()+1; //January is 0!\n\nvar $yyyy = $yesterday.getFullYear();\nif($dd<10){$dd='0'+$dd} if($mm<10){$mm='0'+$mm} $yesterday = $yyyy+'-'+$mm+'-'+$dd;\nvar c =$yesterday;\n    \n\nvar path = \"C:/Users/NODE-RED/Documents/epoch_\"+c+\".csv\"\nmsg.filename = path\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 120,
+        "wires": [
+            [
+                "1c77ef2b3a1f3101"
+            ]
+        ]
+    },
+    {
+        "id": "7c2fcc1838d4990b",
+        "type": "debug",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "2e72f434d49c7b1a",
+        "type": "inject",
+        "z": "afc8d30f374636bc",
+        "name": "delete file",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "8fb4836228049b18"
+            ]
+        ]
+    },
+    {
+        "id": "1c77ef2b3a1f3101",
+        "type": "file",
+        "z": "afc8d30f374636bc",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 750,
+        "y": 120,
+        "wires": [
+            [
+                "7c2fcc1838d4990b"
+            ]
+        ]
+    }
+]
