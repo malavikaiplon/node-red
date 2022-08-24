@@ -1,0 +1,81 @@
+[
+    {
+        "id": "c5268070.c55a3",
+        "type": "ui_template",
+        "z": "b716fdc48724e610",
+        "group": "c33a1024a72aa169",
+        "name": "Upload Btn",
+        "order": 8,
+        "width": "3",
+        "height": 1,
+        "format": "\n<body>\n<button class=\"md-raised md-button md-ink-ripple\" onclick=\"importData()\">Upload</button>    \n\n<script>\nlet restoreScope = scope;\n\nfunction importData() {\n  let input = document.createElement('input');\n  input.type = 'file';\n  input.id = 'restoreBtn';\n  input.onchange = _ => {\n    // you can use this method to get file and perform respective operations\n        let fReader = new FileReader();\n        fReader.readAsText(input.files[0]);\n        fReader.onloadend = function(event){\n        restoreScope.send({payload:event.target.result});}\n        };\n  input.click();\n}\n</script>\n</body>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "54bf5f7f4ae51209"
+            ]
+        ]
+    },
+    {
+        "id": "5e18b80e617a3db8",
+        "type": "debug",
+        "z": "b716fdc48724e610",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "54bf5f7f4ae51209",
+        "type": "csv",
+        "z": "b716fdc48724e610",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 750,
+        "y": 240,
+        "wires": [
+            [
+                "5e18b80e617a3db8"
+            ]
+        ]
+    },
+    {
+        "id": "c33a1024a72aa169",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "cc6c4310cf7b61cc",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "cc6c4310cf7b61cc",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
