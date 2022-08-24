@@ -1,0 +1,179 @@
+[
+    {
+        "id": "1b510524f6184210",
+        "type": "inject",
+        "z": "f0e9ef5f.a6f1e",
+        "name": "INJECT -- iyyermalai",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "5c63cdcb26692662"
+            ]
+        ]
+    },
+    {
+        "id": "3e53cae6db2be1e6",
+        "type": "function",
+        "z": "f0e9ef5f.a6f1e",
+        "name": "",
+        "func": "\n    for (var j = 0; j<msg.payload.length;j++)\n    for (var i = 0; i < msg.payload[j].length;i++)\n \n{\n var newMsg = {};\n newMsg.payload = {\n TIME:msg.payload[j][i].time,\n Air_Value:msg.payload[0][i].last,\n WS_Value:msg.payload[1][i].last,\n \n PLANT:msg.payload[j][i].p,\n BLOCK:msg.payload[j][i].b,\n DEVICE:msg.payload[j][i].d,\n AP:msg.payload[0][i].f,\n WSS:msg.payload[1][i].f\n \n }\n node.send(newMsg);\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "11c7f5e5d066b8cf"
+            ]
+        ]
+    },
+    {
+        "id": "5c63cdcb26692662",
+        "type": "influxdb in",
+        "z": "f0e9ef5f.a6f1e",
+        "influxdb": "d5ff1a1a1028f631",
+        "name": "WS Daata validation",
+        "query": "SELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai' AND \"b\" = 'B90' AND \"d\" = 'WS' AND \"f\" = 'AIR_PRESSURE') AND time >= now() - 12h GROUP BY time(5m), \"p\", \"b\", \"d\", \"f\" fill(none);\nSELECT last(\"value\"),p,b,d,f FROM \"v\" WHERE (\"p\" = 'Iyyermalai' AND \"b\" = 'B90' AND \"d\" = 'WS' AND \"f\" = 'WIND_SPEED') AND time >= now() - 12h GROUP BY time(5m), \"p\", \"b\", \"d\", \"f\"  fill(none);\n\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 420,
+        "y": 380,
+        "wires": [
+            [
+                "3e53cae6db2be1e6"
+            ]
+        ]
+    },
+    {
+        "id": "11c7f5e5d066b8cf",
+        "type": "function",
+        "z": "f0e9ef5f.a6f1e",
+        "name": "Communication >1",
+        "func": "var TIME = msg.payload.TIME\nvar Air_Value =msg.payload.Air_Value\nvar WS_Value =msg.payload.WS_Value\nvar PLANT=msg.payload.PLANT\nvar BLOCK =msg.payload.BLOCK\nvar DEVICE=msg.payload.DEVICE\nvar AP=msg.payload.AP\nvar WSS=msg.payload.WSS\n\n{\n\t\nif (Air_Value <=1000 || Air_Value >=1100)\n\n{\n    var newMsg = {};\n   newMsg.payload =\n   {\n      TIME,\n      Air_Value,\n      PLANT,\n      BLOCK,\n      DEVICE,\n      AP,\n     Issue:\"Air pressure- issue\"\n   }\n          node.send(newMsg);\n}\n}\n{\n\n if  (WS_Value <5 || WS_Value >=15)\n\n{\n    var new1Msg = {};\n   new1Msg.payload =\n   {\n      TIME,\n      WS_Value,\n      PLANT,\n      BLOCK,\n      DEVICE,\n      WSS,\n     Issue:\"WS_Value- issue\"\n   } \n  \n   \n    node.send(new1Msg);\n}\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 380,
+        "wires": [
+            [
+                "b365ef636a59220f"
+            ]
+        ]
+    },
+    {
+        "id": "b365ef636a59220f",
+        "type": "function",
+        "z": "f0e9ef5f.a6f1e",
+        "name": "tags and fields",
+        "func": "msg.payload = [\n {\n measurement: \"AIR\",\n fields:\n {\n Air_Value : msg.payload.Air_Value,\n //WS_Value : msg.payload.WS_Value\n },\n \n tags:{\n PLANT:msg.payload.PLANT,\n BLOCK :msg.payload.BLOCK,\n DEVICE:msg.payload.DEVICE,\n AP:msg.payload.AP,\n // WSS:msg.payload.WSS\n },\n \n timestamp:msg.payload.TIME\n \n },\n\n];\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 460,
+        "wires": [
+            [
+                "099b6276780ddc8f",
+                "464852db1018e58e"
+            ]
+        ]
+    },
+    {
+        "id": "464852db1018e58e",
+        "type": "influxdb batch",
+        "z": "f0e9ef5f.a6f1e",
+        "influxdb": "a5419d0eeac83504",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1070,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "099b6276780ddc8f",
+        "type": "debug",
+        "z": "f0e9ef5f.a6f1e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1070,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "d5ff1a1a1028f631",
+        "type": "influxdb",
+        "hostname": "192.168.5.125",
+        "port": "30086",
+        "protocol": "http",
+        "database": "TATA_CCRA",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "a5419d0eeac83504",
+        "type": "influxdb",
+        "hostname": "192.168.5.125",
+        "port": "30086",
+        "protocol": "http",
+        "database": "TEST_TM",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
