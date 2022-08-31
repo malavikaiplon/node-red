@@ -1,34 +1,5 @@
 [
     {
-        "id": "6a7165287797193f",
-        "type": "inject",
-        "z": "92de018882673e24",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "300",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 190,
-        "y": 200,
-        "wires": [
-            [
-                "7d796b250ba8b734"
-            ]
-        ]
-    },
-    {
         "id": "cd8c84844edf0e56",
         "type": "influxdb in",
         "z": "92de018882673e24",
@@ -78,7 +49,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1220,
+        "x": 1200,
         "y": 200,
         "wires": []
     },
@@ -153,6 +124,38 @@
         "wires": [
             [
                 "a55614dd56d38ee6"
+            ]
+        ]
+    },
+    {
+        "id": "663491c66e77acb2",
+        "type": "cronplus",
+        "z": "92de018882673e24",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */5 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "7d796b250ba8b734"
             ]
         ]
     },
