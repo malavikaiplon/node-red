@@ -22,7 +22,7 @@
         "id": "61a6ddb362bd7ad5",
         "type": "function",
         "z": "92de018882673e24",
-        "name": "function 7",
+        "name": "inv_start&stop",
         "func": "let plantObj\nplantObj = []\n\n//var value=0;\nvar t;\nvar Start_Time = 0;\nvar End_Time = 0;\nfor (var i = 0; i < msg.payload.length; i++) {\n    var time = msg.payload[i].time;\n    var b = msg.payload[i].b;\n    var bd = msg.payload[i].d;\n    var d = msg.payload[i].d;\n    var dd = msg.payload[i].dd;\n    var dt = msg.payload[i].dt;\n    var f = msg.payload[i].f;\n    var fd = msg.payload[i].fd;\n    var h = msg.payload[i].h;\n    var iid = msg.payload[i].iid;\n    var m = msg.payload[i].m;\n    var p = msg.payload[i].p;\n    //var qu = msg.payload[i].qu;\n    //var text = msg.payload[i].text;\n    var u = msg.payload[i].u;\n    var value;\n    var pac_value = msg.payload[i].last;\n    {\n        if ((pac_value > 1) && (Start_Time == 0)) {\n            Start_Time = new Date(time).getTime()\n            t = \"start_time_1\"\n            End_Time = 0\n        }\n        if ((pac_value < 1) && (End_Time == 0)) {\n            End_Time = new Date(time).getTime()\n            t = \"stop_time_1\"\n            Start_Time = 0\n        }\n\n        var obj1 =\n        {\n            time,\n            b,\n            bd,\n            d,\n            dd,\n            dt,\n            f,\n            fd,\n            h,\n            iid,\n            m,\n            p,\n            //qu,\n            //text,\n            u,\n            t,\n            pac_value,\n            //value\n            Start_Time,\n            End_Time\n\n        }\n        plantObj.push(obj1)\n    }\n}\nmsg.payload = plantObj\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
@@ -36,22 +36,6 @@
                 "a09028ad2e374beb"
             ]
         ]
-    },
-    {
-        "id": "1ca537765d84daaa",
-        "type": "debug",
-        "z": "92de018882673e24",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1200,
-        "y": 200,
-        "wires": []
     },
     {
         "id": "a55614dd56d38ee6",
@@ -93,14 +77,14 @@
         "id": "a09028ad2e374beb",
         "type": "function",
         "z": "92de018882673e24",
-        "name": "function 10",
-        "func": "\nlet plantObj\nplantObj = []\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n   var start= msg.payload[i].Start_Time \n   var stop=msg.payload[i].End_Time\n    var tag = msg.payload[i].t\n  var time = msg.payload[i].time;\n  var b = msg.payload[i].b;\n  var bd = msg.payload[i].d;\n  var d = msg.payload[i].d;\n  var dd = msg.payload[i].dd;\n  var dt = msg.payload[i].dt;\n  var f = msg.payload[i].f;\n  var fd = msg.payload[i].fd;\n  var h = msg.payload[i].h;\n  var iid = msg.payload[i].iid;\n  var m = msg.payload[i].m;\n  var p = msg.payload[i].p;\n  var u = msg.payload[i].u;\n    if (start==0)\n    {var value=stop\n    var t=\"stop_time_1\"}\n    else{value=start\n    t=\"start_time_1\"}\n\n  var obj1 =\n  {\n    time,\n    b,\n    bd,\n    d,\n    dd,\n    dt,\n    f,\n    fd,\n    h,\n    iid,\n    m,\n    p,\n    u,\n    value,\n    tag,\n    t\n\n  }\n  plantObj.push(obj1)\n}\n\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "name": "value field",
+        "func": "\nlet plantObj\nplantObj = []\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n   var start= msg.payload[i].Start_Time \n   var stop=msg.payload[i].End_Time\n    var tag = msg.payload[i].t\n  var time = msg.payload[i].time;\n  var b = msg.payload[i].b;\n  var bd = msg.payload[i].d;\n  var d = msg.payload[i].d;\n  var dd = msg.payload[i].dd;\n  var dt = msg.payload[i].dt;\n  var f = msg.payload[i].f;\n  var fd = \"timestamp\";\n  var h = msg.payload[i].h;\n  var iid = msg.payload[i].iid;\n  var m = msg.payload[i].m;\n  var p = msg.payload[i].p;\n  var u = \" \";\n    if (start==0)\n    {var value=stop\n    var t=\"stop_time_1\"}\n    else{value=start\n    t=\"start_time_1\"}\n\n  var obj1 =\n  {\n    time,\n    b,\n    bd,\n    d,\n    dd,\n    dt,\n    f,\n    fd,\n    h,\n    iid,\n    m,\n    p,\n    u,\n    value,\n    tag,\n    t\n\n  }\n  plantObj.push(obj1)\n}\n\nmsg.payload = plantObj\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 830,
+        "x": 820,
         "y": 200,
         "wires": [
             [
@@ -112,14 +96,14 @@
         "id": "ced0b3b80cc34afa",
         "type": "function",
         "z": "92de018882673e24",
-        "name": "function 8",
-        "func": "\n\nfor (var i = 0; i < msg.payload.length; i++) {\n       var obj = {};\n    \n    obj.payload =\n        [\n            {\n                measurement: \"inv_time\",\n                \n                fields: {\n\n                    value: msg.payload[i].value\n                    \n\n                },\n                tags: {\n                     b : msg.payload[i].b,\n                     bd : msg.payload[i].d,\n                     d :msg.payload[i].d,\n                     dd : msg.payload[i].dd,\n                     dt : msg.payload[i].dt,\n                     f :msg.payload[i].tag,\n                     fd : msg.payload[i].fd,\n                     h :msg.payload[i].h,\n                     iid : msg.payload[i].iid,\n                     m : msg.payload[i].m,\n                     p : msg.payload[i].p,\n                     u : msg.payload[i].u,\n                     \n\n                },\n\n                timestamp: msg.payload[i].time\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\nreturn msg;",
+        "name": "influx table",
+        "func": "\n\nfor (var i = 0; i < msg.payload.length; i++) {\n       var obj = {};\n    \n    obj.payload =\n        [\n            {\n                measurement: \"report\",\n                \n                fields: {\n\n                    value: msg.payload[i].value\n                    \n\n                },\n                tags: {\n                     b : msg.payload[i].b,\n                     bd : msg.payload[i].d,\n                     d :msg.payload[i].d,\n                     dd : msg.payload[i].dd,\n                     dt : msg.payload[i].dt,\n                     f :msg.payload[i].tag,\n                     fd : msg.payload[i].fd,\n                     h :msg.payload[i].h,\n                     iid : msg.payload[i].iid,\n                     m : msg.payload[i].m,\n                     p : msg.payload[i].p,\n                     u : msg.payload[i].u,\n                     \n\n                },\n\n                timestamp: msg.payload[i].time\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1020,
+        "x": 970,
         "y": 200,
         "wires": [
             [
@@ -144,7 +128,7 @@
                 "payloadType": "date",
                 "payload": "",
                 "expressionType": "cron",
-                "expression": "0 */5 * * * *",
+                "expression": "0 */1 * * * *",
                 "location": "",
                 "offset": "0",
                 "solarType": "all",
@@ -156,6 +140,39 @@
         "wires": [
             [
                 "7d796b250ba8b734"
+            ]
+        ]
+    },
+    {
+        "id": "5a95184be207ce04",
+        "type": "debug",
+        "z": "92de018882673e24",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9cc0fc5ac3c1d541",
+        "type": "catch",
+        "z": "92de018882673e24",
+        "name": "",
+        "scope": [
+            "a55614dd56d38ee6"
+        ],
+        "uncaught": false,
+        "x": 850,
+        "y": 300,
+        "wires": [
+            [
+                "a55614dd56d38ee6"
             ]
         ]
     },
