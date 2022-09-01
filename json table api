@@ -1,0 +1,116 @@
+[
+    {
+        "id": "223512bd77b96352",
+        "type": "http in",
+        "z": "7befadbcc5804504",
+        "name": "",
+        "url": "/apitest/query",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "b740861ddbb0d68e"
+            ]
+        ]
+    },
+    {
+        "id": "f272c22fe1256aaa",
+        "type": "http response",
+        "z": "7befadbcc5804504",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 790,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b740861ddbb0d68e",
+        "type": "change",
+        "z": "7befadbcc5804504",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[{\"type\":\"table\", \"columns\":[ {\"text\":\"INV Error Codes\",\"type\":\"string\"}], \"rows\": [[\"0: Run\"], [\"4224: ERR_1080:DI_4_Fault\"], [\"4225: ERR_1081:DI_5_Fault\"], [\"4226: ERR_1082:Fan_Failure\"], [\"4227: ERR_1083:Inverter_Internal_Fault\"], [\"8976: ERR_2310:Overcurrent\"], [\"9088: ERR_2380:AC_Overcurrent\"], [\"9089: ERR_2381:Inverter_Short_Circuit\"], [\"9091: ERR_2383:Earth_Fault\"], [\"9092: ERR_2384:Main_Contactor_Fault\"], [\"9184: ERR_23E0:Current_Unbalance_1\"], [\"12576: ERR_3120:AC_Undervoltage\"], [\"12609: ERR_3141:AC_Overfrequency\"], [\"12610: ERR_3142:AC_Underfrequency\"], [\"12816: ERR_3210:DC_Overvoltage\"], [\"12832: ERR_3220:DC_Undervoltage\"], [\"12848: ERR_3230:Charging_Fault\"], [\"12930: ERR_3282:DC_Undervoltage\"], [\"12932: ERR_3284:Charging_Failure\"], [\"12933: ERR_3285:Grid_Voltage_Out_of_Range\"], [\"12961: ERR_32A1:Supply_Volt_Out_of_RT_Area\"], [\"12961: ERR_32AF:DC_Overvoltage\"], [\"16770: ERR_4182:CAB_Temp_1_Low\"], [\"17041: ERR_4291:IGBT_Temp_High\"], [\"17281: ERR_4381:Temp_Diff_1_U\"], [\"17284: ERR_4384:Temp_Diff_2_U\"], [\"21520: ERR_5410:INV_Module_Set_Incorrectly\"], [\"24704: ERR_6080:Autoreset_Completed\"], [\"29984: ERR_7520:COMM_Fail_between_Master_Inverter\"], [\"30081: ERR_7581:COMM_Fail_between_Master_Inverter\"], [\"33152: ERR_8180:Fail_to_Synch\"], [\"33157: ERR_8185:Inverter_Tripped\"], [\"33159: ERR_8187:Reverse_Power_Flow_towards_DC_side_Peak\"], [\"33160: ERR_8188:DC_Breaker_Trip\"], [\"33161: ERR_8189:Grid_Monitoring_Relay_Fault\"], [\"33164: ERR_818C:Voltage_Diff_across_Closed_DC_Switch\"], [\"33165: ERR_818D:DC_Switch_Status_Feedback_Fault\"], [\"33166: ERR_818E:Reverse_Power_Flow_towards_DC_side_Level\"], [\"33183: ERR_819F:Islanding_Detected\"], [\"36995: ERR_9083:DI_3_Fault\"], [\"36996: ERR_9084:DI_4_Fault\"], [\"36997: ERR_9085:DI_5_Fault\"], [\"37000: ERR_9088:Fan_Fault\"], [\"61571: ERR_F083:Emergency_Stop\"], [\"65303: ERR_FF17:Main_Contactor_Fault\"], [\"65430: ERR_FF96:DI_7_Fault\"] ] }]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 300,
+        "wires": [
+            [
+                "f272c22fe1256aaa"
+            ]
+        ]
+    },
+    {
+        "id": "52a31252c90da052",
+        "type": "http in",
+        "z": "7befadbcc5804504",
+        "name": "",
+        "url": "/apitest1",
+        "method": "post",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 340,
+        "y": 360,
+        "wires": [
+            [
+                "ce54bbfa56672146"
+            ]
+        ]
+    },
+    {
+        "id": "7cd947f4d83b48b7",
+        "type": "http response",
+        "z": "7befadbcc5804504",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 790,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ce54bbfa56672146",
+        "type": "change",
+        "z": "7befadbcc5804504",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[   {     \"columns\":[       {\"text\":\"Time\",\"type\":\"time\"},       {\"text\":\"Country\",\"type\":\"string\"},       {\"text\":\"Number\",\"type\":\"number\"}     ],     \"rows\":[       [1234567,\"SE\",123],       [1234567,\"DE\",231],       [1234567,\"US\",321]     ],     \"type\":\"table\"   } ]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 360,
+        "wires": [
+            [
+                "7cd947f4d83b48b7"
+            ]
+        ]
+    }
+]
