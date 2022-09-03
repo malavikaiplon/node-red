@@ -1,0 +1,136 @@
+[
+    {
+        "id": "a5a394a6d710e783",
+        "type": "influxdb in",
+        "z": "5d47f43c5eca1ce0",
+        "influxdb": "edb3988ac6dcfbf7",
+        "name": "hysolwin",
+        "query": "SELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'hysolwin_5MW' AND \"d\" = 'INV01' AND \"f\" = 'TOTAL_INV_EAE_DAY') AND time >= now() - 10d GROUP BY time(5m),p,b,d,f fill(null);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'hysolwin_5MW' AND \"d\" = 'INV22' AND \"f\" = 'TOTAL_INV_EAE_DAY') AND time >= now() - 10d GROUP BY time(5m),p,b,d,f fill(null);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'hysolwin_5MW' AND \"d\" = 'INV08' AND \"f\" = 'TOTAL_INV_EAE_DAY') AND time >= now() - 10d GROUP BY time(5m),p,b,d,f fill(null);\nSELECT last(\"value\") FROM \"v\" WHERE (\"bd\" = 'hysolwin_5MW' AND \"d\" = 'INV14' AND \"f\" = 'TOTAL_INV_EAE_DAY') AND time >= now() - 10d GROUP BY time(5m),p,b,d,f fill(null);",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "01bc2d9d9ed192e7"
+            ]
+        ]
+    },
+    {
+        "id": "202746a15c1b5e18",
+        "type": "function",
+        "z": "5d47f43c5eca1ce0",
+        "name": "multiple measurement points",
+        "func": "\nfor (var i = 0; i < msg.payload.length; i++) \n{\n    var inv_sum = msg.payload[i].inv_sum\n    var time = msg.payload[i].TIME\n    var obj = {};\n    obj.payload =\n   \n        [\n            {\n                measurement: \"INV_SUM\",\n\n                fields: {\n\n                    value: inv_sum\n\n                },\n                tags: {\n\n\n                },\n\n                timestamp: new Date(time)\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);   \n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 200,
+        "wires": [
+            [
+                "f99d8c4af31870b0"
+            ]
+        ]
+    },
+    {
+        "id": "f99d8c4af31870b0",
+        "type": "influxdb batch",
+        "z": "5d47f43c5eca1ce0",
+        "influxdb": "edb3988ac6dcfbf7",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1070,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "01bc2d9d9ed192e7",
+        "type": "function",
+        "z": "5d47f43c5eca1ce0",
+        "name": "function 9",
+        "func": "let plantObj\n\nplantObj = []\n\n    //for (var j = 0; j < msg.payload[0].length; j++)\n    for (var i = 0; i < msg.payload[0].length; i++)\n   // for (var k = 0; k < msg.payload[2].length; k++) \n    //for (var l = 0; k < msg.payload[3].length; l++) \n     {\n        var time0 = new Date(msg.payload[0][i].time).getTime();\n        var time1 = new Date(msg.payload[1][i].time).getTime();\n        var time2 = new Date(msg.payload[2][i].time).getTime();\n        var time3 = new Date(msg.payload[3][i].time).getTime();\n        var inv01 = msg.payload[0][i].last\n        var inv22 = msg.payload[1][i].last\n        var inv08 = msg.payload[2][i].last\n        var inv14 = msg.payload[3][i].last\n\n        if ((time0 == time1 && time2 && time3))\n{\n            {\n                var inv_sum = inv01 + inv22 + inv08 + inv14\n            \n           // if (inv01&&inv22&&inv08&&inv14== \"null\")\n\n           //  {inv_sum=\"null\"}\n            //node.send(obj);\n            var obj = {\n                TIME: new Date(time0),\n                inv01,\n                inv08,\n                inv14,\n                inv22,\n                inv_sum\n\n            }\n\n            plantObj.push(obj)\n        }\n     }\n     }\nmsg.payload = plantObj\n//return null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "202746a15c1b5e18"
+            ]
+        ]
+    },
+    {
+        "id": "b14954fb859aa1fa",
+        "type": "cronplus",
+        "z": "5d47f43c5eca1ce0",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */5 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "a5a394a6d710e783"
+            ]
+        ]
+    },
+    {
+        "id": "edb3988ac6dcfbf7",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8086",
+        "protocol": "http",
+        "database": "hysolwin",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
