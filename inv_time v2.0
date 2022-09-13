@@ -1,0 +1,174 @@
+[
+    {
+        "id": "663491c66e77acb2",
+        "type": "cronplus",
+        "z": "92de018882673e24",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */5 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 100,
+        "y": 60,
+        "wires": [
+            [
+                "82f84609e455ab5c"
+            ]
+        ]
+    },
+    {
+        "id": "64d41317b6bbef8a",
+        "type": "influxdb batch",
+        "z": "92de018882673e24",
+        "influxdb": "536ea1c050c7aae6",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "largeutilitylakeasia",
+        "bucket": "tata_report",
+        "x": 1160,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "bb052fbad88241c9",
+        "type": "influxdb in",
+        "z": "92de018882673e24",
+        "influxdb": "536ea1c050c7aae6",
+        "name": "testdb 2.0",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "largeutilitylakeasia",
+        "x": 400,
+        "y": 60,
+        "wires": [
+            [
+                "dd64ee95f0f1a157"
+            ]
+        ]
+    },
+    {
+        "id": "82f84609e455ab5c",
+        "type": "function",
+        "z": "92de018882673e24",
+        "name": "cum_edc",
+        "func": "\n var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate());\n d.setHours(0,0,0,0);\n \n //var $tommarow = new Date();\n //var d1 = new Date($tommarow);\n //d1.setDate($tommarow.getDate());\n //d1.setHours(23,59,0,0);\n var d1=msg.payload\n  var tstart=new Date(d).toISOString();\n  var tend= new Date(d1).toISOString();\n  \n // var q = SELECT cumulative_sum(sum(value)) FROM energydc_test WHERE (d = 'B01_INV2' AND f !~ /.*PR_EDC*./ AND f != 'UB_ALARM') AND time >= + tstart +ms and time <= + tend + ms GROUP BY time(5m),d,f fill(0);;\n // var q1=SELECT last(value) FROM energydc_test WHERE (d = 'B01_INV2') AND time >= + tstart +ms and time <= + tend + ms GROUP BY time(1m),d,f fill(0);;\n\nvar q = 'from(bucket: \"tata\")|> range(start:' + tstart + ' , stop:' + tend +' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|>filter(fn: (r) => r._field == \"value\")|> filter(fn: (r) => r[\"p\"] == \"Iyyermalai\")|>filter(fn: (r) => r[\"dt\"] == \"INV\")|> filter(fn: (r) => r[\"f\"] == \"PAC\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|>yield(name: \"last\")'\n\nmsg.query = q\n//msg.topic=cum;\n msg.payload=tend\n return msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 60,
+        "wires": [
+            [
+                "bb052fbad88241c9"
+            ]
+        ]
+    },
+    {
+        "id": "dd64ee95f0f1a157",
+        "type": "function",
+        "z": "92de018882673e24",
+        "name": "inv_start&stop",
+        "func": "let plantObj\nplantObj = []\n\n//var value=0;\nvar t;\nvar Start_Time = 0;\nvar End_Time = 0;\nfor (var i = 0; i < msg.payload.length; i++) {\n    var time = msg.payload[i]._time;\n    var b = msg.payload[i].b;\n    var bd = msg.payload[i].d;\n    var d = msg.payload[i].d;\n    var dd = msg.payload[i].dd;\n    var dt = msg.payload[i].dt;\n    var f = msg.payload[i].f;\n    var fd = msg.payload[i].fd;\n    var h = msg.payload[i].h;\n    var iid = msg.payload[i].iid;\n    var m = msg.payload[i].m;\n    var p = msg.payload[i].p;\n    //var qu = msg.payload[i].qu;\n    //var text = msg.payload[i].text;\n    var u = msg.payload[i].u;\n    var value;\n    var pac_value = msg.payload[i]._value;\n    {\n        if ((pac_value > 1) && (Start_Time == 0)) {\n            Start_Time = new Date(time).getTime()\n            t = \"start_time_1\"\n            End_Time = 0\n        }\n        if ((pac_value < 1) && (End_Time == 0)) {\n            End_Time = new Date(time).getTime()\n            t = \"stop_time_1\"\n            Start_Time = 0\n        }\n\n        var obj1 =\n        {\n            time,\n            b,\n            bd,\n            d,\n            dd,\n            dt,\n            f,\n            fd,\n            h,\n            iid,\n            m,\n            p,\n            //qu,\n            //text,\n            u,\n            t,\n            pac_value,\n            //value\n            Start_Time,\n            End_Time\n\n        }\n        plantObj.push(obj1)\n    }\n}\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 60,
+        "wires": [
+            [
+                "07899d85d1182216"
+            ]
+        ]
+    },
+    {
+        "id": "07899d85d1182216",
+        "type": "function",
+        "z": "92de018882673e24",
+        "name": "value field",
+        "func": "\nlet plantObj\nplantObj = []\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n   var start= msg.payload[i].Start_Time \n   var stop=msg.payload[i].End_Time\n    var tag = msg.payload[i].t\n  var time = msg.payload[i].time;\n  var b = msg.payload[i].b;\n  var bd = msg.payload[i].d;\n  var d = msg.payload[i].d;\n  var dd = msg.payload[i].dd;\n  var dt = msg.payload[i].dt;\n  var f = msg.payload[i].f;\n  var fd = \"timestamp\";\n  var h = msg.payload[i].h;\n  var iid = msg.payload[i].iid;\n  var m = msg.payload[i].m;\n  var p = msg.payload[i].p;\n  var u = msg.payload[i].u;\n    if (start==0)\n    {var value=stop\n    var t=\"stop_time_1\"}\n    else{value=start\n    t=\"start_time_1\"}\n\n  var obj1 =\n  {\n    time,\n    b,\n    bd,\n    d,\n    dd,\n    dt,\n    f,\n    fd,\n    h,\n    iid,\n    m,\n    p,\n    u,\n    value,\n    tag,\n    t\n\n  }\n  plantObj.push(obj1)\n}\n\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 60,
+        "wires": [
+            [
+                "2aedcaa6dd7a5390"
+            ]
+        ]
+    },
+    {
+        "id": "2aedcaa6dd7a5390",
+        "type": "function",
+        "z": "92de018882673e24",
+        "name": "influx table",
+        "func": "\n\nfor (var i = 0; i < msg.payload.length; i++) {\n       var obj = {};\n    \n    obj.payload =\n        [\n            {\n                measurement: \"v\",\n                \n                fields: {\n\n                    value: msg.payload[i].value,\n                    text:\"0\",\n                    qu:\"0\"\n\n                },\n                tags: {\n                     b : msg.payload[i].b,\n                     bd : msg.payload[i].d,\n                     d :msg.payload[i].d,\n                     dd : msg.payload[i].dd,\n                     dt : msg.payload[i].dt,\n                     f :msg.payload[i].tag,\n                     fd : msg.payload[i].fd,\n                     h :msg.payload[i].h,\n                     iid : msg.payload[i].iid,\n                     m : msg.payload[i].m,\n                     p : msg.payload[i].p,\n                     u : msg.payload[i].u\n                     \n\n                },\n\n                time: msg.payload[i].time\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 60,
+        "wires": [
+            [
+                "64d41317b6bbef8a"
+            ]
+        ]
+    },
+    {
+        "id": "536ea1c050c7aae6",
+        "type": "influxdb",
+        "hostname": "http://34.93.63.75",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "2.0",
+        "url": "http://34.93.63.75:80",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
