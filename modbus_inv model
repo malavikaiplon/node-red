@@ -1,0 +1,431 @@
+[
+    {
+        "id": "3f99942531ef1094",
+        "type": "csv",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 510,
+        "y": 340,
+        "wires": [
+            [
+                "ae282a4b10467471",
+                "b2f55ffe019c9d79"
+            ]
+        ]
+    },
+    {
+        "id": "acc2aab2a6f3d920",
+        "type": "inject",
+        "z": "9f94945fdba7cf88",
+        "name": "stop",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "stop",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "cfb53a54e91a26e1"
+            ]
+        ]
+    },
+    {
+        "id": "cfb53a54e91a26e1",
+        "type": "file in",
+        "z": "9f94945fdba7cf88",
+        "name": "arken",
+        "filename": "/home/iplon/Downloads/-data-2022-09-19 12_05_38.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "3f99942531ef1094"
+            ]
+        ]
+    },
+    {
+        "id": "ae282a4b10467471",
+        "type": "function",
+        "z": "9f94945fdba7cf88",
+        "name": "inv_sungrow110CX",
+        "func": "\n\nlet plantObj\n\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n\n    var radiation = msg.payload[i][\"Solar_Radiation (W/M2)\"]\n    var time = Date.parse(msg.payload[i].Time )/1000\n\n\n    if ((radiation > 2) && ((msg.topic == \"run\") || (msg.topic == \"Derating\") || (msg.topic ==\"Power_Limitation_From_External_Commands\")))\n{\n    var PAC = ((radiation * 900 * 0.8) / 1000)/9\n    var PAC_limit = 100\n\n    var PF = 1\n    var SAC = PF * PAC\n\n    var UAC1 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC2 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC3 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n\n    var IAC1 = (PAC / 3) * (1000 / UAC1)\n    var IAC2 = (PAC / 3) * (1000 / UAC2)\n    var IAC3 = (PAC / 3) * (1000 / UAC3)\n\n    var QAC= Math.floor(Math.random() * (0 - (-0.1) + 1)) + (-0.1)\n\n    var UDC1 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC2 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC3 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC4 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC5 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC6 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC7 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC8 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC9 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC10 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC11= Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC12 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n\n    var PDC = PAC * 1.02\n    \n    var IDC1=(PDC/12)*(1000/UDC1)\n    var IDC2 = (PDC / 12) * (1000 / UDC2)\n    var IDC3 = (PDC / 12) * (1000 / UDC3)\n    var IDC4 = (PDC / 12) * (1000 / UDC4)\n    var IDC5 = (PDC / 12) * (1000 / UDC5)\n    var IDC6 = (PDC / 12) * (1000 / UDC6)\n    var IDC7 = (PDC / 12) * (1000 / UDC7)\n    var IDC8 = (PDC / 12) * (1000 / UDC8)\n    var IDC9 = (PDC / 12) * (1000 / UDC9)\n    var IDC10 = (PDC / 12) * (1000 / UDC10)\n    var IDC11 = (PDC / 12) * (1000 / UDC11)\n    var IDC12 = (PDC / 12) * (1000 / UDC11)\n    \n    var internal_Temp = Math.floor(Math.random() * (60 - 50 + 1)) + 50\n    var frequency = 50\n\n        var obj = [\n        \n            time,\n            radiation,\n            PAC_limit,\n            PAC,\n            PF,\n            SAC,\n            UAC1,UAC2,UAC3,QAC,\n            IAC1,IAC2,IAC3,PDC,\n            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,\n            IDC1, IDC2, IDC3, IDC4, IDC5, IDC6, IDC7, IDC8, IDC9, IDC10, IDC11, IDC12,\n            internal_Temp,frequency\n        \n        ]\n}\n }\n        plantObj.push(obj)\n    \n\n    msg.payload = plantObj\n  \n    //return null;\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 360,
+        "wires": [
+            [
+                "d69205830cf87491"
+            ]
+        ]
+    },
+    {
+        "id": "d04c0900be344d02",
+        "type": "inject",
+        "z": "9f94945fdba7cf88",
+        "name": "run",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "run",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "cfb53a54e91a26e1"
+            ]
+        ]
+    },
+    {
+        "id": "ed9d099b7ce0b70b",
+        "type": "inject",
+        "z": "9f94945fdba7cf88",
+        "name": "derating",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Derating",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 420,
+        "wires": [
+            [
+                "cfb53a54e91a26e1"
+            ]
+        ]
+    },
+    {
+        "id": "14bd216e6a8b2d2d",
+        "type": "inject",
+        "z": "9f94945fdba7cf88",
+        "name": "Power_Limitation_From_External_Commands",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Power_Limitation_From_External_Commands",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 460,
+        "wires": [
+            [
+                "cfb53a54e91a26e1"
+            ]
+        ]
+    },
+    {
+        "id": "7e8246cc11b162b5",
+        "type": "modbus-flex-write",
+        "z": "9f94945fdba7cf88",
+        "name": "10503",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "server": "d6558d01.ba1a38",
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 750,
+        "y": 460,
+        "wires": [
+            [
+                "f4cb0d26542ead96"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d69205830cf87491",
+        "type": "function",
+        "z": "9f94945fdba7cf88",
+        "name": "FC16 0 [3]",
+        "func": "\n\n\n\nmsg.payload = {\n    'value': msg.payload[0],\n    'fc': 16,\n    'unitid': 0,\n    'address': 0,\n    'quantity': 40\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "7e8246cc11b162b5"
+            ]
+        ]
+    },
+    {
+        "id": "b4c3624bdcd25459",
+        "type": "inject",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "983c43d3ee2698d6",
+                "50e5c88190620e08"
+            ]
+        ]
+    },
+    {
+        "id": "983c43d3ee2698d6",
+        "type": "function",
+        "z": "9f94945fdba7cf88",
+        "name": "FC3 0 [4]",
+        "func": "msg.payload = { \n    'unitid': 0,\n    'fc': 3, \n    'address': 0, \n    'quantity': 40,\n};\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 560,
+        "wires": [
+            [
+                "482302d7ca19f56a"
+            ]
+        ]
+    },
+    {
+        "id": "482302d7ca19f56a",
+        "type": "modbus-flex-getter",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "logIOActivities": false,
+        "server": "d6558d01.ba1a38",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 750,
+        "y": 580,
+        "wires": [
+            [
+                "9aef13d1be322a9b"
+            ],
+            [
+                "509857eee043073d"
+            ]
+        ]
+    },
+    {
+        "id": "0e7cb0488256e220",
+        "type": "debug",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b2f55ffe019c9d79",
+        "type": "function",
+        "z": "9f94945fdba7cf88",
+        "name": "inv_sungrow110CX arr",
+        "func": "\n\nlet plantObj\n\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n\n    var radiation = msg.payload[i][\"Solar_Radiation (W/M2)\"]\n    var time = Date.parse(msg.payload[i].Time )/1000\n\n\n    if ((radiation > 2) && ((msg.topic == \"run\") || (msg.topic == \"Derating\") || (msg.topic ==\"Power_Limitation_From_External_Commands\")))\n{\n    var PAC = ((radiation * 900 * 0.8) / 1000)/9\n    var PAC_limit = 100\n\n    var PF = 1\n    var SAC = PF * PAC\n\n    var UAC1 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC2 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC3 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n\n    var IAC1 = (PAC / 3) * (1000 / UAC1)\n    var IAC2 = (PAC / 3) * (1000 / UAC2)\n    var IAC3 = (PAC / 3) * (1000 / UAC3)\n\n    var QAC= Math.floor(Math.random() * (0 - (-0.1) + 1)) + (-0.1)\n\n    var UDC1 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC2 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC3 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC4 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC5 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC6 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC7 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC8 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC9 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC10 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC11= Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC12 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n\n    var PDC = PAC * 1.02\n    \n    var IDC1=(PDC/12)*(1000/UDC1)\n    var IDC2 = (PDC / 12) * (1000 / UDC2)\n    var IDC3 = (PDC / 12) * (1000 / UDC3)\n    var IDC4 = (PDC / 12) * (1000 / UDC4)\n    var IDC5 = (PDC / 12) * (1000 / UDC5)\n    var IDC6 = (PDC / 12) * (1000 / UDC6)\n    var IDC7 = (PDC / 12) * (1000 / UDC7)\n    var IDC8 = (PDC / 12) * (1000 / UDC8)\n    var IDC9 = (PDC / 12) * (1000 / UDC9)\n    var IDC10 = (PDC / 12) * (1000 / UDC10)\n    var IDC11 = (PDC / 12) * (1000 / UDC11)\n    var IDC12 = (PDC / 12) * (1000 / UDC11)\n    \n    var internal_Temp = Math.floor(Math.random() * (60 - 50 + 1)) + 50\n    var frequency = 50\n\n        var obj = {\n        \n            time,\n            radiation,\n            PAC_limit,\n            PAC,\n            PF,\n            SAC,\n            UAC1,UAC2,UAC3,QAC,\n            IAC1,IAC2,IAC3,PDC,\n            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,\n            IDC1, IDC2, IDC3, IDC4, IDC5, IDC6, IDC7, IDC8, IDC9, IDC10, IDC11, IDC12,\n            internal_Temp,frequency\n        \n}\n\n        plantObj.push(obj)\n    }\n}\n\n    msg.payload = plantObj\n  \n    //return null;\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 713,
+        "y": 298,
+        "wires": [
+            [
+                "0e7cb0488256e220"
+            ]
+        ]
+    },
+    {
+        "id": "36c5530b6eed69c2",
+        "type": "debug",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "50e5c88190620e08",
+        "type": "modbus-getter",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "logIOActivities": false,
+        "unitid": "0",
+        "dataType": "HoldingRegister",
+        "adr": "0",
+        "quantity": "40",
+        "server": "d6558d01.ba1a38",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "x": 740,
+        "y": 620,
+        "wires": [
+            [],
+            [
+                "509857eee043073d"
+            ]
+        ]
+    },
+    {
+        "id": "509857eee043073d",
+        "type": "modbus-response",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "registerShowMax": "40",
+        "x": 970,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "9aef13d1be322a9b",
+        "type": "modbus-response",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "registerShowMax": "40",
+        "x": 990,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f4cb0d26542ead96",
+        "type": "modbus-response",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "registerShowMax": "40",
+        "x": 950,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d6558d01.ba1a38",
+        "type": "modbus-client",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": false,
+        "tcpHost": "localhost",
+        "tcpPort": "10502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "",
+        "unit_id": "",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": false,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": false
+    }
+]
