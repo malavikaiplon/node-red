@@ -18,8 +18,7 @@
         "y": 340,
         "wires": [
             [
-                "ae282a4b10467471",
-                "b2f55ffe019c9d79"
+                "ae282a4b10467471"
             ]
         ]
     },
@@ -77,14 +76,14 @@
         "type": "function",
         "z": "9f94945fdba7cf88",
         "name": "inv_sungrow110CX",
-        "func": "\n\nlet plantObj\n\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n\n    var radiation = msg.payload[i][\"Solar_Radiation (W/M2)\"]\n    var time = Date.parse(msg.payload[i].Time )/1000\n\n\n    if ((radiation > 2) && ((msg.topic == \"run\") || (msg.topic == \"Derating\") || (msg.topic ==\"Power_Limitation_From_External_Commands\")))\n{\n    var PAC = ((radiation * 900 * 0.8) / 1000)/9\n    var PAC_limit = 100\n\n    var PF = 1\n    var SAC = PF * PAC\n\n    var UAC1 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC2 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC3 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n\n    var IAC1 = (PAC / 3) * (1000 / UAC1)\n    var IAC2 = (PAC / 3) * (1000 / UAC2)\n    var IAC3 = (PAC / 3) * (1000 / UAC3)\n\n    var QAC= Math.floor(Math.random() * (0 - (-0.1) + 1)) + (-0.1)\n\n    var UDC1 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC2 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC3 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC4 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC5 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC6 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC7 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC8 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC9 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC10 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC11= Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC12 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n\n    var PDC = PAC * 1.02\n    \n    var IDC1=(PDC/12)*(1000/UDC1)\n    var IDC2 = (PDC / 12) * (1000 / UDC2)\n    var IDC3 = (PDC / 12) * (1000 / UDC3)\n    var IDC4 = (PDC / 12) * (1000 / UDC4)\n    var IDC5 = (PDC / 12) * (1000 / UDC5)\n    var IDC6 = (PDC / 12) * (1000 / UDC6)\n    var IDC7 = (PDC / 12) * (1000 / UDC7)\n    var IDC8 = (PDC / 12) * (1000 / UDC8)\n    var IDC9 = (PDC / 12) * (1000 / UDC9)\n    var IDC10 = (PDC / 12) * (1000 / UDC10)\n    var IDC11 = (PDC / 12) * (1000 / UDC11)\n    var IDC12 = (PDC / 12) * (1000 / UDC11)\n    \n    var internal_Temp = Math.floor(Math.random() * (60 - 50 + 1)) + 50\n    var frequency = 50\n\n        var obj = [\n        \n            time,\n            radiation,\n            PAC_limit,\n            PAC,\n            PF,\n            SAC,\n            UAC1,UAC2,UAC3,QAC,\n            IAC1,IAC2,IAC3,PDC,\n            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,\n            IDC1, IDC2, IDC3, IDC4, IDC5, IDC6, IDC7, IDC8, IDC9, IDC10, IDC11, IDC12,\n            internal_Temp,frequency\n        \n        ]\n}\n }\n        plantObj.push(obj)\n    \n\n    msg.payload = plantObj\n  \n    //return null;\n    return msg;",
+        "func": "\n\nlet plantObj\n\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n\n    var radiation = msg.payload[i][\"Solar_Radiation (W/M2)\"]\n    var time = Date.parse(msg.payload[i].Time )/1000\n\n\n    if ((radiation > 2) && ((msg.topic == \"run\") || (msg.topic == \"Derating\") || (msg.topic ==\"Power_Limitation_From_External_Commands\")))\n{\n    var PAC = ((radiation * 900 * 0.8) / 1000)/9\n    var PAC_limit = 100\n\n    var PF = 1\n    var SAC = PF * PAC\n\n    var UAC1 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC2 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC3 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n\n    var IAC1 = (PAC / 3) * (1000 / UAC1)\n    var IAC2 = (PAC / 3) * (1000 / UAC2)\n    var IAC3 = (PAC / 3) * (1000 / UAC3)\n\n    var QAC= Math.floor(Math.random() * (0 - (0.1) + 1)) + (0.1)\n\n    var UDC1 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC2 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC3 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC4 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC5 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC6 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC7 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC8 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC9 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC10 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC11= Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC12 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n\n    var PDC = PAC * 1.02\n    \n    var IDC1=(PDC/12)*(1000/UDC1)\n    var IDC2 = (PDC / 12) * (1000 / UDC2)\n    var IDC3 = (PDC / 12) * (1000 / UDC3)\n    var IDC4 = (PDC / 12) * (1000 / UDC4)\n    var IDC5 = (PDC / 12) * (1000 / UDC5)\n    var IDC6 = (PDC / 12) * (1000 / UDC6)\n    var IDC7 = (PDC / 12) * (1000 / UDC7)\n    var IDC8 = (PDC / 12) * (1000 / UDC8)\n    var IDC9 = (PDC / 12) * (1000 / UDC9)\n    var IDC10 = (PDC / 12) * (1000 / UDC10)\n    var IDC11 = (PDC / 12) * (1000 / UDC11)\n    var IDC12 = (PDC / 12) * (1000 / UDC11)\n    \n    var internal_Temp = Math.floor(Math.random() * (60 - 50 + 1)) + 50\n    var frequency = 50\n\n        var obj = [\n        \n            //time,\n            radiation,\n            PAC_limit,\n            PAC,\n            PF,\n            SAC,\n            UAC1,UAC2,UAC3,QAC,\n            IAC1,IAC2,IAC3,PDC,\n            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,\n            IDC1, IDC2, IDC3, IDC4, IDC5, IDC6, IDC7, IDC8, IDC9, IDC10, IDC11, IDC12,\n            internal_Temp,frequency\n        \n        ]\n}\n }\n        plantObj.push(obj)\n    \n\n    msg.payload = plantObj\n  \n    //return null;\n    return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 690,
-        "y": 360,
+        "y": 340,
         "wires": [
             [
                 "d69205830cf87491"
@@ -170,7 +169,7 @@
         "topic": "Power_Limitation_From_External_Commands",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
+        "x": 230,
         "y": 460,
         "wires": [
             [
@@ -188,11 +187,11 @@
         "server": "d6558d01.ba1a38",
         "emptyMsgOnFail": false,
         "keepMsgProperties": false,
-        "x": 750,
-        "y": 460,
+        "x": 1050,
+        "y": 340,
         "wires": [
             [
-                "f4cb0d26542ead96"
+                "5fbee8c69d225d1b"
             ],
             []
         ]
@@ -202,17 +201,18 @@
         "type": "function",
         "z": "9f94945fdba7cf88",
         "name": "FC16 0 [3]",
-        "func": "\n\n\n\nmsg.payload = {\n    'value': msg.payload[0],\n    'fc': 16,\n    'unitid': 0,\n    'address': 0,\n    'quantity': 40\n}\n\nreturn msg;\n",
+        "func": "\n\n\n\nmsg.payload = {\n    'value': msg.payload[0],\n    'fc': 16,\n    'unitid': 10,\n    'address': 0,\n    'quantity': 39\n}\n\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
-        "y": 460,
+        "x": 890,
+        "y": 340,
         "wires": [
             [
-                "7e8246cc11b162b5"
+                "7e8246cc11b162b5",
+                "4aca8928ff813b4f"
             ]
         ]
     },
@@ -227,22 +227,22 @@
             },
             {
                 "p": "topic",
-                "vt": "str"
+                "v": "",
+                "vt": "date"
             }
         ],
-        "repeat": "5",
+        "repeat": "60",
         "crontab": "",
         "once": false,
         "onceDelay": "",
         "topic": "",
         "payload": "",
         "payloadType": "str",
-        "x": 210,
-        "y": 560,
+        "x": 270,
+        "y": 580,
         "wires": [
             [
-                "983c43d3ee2698d6",
-                "50e5c88190620e08"
+                "983c43d3ee2698d6"
             ]
         ]
     },
@@ -251,14 +251,14 @@
         "type": "function",
         "z": "9f94945fdba7cf88",
         "name": "FC3 0 [4]",
-        "func": "msg.payload = { \n    'unitid': 0,\n    'fc': 3, \n    'address': 0, \n    'quantity': 40,\n};\nreturn msg;\n\n",
+        "func": "msg.payload = { \n    'unitid': 10,\n    'fc': 3, \n    'address': 0, \n    'quantity': 39,\n};\nreturn msg;\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 520,
-        "y": 560,
+        "x": 460,
+        "y": 580,
         "wires": [
             [
                 "482302d7ca19f56a"
@@ -279,19 +279,20 @@
         "useIOForPayload": false,
         "emptyMsgOnFail": false,
         "keepMsgProperties": false,
-        "x": 750,
+        "x": 650,
         "y": 580,
         "wires": [
             [
-                "9aef13d1be322a9b"
+                "44a80240d022336c",
+                "3616ef0133fe6f42"
             ],
             [
-                "509857eee043073d"
+                "2a2b547891766196"
             ]
         ]
     },
     {
-        "id": "0e7cb0488256e220",
+        "id": "44a80240d022336c",
         "type": "debug",
         "z": "9f94945fdba7cf88",
         "name": "",
@@ -303,102 +304,124 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 970,
-        "y": 320,
+        "x": 1190,
+        "y": 580,
         "wires": []
     },
     {
-        "id": "b2f55ffe019c9d79",
+        "id": "2a2b547891766196",
+        "type": "modbus-response",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "registerShowMax": "40",
+        "x": 890,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "5fbee8c69d225d1b",
+        "type": "modbus-response",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "registerShowMax": "40",
+        "x": 1230,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d59f35b73c6e411f",
+        "type": "debug",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "4aca8928ff813b4f",
+        "type": "debug",
+        "z": "9f94945fdba7cf88",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "3616ef0133fe6f42",
         "type": "function",
         "z": "9f94945fdba7cf88",
-        "name": "inv_sungrow110CX arr",
-        "func": "\n\nlet plantObj\n\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n\n    var radiation = msg.payload[i][\"Solar_Radiation (W/M2)\"]\n    var time = Date.parse(msg.payload[i].Time )/1000\n\n\n    if ((radiation > 2) && ((msg.topic == \"run\") || (msg.topic == \"Derating\") || (msg.topic ==\"Power_Limitation_From_External_Commands\")))\n{\n    var PAC = ((radiation * 900 * 0.8) / 1000)/9\n    var PAC_limit = 100\n\n    var PF = 1\n    var SAC = PF * PAC\n\n    var UAC1 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC2 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n    var UAC3 = Math.floor(Math.random() * (241 - 238 + 1)) + 238\n\n    var IAC1 = (PAC / 3) * (1000 / UAC1)\n    var IAC2 = (PAC / 3) * (1000 / UAC2)\n    var IAC3 = (PAC / 3) * (1000 / UAC3)\n\n    var QAC= Math.floor(Math.random() * (0 - (-0.1) + 1)) + (-0.1)\n\n    var UDC1 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC2 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC3 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC4 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC5 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC6 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC7 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC8 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC9 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC10 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC11= Math.floor(Math.random() * (701 - 698 + 1)) + 698\n    var UDC12 = Math.floor(Math.random() * (701 - 698 + 1)) + 698\n\n    var PDC = PAC * 1.02\n    \n    var IDC1=(PDC/12)*(1000/UDC1)\n    var IDC2 = (PDC / 12) * (1000 / UDC2)\n    var IDC3 = (PDC / 12) * (1000 / UDC3)\n    var IDC4 = (PDC / 12) * (1000 / UDC4)\n    var IDC5 = (PDC / 12) * (1000 / UDC5)\n    var IDC6 = (PDC / 12) * (1000 / UDC6)\n    var IDC7 = (PDC / 12) * (1000 / UDC7)\n    var IDC8 = (PDC / 12) * (1000 / UDC8)\n    var IDC9 = (PDC / 12) * (1000 / UDC9)\n    var IDC10 = (PDC / 12) * (1000 / UDC10)\n    var IDC11 = (PDC / 12) * (1000 / UDC11)\n    var IDC12 = (PDC / 12) * (1000 / UDC11)\n    \n    var internal_Temp = Math.floor(Math.random() * (60 - 50 + 1)) + 50\n    var frequency = 50\n\n        var obj = {\n        \n            time,\n            radiation,\n            PAC_limit,\n            PAC,\n            PF,\n            SAC,\n            UAC1,UAC2,UAC3,QAC,\n            IAC1,IAC2,IAC3,PDC,\n            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,\n            IDC1, IDC2, IDC3, IDC4, IDC5, IDC6, IDC7, IDC8, IDC9, IDC10, IDC11, IDC12,\n            internal_Temp,frequency\n        \n}\n\n        plantObj.push(obj)\n    }\n}\n\n    msg.payload = plantObj\n  \n    //return null;\n    return msg;",
+        "name": "inv_sungrow110CX",
+        "func": "\n\nlet plantObj\n\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n    var time=msg.topic\n   var  radiation = msg.payload[0]\n    var PAC_limit = msg.payload[1]\n    var PAC = msg.payload[2]\n    var PF = msg.payload[3]\n    var SAC = msg.payload[4]\n    var UAC1 = msg.payload[5] \n    var UAC2 = msg.payload[6]\n    var UAC3 = msg.payload[7] \n    var QAC = msg.payload[8]\n    var IAC1 = msg.payload[9]\n    var IAC2 = msg.payload[10]\n    var IAC3 = msg.payload[11] \n    var PDC = msg.payload[12]\n    var UDC1 = msg.payload[13] \n    var UDC2 = msg.payload[14] \n    var UDC3 = msg.payload[15]\n    var UDC4 = msg.payload[16]\n    var UDC5 = msg.payload[17]\n    var UDC6 = msg.payload[18]\n    var UDC7 = msg.payload[19]\n    var UDC8 = msg.payload[20]\n    var UDC9 = msg.payload[21]\n    var UDC10 = msg.payload[22]\n    var UDC11 = msg.payload[23]\n    var UDC12 = msg.payload[24]\n    var IDC1 = msg.payload[25]\n    var IDC2 = msg.payload[26]\n    var IDC3 = msg.payload[27]\n    var IDC4 = msg.payload[28]\n    var IDC5 = msg.payload[29]\n    var IDC6 = msg.payload[30]\n    var IDC7 = msg.payload[31]\n    var IDC8 = msg.payload[32]\n    var IDC9 = msg.payload[33]\n    var IDC10 = msg.payload[34]\n    var IDC11 = msg.payload[35]\n    var IDC12 = msg.payload[36]\n    var internal_Temp = msg.payload[37]\n    var frequency = msg.payload[38]\n\n    \n    \n\n\n        var obj = {\n        \n            time,\n            radiation,\n            PAC_limit,\n            PAC,\n            PF,\n            SAC,\n            UAC1,UAC2,UAC3,QAC,\n            IAC1,IAC2,IAC3,PDC,\n            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,\n            IDC1, IDC2, IDC3, IDC4 ,IDC5, IDC6, IDC7, IDC8 ,IDC9 ,IDC10 ,IDC11 ,IDC12,\n            internal_Temp,frequency\n }\n        \n}\n \n        plantObj.push(obj)\n    \n\n    msg.payload = plantObj\n  \n    //return null;\n    return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 713,
-        "y": 298,
+        "x": 410,
+        "y": 680,
         "wires": [
             [
-                "0e7cb0488256e220"
+                "28e27b3418f7039b"
             ]
         ]
     },
     {
-        "id": "36c5530b6eed69c2",
-        "type": "debug",
+        "id": "28e27b3418f7039b",
+        "type": "csv",
         "z": "9f94945fdba7cf88",
         "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 870,
-        "y": 720,
-        "wires": []
-    },
-    {
-        "id": "50e5c88190620e08",
-        "type": "modbus-getter",
-        "z": "9f94945fdba7cf88",
-        "name": "",
-        "showStatusActivities": false,
-        "showErrors": false,
-        "logIOActivities": false,
-        "unitid": "0",
-        "dataType": "HoldingRegister",
-        "adr": "0",
-        "quantity": "40",
-        "server": "d6558d01.ba1a38",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "keepMsgProperties": false,
-        "x": 740,
-        "y": 620,
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 610,
+        "y": 680,
         "wires": [
-            [],
             [
-                "509857eee043073d"
+                "1c9dd25cd8efa615"
             ]
         ]
     },
     {
-        "id": "509857eee043073d",
-        "type": "modbus-response",
+        "id": "1c9dd25cd8efa615",
+        "type": "file",
         "z": "9f94945fdba7cf88",
-        "name": "",
-        "registerShowMax": "40",
-        "x": 970,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "9aef13d1be322a9b",
-        "type": "modbus-response",
-        "z": "9f94945fdba7cf88",
-        "name": "",
-        "registerShowMax": "40",
-        "x": 990,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "f4cb0d26542ead96",
-        "type": "modbus-response",
-        "z": "9f94945fdba7cf88",
-        "name": "",
-        "registerShowMax": "40",
-        "x": 950,
-        "y": 460,
-        "wires": []
+        "name": "test",
+        "filename": "/home/iplon/Downloads/testmodbus.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 750,
+        "y": 680,
+        "wires": [
+            [
+                "d59f35b73c6e411f"
+            ]
+        ]
     },
     {
         "id": "d6558d01.ba1a38",
