@@ -1,0 +1,110 @@
+[
+    {
+        "id": "e3b5eda853c8866f",
+        "type": "inject",
+        "z": "d694e7fe5de6aed8",
+        "name": "",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "x": 270,
+        "y": 1040,
+        "wires": [
+            [
+                "a6ede2344f15dafc"
+            ]
+        ]
+    },
+    {
+        "id": "3c7512b31b25db52",
+        "type": "debug",
+        "z": "d694e7fe5de6aed8",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 730,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "3a3dae46a091eb05",
+        "type": "amqp out",
+        "z": "d694e7fe5de6aed8",
+        "name": "",
+        "routingkey": "",
+        "iotype": "0",
+        "ioname": "amq.topic",
+        "server": "1dde2dd.ec1ec52",
+        "x": 1043.5,
+        "y": 1039,
+        "wires": []
+    },
+    {
+        "id": "a6ede2344f15dafc",
+        "type": "file in",
+        "z": "d694e7fe5de6aed8",
+        "name": "",
+        "filename": "/home/iplon/Documents/6hr_2022-04-22.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 573.5,
+        "y": 1039,
+        "wires": [
+            [
+                "abb2697a82fec83b"
+            ]
+        ]
+    },
+    {
+        "id": "abb2697a82fec83b",
+        "type": "csv",
+        "z": "d694e7fe5de6aed8",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 853.5,
+        "y": 1039,
+        "wires": [
+            [
+                "3a3dae46a091eb05"
+            ]
+        ]
+    },
+    {
+        "id": "2581b05c73da0bd2",
+        "type": "amqp in",
+        "z": "d694e7fe5de6aed8",
+        "name": "",
+        "topic": "",
+        "iotype": "4",
+        "ioname": "new_test",
+        "server": "1dde2dd.ec1ec52",
+        "x": 380,
+        "y": 1140,
+        "wires": [
+            [
+                "3c7512b31b25db52"
+            ]
+        ]
+    }
+]
