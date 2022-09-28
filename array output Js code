@@ -1,0 +1,85 @@
+
+
+let plantObj
+
+plantObj = []
+
+
+
+
+    var radiation = msg.payload["Solar_Radiation (W/M2)"]
+    var time = Date.parse(msg.payload.Time )/1000
+
+
+    if  ((msg.topic == "run") || (msg.topic == "Derating") || (msg.topic =="Power_Limitation_From_External_Commands"))
+{
+    var PAC = ((radiation * 900 * 0.8) / 1000)/9
+    var PAC_limit = 100
+
+    var PF = 1
+    var SAC = PF * PAC
+
+    var UAC1 = Math.floor(Math.random() * (241 - 238 + 1)) + 238
+    var UAC2 = Math.floor(Math.random() * (241 - 238 + 1)) + 238
+    var UAC3 = Math.floor(Math.random() * (241 - 238 + 1)) + 238
+
+    var IAC1 = (PAC / 3) * (1000 / UAC1)
+    var IAC2 = (PAC / 3) * (1000 / UAC2)
+    var IAC3 = (PAC / 3) * (1000 / UAC3)
+
+    var QAC= Math.floor(Math.random() * (0 - (0.1) + 1)) + (0.1)
+
+    var UDC1 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC2 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC3 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC4 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC5 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC6 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC7 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC8 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC9 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC10 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC11= Math.floor(Math.random() * (701 - 698 + 1)) + 698
+    var UDC12 = Math.floor(Math.random() * (701 - 698 + 1)) + 698
+
+    var PDC = PAC * 1.02
+    
+    var IDC1=(PDC/12)*(1000/UDC1)
+    var IDC2 = (PDC / 12) * (1000 / UDC2)
+    var IDC3 = (PDC / 12) * (1000 / UDC3)
+    var IDC4 = (PDC / 12) * (1000 / UDC4)
+    var IDC5 = (PDC / 12) * (1000 / UDC5)
+    var IDC6 = (PDC / 12) * (1000 / UDC6)
+    var IDC7 = (PDC / 12) * (1000 / UDC7)
+    var IDC8 = (PDC / 12) * (1000 / UDC8)
+    var IDC9 = (PDC / 12) * (1000 / UDC9)
+    var IDC10 = (PDC / 12) * (1000 / UDC10)
+    var IDC11 = (PDC / 12) * (1000 / UDC11)
+    var IDC12 = (PDC / 12) * (1000 / UDC11)
+    
+    var internal_Temp = Math.floor(Math.random() * (60 - 50 + 1)) + 50
+    var frequency = 50
+
+        var obj = [
+        
+            //time,
+            radiation,
+            PAC_limit,
+            PAC,
+            PF,
+            SAC,
+            UAC1,UAC2,UAC3,QAC,
+            IAC1,IAC2,IAC3,PDC,
+            UDC1,UDC2,UDC3,UDC4,UDC5,UDC6,UDC7,UDC8,UDC9,UDC10,UDC11,UDC12,
+            IDC1, IDC2, IDC3, IDC4, IDC5, IDC6, IDC7, IDC8, IDC9, IDC10, IDC11, IDC12,
+            internal_Temp,frequency
+        
+        ]
+}
+ 
+        plantObj.push(obj)
+    
+
+    msg.payload = plantObj
+  
+    return msg;
