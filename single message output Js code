@@ -1,0 +1,36 @@
+
+var j=0;
+for (var i =0; i < msg.payload.length ;i++)
+{
+var f =msg.payload[0].f
+
+var field=msg.payload[i].f[j];
+j=j+1;
+if(j==f.length)
+{j=0;}
+var obj={};
+obj.payload=
+[
+    {
+        measurement: "energydc_test",
+        
+ fields: {
+            
+           value:msg.payload[i].edc
+        
+        },
+        tags:{
+         
+           f:field,
+           d:msg.payload[i].udevice
+        
+        },
+        
+        timestamp:msg.payload[i].TIME
+    }
+];
+
+node.send(obj);
+}
+return null;
+
