@@ -1,0 +1,20 @@
+context.data = context.data || {};
+switch(msg.topic){
+    case "live":
+        context.data.live = msg.payload;
+        msg = null;
+        break;
+    case "master":
+        context.data.master = msg.payload;
+        msg = null;
+        break;
+}
+if(context.data.live != null && context.data.master != null){
+    var data_combine = {
+        "live": context.data.live,
+        "master": context.data.master
+       
+    }
+    context.data = null
+    return {payload: data_combine};
+}  
