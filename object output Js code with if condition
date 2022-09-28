@@ -1,0 +1,65 @@
+let plantObj
+plantObj = []
+
+var t;
+var Start_Time = 0;
+var End_Time = 0;
+for (var i = 0; i < msg.payload.length; i++) {
+    var time = msg.payload[i]._time;
+    var b = msg.payload[i].b;
+    var bd = msg.payload[i].d;
+    var d = msg.payload[i].d;
+    var dd = msg.payload[i].dd;
+    var dt = msg.payload[i].dt;
+    var f = msg.payload[i].f;
+    var fd = msg.payload[i].fd;
+    var h = msg.payload[i].h;
+    var iid = msg.payload[i].iid;
+    var m = msg.payload[i].m;
+    var p = msg.payload[i].p;
+
+    var u = msg.payload[i].u;
+    var value;
+    var pac_value = msg.payload[i]._value;
+    {
+        if ((pac_value > 1) && (Start_Time == 0)) {
+            Start_Time = new Date(time).getTime()
+            t = "start_time_1"
+            End_Time = 0
+        }
+        if ((pac_value < 1) && (End_Time == 0)) {
+            End_Time = new Date(time).getTime()
+            t = "stop_time_1"
+            Start_Time = 0
+        }
+
+        var obj1 =
+        {
+            time,
+            b,
+            bd,
+            d,
+            dd,
+            dt,
+            f,
+            fd,
+            h,
+            iid,
+            m,
+            p,
+            //qu,
+            //text,
+            u,
+            t,
+            pac_value,
+            //value
+            Start_Time,
+            End_Time
+
+        }
+        plantObj.push(obj1)
+    }
+}
+msg.payload = plantObj
+
+return msg;
