@@ -1,0 +1,46 @@
+
+
+for (var i = 0; i < msg.payload.length; i++) {
+       var obj = {};
+    
+    obj.payload =
+        [
+            {
+                measurement: "v",
+                
+                fields: {
+
+                    value: msg.payload[i].value,
+                    text:"0",
+                    qu:"0"
+
+                },
+                tags: {
+                     b : msg.payload[i].b,
+                     bd : msg.payload[i].d,
+                     d :msg.payload[i].d,
+                     dd : msg.payload[i].dd,
+                     dt : msg.payload[i].dt,
+                     f :msg.payload[i].tag,
+                     fd : msg.payload[i].fd,
+                     h :msg.payload[i].h,
+                     iid : msg.payload[i].iid,
+                     m : msg.payload[i].m,
+                     p : msg.payload[i].p,
+                     u : msg.payload[i].u
+                     
+
+                },
+
+                time: msg.payload[i].time
+            }
+        ];
+
+    //plantObj.push(obj)
+    node.send(obj);
+}
+
+//msg.payload = plantObj
+
+//return msg;
+return null;
