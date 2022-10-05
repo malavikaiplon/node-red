@@ -1,0 +1,220 @@
+[
+    {
+        "id": "c260e1789ea43771",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "eace774c4e41fdc7"
+            ]
+        ]
+    },
+    {
+        "id": "815c8c3e9f3ea3b2",
+        "type": "influxdb in",
+        "z": "f6f2187d.f17ca8",
+        "influxdb": "e47f5d7909835369",
+        "name": "charanka_INV",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "largeutilitylakeasia",
+        "x": 480,
+        "y": 240,
+        "wires": [
+            [
+                "965f8fcfdb12819c"
+            ]
+        ]
+    },
+    {
+        "id": "965f8fcfdb12819c",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 10",
+        "func": "let plantObj\n\nplantObj = []\n//for (var j=0;j<msg.payload.length;j++)\n  for (var i = 0; i <msg.payload[0].length; i++)\n   {\n     var itime = new Date(msg.payload[0][i].time).getTime();\n     var dctime = new Date(msg.payload[1][i].time).getTime();\n    var actime = new Date(msg.payload[2][i].time).getTime();\n    //var httime = new Date(msg.payload[3][i].time).getTime(); \n    var  number = msg.payload[0][i].d.split(\"INV\")\n    if ((itime ==dctime)&&(itime==actime) )\n      \n   { \n      \n      var energy_input_dc_kwh_reading = msg.payload[0][i].last\n      var energy_input_dc_kwh_units = msg.payload[0][i].last\n\n\n      var energy_output_ac_kwh_reading = msg.payload[1][i].last\n      var energy_output_ac_kwh_units = msg.payload[2][i].last\n\n      var ht_panel_ac_kwh_reading = \" \"\n      var ht_panel_ac_kwh_units = \" \"\n\n      var captivel_consumption_ac_kwh_reading = \" \"\n      var captivel_consumption_ac_kwh_units = \" \"\n      var plant_code = \"SEPL\"\n\n \nvar obj={\n  time_stamp:new Date(itime),\n  number,\n  energy_input_dc_kwh_reading,\n  energy_input_dc_kwh_units,\n  energy_output_ac_kwh_reading,\n  energy_output_ac_kwh_units,\nht_panel_ac_kwh_reading,\n  ht_panel_ac_kwh_units,\n  captivel_consumption_ac_kwh_reading,\n  captivel_consumption_ac_kwh_units,\n  plant_code\n \n}\n   }\n\nplantObj.push(obj)\n   }\n \n\nmsg.payload =plantObj\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "dbb207fa23e7f7c8"
+            ]
+        ]
+    },
+    {
+        "id": "b5347f7ed3a3ac90",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "eace774c4e41fdc7",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "msg.query",
+        "func": "\n var $today = new Date();\nvar d = new Date($today);\nd.setDate($today.getDate() - 8);\nd.setHours(18,30,0,0);\n var tstart=d.getTime();\n\nvar $today = new Date();\nvar d1 = new Date($today);\nd1.setDate($today.getDate() - 8);\nd1.setHours(20, 30, 0, 0);\nvar tend = d1.getTime();\n //var tend=msg.payload;\n\n\nvar q = \"SELECT last(value) FROM v WHERE (dt ='INV' AND f = 'EDC_DAY') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\nvar q1 = \"SELECT last(value) FROM v WHERE (dt ='INV' AND f = 'EAE') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\nvar q2 = \"SELECT last(value) FROM v WHERE (dt ='INV' AND f = 'EAE_DAY') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\nvar q3 = \"SELECT last(value) FROM v WHERE (d ='CR_EM01' AND f = 'EAE') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\nvar q4 = \"SELECT last(value) FROM v WHERE (d='CR_EM01' AND f = 'EAE_DAY') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\nvar q5 = \"SELECT last(value) FROM v WHERE (dt='INV' AND f = 'EAI') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\nvar q6 = \"SELECT last(value) FROM v WHERE (dt='INV' AND f = 'EAI_DAY') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(10m), d,b,p,f fill(previous);\";\n\nmsg.query = q+q1+q2+q3+q4+q5+q6\n//msg.payload=tstart\nreturn msg;\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "815c8c3e9f3ea3b2"
+            ]
+        ]
+    },
+    {
+        "id": "dbb207fa23e7f7c8",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 14",
+        "func": "let plantObj\n\nplantObj = []\nfor (var i = 0; i < msg.payload.length; i++) \n{\n    var time_stamp = new Date(msg.payload[i].time_stamp).toLocaleString('en-GB',{ hour12: false, timeZone: 'Asia/Kolkata' });\n    //.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })\n    var inverter_number = msg.payload[i].number[0] + msg.payload[i].number[1]\n    var energy_input_dc_kwh_reading = msg.payload[i].energy_input_dc_kwh_reading\n    var energy_input_dc_kwh_units = msg.payload[i].energy_input_dc_kwh_units\n\n\n    var energy_output_ac_kwh_reading = msg.payload[i].energy_output_ac_kwh_reading\n    var energy_output_ac_kwh_units = msg.payload[i].energy_output_ac_kwh_units\n\n    var ht_panel_ac_kwh_reading = msg.payload[i].ht_panel_ac_kwh_reading\n    var ht_panel_ac_kwh_units = msg.payload[i].ht_panel_ac_kwh_units\n\n    var captivel_consumption_ac_kwh_reading = msg.payload[i].captivel_consumption_ac_kwh_reading\n    var captivel_consumption_ac_kwh_units = msg.payload[i].captivel_consumption_ac_kwh_units\n    var plant_code = msg.payload[i].plant_code\n    \n\n\n    var obj = {\n        time_stamp,\n        inverter_number,\n        energy_input_dc_kwh_reading,\n        energy_input_dc_kwh_units,\n        energy_output_ac_kwh_reading,\n        energy_output_ac_kwh_units,\n        ht_panel_ac_kwh_reading,\n        ht_panel_ac_kwh_units,\n        captivel_consumption_ac_kwh_reading,\n        captivel_consumption_ac_kwh_units,\n        plant_code\n\n    }\n\n\nplantObj.push(obj)\n   }\n\n\nmsg.payload = plantObj\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 240,
+        "wires": [
+            [
+                "a0dbeeb197c93509"
+            ]
+        ]
+    },
+    {
+        "id": "a0dbeeb197c93509",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "set_flow",
+        "func": "flow.set(\"inv_api\",msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 240,
+        "wires": [
+            [
+                "b5347f7ed3a3ac90"
+            ]
+        ]
+    },
+    {
+        "id": "1e53c9f84b54efb2",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "set_flow",
+        "func": "msg.payload = flow.get(\"inv_api\")\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 380,
+        "wires": [
+            [
+                "7cd947f4d83b48b7"
+            ]
+        ]
+    },
+    {
+        "id": "52a31252c90da052",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "url": "/apitest1",
+        "method": "get",
+        "upload": true,
+        "swaggerDoc": "",
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "1e53c9f84b54efb2"
+            ]
+        ]
+    },
+    {
+        "id": "7cd947f4d83b48b7",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "content-type": "application/json"
+        },
+        "x": 730,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "e47f5d7909835369",
+        "type": "influxdb",
+        "hostname": "34.100.204.216",
+        "port": "40008",
+        "protocol": "http",
+        "database": "charanka",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
