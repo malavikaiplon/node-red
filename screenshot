@@ -1,0 +1,144 @@
+[
+    {
+        "id": "9dbdb83c6aa5ba3e",
+        "type": "inject",
+        "z": "67c61941.053d58",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "cbea027f1a0d6dc9"
+            ]
+        ]
+    },
+    {
+        "id": "9776064e02f810a5",
+        "type": "puppeteer-page-screenshot",
+        "z": "67c61941.053d58",
+        "name": "",
+        "fullpage": true,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "7941ba58663f836c"
+            ]
+        ]
+    },
+    {
+        "id": "cbea027f1a0d6dc9",
+        "type": "puppeteer-browser-launch",
+        "z": "67c61941.053d58",
+        "timeout": "60000",
+        "slowMo": 0,
+        "headless": true,
+        "debugport": 0,
+        "devtools": true,
+        "name": "",
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "3a0d814239f7c047"
+            ]
+        ]
+    },
+    {
+        "id": "7941ba58663f836c",
+        "type": "jimp-image",
+        "z": "67c61941.053d58",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "/home/iplon/Downloads/test11.pdf",
+        "parameter1Type": "str",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 1,
+        "jimpFunction": "write",
+        "selectedJimpFunction": {
+            "name": "write",
+            "fn": "write",
+            "description": "Write to file. NOTE: You can specify an alternative file extension type to change the type. Currently support types are jpg, png, bmp.",
+            "parameters": [
+                {
+                    "name": "filename",
+                    "type": "str",
+                    "required": true,
+                    "hint": "Name of the file",
+                    "defaultType": "str"
+                }
+            ]
+        },
+        "x": 750,
+        "y": 200,
+        "wires": [
+            [
+                "880a0132d3ef3546"
+            ]
+        ]
+    },
+    {
+        "id": "880a0132d3ef3546",
+        "type": "image viewer",
+        "z": "67c61941.053d58",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 950,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a0d814239f7c047",
+        "type": "puppeteer-page-goto",
+        "z": "67c61941.053d58",
+        "name": "ws",
+        "url": "https://snapshots.raintank.io/dashboard/snapshot/cLPxo0guIuL0vjGxqm19j3sGPB5g2F40",
+        "urltype": "str",
+        "waitUntil": "networkidle0",
+        "x": 410,
+        "y": 200,
+        "wires": [
+            [
+                "9776064e02f810a5"
+            ]
+        ]
+    }
+]
