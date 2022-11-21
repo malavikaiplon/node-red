@@ -1,0 +1,890 @@
+[
+    {
+        "id": "63d962c004d68b5d",
+        "type": "tab",
+        "label": "FTP",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "31be69e558d68b6e",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "msg.query",
+        "func": " var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate() - 1);\n d.setHours(18,30,0,0);\n  var tstart=d.getTime();\n \n \n  var tend=msg.payload;\n  var q = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q1 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q2 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q3 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q4 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q5 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q6 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q7 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q8 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q9 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q10 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q11 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q12 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q13 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q14 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q15 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q16 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q17 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q18 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q19 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q20 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q21 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q22 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q23 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q24 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q25 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q26 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q27 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q28 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q29 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q30 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q31 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q32 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q33 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q34 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q35 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n\n  var q36 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q37 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q38 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q39 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q40 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q41 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q42 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q43 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q44 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q45 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q46 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q47 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q48 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q49 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q50 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q51 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q52 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q53 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q54 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q55 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q56 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q57 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q58 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q59 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q60 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q61 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q62 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q63 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q64 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q65 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q66 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q67 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q68 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q69 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q70 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q71 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q72 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q73 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'PR') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q74 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'CUF') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\"; \n  var q75 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'SOLAR_RADIATION') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m), d,f fill(null);\";\n  var q76 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'SOLAR_RADIATION_TILT') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d,f fill(null);\";\n  var q77 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'AIR_TEMP') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d, f fill(null);\";\n  var q78 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'MODULE_TEMP') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d, f fill(null);\";\n  var q79 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'WIND_SPEED') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d,f fill(null);\";\n  var q80 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'WIND_DIRECTION') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m), d,f fill(null);\";\n  var q81 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'HUMITIDY') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m), d,f fill(null);\"\n \nmsg.query = q+q1+q2+q3+q4+q5+q6+q7+q8+q9+q10+q11+q12+q13+q14+q15+q16+q17+q18+q19+q20+q21+q22+q23+q24+q25+q26+q27+q28+q29+q30+q31+q32+q33+q34+q35+q36+q37+q38+q39+q40+q41+q42+q43+q44+q45+q46+q47+q48+q49+q50+q51+q52+q53+q54+q55+q56+q57+q58+q59+q60+q61+q62+q63+q64+q65+q66+q67+q68+q69+q70+q71+q72+q73+q74+q75+q76+q77+q78+q79+q80+q81\n// msg.payload=tend\n return msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 220,
+        "wires": [
+            [
+                "c88846a58ffd5192"
+            ]
+        ]
+    },
+    {
+        "id": "65d97552f1cfbb81",
+        "type": "csv",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 730,
+        "y": 220,
+        "wires": [
+            [
+                "2e736bbb985e87ab"
+            ]
+        ]
+    },
+    {
+        "id": "d88fdc2fb3032fd5",
+        "type": "debug",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "2e736bbb985e87ab",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "todays date",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\n\nvar c =today1;\ncontext.set('c',c)\n\nvar path = \"/usr/src/node-red/ftp/Medak_\"+c+\".csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 220,
+        "wires": [
+            [
+                "2b59112f08cbc406"
+            ]
+        ]
+    },
+    {
+        "id": "2b59112f08cbc406",
+        "type": "file",
+        "z": "63d962c004d68b5d",
+        "name": "test",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1070,
+        "y": 220,
+        "wires": [
+            [
+                "d88fdc2fb3032fd5"
+            ]
+        ]
+    },
+    {
+        "id": "2f62c9c151a9b8d9",
+        "type": "comment",
+        "z": "63d962c004d68b5d",
+        "name": "medak csv save",
+        "info": "",
+        "x": 310,
+        "y": 171,
+        "wires": []
+    },
+    {
+        "id": "c88846a58ffd5192",
+        "type": "influxdb in",
+        "z": "63d962c004d68b5d",
+        "influxdb": "d4100b3ade9e64bf",
+        "name": "test",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 430,
+        "y": 220,
+        "wires": [
+            [
+                "d7f3bc125817417d"
+            ]
+        ]
+    },
+    {
+        "id": "6f714817002a4415",
+        "type": "debug",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1032,
+        "y": 401,
+        "wires": []
+    },
+    {
+        "id": "89903908f4441e97",
+        "type": "comment",
+        "z": "63d962c004d68b5d",
+        "name": "SFTP push",
+        "info": "",
+        "x": 300,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "a57271cb8adaa688",
+        "type": "sftp in",
+        "z": "63d962c004d68b5d",
+        "name": "pv india",
+        "sftp": "",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "workdir": "/home/iplon/tmp/medak",
+        "x": 802,
+        "y": 401,
+        "wires": [
+            [
+                "6f714817002a4415"
+            ]
+        ]
+    },
+    {
+        "id": "6788d1cc2446dd48",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "filename",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.payload.data = \"/usr/src/node-red/ftp/Medak_\"+c+\".csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\nmsg.payload.filename=\"Medak_\"+c+\".csv\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 602,
+        "y": 401,
+        "wires": [
+            [
+                "a57271cb8adaa688"
+            ]
+        ]
+    },
+    {
+        "id": "e3d5b4100dab6957",
+        "type": "debug",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 964,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "e0a4674ee1725f15",
+        "type": "ftp in",
+        "z": "63d962c004d68b5d",
+        "ftp": "9e23069abe8f4a6d",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "name": "",
+        "x": 763,
+        "y": 510,
+        "wires": [
+            [
+                "e3d5b4100dab6957"
+            ]
+        ]
+    },
+    {
+        "id": "ff80da5d8fe63a8b",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "filename",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.localFilename = \"/usr/src/node-red/ftp/Medak_\"+c+\".csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\nmsg.filename=\"Medak_\"+c+\".csv\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 563,
+        "y": 510,
+        "wires": [
+            [
+                "e0a4674ee1725f15"
+            ]
+        ]
+    },
+    {
+        "id": "d7f3bc125817417d",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "func": "\nlet array = [];\nlet array1 = [];\nvar value = msg.payload.length;\nlet plantObj\n\nplantObj = []\n\nvar j=0;\n\n\nfor(var i=0;i<msg.payload.length;i++)\n{\n    if(msg.payload[i].length == 0)\n   {\n       for(var k=0;k<msg.payload[73].length;k++)\n       {\n           msg.payload[i][k] = 0;\n           \n         \n       }\n   }\n}\n\n  for (var i = 0; i < msg.payload[73].length;i++)\n\n{\n\nvar dateIST = new Date(msg.payload[73][i].time).toLocaleString(\"en-US\", {timeZone: 'Asia/Kolkata'})\n\nvar obj=\n{\nTIME:dateIST,\nB01_INV1_PAC_KW:msg.payload[0][i].mean,\nB01_INV2_PAC_KW:msg.payload[1][i].mean,\nB01_INV3_PAC_KW:msg.payload[2][i].mean,\n B01_INV4_PAC_KW:msg.payload[3][i].mean,\n B02_INV1_PAC_KW:msg.payload[4][i].mean,\n B02_INV2_PAC_KW:msg.payload[5][i].mean,\n B02_INV3_PAC_KW:msg.payload[6][i].mean,\n B02_INV4_PAC_KW:msg.payload[7][i].mean,\n B03_INV1_PAC_KW:msg.payload[8][i].mean,\n B03_INV2_PAC_KW:msg.payload[9][i].mean,\n B03_INV3_PAC_KW:msg.payload[10][i].mean,\n B03_INV4_PAC_KW:msg.payload[11][i].mean,\n B04_INV1_PAC_KW:msg.payload[12][i].mean,\n B04_INV2_PAC_KW:msg.payload[13][i].mean,\n B04_INV3_PAC_KW:msg.payload[14][i].mean,\n B04_INV4_PAC_KW:msg.payload[15][i].mean,\n B05_INV1_PAC_KW:msg.payload[16][i].mean,\n B05_INV2_PAC_KW:msg.payload[17][i].mean,\n B05_INV3_PAC_KW:msg.payload[18][i].mean,\n B05_INV4_PAC_KW:msg.payload[19][i].mean,\n B06_INV1_PAC_KW:msg.payload[20][i].mean,\n B06_INV2_PAC_KW:msg.payload[21][i].mean,\n B06_INV3_PAC_KW:msg.payload[22][i].mean,\n B06_INV4_PAC_KW:msg.payload[23][i].mean,\n B07_INV1_PAC_KW:msg.payload[24][i].mean,\n B07_INV2_PAC_KW:msg.payload[25][i].mean,\n B07_INV3_PAC_KW:msg.payload[26][i].mean,\n B07_INV4_PAC_KW:msg.payload[27][i].mean,\n B08_INV1_PAC_KW:msg.payload[28][i].mean,\n B08_INV2_PAC_KW:msg.payload[29][i].mean,\n B08_INV3_PAC_KW:msg.payload[30][i].mean,\n B08_INV4_PAC_KW:msg.payload[31][i].mean,\n B09_INV1_PAC_KW:msg.payload[32][i].mean,\n B09_INV2_PAC_KW:msg.payload[33][i].mean,\n B09_INV3_PAC_KW:msg.payload[34][i].mean,\n B09_INV4_PAC_KW:msg.payload[35][i].mean,\n B01_INV1_PDC_KW:msg.payload[36][i].mean,\n B01_INV2_PDC_KW:msg.payload[37][i].mean,\n B01_INV3_PDC_KW:msg.payload[38][i].mean,\n B01_INV4_PDC_KW:msg.payload[39][i].mean,\n B02_INV1_PDC_KW:msg.payload[40][i].mean,\n B02_INV2_PDC_KW:msg.payload[41][i].mean,\n B02_INV3_PDC_KW:msg.payload[42][i].mean,\n B02_INV4_PDC_KW:msg.payload[43][i].mean,\n B03_INV1_PDC_KW:msg.payload[44][i].mean,\n B03_INV2_PDC_KW:msg.payload[45][i].mean,\n B03_INV3_PDC_KW:msg.payload[46][i].mean,\n B03_INV4_PDC_KW:msg.payload[47][i].mean,\n B04_INV1_PDC_KW:msg.payload[48][i].mean,\n B04_INV2_PDC_KW:msg.payload[49][i].mean,\n B04_INV3_PDC_KW:msg.payload[50][i].mean,\n B04_INV4_PDC_KW:msg.payload[51][i].mean,\n B05_INV1_PDC_KW:msg.payload[52][i].mean,\n B05_INV2_PDC_KW:msg.payload[53][i].mean,\n B05_INV3_PDC_KW:msg.payload[54][i].mean,\n B05_INV4_PDC_KW:msg.payload[55][i].mean,\n B06_INV1_PDC_KW:msg.payload[56][i].mean,\n B06_INV2_PDC_KW:msg.payload[57][i].mean,\n B06_INV3_PDC_KW:msg.payload[58][i].mean,\n B06_INV4_PDC_KW:msg.payload[59][i].mean,\n B07_INV1_PDC_KW:msg.payload[60][i].mean,\n B07_INV2_PDC_KW:msg.payload[61][i].mean,\n B07_INV3_PDC_KW:msg.payload[62][i].mean,\n B07_INV4_PDC_KW:msg.payload[63][i].mean,\n B08_INV1_PDC_KW:msg.payload[64][i].mean,\n B08_INV2_PDC_KW:msg.payload[65][i].mean,\n B08_INV3_PDC_KW:msg.payload[66][i].mean,\n B08_INV4_PDC_KW:msg.payload[67][i].mean,\n B09_INV1_PDC_KW:msg.payload[68][i].mean,\n B09_INV2_PDC_KW:msg.payload[69][i].mean,\n B09_INV3_PDC_KW:msg.payload[70][i].mean,\n B09_INV4_PDC_KW:msg.payload[71][i].mean,\n PLANT_ACTIVEPOWER_KW:(msg.payload[72][i].mean)*1000,\n PR:msg.payload[73][i].mean,\n CUF:msg.payload[74][i].mean,\n\"GHI_W/m2\":msg.payload[75][i].mean,\n \"GTI_W/m2\":msg.payload[76][i].mean,\n AIR_TEMP_ºC :msg.payload[77][i].mean,\nMODULE_TEMP_ºC :msg.payload[78][i].mean,\nWIND_SPEED_Kmph:msg.payload[79][i].mean,\nWIND_DIRECTION_º:msg.payload[80][i].mean,\n \"HUMITIDY_%\":msg.payload[81][i].mean\n \n}\n\n plantObj.push(obj)\n}\n\nmsg.payload = plantObj\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 220,
+        "wires": [
+            [
+                "65d97552f1cfbb81"
+            ]
+        ]
+    },
+    {
+        "id": "3976295841a4aef3",
+        "type": "cronplus",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": " 1,16,31,46 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 100,
+        "y": 220,
+        "wires": [
+            [
+                "31be69e558d68b6e"
+            ]
+        ]
+    },
+    {
+        "id": "92185fa4d7c2bfdb",
+        "type": "cronplus",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": " 1,16,31,46 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 242,
+        "y": 401,
+        "wires": [
+            [
+                "ef54c43f5997f6e2"
+            ]
+        ]
+    },
+    {
+        "id": "115015fe370a7606",
+        "type": "cronplus",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": " 1,16,31,46 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 274,
+        "y": 500,
+        "wires": [
+            [
+                "289bcdc0dd0862a6"
+            ]
+        ]
+    },
+    {
+        "id": "ef54c43f5997f6e2",
+        "type": "delay",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 402,
+        "y": 401,
+        "wires": [
+            [
+                "6788d1cc2446dd48"
+            ]
+        ]
+    },
+    {
+        "id": "289bcdc0dd0862a6",
+        "type": "delay",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 414,
+        "y": 500,
+        "wires": [
+            [
+                "ff80da5d8fe63a8b"
+            ]
+        ]
+    },
+    {
+        "id": "37cd1a5f895bb2ed",
+        "type": "debug",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "949d674ef87e8300",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "msg.query",
+        "func": " var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate() - 1);\n d.setHours(18,30,0,0);\n  var tstart=d.getTime();\n \n \n  var tend=msg.payload;\n  var q = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q1 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q2 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q3 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q4 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q5 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q6 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q7 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q8 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q9 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q10 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q11 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q12 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q13 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q14 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q15 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q16 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q17 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q18 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q19 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q20 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q21 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q22 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q23 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q24 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q25 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q26 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q27 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q28 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q29 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q30 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q31 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q32 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV1' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q33 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV2' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q34 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV3' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q35 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV4' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n\n  var q36 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q37 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q38 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q39 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B01_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q40 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q41 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q42 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q43 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B02_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q44 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q45 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q46 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q47 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B03_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q48 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q49 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q50 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q51 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B04_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q52 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q53 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q54 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q55 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B05_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q56 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q57 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q58 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q59 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B06_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q60 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q61 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q62 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q63 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B07_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q64 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q65 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q66 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q67 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B08_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q68 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV1' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q69 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV2' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q70 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV3' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q71 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'B09_INV4' AND f = 'PDC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q72 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'PAC') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q73 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'PR') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\";\n  var q74 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_EM01' AND f = 'CUF') AND time >= \" + tstart + \"ms  and time <= \" + tend + \"ms  GROUP BY time(15m), d, f fill(null);\"; \n  var q75 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'SOLAR_RADIATION') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m), d,f fill(null);\";\n  var q76 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'SOLAR_RADIATION_TILT') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d,f fill(null);\";\n  var q77 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'AIR_TEMP') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d, f fill(null);\";\n  var q78 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'MODULE_TEMP') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d, f fill(null);\";\n  var q79 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'WIND_SPEED') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m),d,f fill(null);\";\n  var q80 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'WIND_DIRECTION') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m), d,f fill(null);\";\n  var q81 = \"SELECT mean(value) FROM scaback_csv WHERE (d = 'CR_WS' AND f = 'HUMITIDY') AND time >= \" + tstart + \"ms and time <= \" +tend + \"ms GROUP BY time(15m), d,f fill(null);\"\n \nmsg.query = q+q1+q2+q3+q4+q5+q6+q7+q8+q9+q10+q11+q12+q13+q14+q15+q16+q17+q18+q19+q20+q21+q22+q23+q24+q25+q26+q27+q28+q29+q30+q31+q32+q33+q34+q35+q36+q37+q38+q39+q40+q41+q42+q43+q44+q45+q46+q47+q48+q49+q50+q51+q52+q53+q54+q55+q56+q57+q58+q59+q60+q61+q62+q63+q64+q65+q66+q67+q68+q69+q70+q71+q72+q73+q74+q75+q76+q77+q78+q79+q80+q81\n// msg.payload=tend\n return msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 700,
+        "wires": [
+            [
+                "10570d87e2c0ecd5"
+            ]
+        ]
+    },
+    {
+        "id": "a45beeb7358a37d3",
+        "type": "comment",
+        "z": "63d962c004d68b5d",
+        "name": "medak csv save",
+        "info": "",
+        "x": 490,
+        "y": 651,
+        "wires": []
+    },
+    {
+        "id": "10570d87e2c0ecd5",
+        "type": "influxdb in",
+        "z": "63d962c004d68b5d",
+        "influxdb": "d4100b3ade9e64bf",
+        "name": "test",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 610,
+        "y": 700,
+        "wires": [
+            [
+                "f556609c9e92523c"
+            ]
+        ]
+    },
+    {
+        "id": "f556609c9e92523c",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "func": "\nlet array = [];\nlet array1 = [];\nvar value = msg.payload.length;\nlet plantObj\n\nplantObj = []\n\nvar j=0;\n\n\nfor(var i=0;i<msg.payload.length;i++)\n{\n    if(msg.payload[i].length == 0)\n   {\n       for(var k=0;k<msg.payload[73].length;k++)\n       {\n           msg.payload[i][k] = 0;\n           \n         \n       }\n   }\n}\n\n  for (var i = 0; i < msg.payload[73].length;i++)\n\n{\n\nvar dateIST = new Date(msg.payload[73][i].time).toLocaleString(\"en-US\", {timeZone: 'Asia/Kolkata'})\n\nvar obj=\n{\nTIME:dateIST,\nB01_INV1_PAC_KW:msg.payload[0][i].mean,\nB01_INV2_PAC_KW:msg.payload[1][i].mean,\nB01_INV3_PAC_KW:msg.payload[2][i].mean,\n B01_INV4_PAC_KW:msg.payload[3][i].mean,\n B02_INV1_PAC_KW:msg.payload[4][i].mean,\n B02_INV2_PAC_KW:msg.payload[5][i].mean,\n B02_INV3_PAC_KW:msg.payload[6][i].mean,\n B02_INV4_PAC_KW:msg.payload[7][i].mean,\n B03_INV1_PAC_KW:msg.payload[8][i].mean,\n B03_INV2_PAC_KW:msg.payload[9][i].mean,\n B03_INV3_PAC_KW:msg.payload[10][i].mean,\n B03_INV4_PAC_KW:msg.payload[11][i].mean,\n B04_INV1_PAC_KW:msg.payload[12][i].mean,\n B04_INV2_PAC_KW:msg.payload[13][i].mean,\n B04_INV3_PAC_KW:msg.payload[14][i].mean,\n B04_INV4_PAC_KW:msg.payload[15][i].mean,\n B05_INV1_PAC_KW:msg.payload[16][i].mean,\n B05_INV2_PAC_KW:msg.payload[17][i].mean,\n B05_INV3_PAC_KW:msg.payload[18][i].mean,\n B05_INV4_PAC_KW:msg.payload[19][i].mean,\n B06_INV1_PAC_KW:msg.payload[20][i].mean,\n B06_INV2_PAC_KW:msg.payload[21][i].mean,\n B06_INV3_PAC_KW:msg.payload[22][i].mean,\n B06_INV4_PAC_KW:msg.payload[23][i].mean,\n B07_INV1_PAC_KW:msg.payload[24][i].mean,\n B07_INV2_PAC_KW:msg.payload[25][i].mean,\n B07_INV3_PAC_KW:msg.payload[26][i].mean,\n B07_INV4_PAC_KW:msg.payload[27][i].mean,\n B08_INV1_PAC_KW:msg.payload[28][i].mean,\n B08_INV2_PAC_KW:msg.payload[29][i].mean,\n B08_INV3_PAC_KW:msg.payload[30][i].mean,\n B08_INV4_PAC_KW:msg.payload[31][i].mean,\n B09_INV1_PAC_KW:msg.payload[32][i].mean,\n B09_INV2_PAC_KW:msg.payload[33][i].mean,\n B09_INV3_PAC_KW:msg.payload[34][i].mean,\n B09_INV4_PAC_KW:msg.payload[35][i].mean,\n B01_INV1_PDC_KW:msg.payload[36][i].mean,\n B01_INV2_PDC_KW:msg.payload[37][i].mean,\n B01_INV3_PDC_KW:msg.payload[38][i].mean,\n B01_INV4_PDC_KW:msg.payload[39][i].mean,\n B02_INV1_PDC_KW:msg.payload[40][i].mean,\n B02_INV2_PDC_KW:msg.payload[41][i].mean,\n B02_INV3_PDC_KW:msg.payload[42][i].mean,\n B02_INV4_PDC_KW:msg.payload[43][i].mean,\n B03_INV1_PDC_KW:msg.payload[44][i].mean,\n B03_INV2_PDC_KW:msg.payload[45][i].mean,\n B03_INV3_PDC_KW:msg.payload[46][i].mean,\n B03_INV4_PDC_KW:msg.payload[47][i].mean,\n B04_INV1_PDC_KW:msg.payload[48][i].mean,\n B04_INV2_PDC_KW:msg.payload[49][i].mean,\n B04_INV3_PDC_KW:msg.payload[50][i].mean,\n B04_INV4_PDC_KW:msg.payload[51][i].mean,\n B05_INV1_PDC_KW:msg.payload[52][i].mean,\n B05_INV2_PDC_KW:msg.payload[53][i].mean,\n B05_INV3_PDC_KW:msg.payload[54][i].mean,\n B05_INV4_PDC_KW:msg.payload[55][i].mean,\n B06_INV1_PDC_KW:msg.payload[56][i].mean,\n B06_INV2_PDC_KW:msg.payload[57][i].mean,\n B06_INV3_PDC_KW:msg.payload[58][i].mean,\n B06_INV4_PDC_KW:msg.payload[59][i].mean,\n B07_INV1_PDC_KW:msg.payload[60][i].mean,\n B07_INV2_PDC_KW:msg.payload[61][i].mean,\n B07_INV3_PDC_KW:msg.payload[62][i].mean,\n B07_INV4_PDC_KW:msg.payload[63][i].mean,\n B08_INV1_PDC_KW:msg.payload[64][i].mean,\n B08_INV2_PDC_KW:msg.payload[65][i].mean,\n B08_INV3_PDC_KW:msg.payload[66][i].mean,\n B08_INV4_PDC_KW:msg.payload[67][i].mean,\n B09_INV1_PDC_KW:msg.payload[68][i].mean,\n B09_INV2_PDC_KW:msg.payload[69][i].mean,\n B09_INV3_PDC_KW:msg.payload[70][i].mean,\n B09_INV4_PDC_KW:msg.payload[71][i].mean,\n PLANT_ACTIVEPOWER_KW:(msg.payload[72][i].mean)*1000,\n PR:msg.payload[73][i].mean,\n CUF:msg.payload[74][i].mean,\n\"GHI_W/m2\":msg.payload[75][i].mean,\n \"GTI_W/m2\":msg.payload[76][i].mean,\n AIR_TEMP_ºC :msg.payload[77][i].mean,\nMODULE_TEMP_ºC :msg.payload[78][i].mean,\nWIND_SPEED_Kmph:msg.payload[79][i].mean,\nWIND_DIRECTION_º:msg.payload[80][i].mean,\n \"HUMITIDY_%\":msg.payload[81][i].mean\n \n}\n\n plantObj.push(obj)\n}\n\nmsg.payload = plantObj\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 700,
+        "wires": [
+            [
+                "37cd1a5f895bb2ed"
+            ]
+        ]
+    },
+    {
+        "id": "5d8777ad195bb666",
+        "type": "cronplus",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": " 1,16,31,46 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 280,
+        "y": 700,
+        "wires": [
+            [
+                "949d674ef87e8300"
+            ]
+        ]
+    },
+    {
+        "id": "a0e85556b635624e",
+        "type": "inject",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 290,
+        "y": 840,
+        "wires": [
+            [
+                "278b3bf9af7f3536"
+            ]
+        ]
+    },
+    {
+        "id": "0f25a376ded16531",
+        "type": "file in",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 620,
+        "y": 840,
+        "wires": [
+            [
+                "dbcacaa518734b45"
+            ]
+        ]
+    },
+    {
+        "id": "2242c2ee22bdfcea",
+        "type": "debug",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "278b3bf9af7f3536",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "todays date",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\n\nvar c =today1;\ncontext.set('c',c)\n\nvar path = \"/usr/src/node-red/ftp/Medak04_11_2022.csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 840,
+        "wires": [
+            [
+                "0f25a376ded16531"
+            ]
+        ]
+    },
+    {
+        "id": "dbcacaa518734b45",
+        "type": "csv",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 750,
+        "y": 840,
+        "wires": [
+            [
+                "2242c2ee22bdfcea"
+            ]
+        ]
+    },
+    {
+        "id": "a9cc956b5fa25861",
+        "type": "change",
+        "z": "63d962c004d68b5d",
+        "name": "ftp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ftp",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 1020,
+        "wires": [
+            [
+                "555e90a33a173194"
+            ]
+        ]
+    },
+    {
+        "id": "79fbdbad8d49b113",
+        "type": "change",
+        "z": "63d962c004d68b5d",
+        "name": "local",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "local",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 960,
+        "wires": [
+            [
+                "555e90a33a173194"
+            ]
+        ]
+    },
+    {
+        "id": "555e90a33a173194",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"ftp\":\n        context.data.ftp = msg.payload;\n        msg = null;\n        break;\n    case \"local\":\n        context.data.local = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.ftp != null && context.data.local != null){\n    var data_combine = {\n        \"ftp\": context.data.ftp,\n        \"local\": context.data.local\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 1000,
+        "wires": [
+            [
+                "5a7927d428091118"
+            ]
+        ]
+    },
+    {
+        "id": "5a7927d428091118",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "array comparison",
+        "func": "var local_LENGTH = msg.payload.local.length\n\nvar ftp_LENGTH = msg.payload.ftp.length\n\nlet local = [];\nlet ftp = [];\n\nlet BALANCE = [];\nif (local_LENGTH != ftp_LENGTH) {\n    for (var i = 0; i < local_LENGTH; i++) {\n        local.push(msg.payload.local[i]);\n\n    }\n    for (var j = 0; j < ftp_LENGTH; j++) {\n\n        ftp.push(msg.payload.ftp[j].name);\n\n    }\n    for (var k = 0; k < local_LENGTH; k++) {\n        var flag = 0;\n        for (var l = 0; l < ftp_LENGTH; l++) {\n            if (local[k] === ftp[l]) {\n\n                ftp.splice(l, 1);\n                l--;\n                flag = 1;\n\n            }\n        }\n\n        if (flag == 0) {\n            var device2 = {};\n            device2.payload = {\n\n                files_retrived: local[k]\n            }\n\n\n            node.send(device2);\n        }\n    }\n}\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 1000,
+        "wires": [
+            [
+                "911d2e66736cff13"
+            ]
+        ]
+    },
+    {
+        "id": "7e38eeda3512bbe9",
+        "type": "debug",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "911d2e66736cff13",
+        "type": "function",
+        "z": "63d962c004d68b5d",
+        "name": "insert function",
+        "func": "msg.payload.data = \"/usr/src/node-red/ftp/\" + msg.payload.files_retrived\n//flow.set(\"path_test\",  msg.payload.path);\nmsg.payload.filename = msg.payload.files_retrived\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 1000,
+        "wires": [
+            [
+                "b60bffe0bddb50f7"
+            ]
+        ]
+    },
+    {
+        "id": "07dcedf964dfed5e",
+        "type": "fs-ops-dir",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "path": "/usr/src/node-red/ftp/",
+        "pathType": "str",
+        "filter": "Medak_",
+        "filterType": "str",
+        "dir": "payload",
+        "dirType": "msg",
+        "x": 320,
+        "y": 960,
+        "wires": [
+            [
+                "79fbdbad8d49b113"
+            ]
+        ]
+    },
+    {
+        "id": "5b14adc47ad4da9d",
+        "type": "ftp in",
+        "z": "63d962c004d68b5d",
+        "ftp": "9e23069abe8f4a6d",
+        "operation": "list",
+        "filename": "",
+        "localFilename": "",
+        "name": "",
+        "x": 310,
+        "y": 1020,
+        "wires": [
+            [
+                "a9cc956b5fa25861"
+            ]
+        ]
+    },
+    {
+        "id": "b60bffe0bddb50f7",
+        "type": "ftp in",
+        "z": "63d962c004d68b5d",
+        "ftp": "9e23069abe8f4a6d",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "name": "",
+        "x": 1230,
+        "y": 1000,
+        "wires": [
+            [
+                "7e38eeda3512bbe9"
+            ]
+        ]
+    },
+    {
+        "id": "5e95e63690ed8993",
+        "type": "cronplus",
+        "z": "63d962c004d68b5d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 1 * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 120,
+        "y": 980,
+        "wires": [
+            [
+                "07dcedf964dfed5e",
+                "5b14adc47ad4da9d"
+            ]
+        ]
+    },
+    {
+        "id": "d4100b3ade9e64bf",
+        "type": "influxdb",
+        "hostname": "192.168.63.84",
+        "port": "8086",
+        "protocol": "http",
+        "database": "iSolar",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "9e23069abe8f4a6d",
+        "type": "ftp",
+        "host": "104.211.208.200",
+        "port": "",
+        "secureOptions": "",
+        "user": "Medak",
+        "connTimeout": "",
+        "pasvTimeout": "",
+        "keepalive": ""
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
