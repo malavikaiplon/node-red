@@ -1,0 +1,97 @@
+[
+    {
+        "id": "0a92f13262be5350",
+        "type": "inject",
+        "z": "59706bb0d34702a8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 1260,
+        "wires": [
+            [
+                "453386879e7ca68e"
+            ]
+        ]
+    },
+    {
+        "id": "fd9776648f83c056",
+        "type": "function",
+        "z": "59706bb0d34702a8",
+        "name": "function 1",
+        "func": "\n\nlet plantObj\n\nplantObj = []\n \n\n\n  var time = new Date(msg.payload[0]._time).getTime();\n  //var _time0 = new Date(msg.payload[0][i]._time).get_time();\n  var B01_INV1 = ((msg.payload[0]._value) / 1091.200) * 1000\n  var B01_INV2 = ((msg.payload[1]._value) / 1066.400) * 1000\n  var B01_INV3 = ((msg.payload[2]._value) / 1116.0) * 1000\n  var B01_INV4 = ((msg.payload[3]._value) / 1202.80) * 1000 \n  var B02_INV1 = ((msg.payload[4]._value) / 1215.20) * 1000\n  var B02_INV2 = ((msg.payload[5]._value) / 1215.20) * 1000\n  var B02_INV3 = ((msg.payload[6]._value) / 1240.00) * 1000\n  var B02_INV4 = ((msg.payload[7]._value) / 1227.60) * 1000\n  var B03_INV1 = ((msg.payload[8]._value) / 1252.600) * 1000\n  var B03_INV2 = ((msg.payload[9]._value) / 1227.600) * 1000\n  var B03_INV3 = ((msg.payload[10]._value) / 1202.800) * 1000\n  var B03_INV4 = ((msg.payload[11]._value) / 1202.800) * 1000\n  var B04_INV1 = ((msg.payload[12]._value) / 1240.00) * 1000\n  var B04_INV2 = ((msg.payload[13]._value) / 1252.400) * 1000\n  var B04_INV3 = ((msg.payload[14]._value) / 1240.00) * 1000\n  var B04_INV4 = ((msg.payload[15]._value) / 1252.400) * 1000\n  var B05_INV1 = ((msg.payload[16]._value) / 1227.600) * 1000\n  var B05_INV2 = ((msg.payload[17]._value) / 1227.600) * 1000\n  var B05_INV3 = ((msg.payload[18]._value) / 1240.00) * 1000\n  var B05_INV4 = ((msg.payload[19]._value) / 1227.600) * 1000\n  var B06_INV1 = ((msg.payload[20]._value) / 1232.200) * 1000\n  var B06_INV2 = ((msg.payload[21]._value) / 1234.800) * 1000\n  var B06_INV3 = ((msg.payload[22]._value) / 1220.00) * 1000\n  var B06_INV4 = ((msg.payload[23]._value) / 1195.600) * 1000\n  var B07_INV1 = ((msg.payload[24]._value) / 1234.800) * 1000\n  var B07_INV2 = ((msg.payload[25]._value) / 1234.800) * 1000\n  var B07_INV3 = ((msg.payload[26]._value) / 1234.800) * 1000\n  var B07_INV4 = ((msg.payload[27]._value) / 1234.800) * 1000\n  var B08_INV1 = ((msg.payload[28]._value) / 1234.800) * 1000\n  var B08_INV2 = ((msg.payload[29]._value) / 1234.800) * 1000\n  var B08_INV3 = ((msg.payload[30]._value) / 1234.800) * 1000\n  var B08_INV4 = ((msg.payload[31]._value) / 1234.800) * 1000\n  var B09_INV1 = ((msg.payload[32]._value) / 1164.000) * 1000\n  var B09_INV2 = ((msg.payload[33]._value) / 1164.00) * 1000\n  var B10_INV1 = ((msg.payload[34]._value) / 1247.400) * 1000\n  var B10_INV2 = ((msg.payload[35]._value) / 1247.400) * 1000\n  var B10_INV3 = ((msg.payload[36]._value) / 1247.400) * 1000\n  var B10_INV4 = ((msg.payload[37]._value) / 1247.400) * 1000\n  var B11_INV1 = ((msg.payload[38]._value) / 1247.400) * 1000\n  var B11_INV2 = ((msg.payload[39]._value) / 1222.200) * 1000\n  var B11_INV3 = ((msg.payload[40]._value) / 1260.000) * 1000\n  var B11_INV4 = ((msg.payload[41]._value) / 1260.00) * 1000\n  var B12_INV1 = ((msg.payload[42]._value) / 1232.200) * 1000\n  var B12_INV2 = ((msg.payload[43]._value) / 1285.20) * 1000\n  var B12_INV3 = ((msg.payload[44]._value) / 1230.00) * 1000\n  var B12_INV4 = ((msg.payload[45]._value) / 1260.00) * 1000\n  var B13_INV1 = ((msg.payload[46]._value) / 1247.400) * 1000\n  var B13_INV2 = ((msg.payload[47]._value) / 1272.600) * 1000\n  var B13_INV3 = ((msg.payload[48]._value) / 1234.800) * 1000\n  var B13_INV4 = ((msg.payload[49]._value) / 1223.800) * 1000\n  \nvar sy = [\n  B01_INV1, B01_INV2, B01_INV3, B01_INV4,\n  B02_INV1, B02_INV2, B02_INV3, B02_INV4,\n  B03_INV1, B03_INV2, B03_INV3, B03_INV4,\n  B04_INV1, B04_INV2, B04_INV3, B04_INV4,\n  B05_INV1, B05_INV2, B05_INV3, B05_INV4,\n  B06_INV1, B06_INV2, B06_INV3, B06_INV4,\n  B07_INV1, B07_INV2, B07_INV3, B07_INV4,\n  B08_INV1, B08_INV2, B08_INV3, B08_INV4,\n  B09_INV1, B09_INV2,\n  B10_INV1, B10_INV2, B10_INV3, B10_INV4,\n  B11_INV1, B11_INV2, B11_INV3, B11_INV4,\n  B12_INV1, B12_INV2, B12_INV3, B12_INV4,\n  B13_INV1, B13_INV2, B13_INV3, B13_INV4\n]\n\n//plantObj.push(sy[0])\n\n\n\n\nfor (var i = 0; i < msg.payload.length; i++)\n {\n  var obj = {};\n  obj =\n      {\n        fields: {\n          value: sy[i]\n           },\n        tags: {\n          d: msg.payload[i].d\n          },\n        timestamp: msg.payload[i]._time\n      }\n  plantObj.push(obj)\n  //node.send(obj);\n}\n\nmsg.payload = plantObj\n\nreturn msg;\nreturn null;\n\n\n \n \n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1260,
+        "wires": [
+            [
+                "bb30fd9c197e5165"
+            ]
+        ]
+    },
+    {
+        "id": "453386879e7ca68e",
+        "type": "influxdb in",
+        "z": "59706bb0d34702a8",
+        "influxdb": "df46d0db0e3737ed",
+        "name": "testdb 2.0",
+        "query": "from(bucket: \"tata\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"v\")\n  |> filter(fn: (r) => r[\"d\"] =~ /INV/)\n  |> filter(fn: (r) => r[\"f\"] == \"EAE_DAY\")\n  |> filter(fn: (r) => r[\"p\"] == \"Iyyermalai\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r._value > 0.5)\n  |> aggregateWindow(every: 1d, fn: max, createEmpty: false)\n  |> yield(name: \"max\")\n",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "largeutilitylakeasia",
+        "x": 340,
+        "y": 1260,
+        "wires": [
+            [
+                "fd9776648f83c056"
+            ]
+        ]
+    },
+    {
+        "id": "df46d0db0e3737ed",
+        "type": "influxdb",
+        "hostname": "http://34.93.63.75",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "2.0",
+        "url": "http://iplon-pvindia.com:31086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
