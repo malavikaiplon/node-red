@@ -1,0 +1,243 @@
+[
+    {
+        "id": "f41e9c287899869f",
+        "type": "mqtt in",
+        "z": "fc42e39d94bf81f5",
+        "name": "",
+        "topic": "solar/inverter/#",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "efdbf9fee9037cee",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 240,
+        "wires": [
+            [
+                "d7f3bc125817417d"
+            ]
+        ]
+    },
+    {
+        "id": "d7f3bc125817417d",
+        "type": "function",
+        "z": "fc42e39d94bf81f5",
+        "name": "",
+        "func": "let array = [];\nlet array1 = [];\nlet plantObj\n\nplantObj = []\n\n\n\n\n       var obj =\n        \n       {\n        Time: new Date((msg.payload.time) * 1000).toLocaleString(\"en-US\", { timeZone: 'Asia/Kolkata' }),\n        A_Ms_Amp: msg.payload.values[\"A.Ms.Amp\"],\n        A1_Ms_Amp: msg.payload.values[\"A1.Ms.Amp\"],\n        B_Ms_Amp: msg.payload.values[\"B.Ms.Amp\"],\n        B1_Ms_Amp: msg.payload.values[\"B1.Ms.Amp\"],\n        A_Ms_Vol: msg.payload.values[\"A.Ms.Vol\"],\n        B_Ms_Vol: msg.payload.values[\"B.Ms.Vol\"],\n        A_Ms_Watt: msg.payload.values[\"A.Ms.Watt\"],\n        B_Ms_Watt: msg.payload.values[\"B.Ms.Watt\"],\n        Pac: msg.payload.values.Pac,\n        GridMs_W_phsA: msg.payload.values[\"GridMs.W.phsA\"],\n        GridMs_W_phsB: msg.payload.values[\"GridMs.W.phsB\"],\n        GridMs_W_phsC: msg.payload.values[\"GridMs.W.phsC\"],\n        GridMs_PhV_phsA: msg.payload.values[\"GridMs.PhV.phsA\"],\n        GridMs_PhV_phsB: msg.payload.values[\"GridMs.PhV.phsB\"],\n        GridMs_PhV_phsC: msg.payload.values[\"GridMs.PhV.phsC\"],\n        GridMs_A_phsA: msg.payload.values[\"GridMs.A.phsA\"],\n        GridMs_A_phsB: msg.payload.values[\"GridMs.A.phsB\"],\n        GridMs_A_phsC: msg.payload.values[\"GridMs.A.phsC\"],\n        GridMs_Hz: msg.payload.values[\"GridMs.Hz\"],\n        GridMs_TotVAr: msg.payload.values[\"GridMs.TotVAr\"],\n        GridMs_VAr_phsA: msg.payload.values[\"GridMs.VAr.phsA\"],\n        GridMs_VAr_phsB: msg.payload.values[\"GridMs.VAr.phsB\"],\n        GridMs_VAr_phsC: msg.payload.values[\"GridMs.VAr.phsC\"],\n        GridMs_TotVA: msg.payload.values[\"GridMs.TotVA\"],\n        GridMs_VA_phsA: msg.payload.values[\"GridMs.VA.phsA\"],\n        GridMs_VA_phsB: msg.payload.values[\"GridMs.VA.phsB\"],\n        GridMs_VA_phsC: msg.payload.values[\"GridMs.VA.phsC\"],\n        GridMs_TotPF: msg.payload.values[\"GridMs.TotPF\"],\n        Op_Dmd_WCtl: msg.payload.values[\"Op.Dmd.WCtl\"],\n        Op_Dmd_VArCtl: msg.payload.values[\"Op.Dmd.VArCtl\"],\n        Op_Dmd_PFCtl: msg.payload.values[\"Op.Dmd.PFCtl\"],\n        Serial_Number: msg.payload.values[\"Serial Number\"],\n        E_Total: msg.payload.values[\"E-Total\"],\n        GM_TotWhOut: msg.payload.values[\"GM.TotWhOut\"],\n        Op_EvtCntUsr: msg.payload.values[\"Op.EvtCntUsr\"],\n        Mt_TotTmh: msg.payload.values[\"Mt.TotTmh\"],\n        Mt_TotOpTmh: msg.payload.values[\"Mt.TotOpTmh\"],\n        Op_EvtNo: msg.payload.values[\"Op.EvtNo\"],\n        Op_EvtNoDvlp: msg.payload.values[\"Op.EvtNoDvlp\"],\n        Op_TmsRmg: msg.payload.values[\"Op.TmsRmg\"],\n        Mode: msg.payload.values.Mode,\n        Error: msg.payload.values.Error,\n        Op_Health: msg.payload.values[\"Op.Health\"],\n        Op_Prio: msg.payload.values[\"Op.Prio\"],\n        Op_GriSwStt: msg.payload.values[\"Op.GriSwStt\"],\n        Inv_TmpLimStt: msg.payload.values[\"Inv.TmpLimStt\"],\n        InvCtl_Stt: msg.payload.values[\"InvCtl.Stt\"],\n        PlntCtl_Stt: msg.payload.values[\"PlntCtl.Stt\"],\n        PCM_DigInStt: msg.payload.values[\"PCM-DigInStt\"],\n        Op_Dmd_PFExtCtl: msg.payload.values[\"Op.Dmd.PFExtCtl\"]\n\n           \n}\n\nplantObj.push(obj)\n\n\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 240,
+        "wires": [
+            [
+                "7c693463eab8976e"
+            ]
+        ]
+    },
+    {
+        "id": "0f21182d46424e40",
+        "type": "debug",
+        "z": "fc42e39d94bf81f5",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "7c693463eab8976e",
+        "type": "csv",
+        "z": "fc42e39d94bf81f5",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": true,
+        "include_null_values": true,
+        "x": 570,
+        "y": 240,
+        "wires": [
+            [
+                "395ac08096104429"
+            ]
+        ]
+    },
+    {
+        "id": "395ac08096104429",
+        "type": "function",
+        "z": "fc42e39d94bf81f5",
+        "name": "todays date",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\n\nvar c =today1;\ncontext.set('c',c)\n\nvar path = \"/home/iplon/yasdi2mqtt/ftp/yasdi_\"+c+\".csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 240,
+        "wires": [
+            [
+                "93741b6a02893f83"
+            ]
+        ]
+    },
+    {
+        "id": "93741b6a02893f83",
+        "type": "file",
+        "z": "fc42e39d94bf81f5",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 880,
+        "y": 240,
+        "wires": [
+            [
+                "0f21182d46424e40"
+            ]
+        ]
+    },
+    {
+        "id": "e1d06742c11a0794",
+        "type": "function",
+        "z": "fc42e39d94bf81f5",
+        "name": "filename",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.localFilename = \"/home/iplon/yasdi2mqtt/ftp/yasdi_\" + c + \".csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\nmsg.filename=\"SMA_yasdi_\"+c+\".csv\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 380,
+        "wires": [
+            [
+                "174cca89d1e6361b"
+            ]
+        ]
+    },
+    {
+        "id": "4c311e629a1ce049",
+        "type": "cronplus",
+        "z": "fc42e39d94bf81f5",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */5 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "e1d06742c11a0794"
+            ]
+        ]
+    },
+    {
+        "id": "174cca89d1e6361b",
+        "type": "ftp in",
+        "z": "fc42e39d94bf81f5",
+        "ftp": "b1257bd787c290b6",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "name": "",
+        "x": 690,
+        "y": 380,
+        "wires": [
+            [
+                "aed5b2d2459957a8"
+            ]
+        ]
+    },
+    {
+        "id": "aed5b2d2459957a8",
+        "type": "debug",
+        "z": "fc42e39d94bf81f5",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "efdbf9fee9037cee",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b1257bd787c290b6",
+        "type": "ftp",
+        "host": "ftpserver1.solarlink.co",
+        "port": "",
+        "secureOptions": "",
+        "user": "mh_ci_fiat_one_fpel",
+        "connTimeout": "",
+        "pasvTimeout": "",
+        "keepalive": ""
+    }
+]
