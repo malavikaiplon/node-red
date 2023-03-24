@@ -1,12 +1,16 @@
 {
-    "name": "deepak",
-    "description": "A Node-RED Project",
-    "version": "0.0.1",
-    "dependencies": {},
-    "node-red": {
-        "settings": {
-            "flowFile": "API.json",
-            "credentialsFile": "API_cred.json"
-        }
-    }
+  "name": "mogodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "malavika",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^5.1.0",
+    "mongoose": "^7.0.2"
+  }
 }
