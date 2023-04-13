@@ -10,7 +10,7 @@
         "precision": "",
         "retentionPolicy": "",
         "org": "largeutilitylakeasia",
-        "x": 720,
+        "x": 700,
         "y": 160,
         "wires": [
             [
@@ -61,7 +61,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 550,
+        "x": 530,
         "y": 160,
         "wires": [
             [
@@ -84,7 +84,7 @@
         "strings": false,
         "include_empty_strings": "",
         "include_null_values": "",
-        "x": 410,
+        "x": 390,
         "y": 160,
         "wires": [
             [
@@ -112,11 +112,11 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 890,
+        "x": 850,
         "y": 160,
         "wires": [
             [
-                "05372ec90cbc5082"
+                "2b769e24f367beec"
             ]
         ]
     },
@@ -131,29 +131,13 @@
         "syntax": "mustache",
         "template": "plant,measurement,device,field,factor\ncharanka,v,INV,EDC_DAY,1.0\ncharanka,v,INV,EAE_DAY,1.0\n\n\n\n",
         "output": "str",
-        "x": 280,
+        "x": 260,
         "y": 160,
         "wires": [
             [
                 "25480b3f5090c831"
             ]
         ]
-    },
-    {
-        "id": "08e100d974cffd3b",
-        "type": "debug",
-        "z": "d542d02f57c3a7d6",
-        "name": "debug 133",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1110,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "e52cbc1abef1469a",
@@ -166,7 +150,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 620,
+        "x": 600,
         "y": 380,
         "wires": [
             [
@@ -183,7 +167,7 @@
         "headers": {
             "content-type": "application/json"
         },
-        "x": 910,
+        "x": 890,
         "y": 380,
         "wires": []
     },
@@ -195,68 +179,13 @@
         "property": "payload",
         "action": "str",
         "pretty": false,
-        "x": 770,
+        "x": 750,
         "y": 380,
         "wires": [
             [
-                "24eccc7e57b63495",
-                "1c517274020140fe"
+                "24eccc7e57b63495"
             ]
         ]
-    },
-    {
-        "id": "05372ec90cbc5082",
-        "type": "function",
-        "z": "d542d02f57c3a7d6",
-        "name": "function 116",
-        "func": "let plantObj\nplantObj = []\n\n\nfor (var i = 0; i < msg.payload[0].length; i++)\n{\n    var dctime = new Date(msg.payload[0][i]._time).getTime();\n     var actime = new Date(msg.payload[1][i]._time).getTime();\n    //var time3 = new Date(msg.payload[2][i]._time).getTime();\n    //var httime = new Date(msg.payload[3][i].time).getTime(); \n  var number = msg.payload[0][i].d.split(\"INV\")\n  var date = new Date().toISOString().slice(0, 10);\n  var time = new Date(dctime).toLocaleString('en-GB', { hour12: false, timeZone: 'Asia/Kolkata' });\n  var time_stamp = date + time.slice(10, 20)\n  var time2 = time_stamp.split(\",\")\n  if (i != 0){\n    var energy_input_dc_kwh_units = Number(((msg.payload[0][i]._value) - (msg.payload[0][i - 1]._value)).toFixed(2))\n    var energy_output_ac_kwh_units = Number(((msg.payload[1][i]._value) - (msg.payload[1][i - 1]._value)).toFixed(2))\n  }\n  else{\n    energy_input_dc_kwh_units=0\n    energy_output_ac_kwh_units=0\n  }\n  if (dctime == actime)\n  {\n      var energy_input_dc_kwh_reading = msg.payload[0][i]._value\n      var d = msg.payload[0][i].d.split(\"INV\")\n      var energy_output_ac_kwh_reading = msg.payload[1][i]._value\n      var ht_panel_ac_kwh_reading = \"\"\n      var ht_panel_ac_kwh_units = \"\"\n\n      var captivel_consumption_ac_kwh_reading = \"\"\n      var captivel_consumption_ac_kwh_units = \"\"\n      var plant_code = \"SEPL\"\n\nvar obj={\n  time2,\n  number,\n  energy_input_dc_kwh_reading,\n  energy_input_dc_kwh_units,\n  energy_output_ac_kwh_reading,\n  energy_output_ac_kwh_units,\n  ht_panel_ac_kwh_reading,\n  ht_panel_ac_kwh_units,\n  captivel_consumption_ac_kwh_reading,\n  captivel_consumption_ac_kwh_units,\n  plant_code\n \n}\n  }\nplantObj.push(obj)  \n}\n \nmsg.payload =plantObj\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1030,
-        "y": 160,
-        "wires": [
-            [
-                "8576f1bc3cc58b2a"
-            ]
-        ]
-    },
-    {
-        "id": "8576f1bc3cc58b2a",
-        "type": "function",
-        "z": "d542d02f57c3a7d6",
-        "name": "function 14",
-        "func": "let plantObj\n\nplantObj = []\nfor (var i = 0; i < msg.payload.length; i++) \n{\n    var time_stamp = msg.payload[i].time2[0] + msg.payload[i].time2[1]\n    //.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })\n    var inverter_number = msg.payload[i].number[0] + msg.payload[i].number[1]\n    \n    var energy_input_dc_kwh_reading = (msg.payload[i].energy_input_dc_kwh_reading).toString()\n    var energy_input_dc_kwh_units = (msg.payload[i].energy_input_dc_kwh_units).toString()\n    var energy_output_ac_kwh_reading = (msg.payload[i].energy_output_ac_kwh_reading).toString()\n    var energy_output_ac_kwh_units = (msg.payload[i].energy_output_ac_kwh_units).toString()\n\n    var ht_panel_ac_kwh_reading = msg.payload[i].ht_panel_ac_kwh_reading\n    var ht_panel_ac_kwh_units = msg.payload[i].ht_panel_ac_kwh_units\n\n    var captivel_consumption_ac_kwh_reading = msg.payload[i].captivel_consumption_ac_kwh_reading\n    var captivel_consumption_ac_kwh_units = msg.payload[i].captivel_consumption_ac_kwh_units\n    var plant_code = msg.payload[i].plant_code\n    \n\n\n    var obj = {\n       \n        time_stamp,\n        inverter_number,\n        energy_input_dc_kwh_reading,\n        energy_input_dc_kwh_units,\n        energy_output_ac_kwh_reading,\n        energy_output_ac_kwh_units,\n        ht_panel_ac_kwh_reading,\n        ht_panel_ac_kwh_units,\n        captivel_consumption_ac_kwh_reading,\n        captivel_consumption_ac_kwh_units,\n        plant_code\n\n    }\n\n\nplantObj.push(obj)\n   }\nmsg.payload = plantObj\nflow.set(\"inv_api\", msg.payload);\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1190,
-        "y": 160,
-        "wires": [
-            [
-                "08e100d974cffd3b"
-            ]
-        ]
-    },
-    {
-        "id": "1c517274020140fe",
-        "type": "debug",
-        "z": "d542d02f57c3a7d6",
-        "name": "debug 280",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 950,
-        "y": 340,
-        "wires": []
     },
     {
         "id": "6dd4692bcc90af75",
@@ -267,11 +196,65 @@
         "method": "get",
         "upload": false,
         "swaggerDoc": "",
-        "x": 390,
+        "x": 370,
         "y": 380,
         "wires": [
             [
                 "e52cbc1abef1469a"
+            ]
+        ]
+    },
+    {
+        "id": "edd63bd66dcb8160",
+        "type": "debug",
+        "z": "d542d02f57c3a7d6",
+        "name": "debug 280",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "de7fe209db5a9b73",
+        "type": "function",
+        "z": "d542d02f57c3a7d6",
+        "name": "function 14",
+        "func": "let plantObj\n\nplantObj = []\nfor (var i = 0; i < msg.payload.length; i++) \n{\n    var time_stamp = msg.payload[i].time2[0] + msg.payload[i].time2[1]\n    //.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })\n    var inverter_number = msg.payload[i].number[0] + msg.payload[i].number[1]\n    \n    var energy_input_dc_kwh_reading = (msg.payload[i].energy_input_dc_kwh_reading).toString()\n    var energy_input_dc_kwh_units = (msg.payload[i].energy_input_dc_kwh_units).toString()\n    var energy_output_ac_kwh_reading = (msg.payload[i].energy_output_ac_kwh_reading).toString()\n    var energy_output_ac_kwh_units = (msg.payload[i].energy_output_ac_kwh_units).toString()\n\n    var ht_panel_ac_kwh_reading = msg.payload[i].ht_panel_ac_kwh_reading\n    var ht_panel_ac_kwh_units = msg.payload[i].ht_panel_ac_kwh_units\n\n    var captivel_consumption_ac_kwh_reading = msg.payload[i].captivel_consumption_ac_kwh_reading\n    var captivel_consumption_ac_kwh_units = msg.payload[i].captivel_consumption_ac_kwh_units\n    var plant_code = msg.payload[i].plant_code\n    \n\n\n    var obj = {\n      time_stamp,\n      inverter_number,\n        energy_input_dc_kwh_reading,\n        energy_input_dc_kwh_units,\n        energy_output_ac_kwh_reading,\n        energy_output_ac_kwh_units,\n        ht_panel_ac_kwh_reading,\n        ht_panel_ac_kwh_units,\n        captivel_consumption_ac_kwh_reading,\n        captivel_consumption_ac_kwh_units,\n        plant_code\n       \n    }\nplantObj.push(obj)\n   }\n\nmsg.payload = {\"payload\":plantObj}\nflow.set(\"inv_api\", msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 160,
+        "wires": [
+            [
+                "edd63bd66dcb8160"
+            ]
+        ]
+    },
+    {
+        "id": "2b769e24f367beec",
+        "type": "function",
+        "z": "d542d02f57c3a7d6",
+        "name": "function 117",
+        "func": "let plantObj\nplantObj = []\n\nfor (var i = 0; i < msg.payload[0].length; i++) {\n    var dctime = new Date(msg.payload[0][i]._time).getTime();\n    var actime = new Date(msg.payload[1][i]._time).getTime();\n    var number = msg.payload[0][i].d.split(\"INV\")\n    var date = new Date().toISOString().slice(0, 10);\n    var time = new Date(dctime).toLocaleString('en-GB', { hour12: false, timeZone: 'Asia/Kolkata' });\n    var time_stamp = date + time.slice(10, 20)\n    var time2 = time_stamp.split(\",\")\n    var device = msg.payload[0][i].d\n    if ((i == 0) || (device != msg.payload[0][i - 1].d)) {\n        var energy_input_dc_kwh_reading = msg.payload[0][i]._value\n        var d = msg.payload[0][i].d.split(\"INV\")\n        var energy_output_ac_kwh_reading = msg.payload[1][i]._value\n        var ht_panel_ac_kwh_reading = \"\"\n        var ht_panel_ac_kwh_units = \"\"\n        var energy_input_dc_kwh_units = 0\n        var energy_output_ac_kwh_units = 0\n        var captivel_consumption_ac_kwh_reading = \"\"\n        var captivel_consumption_ac_kwh_units = \"\"\n        var plant_code = \"SEPL\"}\n\n    if ((i!=0)&&(dctime == actime) && (device == msg.payload[0][i-1].d)){\n         energy_input_dc_kwh_reading = msg.payload[0][i]._value\n         d = msg.payload[0][i].d.split(\"INV\")\n         energy_output_ac_kwh_reading = msg.payload[1][i]._value\n         ht_panel_ac_kwh_reading = \"\"\n         ht_panel_ac_kwh_units = \"\"\n         energy_input_dc_kwh_units = Number(((msg.payload[0][i]._value) - (msg.payload[0][i-1]._value)).toFixed(2))\n         energy_output_ac_kwh_units = Number(((msg.payload[1][i]._value) - (msg.payload[1][i-1]._value)).toFixed(2))\n         captivel_consumption_ac_kwh_reading = \"\"\n         captivel_consumption_ac_kwh_units = \"\"\n         plant_code = \"SEPL\"\n       }\n    var obj = {\n        time2,\n        number,\n    energy_input_dc_kwh_reading,\n    energy_input_dc_kwh_units,\n    energy_output_ac_kwh_reading,\n    energy_output_ac_kwh_units,\n    ht_panel_ac_kwh_reading,\n    ht_panel_ac_kwh_units,\n    captivel_consumption_ac_kwh_reading,\n    captivel_consumption_ac_kwh_units,\n    plant_code\n\n    }\n\n    plantObj.push(obj)\n}\n\nmsg.payload = plantObj\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 160,
+        "wires": [
+            [
+                "de7fe209db5a9b73"
             ]
         ]
     },
