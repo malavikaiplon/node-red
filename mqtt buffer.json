@@ -1,0 +1,1139 @@
+[
+    {
+        "id": "4a4a6f53a49dc7a1",
+        "type": "tab",
+        "label": "mqtt buffer",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "44cd720664c9b7ba",
+        "type": "csv",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "286ca9f889862167",
+                "331a456c20e2ea7c"
+            ]
+        ]
+    },
+    {
+        "id": "1cfaaeed683c5bb2",
+        "type": "file in",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "config file read",
+        "filename": "/opt/iGate_config.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 320,
+        "y": 420,
+        "wires": [
+            [
+                "44cd720664c9b7ba"
+            ]
+        ]
+    },
+    {
+        "id": "8fdc67af0f028d00",
+        "type": "file",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "config file write",
+        "filename": "/opt/iGate_config.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 780,
+        "y": 220,
+        "wires": [
+            [
+                "ece7ba7663d78c67"
+            ]
+        ]
+    },
+    {
+        "id": "87cb78362ab6b4ca",
+        "type": "inject",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 480,
+        "y": 220,
+        "wires": [
+            [
+                "61b95f19d69b81cc"
+            ]
+        ]
+    },
+    {
+        "id": "61b95f19d69b81cc",
+        "type": "template",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "config.csv",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "text",
+        "syntax": "mustache",
+        "template": "s.no,cus_tag,iplon_tag,bd,dd,dt,fd,h,iid,m,p,qu,text,u,mn\n1,default:MCR_INV1_AC_CAP,CR.CR_INV01.AC_CAP,Maharastra_20MWp,CR_INV01,INVERTER,AC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n2,default:MCR_INV1_AC_CB,CR.CR_INV01.AC_CB,Maharastra_20MWp,CR_INV01,INVERTER,AC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n3,default:MCR_INV1_ALARM_CODE,CR.CR_INV01.ALARM_CODE,Maharastra_20MWp,CR_INV01,INVERTER,ALARM_CODE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n4,default:MCR_INV1_AVAILABILITY,CR.CR_INV01.INV_AVAILABILITY,Maharastra_20MWp,CR_INV01,INVERTER,INV_AVAILABILITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n5,default:MCR_INV1_BRKDWN_LOSS,CR.CR_INV01.BREAKDOWN_LOSS,Maharastra_20MWp,CR_INV01,INVERTER,BREAKDOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n6,default:MCR_INV1_BRKDWN_MNT,CR.CR_INV01.BREAKDOWN_MNT,Maharastra_20MWp,CR_INV01,INVERTER,BREAKDOWN_MNT,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n7,default:MCR_INV1_CH10_A,CR.CR_INV01.IDC10,Maharastra_20MWp,CR_INV01,INVERTER,IDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n8,default:MCR_INV1_CH10_KW,CR.CR_INV01.PDC10,Maharastra_20MWp,CR_INV01,INVERTER,PDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n9,default:MCR_INV1_CH10_KWH,CR.CR_INV01.EDC10,Maharastra_20MWp,CR_INV01,INVERTER,EDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n10,default:MCR_INV1_CH11_A,CR.CR_INV01.IDC11,Maharastra_20MWp,CR_INV01,INVERTER,IDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n11,default:MCR_INV1_CH11_KW,CR.CR_INV01.PDC11,Maharastra_20MWp,CR_INV01,INVERTER,PDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n12,default:MCR_INV1_CH11_KWH,CR.CR_INV01.EDC11,Maharastra_20MWp,CR_INV01,INVERTER,EDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n13,default:MCR_INV1_CH12_A,CR.CR_INV01.IDC12,Maharastra_20MWp,CR_INV01,INVERTER,IDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n14,default:MCR_INV1_CH12_KW,CR.CR_INV01.PDC12,Maharastra_20MWp,CR_INV01,INVERTER,PDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n15,default:MCR_INV1_CH12_KWH,CR.CR_INV01.EDC12,Maharastra_20MWp,CR_INV01,INVERTER,EDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n16,default:MCR_INV1_CH13_A,CR.CR_INV01.IDC13,Maharastra_20MWp,CR_INV01,INVERTER,IDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n17,default:MCR_INV1_CH13_KW,CR.CR_INV01.PDC13,Maharastra_20MWp,CR_INV01,INVERTER,PDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n18,default:MCR_INV1_CH13_KWH,CR.CR_INV01.EDC13,Maharastra_20MWp,CR_INV01,INVERTER,EDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n19,default:MCR_INV1_CH14_A,CR.CR_INV01.IDC14,Maharastra_20MWp,CR_INV01,INVERTER,IDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n20,default:MCR_INV1_CH14_KW,CR.CR_INV01.PDC14,Maharastra_20MWp,CR_INV01,INVERTER,PDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n21,default:MCR_INV1_CH14_KWH,CR.CR_INV01.EDC14,Maharastra_20MWp,CR_INV01,INVERTER,EDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n22,default:MCR_INV1_CH15_A,CR.CR_INV01.IDC15,Maharastra_20MWp,CR_INV01,INVERTER,IDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n23,default:MCR_INV1_CH15_KW,CR.CR_INV01.PDC15,Maharastra_20MWp,CR_INV01,INVERTER,PDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n24,default:MCR_INV1_CH15_KWH,CR.CR_INV01.EDC15,Maharastra_20MWp,CR_INV01,INVERTER,EDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n25,default:MCR_INV1_CH16_A,CR.CR_INV01.IDC16,Maharastra_20MWp,CR_INV01,INVERTER,IDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n26,default:MCR_INV1_CH16_KW,CR.CR_INV01.PDC16,Maharastra_20MWp,CR_INV01,INVERTER,PDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n27,default:MCR_INV1_CH16_KWH,CR.CR_INV01.EDC16,Maharastra_20MWp,CR_INV01,INVERTER,EDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n28,default:MCR_INV1_CH1_A,CR.CR_INV01.IDC01,Maharastra_20MWp,CR_INV01,INVERTER,IDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n29,default:MCR_INV1_CH1_KW,CR.CR_INV01.PDC01,Maharastra_20MWp,CR_INV01,INVERTER,PDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n30,default:MCR_INV1_CH1_KWH,CR.CR_INV01.EDC01,Maharastra_20MWp,CR_INV01,INVERTER,EDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n31,default:MCR_INV1_CH2_A,CR.CR_INV01.IDC02,Maharastra_20MWp,CR_INV01,INVERTER,IDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n32,default:MCR_INV1_CH2_KW,CR.CR_INV01.PDC02,Maharastra_20MWp,CR_INV01,INVERTER,PDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n33,default:MCR_INV1_CH2_KWH,CR.CR_INV01.EDC02,Maharastra_20MWp,CR_INV01,INVERTER,EDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n34,default:MCR_INV1_CH3_A,CR.CR_INV01.IDC03,Maharastra_20MWp,CR_INV01,INVERTER,IDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n35,default:MCR_INV1_CH3_KW,CR.CR_INV01.PDC03,Maharastra_20MWp,CR_INV01,INVERTER,PDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n36,default:MCR_INV1_CH3_KWH,CR.CR_INV01.EDC03,Maharastra_20MWp,CR_INV01,INVERTER,EDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n37,default:MCR_INV1_CH4_A,CR.CR_INV01.IDC04,Maharastra_20MWp,CR_INV01,INVERTER,IDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n38,default:MCR_INV1_CH4_KW,CR.CR_INV01.PDC04,Maharastra_20MWp,CR_INV01,INVERTER,PDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n39,default:MCR_INV1_CH4_KWH,CR.CR_INV01.EDC04,Maharastra_20MWp,CR_INV01,INVERTER,EDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n40,default:MCR_INV1_CH5_A,CR.CR_INV01.IDC05,Maharastra_20MWp,CR_INV01,INVERTER,IDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n41,default:MCR_INV1_CH5_KW,CR.CR_INV01.PDC05,Maharastra_20MWp,CR_INV01,INVERTER,PDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n42,default:MCR_INV1_CH5_KWH,CR.CR_INV01.EDC05,Maharastra_20MWp,CR_INV01,INVERTER,EDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n43,default:MCR_INV1_CH6_A,CR.CR_INV01.IDC06,Maharastra_20MWp,CR_INV01,INVERTER,IDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n44,default:MCR_INV1_CH6_KW,CR.CR_INV01.PDC06,Maharastra_20MWp,CR_INV01,INVERTER,PDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n45,default:MCR_INV1_CH6_KWH,CR.CR_INV01.EDC06,Maharastra_20MWp,CR_INV01,INVERTER,EDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n46,default:MCR_INV1_CH7_A,CR.CR_INV01.IDC07,Maharastra_20MWp,CR_INV01,INVERTER,IDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n47,default:MCR_INV1_CH7_KW,CR.CR_INV01.PDC07,Maharastra_20MWp,CR_INV01,INVERTER,PDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n48,default:MCR_INV1_CH7_KWH,CR.CR_INV01.EDC07,Maharastra_20MWp,CR_INV01,INVERTER,EDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n49,default:MCR_INV1_CH8_A,CR.CR_INV01.IDC08,Maharastra_20MWp,CR_INV01,INVERTER,IDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n50,default:MCR_INV1_CH8_KW,CR.CR_INV01.PDC08,Maharastra_20MWp,CR_INV01,INVERTER,PDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n51,default:MCR_INV1_CH8_KWH,CR.CR_INV01.EDC08,Maharastra_20MWp,CR_INV01,INVERTER,EDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n52,default:MCR_INV1_CH9_A,CR.CR_INV01.IDC09,Maharastra_20MWp,CR_INV01,INVERTER,IDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n53,default:MCR_INV1_CH9_KW,CR.CR_INV01.PDC09,Maharastra_20MWp,CR_INV01,INVERTER,PDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n54,default:MCR_INV1_CH9_KWH,CR.CR_INV01.EDC09,Maharastra_20MWp,CR_INV01,INVERTER,EDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n55,default:MCR_INV1_COMM_STS,CR.CR_INV01.COMMUNICATION_STATUS,Maharastra_20MWp,CR_INV01,INVERTER,COMMUNICATION_STATUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n56,default:MCR_INV1_CPR,CR.CR_INV01.CPR,Maharastra_20MWp,CR_INV01,INVERTER,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n57,default:MCR_INV1_DC_CAP,CR.CR_INV01.DC_CAP,Maharastra_20MWp,CR_INV01,INVERTER,DC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n58,default:MCR_INV1_DC_CB,CR.CR_INV01.DC_CB,Maharastra_20MWp,CR_INV01,INVERTER,DC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n59,default:MCR_INV1_EVENT_CODE1,CR.CR_INV01.EVENT_CODE_1,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n60,default:MCR_INV1_EVENT_CODE2,CR.CR_INV01.EVENT_CODE_2,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n61,default:MCR_INV1_EVENT_CODE3,CR.CR_INV01.EVENT_CODE_3,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n62,default:MCR_INV1_EVENT_CODE4,CR.CR_INV01.EVENT_CODE_4,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_4,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n63,default:MCR_INV1_EVENT_CODE5,CR.CR_INV01.EVENT_CODE_5,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_5,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n64,default:MCR_INV1_EVENT_CODE6,CR.CR_INV01.EVENT_CODE_6,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_6,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n65,default:MCR_INV1_EVENT_CODE7,CR.CR_INV01.EVENT_CODE_7,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_7,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n66,default:MCR_INV1_EVENT_CODE8,CR.CR_INV01.EVENT_CODE_8,Maharastra_20MWp,CR_INV01,INVERTER,EVENT_CODE_8,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n67,default:MCR_INV1_HZ,CR.CR_INV01.FAC,Maharastra_20MWp,CR_INV01,INVERTER,FAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Hz,v\n68,default:MCR_INV1_IB,CR.CR_INV01.IAC3,Maharastra_20MWp,CR_INV01,INVERTER,IAC3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n69,default:MCR_INV1_INT_TEMP,CR.CR_INV01.INTERNAL_TEMP,Maharastra_20MWp,CR_INV01,INVERTER,INTERNAL_TEMP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Deg_C,v\n70,default:MCR_INV1_IN_A,CR.CR_INV01.IN_A,Maharastra_20MWp,CR_INV01,INVERTER,IN_A,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n71,default:MCR_INV1_IN_KW,CR.CR_INV01.IN_KW,Maharastra_20MWp,CR_INV01,INVERTER,IN_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n72,default:MCR_INV1_IN_V,CR.CR_INV01.IN_V,Maharastra_20MWp,CR_INV01,INVERTER,IN_V,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n73,default:MCR_INV1_IR,CR.CR_INV01.IAC1,Maharastra_20MWp,CR_INV01,INVERTER,IAC1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n74,default:MCR_INV1_IY,CR.CR_INV01.IAC2,Maharastra_20MWp,CR_INV01,INVERTER,IAC2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n75,default:MCR_INV1_KVA,CR.CR_INV01.SAC,Maharastra_20MWp,CR_INV01,INVERTER,SAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVa ,v\n76,default:MCR_INV1_KVAR,CR.CR_INV01.QAC,Maharastra_20MWp,CR_INV01,INVERTER,QAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVar,v\n77,default:MCR_INV1_KW,CR.CR_INV01.PAC,Maharastra_20MWp,CR_INV01,INVERTER,PAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n78,default:MCR_INV1_PF,CR.CR_INV01.PF,Maharastra_20MWp,CR_INV01,INVERTER,PF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n79,default:MCR_INV1_PR,CR.CR_INV01.PR,Maharastra_20MWp,CR_INV01,INVERTER,PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n80,default:MCR_INV1_RUNNING,CR.CR_INV01.RUNNING,Maharastra_20MWp,CR_INV01,INVERTER,RUNNING,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n81,default:MCR_INV1_TODAY_KWH,CR.CR_INV01.EAE_DAY,Maharastra_20MWp,CR_INV01,INVERTER,EAE_DAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n82,default:MCR_INV1_TOTAL_KWH,CR.CR_INV01.EAE,Maharastra_20MWp,CR_INV01,INVERTER,EAE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n83,default:MCR_INV1_VBR,CR.CR_INV01.UAC31,Maharastra_20MWp,CR_INV01,INVERTER,UAC31,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n84,default:MCR_INV1_VRY,CR.CR_INV01.UAC12,Maharastra_20MWp,CR_INV01,INVERTER,UAC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n85,default:MCR_INV1_VYB,CR.CR_INV01.UAC23,Maharastra_20MWp,CR_INV01,INVERTER,UAC23,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n86,default:MCR_INV1_YES_KWH,CR.CR_INV01.EAE_YDAY,Maharastra_20MWp,CR_INV01,INVERTER,EAE_YDAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n87,default:MCR_INV2_AC_CAP,CR.CR_INV02.AC_CAP,Maharastra_20MWp,CR_INV02,INVERTER,AC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n88,default:MCR_INV2_AC_CB,CR.CR_INV02.AC_CB,Maharastra_20MWp,CR_INV02,INVERTER,AC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n89,default:MCR_INV2_ALARM_CODE,CR.CR_INV02.ALARM_CODE,Maharastra_20MWp,CR_INV02,INVERTER,ALARM_CODE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n90,default:MCR_INV2_AVAILABILITY,CR.CR_INV02.INV_AVAILABILITY,Maharastra_20MWp,CR_INV02,INVERTER,INV_AVAILABILITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n91,default:MCR_INV2_BRKDWN_LOSS,CR.CR_INV02.BREAKDOWN_LOSS,Maharastra_20MWp,CR_INV02,INVERTER,BREAKDOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n92,default:MCR_INV2_BRKDWN_MNT,CR.CR_INV02.BREAKDOWN_MNT,Maharastra_20MWp,CR_INV02,INVERTER,BREAKDOWN_MNT,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n93,default:MCR_INV2_CH10_A,CR.CR_INV02.IDC10,Maharastra_20MWp,CR_INV02,INVERTER,IDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n94,default:MCR_INV2_CH10_KW,CR.CR_INV02.PDC10,Maharastra_20MWp,CR_INV02,INVERTER,PDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n95,default:MCR_INV2_CH10_KWH,CR.CR_INV02.EDC10,Maharastra_20MWp,CR_INV02,INVERTER,EDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n96,default:MCR_INV2_CH11_A,CR.CR_INV02.IDC11,Maharastra_20MWp,CR_INV02,INVERTER,IDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n97,default:MCR_INV2_CH11_KW,CR.CR_INV02.PDC11,Maharastra_20MWp,CR_INV02,INVERTER,PDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n98,default:MCR_INV2_CH11_KWH,CR.CR_INV02.EDC11,Maharastra_20MWp,CR_INV02,INVERTER,EDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n99,default:MCR_INV2_CH12_A,CR.CR_INV02.IDC12,Maharastra_20MWp,CR_INV02,INVERTER,IDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n100,default:MCR_INV2_CH12_KW,CR.CR_INV02.PDC12,Maharastra_20MWp,CR_INV02,INVERTER,PDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n101,default:MCR_INV2_CH12_KWH,CR.CR_INV02.EDC12,Maharastra_20MWp,CR_INV02,INVERTER,EDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n102,default:MCR_INV2_CH13_A,CR.CR_INV02.IDC13,Maharastra_20MWp,CR_INV02,INVERTER,IDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n103,default:MCR_INV2_CH13_KW,CR.CR_INV02.PDC13,Maharastra_20MWp,CR_INV02,INVERTER,PDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n104,default:MCR_INV2_CH13_KWH,CR.CR_INV02.EDC13,Maharastra_20MWp,CR_INV02,INVERTER,EDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n105,default:MCR_INV2_CH14_A,CR.CR_INV02.IDC14,Maharastra_20MWp,CR_INV02,INVERTER,IDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n106,default:MCR_INV2_CH14_KW,CR.CR_INV02.PDC14,Maharastra_20MWp,CR_INV02,INVERTER,PDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n107,default:MCR_INV2_CH14_KWH,CR.CR_INV02.EDC14,Maharastra_20MWp,CR_INV02,INVERTER,EDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n108,default:MCR_INV2_CH15_A,CR.CR_INV02.IDC15,Maharastra_20MWp,CR_INV02,INVERTER,IDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n109,default:MCR_INV2_CH15_KW,CR.CR_INV02.PDC15,Maharastra_20MWp,CR_INV02,INVERTER,PDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n110,default:MCR_INV2_CH15_KWH,CR.CR_INV02.EDC15,Maharastra_20MWp,CR_INV02,INVERTER,EDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n111,default:MCR_INV2_CH16_A,CR.CR_INV02.IDC16,Maharastra_20MWp,CR_INV02,INVERTER,IDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n112,default:MCR_INV2_CH16_KW,CR.CR_INV02.PDC16,Maharastra_20MWp,CR_INV02,INVERTER,PDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n113,default:MCR_INV2_CH16_KWH,CR.CR_INV02.EDC16,Maharastra_20MWp,CR_INV02,INVERTER,EDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n114,default:MCR_INV2_CH1_A,CR.CR_INV02.IDC01,Maharastra_20MWp,CR_INV02,INVERTER,IDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n115,default:MCR_INV2_CH1_KW,CR.CR_INV02.PDC01,Maharastra_20MWp,CR_INV02,INVERTER,PDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n116,default:MCR_INV2_CH1_KWH,CR.CR_INV02.EDC01,Maharastra_20MWp,CR_INV02,INVERTER,EDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n117,default:MCR_INV2_CH2_A,CR.CR_INV02.IDC02,Maharastra_20MWp,CR_INV02,INVERTER,IDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n118,default:MCR_INV2_CH2_KW,CR.CR_INV02.PDC02,Maharastra_20MWp,CR_INV02,INVERTER,PDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n119,default:MCR_INV2_CH2_KWH,CR.CR_INV02.EDC02,Maharastra_20MWp,CR_INV02,INVERTER,EDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n120,default:MCR_INV2_CH3_A,CR.CR_INV02.IDC03,Maharastra_20MWp,CR_INV02,INVERTER,IDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n121,default:MCR_INV2_CH3_KW,CR.CR_INV02.PDC03,Maharastra_20MWp,CR_INV02,INVERTER,PDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n122,default:MCR_INV2_CH3_KWH,CR.CR_INV02.EDC03,Maharastra_20MWp,CR_INV02,INVERTER,EDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n123,default:MCR_INV2_CH4_A,CR.CR_INV02.IDC04,Maharastra_20MWp,CR_INV02,INVERTER,IDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n124,default:MCR_INV2_CH4_KW,CR.CR_INV02.PDC04,Maharastra_20MWp,CR_INV02,INVERTER,PDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n125,default:MCR_INV2_CH4_KWH,CR.CR_INV02.EDC04,Maharastra_20MWp,CR_INV02,INVERTER,EDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n126,default:MCR_INV2_CH5_A,CR.CR_INV02.IDC05,Maharastra_20MWp,CR_INV02,INVERTER,IDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n127,default:MCR_INV2_CH5_KW,CR.CR_INV02.PDC05,Maharastra_20MWp,CR_INV02,INVERTER,PDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n128,default:MCR_INV2_CH5_KWH,CR.CR_INV02.EDC05,Maharastra_20MWp,CR_INV02,INVERTER,EDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n129,default:MCR_INV2_CH6_A,CR.CR_INV02.IDC06,Maharastra_20MWp,CR_INV02,INVERTER,IDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n130,default:MCR_INV2_CH6_KW,CR.CR_INV02.PDC06,Maharastra_20MWp,CR_INV02,INVERTER,PDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n131,default:MCR_INV2_CH6_KWH,CR.CR_INV02.EDC06,Maharastra_20MWp,CR_INV02,INVERTER,EDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n132,default:MCR_INV2_CH7_A,CR.CR_INV02.IDC07,Maharastra_20MWp,CR_INV02,INVERTER,IDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n133,default:MCR_INV2_CH7_KW,CR.CR_INV02.PDC07,Maharastra_20MWp,CR_INV02,INVERTER,PDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n134,default:MCR_INV2_CH7_KWH,CR.CR_INV02.EDC07,Maharastra_20MWp,CR_INV02,INVERTER,EDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n135,default:MCR_INV2_CH8_A,CR.CR_INV02.IDC08,Maharastra_20MWp,CR_INV02,INVERTER,IDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n136,default:MCR_INV2_CH8_KW,CR.CR_INV02.PDC08,Maharastra_20MWp,CR_INV02,INVERTER,PDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n137,default:MCR_INV2_CH8_KWH,CR.CR_INV02.EDC08,Maharastra_20MWp,CR_INV02,INVERTER,EDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n138,default:MCR_INV2_CH9_A,CR.CR_INV02.IDC09,Maharastra_20MWp,CR_INV02,INVERTER,IDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n139,default:MCR_INV2_CH9_KW,CR.CR_INV02.PDC09,Maharastra_20MWp,CR_INV02,INVERTER,PDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n140,default:MCR_INV2_CH9_KWH,CR.CR_INV02.EDC09,Maharastra_20MWp,CR_INV02,INVERTER,EDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n141,default:MCR_INV2_COMM_STS,CR.CR_INV02.COMMUNICATION_STATUS,Maharastra_20MWp,CR_INV02,INVERTER,COMMUNICATION_STATUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n142,default:MCR_INV2_CPR,CR.CR_INV02.CPR,Maharastra_20MWp,CR_INV02,INVERTER,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n143,default:MCR_INV2_DC_CAP,CR.CR_INV02.DC_CAP,Maharastra_20MWp,CR_INV02,INVERTER,DC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n144,default:MCR_INV2_DC_CB,CR.CR_INV02.DC_CB,Maharastra_20MWp,CR_INV02,INVERTER,DC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n145,default:MCR_INV2_EVENT_CODE1,CR.CR_INV02.EVENT_CODE_1,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n146,default:MCR_INV2_EVENT_CODE2,CR.CR_INV02.EVENT_CODE_2,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n147,default:MCR_INV2_EVENT_CODE3,CR.CR_INV02.EVENT_CODE_3,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n148,default:MCR_INV2_EVENT_CODE4,CR.CR_INV02.EVENT_CODE_4,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_4,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n149,default:MCR_INV2_EVENT_CODE5,CR.CR_INV02.EVENT_CODE_5,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_5,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n150,default:MCR_INV2_EVENT_CODE6,CR.CR_INV02.EVENT_CODE_6,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_6,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n151,default:MCR_INV2_EVENT_CODE7,CR.CR_INV02.EVENT_CODE_7,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_7,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n152,default:MCR_INV2_EVENT_CODE8,CR.CR_INV02.EVENT_CODE_8,Maharastra_20MWp,CR_INV02,INVERTER,EVENT_CODE_8,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n153,default:MCR_INV2_HZ,CR.CR_INV02.FAC,Maharastra_20MWp,CR_INV02,INVERTER,FAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Hz,v\n154,default:MCR_INV2_IB,CR.CR_INV02.IAC3,Maharastra_20MWp,CR_INV02,INVERTER,IAC3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n155,default:MCR_INV2_INT_TEMP,CR.CR_INV02.INTERNAL_TEMP,Maharastra_20MWp,CR_INV02,INVERTER,INTERNAL_TEMP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Deg_C,v\n156,default:MCR_INV2_IN_A,CR.CR_INV02.IN_A,Maharastra_20MWp,CR_INV02,INVERTER,IN_A,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n157,default:MCR_INV2_IN_KW,CR.CR_INV02.IN_KW,Maharastra_20MWp,CR_INV02,INVERTER,IN_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n158,default:MCR_INV2_IN_V,CR.CR_INV02.IN_V,Maharastra_20MWp,CR_INV02,INVERTER,IN_V,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n159,default:MCR_INV2_IR,CR.CR_INV02.IAC1,Maharastra_20MWp,CR_INV02,INVERTER,IAC1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n160,default:MCR_INV2_IY,CR.CR_INV02.IAC2,Maharastra_20MWp,CR_INV02,INVERTER,IAC2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n161,default:MCR_INV2_KVA,CR.CR_INV02.SAC,Maharastra_20MWp,CR_INV02,INVERTER,SAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVa ,v\n162,default:MCR_INV2_KVAR,CR.CR_INV02.QAC,Maharastra_20MWp,CR_INV02,INVERTER,QAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVar,v\n163,default:MCR_INV2_KW,CR.CR_INV02.PAC,Maharastra_20MWp,CR_INV02,INVERTER,PAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n164,default:MCR_INV2_PF,CR.CR_INV02.PF,Maharastra_20MWp,CR_INV02,INVERTER,PF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n165,default:MCR_INV2_PR,CR.CR_INV02.PR,Maharastra_20MWp,CR_INV02,INVERTER,PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n166,default:MCR_INV2_RUNNING,CR.CR_INV02.RUNNING,Maharastra_20MWp,CR_INV02,INVERTER,RUNNING,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n167,default:MCR_INV2_TODAY_KWH,CR.CR_INV02.EAE_DAY,Maharastra_20MWp,CR_INV02,INVERTER,EAE_DAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n168,default:MCR_INV2_TOTAL_KWH,CR.CR_INV02.EAE,Maharastra_20MWp,CR_INV02,INVERTER,EAE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n169,default:MCR_INV2_VBR,CR.CR_INV02.UAC31,Maharastra_20MWp,CR_INV02,INVERTER,UAC31,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n170,default:MCR_INV2_VRY,CR.CR_INV02.UAC12,Maharastra_20MWp,CR_INV02,INVERTER,UAC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n171,default:MCR_INV2_VYB,CR.CR_INV02.UAC23,Maharastra_20MWp,CR_INV02,INVERTER,UAC23,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n172,default:MCR_INV2_YES_KWH,CR.CR_INV02.EAE_YDAY,Maharastra_20MWp,CR_INV02,INVERTER,EAE_YDAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n173,default:MCR_INV3_AC_CAP,CR.CR_INV03.AC_CAP,Maharastra_20MWp,CR_INV03,INVERTER,AC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n174,default:MCR_INV3_AC_CB,CR.CR_INV03.AC_CB,Maharastra_20MWp,CR_INV03,INVERTER,AC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n175,default:MCR_INV3_ALARM_CODE,CR.CR_INV03.ALARM_CODE,Maharastra_20MWp,CR_INV03,INVERTER,ALARM_CODE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n176,default:MCR_INV3_AVAILABILITY,CR.CR_INV03.INV_AVAILABILITY,Maharastra_20MWp,CR_INV03,INVERTER,INV_AVAILABILITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n177,default:MCR_INV3_BRKDWN_LOSS,CR.CR_INV03.BREAKDOWN_LOSS,Maharastra_20MWp,CR_INV03,INVERTER,BREAKDOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n178,default:MCR_INV3_BRKDWN_MNT,CR.CR_INV03.BREAKDOWN_MNT,Maharastra_20MWp,CR_INV03,INVERTER,BREAKDOWN_MNT,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n179,default:MCR_INV3_CH10_A,CR.CR_INV03.IDC10,Maharastra_20MWp,CR_INV03,INVERTER,IDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n180,default:MCR_INV3_CH10_KW,CR.CR_INV03.PDC10,Maharastra_20MWp,CR_INV03,INVERTER,PDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n181,default:MCR_INV3_CH10_KWH,CR.CR_INV03.EDC10,Maharastra_20MWp,CR_INV03,INVERTER,EDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n182,default:MCR_INV3_CH11_A,CR.CR_INV03.IDC11,Maharastra_20MWp,CR_INV03,INVERTER,IDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n183,default:MCR_INV3_CH11_KW,CR.CR_INV03.PDC11,Maharastra_20MWp,CR_INV03,INVERTER,PDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n184,default:MCR_INV3_CH11_KWH,CR.CR_INV03.EDC11,Maharastra_20MWp,CR_INV03,INVERTER,EDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n185,default:MCR_INV3_CH12_A,CR.CR_INV03.IDC12,Maharastra_20MWp,CR_INV03,INVERTER,IDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n186,default:MCR_INV3_CH12_KW,CR.CR_INV03.PDC12,Maharastra_20MWp,CR_INV03,INVERTER,PDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n187,default:MCR_INV3_CH12_KWH,CR.CR_INV03.EDC12,Maharastra_20MWp,CR_INV03,INVERTER,EDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n188,default:MCR_INV3_CH13_A,CR.CR_INV03.IDC13,Maharastra_20MWp,CR_INV03,INVERTER,IDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n189,default:MCR_INV3_CH13_KW,CR.CR_INV03.PDC13,Maharastra_20MWp,CR_INV03,INVERTER,PDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n190,default:MCR_INV3_CH13_KWH,CR.CR_INV03.EDC13,Maharastra_20MWp,CR_INV03,INVERTER,EDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n191,default:MCR_INV3_CH14_A,CR.CR_INV03.IDC14,Maharastra_20MWp,CR_INV03,INVERTER,IDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n192,default:MCR_INV3_CH14_KW,CR.CR_INV03.PDC14,Maharastra_20MWp,CR_INV03,INVERTER,PDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n193,default:MCR_INV3_CH14_KWH,CR.CR_INV03.EDC14,Maharastra_20MWp,CR_INV03,INVERTER,EDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n194,default:MCR_INV3_CH15_A,CR.CR_INV03.IDC15,Maharastra_20MWp,CR_INV03,INVERTER,IDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n195,default:MCR_INV3_CH15_KW,CR.CR_INV03.PDC15,Maharastra_20MWp,CR_INV03,INVERTER,PDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n196,default:MCR_INV3_CH15_KWH,CR.CR_INV03.EDC15,Maharastra_20MWp,CR_INV03,INVERTER,EDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n197,default:MCR_INV3_CH16_A,CR.CR_INV03.IDC16,Maharastra_20MWp,CR_INV03,INVERTER,IDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n198,default:MCR_INV3_CH16_KW,CR.CR_INV03.PDC16,Maharastra_20MWp,CR_INV03,INVERTER,PDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n199,default:MCR_INV3_CH16_KWH,CR.CR_INV03.EDC16,Maharastra_20MWp,CR_INV03,INVERTER,EDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n200,default:MCR_INV3_CH1_A,CR.CR_INV03.IDC01,Maharastra_20MWp,CR_INV03,INVERTER,IDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n201,default:MCR_INV3_CH1_KW,CR.CR_INV03.PDC01,Maharastra_20MWp,CR_INV03,INVERTER,PDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n202,default:MCR_INV3_CH1_KWH,CR.CR_INV03.EDC01,Maharastra_20MWp,CR_INV03,INVERTER,EDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n203,default:MCR_INV3_CH2_A,CR.CR_INV03.IDC02,Maharastra_20MWp,CR_INV03,INVERTER,IDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n204,default:MCR_INV3_CH2_KW,CR.CR_INV03.PDC02,Maharastra_20MWp,CR_INV03,INVERTER,PDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n205,default:MCR_INV3_CH2_KWH,CR.CR_INV03.EDC02,Maharastra_20MWp,CR_INV03,INVERTER,EDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n206,default:MCR_INV3_CH3_A,CR.CR_INV03.IDC03,Maharastra_20MWp,CR_INV03,INVERTER,IDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n207,default:MCR_INV3_CH3_KW,CR.CR_INV03.PDC03,Maharastra_20MWp,CR_INV03,INVERTER,PDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n208,default:MCR_INV3_CH3_KWH,CR.CR_INV03.EDC03,Maharastra_20MWp,CR_INV03,INVERTER,EDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n209,default:MCR_INV3_CH4_A,CR.CR_INV03.IDC04,Maharastra_20MWp,CR_INV03,INVERTER,IDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n210,default:MCR_INV3_CH4_KW,CR.CR_INV03.PDC04,Maharastra_20MWp,CR_INV03,INVERTER,PDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n211,default:MCR_INV3_CH4_KWH,CR.CR_INV03.EDC04,Maharastra_20MWp,CR_INV03,INVERTER,EDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n212,default:MCR_INV3_CH5_A,CR.CR_INV03.IDC05,Maharastra_20MWp,CR_INV03,INVERTER,IDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n213,default:MCR_INV3_CH5_KW,CR.CR_INV03.PDC05,Maharastra_20MWp,CR_INV03,INVERTER,PDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n214,default:MCR_INV3_CH5_KWH,CR.CR_INV03.EDC05,Maharastra_20MWp,CR_INV03,INVERTER,EDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n215,default:MCR_INV3_CH6_A,CR.CR_INV03.IDC06,Maharastra_20MWp,CR_INV03,INVERTER,IDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n216,default:MCR_INV3_CH6_KW,CR.CR_INV03.PDC06,Maharastra_20MWp,CR_INV03,INVERTER,PDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n217,default:MCR_INV3_CH6_KWH,CR.CR_INV03.EDC06,Maharastra_20MWp,CR_INV03,INVERTER,EDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n218,default:MCR_INV3_CH7_A,CR.CR_INV03.IDC07,Maharastra_20MWp,CR_INV03,INVERTER,IDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n219,default:MCR_INV3_CH7_KW,CR.CR_INV03.PDC07,Maharastra_20MWp,CR_INV03,INVERTER,PDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n220,default:MCR_INV3_CH7_KWH,CR.CR_INV03.EDC07,Maharastra_20MWp,CR_INV03,INVERTER,EDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n221,default:MCR_INV3_CH8_A,CR.CR_INV03.IDC08,Maharastra_20MWp,CR_INV03,INVERTER,IDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n222,default:MCR_INV3_CH8_KW,CR.CR_INV03.PDC08,Maharastra_20MWp,CR_INV03,INVERTER,PDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n223,default:MCR_INV3_CH8_KWH,CR.CR_INV03.EDC08,Maharastra_20MWp,CR_INV03,INVERTER,EDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n224,default:MCR_INV3_CH9_A,CR.CR_INV03.IDC09,Maharastra_20MWp,CR_INV03,INVERTER,IDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n225,default:MCR_INV3_CH9_KW,CR.CR_INV03.PDC09,Maharastra_20MWp,CR_INV03,INVERTER,PDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n226,default:MCR_INV3_CH9_KWH,CR.CR_INV03.EDC09,Maharastra_20MWp,CR_INV03,INVERTER,EDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n227,default:MCR_INV3_COMM_STS,CR.CR_INV03.COMMUNICATION_STATUS,Maharastra_20MWp,CR_INV03,INVERTER,COMMUNICATION_STATUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n228,default:MCR_INV3_CPR,CR.CR_INV03.CPR,Maharastra_20MWp,CR_INV03,INVERTER,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n229,default:MCR_INV3_DC_CAP,CR.CR_INV03.DC_CAP,Maharastra_20MWp,CR_INV03,INVERTER,DC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n230,default:MCR_INV3_DC_CB,CR.CR_INV03.DC_CB,Maharastra_20MWp,CR_INV03,INVERTER,DC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n231,default:MCR_INV3_EVENT_CODE1,CR.CR_INV03.EVENT_CODE_1,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n232,default:MCR_INV3_EVENT_CODE2,CR.CR_INV03.EVENT_CODE_2,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n233,default:MCR_INV3_EVENT_CODE3,CR.CR_INV03.EVENT_CODE_3,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n234,default:MCR_INV3_EVENT_CODE4,CR.CR_INV03.EVENT_CODE_4,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_4,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n235,default:MCR_INV3_EVENT_CODE5,CR.CR_INV03.EVENT_CODE_5,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_5,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n236,default:MCR_INV3_EVENT_CODE6,CR.CR_INV03.EVENT_CODE_6,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_6,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n237,default:MCR_INV3_EVENT_CODE7,CR.CR_INV03.EVENT_CODE_7,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_7,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n238,default:MCR_INV3_EVENT_CODE8,CR.CR_INV03.EVENT_CODE_8,Maharastra_20MWp,CR_INV03,INVERTER,EVENT_CODE_8,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n239,default:MCR_INV3_HZ,CR.CR_INV03.FAC,Maharastra_20MWp,CR_INV03,INVERTER,FAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Hz,v\n240,default:MCR_INV3_IB,CR.CR_INV03.IAC3,Maharastra_20MWp,CR_INV03,INVERTER,IAC3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n241,default:MCR_INV3_INT_TEMP,CR.CR_INV03.INTERNAL_TEMP,Maharastra_20MWp,CR_INV03,INVERTER,INTERNAL_TEMP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Deg_C,v\n242,default:MCR_INV3_IN_A,CR.CR_INV03.IN_A,Maharastra_20MWp,CR_INV03,INVERTER,IN_A,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n243,default:MCR_INV3_IN_KW,CR.CR_INV03.IN_KW,Maharastra_20MWp,CR_INV03,INVERTER,IN_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n244,default:MCR_INV3_IN_V,CR.CR_INV03.IN_V,Maharastra_20MWp,CR_INV03,INVERTER,IN_V,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n245,default:MCR_INV3_IR,CR.CR_INV03.IAC1,Maharastra_20MWp,CR_INV03,INVERTER,IAC1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n246,default:MCR_INV3_IY,CR.CR_INV03.IAC2,Maharastra_20MWp,CR_INV03,INVERTER,IAC2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n247,default:MCR_INV3_KVA,CR.CR_INV03.SAC,Maharastra_20MWp,CR_INV03,INVERTER,SAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVa ,v\n248,default:MCR_INV3_KVAR,CR.CR_INV03.QAC,Maharastra_20MWp,CR_INV03,INVERTER,QAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVar,v\n249,default:MCR_INV3_KW,CR.CR_INV03.PAC,Maharastra_20MWp,CR_INV03,INVERTER,PAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n250,default:MCR_INV3_PF,CR.CR_INV03.PF,Maharastra_20MWp,CR_INV03,INVERTER,PF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n251,default:MCR_INV3_PR,CR.CR_INV03.PR,Maharastra_20MWp,CR_INV03,INVERTER,PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n252,default:MCR_INV3_RUNNING,CR.CR_INV03.RUNNING,Maharastra_20MWp,CR_INV03,INVERTER,RUNNING,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n253,default:MCR_INV3_TODAY_KWH,CR.CR_INV03.EAE_DAY,Maharastra_20MWp,CR_INV03,INVERTER,EAE_DAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n254,default:MCR_INV3_TOTAL_KWH,CR.CR_INV03.EAE,Maharastra_20MWp,CR_INV03,INVERTER,EAE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n255,default:MCR_INV3_VBR,CR.CR_INV03.UAC31,Maharastra_20MWp,CR_INV03,INVERTER,UAC31,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n256,default:MCR_INV3_VRY,CR.CR_INV03.UAC12,Maharastra_20MWp,CR_INV03,INVERTER,UAC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n257,default:MCR_INV3_VYB,CR.CR_INV03.UAC23,Maharastra_20MWp,CR_INV03,INVERTER,UAC23,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n258,default:MCR_INV3_YES_KWH,CR.CR_INV03.EAE_YDAY,Maharastra_20MWp,CR_INV03,INVERTER,EAE_YDAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n259,default:MCR_INV4_AC_CAP,CR.CR_INV04.AC_CAP,Maharastra_20MWp,CR_INV04,INVERTER,AC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n260,default:MCR_INV4_AC_CB,CR.CR_INV04.AC_CB,Maharastra_20MWp,CR_INV04,INVERTER,AC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n261,default:MCR_INV4_ALARM_CODE,CR.CR_INV04.ALARM_CODE,Maharastra_20MWp,CR_INV04,INVERTER,ALARM_CODE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n262,default:MCR_INV4_AVAILABILITY,CR.CR_INV04.INV_AVAILABILITY,Maharastra_20MWp,CR_INV04,INVERTER,INV_AVAILABILITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n263,default:MCR_INV4_BRKDWN_LOSS,CR.CR_INV04.BREAKDOWN_LOSS,Maharastra_20MWp,CR_INV04,INVERTER,BREAKDOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n264,default:MCR_INV4_BRKDWN_MNT,CR.CR_INV04.BREAKDOWN_MNT,Maharastra_20MWp,CR_INV04,INVERTER,BREAKDOWN_MNT,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n265,default:MCR_INV4_CH10_A,CR.CR_INV04.IDC10,Maharastra_20MWp,CR_INV04,INVERTER,IDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n266,default:MCR_INV4_CH10_KW,CR.CR_INV04.PDC10,Maharastra_20MWp,CR_INV04,INVERTER,PDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n267,default:MCR_INV4_CH10_KWH,CR.CR_INV04.EDC10,Maharastra_20MWp,CR_INV04,INVERTER,EDC10,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n268,default:MCR_INV4_CH11_A,CR.CR_INV04.IDC11,Maharastra_20MWp,CR_INV04,INVERTER,IDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n269,default:MCR_INV4_CH11_KW,CR.CR_INV04.PDC11,Maharastra_20MWp,CR_INV04,INVERTER,PDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n270,default:MCR_INV4_CH11_KWH,CR.CR_INV04.EDC11,Maharastra_20MWp,CR_INV04,INVERTER,EDC11,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n271,default:MCR_INV4_CH12_A,CR.CR_INV04.IDC12,Maharastra_20MWp,CR_INV04,INVERTER,IDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n272,default:MCR_INV4_CH12_KW,CR.CR_INV04.PDC12,Maharastra_20MWp,CR_INV04,INVERTER,PDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n273,default:MCR_INV4_CH12_KWH,CR.CR_INV04.EDC12,Maharastra_20MWp,CR_INV04,INVERTER,EDC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n274,default:MCR_INV4_CH13_A,CR.CR_INV04.IDC13,Maharastra_20MWp,CR_INV04,INVERTER,IDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n275,default:MCR_INV4_CH13_KW,CR.CR_INV04.PDC13,Maharastra_20MWp,CR_INV04,INVERTER,PDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n276,default:MCR_INV4_CH13_KWH,CR.CR_INV04.EDC13,Maharastra_20MWp,CR_INV04,INVERTER,EDC13,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n277,default:MCR_INV4_CH14_A,CR.CR_INV04.IDC14,Maharastra_20MWp,CR_INV04,INVERTER,IDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n278,default:MCR_INV4_CH14_KW,CR.CR_INV04.PDC14,Maharastra_20MWp,CR_INV04,INVERTER,PDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n279,default:MCR_INV4_CH14_KWH,CR.CR_INV04.EDC14,Maharastra_20MWp,CR_INV04,INVERTER,EDC14,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n280,default:MCR_INV4_CH15_A,CR.CR_INV04.IDC15,Maharastra_20MWp,CR_INV04,INVERTER,IDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n281,default:MCR_INV4_CH15_KW,CR.CR_INV04.PDC15,Maharastra_20MWp,CR_INV04,INVERTER,PDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n282,default:MCR_INV4_CH15_KWH,CR.CR_INV04.EDC15,Maharastra_20MWp,CR_INV04,INVERTER,EDC15,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n283,default:MCR_INV4_CH16_A,CR.CR_INV04.IDC16,Maharastra_20MWp,CR_INV04,INVERTER,IDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n284,default:MCR_INV4_CH16_KW,CR.CR_INV04.PDC16,Maharastra_20MWp,CR_INV04,INVERTER,PDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n285,default:MCR_INV4_CH16_KWH,CR.CR_INV04.EDC16,Maharastra_20MWp,CR_INV04,INVERTER,EDC16,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n286,default:MCR_INV4_CH1_A,CR.CR_INV04.IDC01,Maharastra_20MWp,CR_INV04,INVERTER,IDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n287,default:MCR_INV4_CH1_KW,CR.CR_INV04.PDC01,Maharastra_20MWp,CR_INV04,INVERTER,PDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n288,default:MCR_INV4_CH1_KWH,CR.CR_INV04.EDC01,Maharastra_20MWp,CR_INV04,INVERTER,EDC01,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n289,default:MCR_INV4_CH2_A,CR.CR_INV04.IDC02,Maharastra_20MWp,CR_INV04,INVERTER,IDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n290,default:MCR_INV4_CH2_KW,CR.CR_INV04.PDC02,Maharastra_20MWp,CR_INV04,INVERTER,PDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n291,default:MCR_INV4_CH2_KWH,CR.CR_INV04.EDC02,Maharastra_20MWp,CR_INV04,INVERTER,EDC02,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n292,default:MCR_INV4_CH3_A,CR.CR_INV04.IDC03,Maharastra_20MWp,CR_INV04,INVERTER,IDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n293,default:MCR_INV4_CH3_KW,CR.CR_INV04.PDC03,Maharastra_20MWp,CR_INV04,INVERTER,PDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n294,default:MCR_INV4_CH3_KWH,CR.CR_INV04.EDC03,Maharastra_20MWp,CR_INV04,INVERTER,EDC03,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n295,default:MCR_INV4_CH4_A,CR.CR_INV04.IDC04,Maharastra_20MWp,CR_INV04,INVERTER,IDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n296,default:MCR_INV4_CH4_KW,CR.CR_INV04.PDC04,Maharastra_20MWp,CR_INV04,INVERTER,PDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n297,default:MCR_INV4_CH4_KWH,CR.CR_INV04.EDC04,Maharastra_20MWp,CR_INV04,INVERTER,EDC04,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n298,default:MCR_INV4_CH5_A,CR.CR_INV04.IDC05,Maharastra_20MWp,CR_INV04,INVERTER,IDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n299,default:MCR_INV4_CH5_KW,CR.CR_INV04.PDC05,Maharastra_20MWp,CR_INV04,INVERTER,PDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n300,default:MCR_INV4_CH5_KWH,CR.CR_INV04.EDC05,Maharastra_20MWp,CR_INV04,INVERTER,EDC05,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n301,default:MCR_INV4_CH6_A,CR.CR_INV04.IDC06,Maharastra_20MWp,CR_INV04,INVERTER,IDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n302,default:MCR_INV4_CH6_KW,CR.CR_INV04.PDC06,Maharastra_20MWp,CR_INV04,INVERTER,PDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n303,default:MCR_INV4_CH6_KWH,CR.CR_INV04.EDC06,Maharastra_20MWp,CR_INV04,INVERTER,EDC06,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n304,default:MCR_INV4_CH7_A,CR.CR_INV04.IDC07,Maharastra_20MWp,CR_INV04,INVERTER,IDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n305,default:MCR_INV4_CH7_KW,CR.CR_INV04.PDC07,Maharastra_20MWp,CR_INV04,INVERTER,PDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n306,default:MCR_INV4_CH7_KWH,CR.CR_INV04.EDC07,Maharastra_20MWp,CR_INV04,INVERTER,EDC07,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n307,default:MCR_INV4_CH8_A,CR.CR_INV04.IDC08,Maharastra_20MWp,CR_INV04,INVERTER,IDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n308,default:MCR_INV4_CH8_KW,CR.CR_INV04.PDC08,Maharastra_20MWp,CR_INV04,INVERTER,PDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n309,default:MCR_INV4_CH8_KWH,CR.CR_INV04.EDC08,Maharastra_20MWp,CR_INV04,INVERTER,EDC08,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n310,default:MCR_INV4_CH9_A,CR.CR_INV04.IDC09,Maharastra_20MWp,CR_INV04,INVERTER,IDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n311,default:MCR_INV4_CH9_KW,CR.CR_INV04.PDC09,Maharastra_20MWp,CR_INV04,INVERTER,PDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n312,default:MCR_INV4_CH9_KWH,CR.CR_INV04.EDC09,Maharastra_20MWp,CR_INV04,INVERTER,EDC09,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n313,default:MCR_INV4_COMM_STS,CR.CR_INV04.COMMUNICATION_STATUS,Maharastra_20MWp,CR_INV04,INVERTER,COMMUNICATION_STATUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n314,default:MCR_INV4_CPR,CR.CR_INV04.CPR,Maharastra_20MWp,CR_INV04,INVERTER,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n315,default:MCR_INV4_DC_CAP,CR.CR_INV04.DC_CAP,Maharastra_20MWp,CR_INV04,INVERTER,DC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n316,default:MCR_INV4_DC_CB,CR.CR_INV04.DC_CB,Maharastra_20MWp,CR_INV04,INVERTER,DC_CB,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n317,default:MCR_INV4_EVENT_CODE1,CR.CR_INV04.EVENT_CODE_1,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n318,default:MCR_INV4_EVENT_CODE2,CR.CR_INV04.EVENT_CODE_2,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n319,default:MCR_INV4_EVENT_CODE3,CR.CR_INV04.EVENT_CODE_3,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n320,default:MCR_INV4_EVENT_CODE4,CR.CR_INV04.EVENT_CODE_4,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_4,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n321,default:MCR_INV4_EVENT_CODE5,CR.CR_INV04.EVENT_CODE_5,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_5,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n322,default:MCR_INV4_EVENT_CODE6,CR.CR_INV04.EVENT_CODE_6,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_6,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n323,default:MCR_INV4_EVENT_CODE7,CR.CR_INV04.EVENT_CODE_7,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_7,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n324,default:MCR_INV4_EVENT_CODE8,CR.CR_INV04.EVENT_CODE_8,Maharastra_20MWp,CR_INV04,INVERTER,EVENT_CODE_8,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n325,default:MCR_INV4_HZ,CR.CR_INV04.FAC,Maharastra_20MWp,CR_INV04,INVERTER,FAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Hz,v\n326,default:MCR_INV4_IB,CR.CR_INV04.IAC3,Maharastra_20MWp,CR_INV04,INVERTER,IAC3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n327,default:MCR_INV4_INT_TEMP,CR.CR_INV04.INTERNAL_TEMP,Maharastra_20MWp,CR_INV04,INVERTER,INTERNAL_TEMP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Deg_C,v\n328,default:MCR_INV4_IN_A,CR.CR_INV04.IN_A,Maharastra_20MWp,CR_INV04,INVERTER,IN_A,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n329,default:MCR_INV4_IN_KW,CR.CR_INV04.IN_KW,Maharastra_20MWp,CR_INV04,INVERTER,IN_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n330,default:MCR_INV4_IN_V,CR.CR_INV04.IN_V,Maharastra_20MWp,CR_INV04,INVERTER,IN_V,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n331,default:MCR_INV4_IR,CR.CR_INV04.IAC1,Maharastra_20MWp,CR_INV04,INVERTER,IAC1,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n332,default:MCR_INV4_IY,CR.CR_INV04.IAC2,Maharastra_20MWp,CR_INV04,INVERTER,IAC2,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n333,default:MCR_INV4_KVA,CR.CR_INV04.SAC,Maharastra_20MWp,CR_INV04,INVERTER,SAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVa ,v\n334,default:MCR_INV4_KVAR,CR.CR_INV04.QAC,Maharastra_20MWp,CR_INV04,INVERTER,QAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVar,v\n335,default:MCR_INV4_KW,CR.CR_INV04.PAC,Maharastra_20MWp,CR_INV04,INVERTER,PAC,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n336,default:MCR_INV4_PF,CR.CR_INV04.PF,Maharastra_20MWp,CR_INV04,INVERTER,PF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n337,default:MCR_INV4_PR,CR.CR_INV04.PR,Maharastra_20MWp,CR_INV04,INVERTER,PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n338,default:MCR_INV4_RUNNING,CR.CR_INV04.RUNNING,Maharastra_20MWp,CR_INV04,INVERTER,RUNNING,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n339,default:MCR_INV4_TODAY_KWH,CR.CR_INV04.EAE_DAY,Maharastra_20MWp,CR_INV04,INVERTER,EAE_DAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n340,default:MCR_INV4_TOTAL_KWH,CR.CR_INV04.EAE,Maharastra_20MWp,CR_INV04,INVERTER,EAE,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n341,default:MCR_INV4_VBR,CR.CR_INV04.UAC31,Maharastra_20MWp,CR_INV04,INVERTER,UAC31,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n342,default:MCR_INV4_VRY,CR.CR_INV04.UAC12,Maharastra_20MWp,CR_INV04,INVERTER,UAC12,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n343,default:MCR_INV4_VYB,CR.CR_INV04.UAC23,Maharastra_20MWp,CR_INV04,INVERTER,UAC23,Server_7722,7722,1,Maharastra_20MWp,0,opcua,V,v\n344,default:MCR_INV4_YES_KWH,CR.CR_INV04.EAE_YDAY,Maharastra_20MWp,CR_INV04,INVERTER,EAE_YDAY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n345,default:MCR_MFM1_AC_CAP,CR.CR_EM01.AC_CAP,Maharastra_20MWp,CR_EM01,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n346,default:MCR_MFM1_AVAILABILITY,CR.CR_EM01.EM01_AVAILABILITY,Maharastra_20MWp,CR_EM01,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n347,default:MCR_MFM1_AVG_AMP,CR.CR_EM01.AVG_AMP,Maharastra_20MWp,CR_EM01,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n348,default:MCR_MFM1_BRKDWN_LOSS,CR.CR_EM01.BREAK_DOWN_LOSS,Maharastra_20MWp,CR_EM01,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n349,default:MCR_MFM1_BRKDWN_MNT,CR.CR_EM01.BREAK_DOWN_MNT,Maharastra_20MWp,CR_EM01,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n350,default:MCR_MFM1_COMM_STS,CR.CR_EM01.COMM_STS,Maharastra_20MWp,CR_EM01,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n351,default:MCR_MFM1_CPR,CR.CR_EM01.CPR,Maharastra_20MWp,CR_EM01,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n352,default:MCR_MFM1_DC_CAP,CR.CR_EM01.DC_CAP,Maharastra_20MWp,CR_EM01,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n353,default:MCR_MFM1_EXP_KVARH,CR.CR_EM01.EXP_ERE,Maharastra_20MWp,CR_EM01,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n354,default:MCR_MFM1_EXP_KWH,CR.CR_EM01.EXP_EAE,Maharastra_20MWp,CR_EM01,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n355,default:MCR_MFM1_HZ,CR.CR_EM01.FAC,Maharastra_20MWp,CR_EM01,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n356,default:MCR_MFM1_IB,CR.CR_EM01.IAC3,Maharastra_20MWp,CR_EM01,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n357,default:MCR_MFM1_IMP_KVARH,CR.CR_EM01.ERI,Maharastra_20MWp,CR_EM01,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n358,default:MCR_MFM1_IMP_KWH,CR.CR_EM01.EAI,Maharastra_20MWp,CR_EM01,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n359,default:MCR_MFM1_IR,CR.CR_EM01.IAC1,Maharastra_20MWp,CR_EM01,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n360,default:MCR_MFM1_IY,CR.CR_EM01.IAC2,Maharastra_20MWp,CR_EM01,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n361,default:MCR_MFM1_KVA,CR.CR_EM01.SAC,Maharastra_20MWp,CR_EM01,EM,Apparent_power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n362,default:MCR_MFM1_KVAR,CR.CR_EM01.QAC,Maharastra_20MWp,CR_EM01,EM,Reactive_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n363,default:MCR_MFM1_KW,CR.CR_EM01.PAC,Maharastra_20MWp,CR_EM01,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n364,default:MCR_MFM1_PF,CR.CR_EM01.PF,Maharastra_20MWp,CR_EM01,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n365,default:MCR_MFM1_PR,CR.CR_EM01.PR,Maharastra_20MWp,CR_EM01,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n366,default:MCR_MFM1_TODAY_KWH,CR.CR_EM01.EAE_DAY,Maharastra_20MWp,CR_EM01,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n367,default:MCR_MFM1_VBR,CR.CR_EM01.UAC31,Maharastra_20MWp,CR_EM01,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n368,default:MCR_MFM1_VRY,CR.CR_EM01.UAC12,Maharastra_20MWp,CR_EM01,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n369,default:MCR_MFM1_VYB,CR.CR_EM01.UAC23,Maharastra_20MWp,CR_EM01,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n370,default:MCR_MFM1_YEST_KWH,CR.CR_EM01.EAE_YDAY,Maharastra_20MWp,CR_EM01,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n371,default:MCR_MFM2_AC_CAP,CR.CR_EM02.AC_CAP,Maharastra_20MWp,CR_EM02,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n372,default:MCR_MFM2_AVAILABILITY,CR.CR_EM02.EM02_AVAILABILITY,Maharastra_20MWp,CR_EM02,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n373,default:MCR_MFM2_AVG_AMP,CR.CR_EM02.AVG_AMP,Maharastra_20MWp,CR_EM02,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n374,default:MCR_MFM2_BRKDWN_LOSS,CR.CR_EM02.BREAK_DOWN_LOSS,Maharastra_20MWp,CR_EM02,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n375,default:MCR_MFM2_BRKDWN_MNT,CR.CR_EM02.BREAK_DOWN_MNT,Maharastra_20MWp,CR_EM02,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n376,default:MCR_MFM2_COMM_STS,CR.CR_EM02.COMM_STS,Maharastra_20MWp,CR_EM02,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n377,default:MCR_MFM2_CPR,CR.CR_EM02.CPR,Maharastra_20MWp,CR_EM02,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n378,default:MCR_MFM2_DC_CAP,CR.CR_EM02.DC_CAP,Maharastra_20MWp,CR_EM02,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n379,default:MCR_MFM2_EXP_KVARH,CR.CR_EM02.EXP_ERE,Maharastra_20MWp,CR_EM02,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n380,default:MCR_MFM2_EXP_KWH,CR.CR_EM02.EXP_EAE,Maharastra_20MWp,CR_EM02,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n381,default:MCR_MFM2_HZ,CR.CR_EM02.FAC,Maharastra_20MWp,CR_EM02,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n382,default:MCR_MFM2_IB,CR.CR_EM02.IAC3,Maharastra_20MWp,CR_EM02,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n383,default:MCR_MFM2_IMP_KVARH,CR.CR_EM02.ERI,Maharastra_20MWp,CR_EM02,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n384,default:MCR_MFM2_IMP_KWH,CR.CR_EM02.EAI,Maharastra_20MWp,CR_EM02,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n385,default:MCR_MFM2_IR,CR.CR_EM02.IAC1,Maharastra_20MWp,CR_EM02,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n386,default:MCR_MFM2_IY,CR.CR_EM02.IAC2,Maharastra_20MWp,CR_EM02,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n387,default:MCR_MFM2_KVA,CR.CR_EM02.SAC,Maharastra_20MWp,CR_EM02,EM,Apparent_power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n388,default:MCR_MFM2_KVAR,CR.CR_EM02.QAC,Maharastra_20MWp,CR_EM02,EM,Reactive_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n389,default:MCR_MFM2_KW,CR.CR_EM02.PAC,Maharastra_20MWp,CR_EM02,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n390,default:MCR_MFM2_PF,CR.CR_EM02.PF,Maharastra_20MWp,CR_EM02,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n391,default:MCR_MFM2_PR,CR.CR_EM02.PR,Maharastra_20MWp,CR_EM02,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n392,default:MCR_MFM2_TODAY_KWH,CR.CR_EM02.EAE_DAY,Maharastra_20MWp,CR_EM02,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n393,default:MCR_MFM2_VBR,CR.CR_EM02.UAC31,Maharastra_20MWp,CR_EM02,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n394,default:MCR_MFM2_VRY,CR.CR_EM02.UAC12,Maharastra_20MWp,CR_EM02,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n395,default:MCR_MFM2_VYB,CR.CR_EM02.UAC23,Maharastra_20MWp,CR_EM02,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n396,default:MCR_MFM2_YEST_KWH,CR.CR_EM02.EAE_YDAY,Maharastra_20MWp,CR_EM02,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n397,default:MCR_MFM3_AC_CAP,CR.CR_EM03.AC_CAP,Maharastra_20MWp,CR_EM03,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n398,default:MCR_MFM3_AVAILABILITY,CR.CR_EM03.EM03_AVAILABILITY,Maharastra_20MWp,CR_EM03,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n399,default:MCR_MFM3_AVG_AMP,CR.CR_EM03.AVG_AMP,Maharastra_20MWp,CR_EM03,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n400,default:MCR_MFM3_BRKDWN_LOSS,CR.CR_EM03.BREAK_DOWN_LOSS,Maharastra_20MWp,CR_EM03,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n401,default:MCR_MFM3_BRKDWN_MNT,CR.CR_EM03.BREAK_DOWN_MNT,Maharastra_20MWp,CR_EM03,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n402,default:MCR_MFM3_COMM_STS,CR.CR_EM03.COMM_STS,Maharastra_20MWp,CR_EM03,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n403,default:MCR_MFM3_CPR,CR.CR_EM03.CPR,Maharastra_20MWp,CR_EM03,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n404,default:MCR_MFM3_DC_CAP,CR.CR_EM03.DC_CAP,Maharastra_20MWp,CR_EM03,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n405,default:MCR_MFM3_EXP_KVARH,CR.CR_EM03.EXP_ERE,Maharastra_20MWp,CR_EM03,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n406,default:MCR_MFM3_EXP_KWH,CR.CR_EM03.EXP_EAE,Maharastra_20MWp,CR_EM03,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n407,default:MCR_MFM3_HZ,CR.CR_EM03.FAC,Maharastra_20MWp,CR_EM03,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n408,default:MCR_MFM3_IB,CR.CR_EM03.IAC3,Maharastra_20MWp,CR_EM03,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n409,default:MCR_MFM3_IMP_KVARH,CR.CR_EM03.ERI,Maharastra_20MWp,CR_EM03,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n410,default:MCR_MFM3_IMP_KWH,CR.CR_EM03.EAI,Maharastra_20MWp,CR_EM03,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n411,default:MCR_MFM3_IR,CR.CR_EM03.IAC1,Maharastra_20MWp,CR_EM03,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n412,default:MCR_MFM3_IY,CR.CR_EM03.IAC2,Maharastra_20MWp,CR_EM03,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n413,default:MCR_MFM3_KVA,CR.CR_EM03.SAC,Maharastra_20MWp,CR_EM03,EM,Apparent_power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n414,default:MCR_MFM3_KVAR,CR.CR_EM03.QAC,Maharastra_20MWp,CR_EM03,EM,Reactive_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n415,default:MCR_MFM3_KW,CR.CR_EM03.PAC,Maharastra_20MWp,CR_EM03,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n416,default:MCR_MFM3_PF,CR.CR_EM03.PF,Maharastra_20MWp,CR_EM03,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n417,default:MCR_MFM3_PR,CR.CR_EM03.PR,Maharastra_20MWp,CR_EM03,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n418,default:MCR_MFM3_TODAY_KWH,CR.CR_EM03.EAE_DAY,Maharastra_20MWp,CR_EM03,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n419,default:MCR_MFM3_VBR,CR.CR_EM03.UAC31,Maharastra_20MWp,CR_EM03,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n420,default:MCR_MFM3_VRY,CR.CR_EM03.UAC12,Maharastra_20MWp,CR_EM03,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n421,default:MCR_MFM3_VYB,CR.CR_EM03.UAC23,Maharastra_20MWp,CR_EM03,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n422,default:MCR_MFM3_YEST_KWH,CR.CR_EM03.EAE_YDAY,Maharastra_20MWp,CR_EM03,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n423,default:INC1_MFM_AC_CAP,CR.CR_EM04.AC_CAP,Maharastra_20MWp,CR_EM04,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n424,default:INC1_MFM_AVAILABILITY,CR.CR_EM04.EM04_AVAILABILITY,Maharastra_20MWp,CR_EM04,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n425,default:INC1_MFM_AVG_AMP,CR.CR_EM04.AVG_AMP,Maharastra_20MWp,CR_EM04,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n426,default:INC1_MFM_BRKDWN_LOSS,CR.CR_EM04.BREAK_DOWN_LOSS,Maharastra_20MWp,CR_EM04,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n427,default:INC1_MFM_BRKDWN_MNT,CR.CR_EM04.BREAK_DOWN_MNT,Maharastra_20MWp,CR_EM04,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n428,default:INC1_MFM_COMM_STS,CR.CR_EM04.COMM_STS,Maharastra_20MWp,CR_EM04,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n429,default:INC1_MFM_CPR,CR.CR_EM04.CPR,Maharastra_20MWp,CR_EM04,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n430,default:INC1_MFM_DC_CAP,CR.CR_EM04.DC_CAP,Maharastra_20MWp,CR_EM04,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n431,default:INC1_MFM_EXP_KVARH,CR.CR_EM04.EXP_ERE,Maharastra_20MWp,CR_EM04,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n432,default:INC1_MFM_EXP_KWH,CR.CR_EM04.EXP_EAE,Maharastra_20MWp,CR_EM04,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n433,default:INC1_MFM_HZ,CR.CR_EM04.FAC,Maharastra_20MWp,CR_EM04,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n434,default:INC1_MFM_IB,CR.CR_EM04.IAC3,Maharastra_20MWp,CR_EM04,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n435,default:INC1_MFM_IMP_KVARH,CR.CR_EM04.ERI,Maharastra_20MWp,CR_EM04,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n436,default:INC1_MFM_IMP_KWH,CR.CR_EM04.EAI,Maharastra_20MWp,CR_EM04,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n437,default:INC1_MFM_IR,CR.CR_EM04.IAC1,Maharastra_20MWp,CR_EM04,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n438,default:INC1_MFM_IY,CR.CR_EM04.IAC2,Maharastra_20MWp,CR_EM04,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n439,default:INC1_MFM_KVA,CR.CR_EM04.SAC,Maharastra_20MWp,CR_EM04,EM,Apparent Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n440,default:INC1_MFM_KVAR,CR.CR_EM04.QAC,Maharastra_20MWp,CR_EM04,EM,Reactive Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n441,default:INC1_MFM_KW,CR.CR_EM04.PAC,Maharastra_20MWp,CR_EM04,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n442,default:INC1_MFM_PF,CR.CR_EM04.PF,Maharastra_20MWp,CR_EM04,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n443,default:INC1_MFM_PR,CR.CR_EM04.PR,Maharastra_20MWp,CR_EM04,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n444,default:INC1_MFM_TODAY_KWH,CR.CR_EM04.EAE_DAY,Maharastra_20MWp,CR_EM04,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n445,default:INC1_MFM_VBR,CR.CR_EM04.UAC31,Maharastra_20MWp,CR_EM04,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n446,default:INC1_MFM_VRY,CR.CR_EM04.UAC12,Maharastra_20MWp,CR_EM04,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n447,default:INC1_MFM_VYB,CR.CR_EM04.UAC23,Maharastra_20MWp,CR_EM04,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n448,default:INC1_MFM_YEST_KWH,CR.CR_EM04.EAE_YDAY,Maharastra_20MWp,CR_EM04,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n449,default:INC2_MFM_AC_CAP,CR.CR_EM05.AC_CAP,Maharastra_20MWp,CR_EM05,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n450,default:INC2_MFM_AVAILABILITY,CR.CR_EM05.EM05_AVAILABILITY,Maharastra_20MWp,CR_EM05,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n451,default:INC2_MFM_AVG_AMP,CR.CR_EM05.AVG_AMP,Maharastra_20MWp,CR_EM05,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n452,default:INC2_MFM_BRKDWN_LOSS,CR.CR_EM05.BREAK_DOWN_LOSS,Maharastra_20MWp,CR_EM05,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n453,default:INC2_MFM_BRKDWN_MNT,CR.CR_EM05.BREAK_DOWN_MNT,Maharastra_20MWp,CR_EM05,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n454,default:INC2_MFM_COMM_STS,CR.CR_EM05.COMM_STS,Maharastra_20MWp,CR_EM05,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n455,default:INC2_MFM_CPR,CR.CR_EM05.CPR,Maharastra_20MWp,CR_EM05,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n456,default:INC2_MFM_DC_CAP,CR.CR_EM05.DC_CAP,Maharastra_20MWp,CR_EM05,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n457,default:INC2_MFM_EXP_KVARH,CR.CR_EM05.EXP_ERE,Maharastra_20MWp,CR_EM05,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n458,default:INC2_MFM_EXP_KWH,CR.CR_EM05.EXP_EAE,Maharastra_20MWp,CR_EM05,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n459,default:INC2_MFM_HZ,CR.CR_EM05.FAC,Maharastra_20MWp,CR_EM05,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n460,default:INC2_MFM_IB,CR.CR_EM05.IAC3,Maharastra_20MWp,CR_EM05,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n461,default:INC2_MFM_IMP_KVARH,CR.CR_EM05.ERI,Maharastra_20MWp,CR_EM05,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n462,default:INC2_MFM_IMP_KWH,CR.CR_EM05.EAI,Maharastra_20MWp,CR_EM05,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n463,default:INC2_MFM_IR,CR.CR_EM05.IAC1,Maharastra_20MWp,CR_EM05,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n464,default:INC2_MFM_IY,CR.CR_EM05.IAC2,Maharastra_20MWp,CR_EM05,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n465,default:INC2_MFM_KVA,CR.CR_EM05.SAC,Maharastra_20MWp,CR_EM05,EM,Apparent Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n466,default:INC2_MFM_KVAR,CR.CR_EM05.QAC,Maharastra_20MWp,CR_EM05,EM,Reactive Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n467,default:INC2_MFM_KW,CR.CR_EM05.PAC,Maharastra_20MWp,CR_EM05,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n468,default:INC2_MFM_PF,CR.CR_EM05.PF,Maharastra_20MWp,CR_EM05,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n469,default:INC2_MFM_PR,CR.CR_EM05.PR,Maharastra_20MWp,CR_EM05,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n470,default:INC2_MFM_TODAY_KWH,CR.CR_EM05.EAE_DAY,Maharastra_20MWp,CR_EM05,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n471,default:INC2_MFM_VBR,CR.CR_EM05.UAC31,Maharastra_20MWp,CR_EM05,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n472,default:INC2_MFM_VRY,CR.CR_EM05.UAC12,Maharastra_20MWp,CR_EM05,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,A,v\n473,default:INC2_MFM_VYB,CR.CR_EM05.UAC23,Maharastra_20MWp,CR_EM05,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n474,default:INC2_MFM_YEST_KWH,CR.CR_EM05.EAE_YDAY,Maharastra_20MWp,CR_EM05,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n475,default:ICR_MFM1_AC_CAP,B01.B01_EM01.AC_CAP,Maharastra_20MWp,B01_EM01,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n476,default:ICR_MFM1_AVAILABILITY,B01.B01_EM01.AVAILABILITY,Maharastra_20MWp,B01_EM01,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n477,default:ICR_MFM1_AVG_AMP,B01.B01_EM01.AVG_AMP,Maharastra_20MWp,B01_EM01,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n478,default:ICR_MFM1_BRKDWN_LOSS,B01.B01_EM01.BRKDWN_LOSS,Maharastra_20MWp,B01_EM01,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n479,default:ICR_MFM1_BRKDWN_MNT,B01.B01_EM01.BRKDWN_MNT,Maharastra_20MWp,B01_EM01,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n480,default:ICR_MFM1_COMM_STS,B01.B01_EM01.COMM_STS,Maharastra_20MWp,B01_EM01,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n481,default:ICR_MFM1_CPR,B01.B01_EM01.CPR,Maharastra_20MWp,B01_EM01,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n482,default:ICR_MFM1_DC_CAP,B01.B01_EM01.DC_CAP,Maharastra_20MWp,B01_EM01,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n483,default:ICR_MFM1_EXP_KVARH,B01.B01_EM01.EXP_ERE,Maharastra_20MWp,B01_EM01,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n484,default:ICR_MFM1_EXP_KWH,B01.B01_EM01.EXP_EAE,Maharastra_20MWp,B01_EM01,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n485,default:ICR_MFM1_HZ,B01.B01_EM01.FAC,Maharastra_20MWp,B01_EM01,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n486,default:ICR_MFM1_IB,B01.B01_EM01.IAC3,Maharastra_20MWp,B01_EM01,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n487,default:ICR_MFM1_IMP_KVARH,B01.B01_EM01.ERI,Maharastra_20MWp,B01_EM01,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n488,default:ICR_MFM1_IMP_KWH,B01.B01_EM01.EAI,Maharastra_20MWp,B01_EM01,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n489,default:ICR_MFM1_IR,B01.B01_EM01.IAC1,Maharastra_20MWp,B01_EM01,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n490,default:ICR_MFM1_IY,B01.B01_EM01.IAC2,Maharastra_20MWp,B01_EM01,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n491,default:ICR_MFM1_KVA,B01.B01_EM01.SAC,Maharastra_20MWp,B01_EM01,EM,Apparent Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n492,default:ICR_MFM1_KVAR,B01.B01_EM01.QAC,Maharastra_20MWp,B01_EM01,EM,Reactive Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n493,default:ICR_MFM1_KW,B01.B01_EM01.PAC,Maharastra_20MWp,B01_EM01,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n494,default:ICR_MFM1_PF,B01.B01_EM01.PF,Maharastra_20MWp,B01_EM01,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n495,default:ICR_MFM1_PR,B01.B01_EM01.PR,Maharastra_20MWp,B01_EM01,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n496,default:ICR_MFM1_TODAY_KWH,B01.B01_EM01.EAE_DAY,Maharastra_20MWp,B01_EM01,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n497,default:ICR_MFM1_VBR,B01.B01_EM01.UAC31,Maharastra_20MWp,B01_EM01,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n498,default:ICR_MFM1_VRY,B01.B01_EM01.UAC12,Maharastra_20MWp,B01_EM01,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n499,default:ICR_MFM1_VYB,B01.B01_EM01.UAC23,Maharastra_20MWp,B01_EM01,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n500,default:ICR_MFM1_YEST_KWH,B01.B01_EM01.EAE_YDAY,Maharastra_20MWp,B01_EM01,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n501,default:ICR_MFM2_AC_CAP,B01.B01_EM02.AC_CAP,Maharastra_20MWp,B01_EM02,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n502,default:ICR_MFM2_AVAILABILITY,B01.B01_EM02.AVAILABILITY,Maharastra_20MWp,B01_EM02,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n503,default:ICR_MFM2_AVG_AMP,B01.B01_EM02.AVG_AMP,Maharastra_20MWp,B01_EM02,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n504,default:ICR_MFM2_BRKDWN_LOSS,B01.B01_EM02.BRKDWN_LOSS,Maharastra_20MWp,B01_EM02,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n505,default:ICR_MFM2_BRKDWN_MNT,B01.B01_EM02.BRKDWN_MNT,Maharastra_20MWp,B01_EM02,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n506,default:ICR_MFM2_COMM_STS,B01.B01_EM02.COMM_STS,Maharastra_20MWp,B01_EM02,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n507,default:ICR_MFM2_CPR,B01.B01_EM02.CPR,Maharastra_20MWp,B01_EM02,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n508,default:ICR_MFM2_DC_CAP,B01.B01_EM02.DC_CAP,Maharastra_20MWp,B01_EM02,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n509,default:ICR_MFM2_EXP_KVARH,B01.B01_EM02.EXP_ERE,Maharastra_20MWp,B01_EM02,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n510,default:ICR_MFM2_EXP_KWH,B01.B01_EM02.EXP_EAE,Maharastra_20MWp,B01_EM02,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n511,default:ICR_MFM2_HZ,B01.B01_EM02.FAC,Maharastra_20MWp,B01_EM02,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n512,default:ICR_MFM2_IB,B01.B01_EM02.IAC3,Maharastra_20MWp,B01_EM02,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n513,default:ICR_MFM2_IMP_KVARH,B01.B01_EM02.ERI,Maharastra_20MWp,B01_EM02,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n514,default:ICR_MFM2_IMP_KWH,B01.B01_EM02.EAI,Maharastra_20MWp,B01_EM02,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n515,default:ICR_MFM2_IR,B01.B01_EM02.IAC1,Maharastra_20MWp,B01_EM02,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n516,default:ICR_MFM2_IY,B01.B01_EM02.IAC2,Maharastra_20MWp,B01_EM02,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n517,default:ICR_MFM2_KVA,B01.B01_EM02.SAC,Maharastra_20MWp,B01_EM02,EM,Apparent Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n518,default:ICR_MFM2_KVAR,B01.B01_EM02.QAC,Maharastra_20MWp,B01_EM02,EM,Reactive Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n519,default:ICR_MFM2_KW,B01.B01_EM02.PAC,Maharastra_20MWp,B01_EM02,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n520,default:ICR_MFM2_PF,B01.B01_EM02.PF,Maharastra_20MWp,B01_EM02,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n521,default:ICR_MFM2_PR,B01.B01_EM02.PR,Maharastra_20MWp,B01_EM02,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n522,default:ICR_MFM2_TODAY_KWH,B01.B01_EM02.EAE_DAY,Maharastra_20MWp,B01_EM02,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n523,default:ICR_MFM2_VBR,B01.B01_EM02.UAC31,Maharastra_20MWp,B01_EM02,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n524,default:ICR_MFM2_VRY,B01.B01_EM02.UAC12,Maharastra_20MWp,B01_EM02,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n525,default:ICR_MFM2_VYB,B01.B01_EM02.UAC23,Maharastra_20MWp,B01_EM02,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n526,default:ICR_MFM2_YEST_KWH,B01.B01_EM02.EAE_YDAY,Maharastra_20MWp,B01_EM02,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n527,default:ICR_MFM3_AC_CAP,B01.B01_EM03.AC_CAP,Maharastra_20MWp,B01_EM03,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n528,default:ICR_MFM3_AVAILABILITY,B01.B01_EM03.AVAILABILITY,Maharastra_20MWp,B01_EM03,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n529,default:ICR_MFM3_AVG_AMP,B01.B01_EM03.AVG_AMP,Maharastra_20MWp,B01_EM03,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n530,default:ICR_MFM3_BRKDWN_LOSS,B01.B01_EM03.BRKDWN_LOSS,Maharastra_20MWp,B01_EM03,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n531,default:ICR_MFM3_BRKDWN_MNT,B01.B01_EM03.BRKDWN_MNT,Maharastra_20MWp,B01_EM03,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n532,default:ICR_MFM3_COMM_STS,B01.B01_EM03.COMM_STS,Maharastra_20MWp,B01_EM03,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n533,default:ICR_MFM3_CPR,B01.B01_EM03.CPR,Maharastra_20MWp,B01_EM03,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n534,default:ICR_MFM3_DC_CAP,B01.B01_EM03.DC_CAP,Maharastra_20MWp,B01_EM03,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n535,default:ICR_MFM3_EXP_KVARH,B01.B01_EM03.EXP_ERE,Maharastra_20MWp,B01_EM03,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n536,default:ICR_MFM3_EXP_KWH,B01.B01_EM03.EXP_EAE,Maharastra_20MWp,B01_EM03,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n537,default:ICR_MFM3_HZ,B01.B01_EM03.FAC,Maharastra_20MWp,B01_EM03,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n538,default:ICR_MFM3_IB,B01.B01_EM03.IAC3,Maharastra_20MWp,B01_EM03,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n539,default:ICR_MFM3_IMP_KVARH,B01.B01_EM03.ERI,Maharastra_20MWp,B01_EM03,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n540,default:ICR_MFM3_IMP_KWH,B01.B01_EM03.EAI,Maharastra_20MWp,B01_EM03,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n541,default:ICR_MFM3_IR,B01.B01_EM03.IAC1,Maharastra_20MWp,B01_EM03,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n542,default:ICR_MFM3_IY,B01.B01_EM03.IAC2,Maharastra_20MWp,B01_EM03,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n543,default:ICR_MFM3_KVA,B01.B01_EM03.SAC,Maharastra_20MWp,B01_EM03,EM,Apparent Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n544,default:ICR_MFM3_KVAR,B01.B01_EM03.QAC,Maharastra_20MWp,B01_EM03,EM,Reactive Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n545,default:ICR_MFM3_KW,B01.B01_EM03.PAC,Maharastra_20MWp,B01_EM03,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n546,default:ICR_MFM3_PF,B01.B01_EM03.PF,Maharastra_20MWp,B01_EM03,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n547,default:ICR_MFM3_PR,B01.B01_EM03.PR,Maharastra_20MWp,B01_EM03,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n548,default:ICR_MFM3_TODAY_KWH,B01.B01_EM03.EAE_DAY,Maharastra_20MWp,B01_EM03,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n549,default:ICR_MFM3_VBR,B01.B01_EM03.UAC31,Maharastra_20MWp,B01_EM03,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n550,default:ICR_MFM3_VRY,B01.B01_EM03.UAC12,Maharastra_20MWp,B01_EM03,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n551,default:ICR_MFM3_VYB,B01.B01_EM03.UAC23,Maharastra_20MWp,B01_EM03,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n552,default:ICR_MFM3_YEST_KWH,B01.B01_EM03.EAE_YDAY,Maharastra_20MWp,B01_EM03,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n553,default:OG_MFM_AC_CAP,CR.CR_EM06.AC_CAP,Maharastra_20MWp,CR_EM06,EM,AC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n554,default:OG_MFM_AVAILABILITY,CR.CR_EM06.AVAILABILITY,Maharastra_20MWp,CR_EM06,EM,Availabillity,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n555,default:OG_MFM_AVG_AMP,CR.CR_EM06.AVG_AMP,Maharastra_20MWp,CR_EM06,EM,AVG_AMPS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n556,default:OG_MFM_BRKDWN_LOSS,CR.CR_EM06.BRKDWN_LOSS,Maharastra_20MWp,CR_EM06,EM,Break_DOWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n557,default:OG_MFM_BRKDWN_MNT,CR.CR_EM06.BRKDWN_MNT,Maharastra_20MWp,CR_EM06,EM,Break_DOWN_Minutes,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n558,default:OG_MFM_COMM_STS,CR.CR_EM06.COMM_STS,Maharastra_20MWp,CR_EM06,EM,Communication_STAUS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n559,default:OG_MFM_CPR,CR.CR_EM06.CPR,Maharastra_20MWp,CR_EM06,EM,CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n560,default:OG_MFM_DC_CAP,CR.CR_EM06.DC_CAP,Maharastra_20MWp,CR_EM06,EM,DC_CAPACITY,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n561,default:OG_MFM_EXP_KVARH,CR.CR_EM06.EXP_ERE,Maharastra_20MWp,CR_EM06,EM,Expected_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n562,default:OG_MFM_EXP_KWH,CR.CR_EM06.EXP_EAE,Maharastra_20MWp,CR_EM06,EM,Expected_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n563,default:OG_MFM_HZ,CR.CR_EM06.FAC,Maharastra_20MWp,CR_EM06,EM,Frequency,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n564,default:OG_MFM_IB,CR.CR_EM06.IAC3,Maharastra_20MWp,CR_EM06,EM,Phase_current_3,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n565,default:OG_MFM_IMP_KVARH,CR.CR_EM06.ERI,Maharastra_20MWp,CR_EM06,EM,Import_Reactive_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n566,default:OG_MFM_IMP_KWH,CR.CR_EM06.EAI,Maharastra_20MWp,CR_EM06,EM,Import_Active_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n567,default:OG_MFM_IR,CR.CR_EM06.IAC1,Maharastra_20MWp,CR_EM06,EM,R_phase_current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n568,default:OG_MFM_IY,CR.CR_EM06.IAC2,Maharastra_20MWp,CR_EM06,EM,Y_Phase_Current,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n569,default:OG_MFM_KVA,CR.CR_EM06.SAC,Maharastra_20MWp,CR_EM06,EM,Apparent Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n570,default:OG_MFM_KVAR,CR.CR_EM06.QAC,Maharastra_20MWp,CR_EM06,EM,Reactive Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n571,default:OG_MFM_KW,CR.CR_EM06.PAC,Maharastra_20MWp,CR_EM06,EM,Active_Power,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n572,default:OG_MFM_PF,CR.CR_EM06.PF,Maharastra_20MWp,CR_EM06,EM,Power_Factor,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n573,default:OG_MFM_PR,CR.CR_EM06.PR,Maharastra_20MWp,CR_EM06,EM,Performance_Ratio,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n574,default:OG_MFM_TODAY_KWH,CR.CR_EM06.EAE_DAY,Maharastra_20MWp,CR_EM06,EM,Day_Energy,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n575,default:OG_MFM_VBR,CR.CR_EM06.UAC31,Maharastra_20MWp,CR_EM06,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n576,default:OG_MFM_VRY,CR.CR_EM06.UAC12,Maharastra_20MWp,CR_EM06,EM,phase_Voltage_between_R&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n577,default:OG_MFM_VYB,CR.CR_EM06.UAC23,Maharastra_20MWp,CR_EM06,EM,phase_Voltage_between_Y&B,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n578,default:OG_MFM_YEST_KWH,CR.CR_EM06.EAE_YDAY,Maharastra_20MWp,CR_EM06,EM,Energty_yesterday,Server_7722,7722,1,Maharastra_20MWp,0,opcua,B,v\n579,default:PLANT_AC_CAP,CR.PLANT.AC_CAP,Maharastra_20MWp,PLANT_CALC,PLANT,AC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n580,default:PLANT_BRKDWN_LOSS,CR.PLANT.BRKDWN_LOSS,Maharastra_20MWp,PLANT_CALC,PLANT,BRKDWN_LOSS,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n581,default:PLANT_BRKDWN_MNT,CR.PLANT.BRKDWN_MNT,Maharastra_20MWp,PLANT_CALC,PLANT,BRKDWN_MNT,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n582,default:PLANT_DC_CAP,CR.PLANT.DC_CAP,Maharastra_20MWp,PLANT_CALC,PLANT,DC_CAP,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n583,default:PLANT_DESIGN_PR,CR.PLANT.DESIGN_PR,Maharastra_20MWp,PLANT_CALC,PLANT,DESIGN_PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n584,default:PLANT_EXP_MWh,CR.PLANT.EXP_MWh,Maharastra_20MWp,PLANT_CALC,PLANT,EXP_MWh,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n585,default:PLANT_IMP_MWh,CR.PLANT.IMP_MWh,Maharastra_20MWp,PLANT_CALC,PLANT,IMP_MWh,Server_7722,7722,1,Maharastra_20MWp,0,opcua,MW,v\n586,default:PLANT_KVAR,CR.PLANT.KVAR,Maharastra_20MWp,PLANT_CALC,PLANT,KVAR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kVar,v\n587,default:PLANT_KW,CR.PLANT.KW,Maharastra_20MWp,PLANT_CALC,PLANT,KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW ,v\n588,default:PLANT_MTD_AC_CUF,CR.PLANT.MTD_AC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_AC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n589,default:PLANT_MTD_CPR,CR.PLANT.MTD_CPR,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n590,default:PLANT_MTD_DC_CUF,CR.PLANT.MTD_DC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_DC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n591,default:PLANT_MTD_EXP_KWH,CR.PLANT.MTD_EXP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_EXP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh ,v\n592,default:PLANT_MTD_IMP_KWH,CR.PLANT.MTD_IMP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_IMP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh ,v\n593,default:PLANT_MTD_KWH,CR.PLANT.MTD_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh ,v\n594,default:PLANT_MTD_PEAK_GII,CR.PLANT.MTD_PEAK_GII,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_PEAK_GII,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh ,v\n595,default:PLANT_MTD_PEAK_KW,CR.PLANT.MTD_PEAK_KW,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_PEAK_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n596,default:PLANT_MTD_PR,CR.PLANT.MTD_PR,Maharastra_20MWp,PLANT_CALC,PLANT,MTD_PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n597,default:PLANT_RUN_INV,CR.PLANT.RUN_INV,Maharastra_20MWp,PLANT_CALC,PLANT,RUN_INV,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n598,default:PLANT_TODAY_AC_CUF,CR.PLANT.TODAY_AC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_AC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n599,default:PLANT_TODAY_CPR,CR.PLANT.TODAY_CPR,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n600,default:PLANT_TODAY_DC_CUF,CR.PLANT.TODAY_DC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_DC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n601,default:PLANT_TODAY_EXP_KWH,CR.PLANT.TODAY_EXP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_EXP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n602,default:PLANT_TODAY_IMP_KWH,CR.PLANT.TODAY_IMP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_IMP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n603,default:PLANT_TODAY_KWH,CR.PLANT.TODAY_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n604,default:PLANT_TODAY_PEAK_GII,CR.PLANT.TODAY_PEAK_GII,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_PEAK_GII,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n605,default:PLANT_TODAY_PEAK_GII_INDI,CR.PLANT.TODAY_PEAK_GII_INDI,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_PEAK_GII_INDI,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n606,default:PLANT_TODAY_PEAK_KW,CR.PLANT.TODAY_PEAK_KW,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_PEAK_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n607,default:PLANT_TODAY_PEAK_KW_INDI,CR.PLANT.TODAY_PEAK_KW_INDI,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_PEAK_KW_INDI,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n608,default:PLANT_TODAY_PR,CR.PLANT.TODAY_PR,Maharastra_20MWp,PLANT_CALC,PLANT,TODAY_PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n609,default:PLANT_YEST_AC_CUF,CR.PLANT.YEST_AC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_AC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n610,default:PLANT_YEST_CPR,CR.PLANT.YEST_CPR,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n611,default:PLANT_YEST_DC_CUF,CR.PLANT.YEST_DC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_DC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n612,default:PLANT_YEST_EXP_KWH,CR.PLANT.YEST_EXP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_EXP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n613,default:PLANT_YEST_IMP_KWH,CR.PLANT.YEST_IMP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_IMP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n614,default:PLANT_YEST_KWH,CR.PLANT.YEST_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n615,default:PLANT_YEST_PEAK_GII,CR.PLANT.YEST_PEAK_GII,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_PEAK_GII,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n616,default:PLANT_YEST_PEAK_GII_INDI,CR.PLANT.YEST_PEAK_GII_INDI,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_PEAK_GII_INDI,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n617,default:PLANT_YEST_PEAK_KW,CR.PLANT.YEST_PEAK_KW,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_PEAK_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n618,default:PLANT_YEST_PEAK_KW_INDI,CR.PLANT.YEST_PEAK_KW_INDI,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_PEAK_KW_INDI,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n619,default:PLANT_YEST_PR,CR.PLANT.YEST_PR,Maharastra_20MWp,PLANT_CALC,PLANT,YEST_PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n620,default:PLANT_YTD_AC_CUF,CR.PLANT.YTD_AC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_AC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n621,default:PLANT_YTD_CPR,CR.PLANT.YTD_CPR,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_CPR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n622,default:PLANT_YTD_DC_CUF,CR.PLANT.YTD_DC_CUF,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_DC_CUF,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n623,default:PLANT_YTD_EXP_KWH,CR.PLANT.YTD_EXP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_EXP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n624,default:PLANT_YTD_IMP_KWH,CR.PLANT.YTD_IMP_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_IMP_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n625,default:PLANT_YTD_KWH,CR.PLANT.YTD_KWH,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_KWH,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kWh,v\n626,default:PLANT_YTD_PEAK_GII,CR.PLANT.YTD_PEAK_GII,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_PEAK_GII,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n627,default:PLANT_YTD_PEAK_KW,CR.PLANT.YTD_PEAK_KW,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_PEAK_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n628,default:PLANT_YTD_PR,CR.PLANT.YTD_PR,Maharastra_20MWp,PLANT_CALC,PLANT,YTD_PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n629,default:PLANT_YTD_PEAK_KW,CR.PLANT.YTD_PEAK_KW,Maharastra_20MWp,xx,PLANT,YTD_PEAK_KW,Server_7722,7722,1,Maharastra_20MWp,0,opcua,kW,v\n630,default:PLANT_YTD_PR,CR.PLANT.YTD_PR,Maharastra_20MWp,xx,PLANT,YTD_PR,Server_7722,7722,1,Maharastra_20MWp,0,opcua,Decimal,v\n",
+        "output": "str",
+        "x": 620,
+        "y": 220,
+        "wires": [
+            [
+                "8fdc67af0f028d00"
+            ]
+        ]
+    },
+    {
+        "id": "ece7ba7663d78c67",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "debug 42",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "286ca9f889862167",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "node_id",
+        "func": "var obj = {};\nlet text = \"ns=2;s=\";\n\nobj.payload = {\n    id: text.concat(msg.payload.cus_tag)\n    }\n\nnode.send(obj)\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "66934189ae0d2c6c"
+            ]
+        ]
+    },
+    {
+        "id": "66934189ae0d2c6c",
+        "type": "change",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 340,
+        "wires": [
+            [
+                "a5973084461d9eaa"
+            ]
+        ]
+    },
+    {
+        "id": "331a456c20e2ea7c",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "fields",
+        "func": "var obj = {};\n\nobj.payload = {\n    cus_tag: msg.payload.cus_tag,\n    bdf: msg.payload.iplon_tag,\n    bd: msg.payload.bd,\n    dd: msg.payload.dd,\n    dt: msg.payload.dt,\n    fd: msg.payload.fd,\n    h: msg.payload.h,\n    iid: msg.payload.iid,\n    m: msg.payload.m,\n    p: msg.payload.p,\n    qu: msg.payload.qu,\n    text: msg.payload.text,\n    u: msg.payload.u,\n    mn: msg.payload.mn\n    }\n\nnode.send(obj)\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 420,
+        "wires": [
+            [
+                "b270b09ac2954200"
+            ]
+        ]
+    },
+    {
+        "id": "b270b09ac2954200",
+        "type": "change",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "fields",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 420,
+        "wires": [
+            [
+                "19b333cc8f7f5c32"
+            ]
+        ]
+    },
+    {
+        "id": "723392e41d56bd80",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "obj_file",
+        "func": "if (msg.sourceTimestamp == msg.serverTimestamp) {\n    var text = new Date(msg.sourceTimestamp);\n}else if (msg.sourceTimestamp != msg.serverTimestamp) {\n    var text = new Date(msg.serverTimestamp);\n}   \nvar dateUTC1 = new Date(text).toISOString().slice(0,19);\nvar dateUTC = dateUTC1 + 'Z';\nvar epoch1 = new Date(dateUTC).getTime();\nvar epoch = ((epoch1 / 1000));\n\nif (msg.payload == null) {\n    (msg.payload = \"null\") && (epoch1 = 0)\n}\nvar tag = msg.topic.split(\"ns=2;s=\");\nvar obj = {\n    time: epoch,\n    value: msg.payload,\n    tag: tag[1]\n}\n\nmsg.payload = obj\nmsg.topic=\"client\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 340,
+        "wires": [
+            [
+                "2f8720c4167cf294"
+            ]
+        ]
+    },
+    {
+        "id": "e3662d9a264cfba7",
+        "type": "catch",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "scope": [
+            "f6a9b354c75dd762"
+        ],
+        "uncaught": false,
+        "x": 550,
+        "y": 100,
+        "wires": [
+            [
+                "5a2d43283c5454a7"
+            ]
+        ]
+    },
+    {
+        "id": "5a2d43283c5454a7",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c80db86d31168384",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch (msg.topic) {\n    case \"client\":\n        context.data.client = msg.payload;\n        msg = null;\n        break;\n    case \"fields\":\n        context.data.fields = msg.payload;\n        msg = null;\n        break;\n}\nif (context.data.client != null && context.data.fields != null) {\n    var data_combine = {\n        \"client\": context.data.client,\n        \"fields\": context.data.fields\n\n    }\n    context.data = null\n    return { payload: data_combine };\n}  \n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1000,
+        "y": 420,
+        "wires": [
+            [
+                "d21d7cf90d7569ae",
+                "9c95f722a1bce395",
+                "72d0112127a7163a"
+            ]
+        ]
+    },
+    {
+        "id": "980be56e50e5948b",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "debug 43",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "2f8720c4167cf294",
+        "type": "join",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "630",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1030,
+        "y": 340,
+        "wires": [
+            [
+                "c80db86d31168384"
+            ]
+        ]
+    },
+    {
+        "id": "19b333cc8f7f5c32",
+        "type": "join",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "630",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "c80db86d31168384"
+            ]
+        ]
+    },
+    {
+        "id": "d21d7cf90d7569ae",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "function 10",
+        "func": "var epoch1 = new Date().getTime();\nvar epoch = epoch1 + 19800;\nvar dateIST = new Date(epoch).toISOString().slice(0, 10);\n\nvar influx_path = \"/data/cloud/opcuacsv_to_influx/\";\nif (!fs.existsSync(influx_path)) {\n    fs.mkdirSync(influx_path, { recursive: true });\n}\n\n//var storage_path = \"/data/cloud/opcuacsv_to_storage/\" + dateIST;\n//if (!fs.existsSync(storage_path)) {\n//    fs.mkdirSync(storage_path, { recursive: true });\n//}\n\nvar client_len = msg.payload.client.length\nvar fields_len = msg.payload.fields.length\n\nlet text = \"SN:\";\nvar old_device_name = \"now\"\nvar new_device_name = \"now1\"\nvar file_start = 0\n\nfor (var i = 0; i < client_len; i++) {\n    for (var j = i + 1; j < fields_len; j++) {\n        old_device_name = msg.payload.fields[i].dd\n        if (old_device_name != new_device_name && file_start == 1) {\n            var file_create = 0\n\n            //csv to influxdb path            \n            //@ts-ignore\n            if (file_create == 0) {\n                file_create = 1\n                var info_str1 = infos_array.toString();\n                var info_str = info_str1 + '\\n';\n\n                var filenameandpath_influx = influx_path + filename\n                fs.appendFileSync(filenameandpath_influx, info_str, function (err) {\n                    if (err) throw err;\n                });\n                if (file_create == 1) {\n                    file_create = 2\n                    var field_str1 = fields_array.toString()\n                    var field_str = field_str1 + '\\n';\n                    fs.appendFileSync(filenameandpath_influx, field_str, function (err) {\n                        if (err) throw err;\n                    });\n                    if (file_create == 2) {\n                        var value_str1 = values_array.toString()\n                        var value_str = value_str1 + '\\n';\n                        fs.appendFileSync(filenameandpath_influx, value_str, function (err) {\n                            if (err) throw err;\n                        });\n                    }\n                }\n                fs.rename(filenameandpath_influx, filenameandpath_influx + \".unsent\", function (err) {\n                    if (err) throw err;\n                });\n            }\n\n            //csv to storage path\n            //file_create = 0\n            ////@ts-ignore\n            //if (file_create == 0) {\n            //    file_create = 1\n            //    var info_str1 = infos_array.toString();\n            //    var info_str = info_str1 + '\\n';\n            //    var filenameandpath_storage = storage_path + \"/\" + filename\n            //    fs.appendFileSync(filenameandpath_storage, info_str, function (err) {\n            //        if (err) throw err;\n            //    });\n            //    if (file_create == 1) {\n            //        file_create = 2\n            //        var field_str1 = fields_array.toString()\n            //        var field_str = field_str1 + '\\n';\n            //        fs.appendFileSync(filenameandpath_storage, field_str, function (err) {\n            //            if (err) throw err;\n            //        });\n            //        if (file_create == 2) {\n            //            var value_str1 = values_array.toString()\n            //            var value_str = value_str1 + '\\n';\n            //            fs.appendFileSync(filenameandpath_storage, value_str, function (err) {\n            //                if (err) throw err;\n            //            });\n            //        }\n            //    }\n            //    fs.rename(filenameandpath_storage, filenameandpath_storage + \".unsent\", function (err) {\n            //        if (err) throw err;\n            //    });\n            //}\n\n            var infos_array = []\n            var fields_array = []\n            var values_array = []\n\n            file_start = 1\n            new_device_name = msg.payload.fields[j].dd\n            var iGate_id = msg.payload.fields[i].iid\n            var filename = iGate_id + \"_\" + old_device_name + \"_\" + epoch + \".csv\";\n            infos_array.push(msg.payload.fields[i].iid)\n            infos_array.push(text.concat(msg.payload.fields[i].dd))\n            infos_array.push(msg.payload.fields[i].dt)\n            infos_array.push(\"0.0.0.0\")\n            infos_array.push(msg.payload.fields[i].m)\n            fields_array.push(\"TS\")\n            values_array.push(msg.payload.client[i].time)\n        }\n\n        if (old_device_name != new_device_name && file_start == 0) {\n            var infos_array = []\n            var fields_array = []\n            var values_array = []\n\n            file_start = 1\n            new_device_name = msg.payload.fields[j].dd\n            var iGate_id = msg.payload.fields[i].iid\n            var filename = iGate_id + \"_\" + old_device_name + \"_\" + epoch + \".csv\";\n            infos_array.push(msg.payload.fields[i].iid)\n            infos_array.push(text.concat(msg.payload.fields[i].dd))\n            infos_array.push(msg.payload.fields[i].dt)\n            infos_array.push(\"0.0.0.0\")\n            infos_array.push(msg.payload.fields[i].m)\n            fields_array.push(\"TS\")\n            values_array.push(msg.payload.client[i].time)\n        }\n\n        if (old_device_name == new_device_name && file_start == 1) {\n            file_start = 2\n            var arrstr = msg.payload.fields[i].bdf.split(\".\", 5);\n            fields_array.push(arrstr[2])\n        }\n        if (old_device_name == new_device_name && file_start == 2) {\n            file_start = 1\n            if (msg.payload.client[i].value == false || msg.payload.client[i].value == \"False\" || msg.payload.client[i].value == \"FALSE\") {\n                var val = 0\n                var val1 = val.toFixed(2);\n                values_array.push(val1)\n            }\n            else if (msg.payload.client[i].value == true || msg.payload.client[i].value == \"True\" || msg.payload.client[i].value == \"TRUE\") {\n                var val = 1\n                var val1 = val.toFixed(2);\n                values_array.push(val1)\n            }\n            else if (msg.payload.client[i].value == \"null\" || msg.payload.client[i].value == \"nan\" || msg.payload.client[i].value == \"inf\" || msg.payload.client[i].value == \"-inf\") {\n                values_array.push(\"\")\n            }\n            else {\n                var val2 = msg.payload.client[i].value\n                var val3 = val2.toFixed(2);\n                values_array.push(val3)\n            }\n            i = j\n        }\n    }\n}\nmsg.payload = 'finished'\nreturn msg;\n//return null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fs",
+                "module": "fs"
+            },
+            {
+                "var": "os",
+                "module": "os"
+            }
+        ],
+        "x": 1140,
+        "y": 420,
+        "wires": [
+            [
+                "980be56e50e5948b"
+            ]
+        ]
+    },
+    {
+        "id": "0831b3fc42e7b97e",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "iGate_config.csv updation",
+        "info": " ",
+        "x": 670,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "2f91f3f3ee50a407",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "csv to opcua polling flow",
+        "info": " ",
+        "x": 690,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "eb6d84f0e5c61ab2",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "schedular for file creation",
+        "info": " ",
+        "x": 170,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "b88b18fe762ed3be",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "data to influx",
+        "info": " ",
+        "x": 1230,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "4ef4b33d909d6301",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "debug 44",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1320,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "9c95f722a1bce395",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "function 11",
+        "func": "var epoch1 = new Date().getTime();\nvar epoch = epoch1 + 19800;\nvar dateIST = new Date(epoch).toISOString().slice(0, 10);\n\n//var influx_path = \"/data/cloud/opcuacsv_to_influx/\";\n//if (!fs.existsSync(influx_path)) {\n//    fs.mkdirSync(influx_path, { recursive: true });\n//}\n\nvar storage_path = \"/data/cloud/opcuacsv_to_storage/\" + dateIST;\nif (!fs.existsSync(storage_path)) {\n    fs.mkdirSync(storage_path, { recursive: true });\n}\n\nvar client_len = msg.payload.client.length\nvar fields_len = msg.payload.fields.length\n\nlet text = \"SN:\";\nvar old_device_name = \"now\"\nvar new_device_name = \"now1\"\nvar file_start = 0\n\nfor (var i = 0; i < client_len; i++) {\n    for (var j = i + 1; j < fields_len; j++) {\n        old_device_name = msg.payload.fields[i].dd\n        if (old_device_name != new_device_name && file_start == 1) {\n            var file_create = 0\n\n            //csv to influxdb path\n            ////@ts-ignore\n            //if (file_create == 0) {\n            //    file_create = 1\n            //    var info_str1 = infos_array.toString();\n            //    var info_str = info_str1 + '\\n';\n            //    var filenameandpath_influx = influx_path + filename\n            //    fs.appendFileSync(filenameandpath_influx, info_str, function (err) {\n            //        if (err) throw err;\n            //    });\n            //    if (file_create == 1) {\n            //        file_create = 2\n            //        var field_str1 = fields_array.toString()\n            //        var field_str = field_str1 + '\\n';\n            //        fs.appendFileSync(filenameandpath_influx, field_str, function (err) {\n            //            if (err) throw err;\n            //        });\n            //        if (file_create == 2) {\n            //            var value_str1 = values_array.toString()\n            //            var value_str = value_str1 + '\\n';\n            //            fs.appendFileSync(filenameandpath_influx, value_str, function (err) {\n            //                if (err) throw err;\n            //            });\n            //        }\n            //    }\n            //    fs.rename(filenameandpath_influx, filenameandpath_influx + \".unsent\", function (err) {\n            //        if (err) throw err;\n            //    });\n            //}\n\n            //csv to storage path\n            file_create = 0\n            //@ts-ignore\n            if (file_create == 0) {\n                file_create = 1\n                var info_str1 = infos_array.toString();\n                var info_str = info_str1 + '\\n';\n                var filenameandpath_storage = storage_path + \"/\" + filename\n                fs.appendFileSync(filenameandpath_storage, info_str, function (err) {\n                    if (err) throw err;\n                });\n                if (file_create == 1) {\n                    file_create = 2\n                    var field_str1 = fields_array.toString()\n                    var field_str = field_str1 + '\\n';\n                    fs.appendFileSync(filenameandpath_storage, field_str, function (err) {\n                        if (err) throw err;\n                    });\n                    if (file_create == 2) {\n                        var value_str1 = values_array.toString()\n                        var value_str = value_str1 + '\\n';\n                        fs.appendFileSync(filenameandpath_storage, value_str, function (err) {\n                            if (err) throw err;\n                        });\n                    }\n                }\n                fs.rename(filenameandpath_storage, filenameandpath_storage + \".unsent\", function (err) {\n                    if (err) throw err;\n                });\n            }\n\n            var infos_array = []\n            var fields_array = []\n            var values_array = []\n\n            file_start = 1\n            new_device_name = msg.payload.fields[j].dd\n            var iGate_id = msg.payload.fields[i].iid\n            var filename = iGate_id + \"_\" + old_device_name + \"_\" + epoch + \".csv\";\n            infos_array.push(msg.payload.fields[i].iid)\n            infos_array.push(text.concat(msg.payload.fields[i].dd))\n            infos_array.push(msg.payload.fields[i].dt)\n            infos_array.push(\"0.0.0.0\")\n            infos_array.push(msg.payload.fields[i].m)\n            fields_array.push(\"TS\")\n            values_array.push(msg.payload.client[i].time)\n        }\n\n        if (old_device_name != new_device_name && file_start == 0) {\n            var infos_array = []\n            var fields_array = []\n            var values_array = []\n\n            file_start = 1\n            new_device_name = msg.payload.fields[j].dd\n            var iGate_id = msg.payload.fields[i].iid\n            var filename = iGate_id + \"_\" + old_device_name + \"_\" + epoch + \".csv\";\n            infos_array.push(msg.payload.fields[i].iid)\n            infos_array.push(text.concat(msg.payload.fields[i].dd))\n            infos_array.push(msg.payload.fields[i].dt)\n            infos_array.push(\"0.0.0.0\")\n            infos_array.push(msg.payload.fields[i].m)\n            fields_array.push(\"TS\")\n            values_array.push(msg.payload.client[i].time)\n        }\n\n        if (old_device_name == new_device_name && file_start == 1) {\n            file_start = 2\n            var arrstr = msg.payload.fields[i].bdf.split(\".\", 5);\n            fields_array.push(arrstr[2])\n        }\n        if (old_device_name == new_device_name && file_start == 2) {\n            file_start = 1\n            if (msg.payload.client[i].value == false || msg.payload.client[i].value == \"False\" || msg.payload.client[i].value == \"FALSE\") {\n                var val = 0\n                var val1 = val.toFixed(2);\n                values_array.push(val1)\n            }\n            else if (msg.payload.client[i].value == true || msg.payload.client[i].value == \"True\" || msg.payload.client[i].value == \"TRUE\") {\n                var val = 1\n                var val1 = val.toFixed(2);\n                values_array.push(val1)\n            }\n            else if (msg.payload.client[i].value == \"null\" || msg.payload.client[i].value == \"nan\" || msg.payload.client[i].value == \"inf\" || msg.payload.client[i].value == \"-inf\") {\n                values_array.push(\"\")\n            }\n            else {\n                var val2 = msg.payload.client[i].value\n                var val3 = val2.toFixed(2);\n                values_array.push(val3)\n            }\n            i = j\n        }\n    }\n}\nmsg.payload = 'finished'\nreturn msg;\n//return null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "fs",
+                "module": "fs"
+            },
+            {
+                "var": "os",
+                "module": "os"
+            }
+        ],
+        "x": 1180,
+        "y": 500,
+        "wires": [
+            [
+                "4ef4b33d909d6301"
+            ]
+        ]
+    },
+    {
+        "id": "14175368945b3960",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "data to storage",
+        "info": " ",
+        "x": 1240,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "32d10c7e538ff072",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "Flow for MCR",
+        "info": " ",
+        "x": 150,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "2aebc125e88c5695",
+        "type": "cronplus",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "schedular",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 160,
+        "y": 420,
+        "wires": [
+            [
+                "1cfaaeed683c5bb2"
+            ]
+        ]
+    },
+    {
+        "id": "a5973084461d9eaa",
+        "type": "OpcUa-Client",
+        "z": "4a4a6f53a49dc7a1",
+        "endpoint": "3062a34b40c5b07a",
+        "action": "read",
+        "deadbandtype": "a",
+        "deadbandvalue": 1,
+        "time": 10,
+        "timeUnit": "s",
+        "certificate": "n",
+        "localfile": "",
+        "localkeyfile": "",
+        "securitymode": "None",
+        "securitypolicy": "None",
+        "folderName4PKI": "",
+        "name": "",
+        "x": 740,
+        "y": 340,
+        "wires": [
+            [
+                "723392e41d56bd80"
+            ]
+        ]
+    },
+    {
+        "id": "72d0112127a7163a",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "comparison",
+        "func": "var client_len = msg.payload.client.length\nvar fields_len = msg.payload.fields.length\n\nvar array = []\n\nfor (var i = 0; i < client_len; i++) {\n    for (var j = 0; j < fields_len; j++) {\n        if (msg.payload.client[i].tag == msg.payload.fields[j].cus_tag) {\n            var obj = {}\n            if (msg.payload.client[i].value == false || msg.payload.client[i].value == \"False\" || msg.payload.client[i].value == \"FALSE\") {\n                var arrstr = msg.payload.fields[j].bdf.split(\".\", 5);\n                var val = 0;\n                var val1 = val.toFixed(2);\n                obj = {\n                    time: msg.payload.client[i].time,\n                    b: arrstr[0],\n                    bd: msg.payload.fields[j].bd,\n                    d: arrstr[1],\n                    dd: msg.payload.fields[j].dd,\n                    dt: msg.payload.fields[j].dt,\n                    f: arrstr[2],\n                    fd: msg.payload.fields[j].fd,\n                    h: msg.payload.fields[j].h,\n                    iid: msg.payload.fields[j].iid,\n                    m: msg.payload.fields[j].m,\n                    p: msg.payload.fields[j].p,\n                    qu: msg.payload.fields[j].qu,\n                    text: msg.payload.client[i].value,\n                    u: msg.payload.fields[j].u,\n                    value: val1,\n                    mn: msg.payload.fields[j].mn\n                }\n                array.push(obj)\n            }\n            else if (msg.payload.client[i].value == true || msg.payload.client[i].value == \"True\" || msg.payload.client[i].value == \"TRUE\") {\n                var arrstr = msg.payload.fields[j].bdf.split(\".\", 5);\n                var val = 1;\n                var val1 = val.toFixed(2);\n                obj = {\n                    time: msg.payload.client[i].time,\n                    b: arrstr[0],\n                    bd: msg.payload.fields[j].bd,\n                    d: arrstr[1],\n                    dd: msg.payload.fields[j].dd,\n                    dt: msg.payload.fields[j].dt,\n                    f: arrstr[2],\n                    fd: msg.payload.fields[j].fd,\n                    h: msg.payload.fields[j].h,\n                    iid: msg.payload.fields[j].iid,\n                    m: msg.payload.fields[j].m,\n                    p: msg.payload.fields[j].p,\n                    qu: msg.payload.fields[j].qu,\n                    text: msg.payload.client[i].value,\n                    u: msg.payload.fields[j].u,\n                    value: val1,\n                    mn: msg.payload.fields[j].mn\n                }\n                array.push(obj)\n            }\n            else if (msg.payload.client[i].value == \"null\" || msg.payload.client[i].value == \"nan\" || msg.payload.client[i].value == \"inf\" || msg.payload.client[i].value == \"-inf\") {\n                var arrstr = msg.payload.fields[j].bdf.split(\".\", 5);\n                obj = {\n                    time: msg.payload.client[i].time,\n                    b: arrstr[0],\n                    bd: msg.payload.fields[j].bd,\n                    d: arrstr[1],\n                    dd: msg.payload.fields[j].dd,\n                    dt: msg.payload.fields[j].dt,\n                    f: arrstr[2],\n                    fd: msg.payload.fields[j].fd,\n                    h: msg.payload.fields[j].h,\n                    iid: msg.payload.fields[j].iid,\n                    m: msg.payload.fields[j].m,\n                    p: msg.payload.fields[j].p,\n                    qu: msg.payload.fields[j].qu,\n                    text: msg.payload.client[i].value,\n                    u: msg.payload.fields[j].u,\n                    value: \"\",\n                    mn: msg.payload.fields[j].mn\n                }\n                array.push(obj)\n            }\n            else {\n                var arrstr = msg.payload.fields[j].bdf.split(\".\", 5);\n                var val2 = msg.payload.client[i].value;\n                var val3 = val2.toFixed(2);\n                obj = {\n                    time: msg.payload.client[i].time,\n                    b: arrstr[0],\n                    bd: msg.payload.fields[j].bd,\n                    d: arrstr[1],\n                    dd: msg.payload.fields[j].dd,\n                    dt: msg.payload.fields[j].dt,\n                    f: arrstr[2],\n                    fd: msg.payload.fields[j].fd,\n                    h: msg.payload.fields[j].h,\n                    iid: msg.payload.fields[j].iid,\n                    m: msg.payload.fields[j].m,\n                    p: msg.payload.fields[j].p,\n                    qu: msg.payload.fields[j].qu,\n                    text: msg.payload.fields[j].text,\n                    u: msg.payload.fields[j].u,\n                    value: val3,\n                    mn: msg.payload.fields[j].mn\n                }\n                array.push(obj)\n            }\n        }\n    }\n}\nmsg.payload = array\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 480,
+        "wires": [
+            [
+                "439b0df7b6e5d245"
+            ]
+        ]
+    },
+    {
+        "id": "f7c533efa75c738f",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "debug 45",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "d01afdb10f4f4707",
+        "type": "status",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "scope": [
+            "d76a38f7fb472168"
+        ],
+        "x": 300,
+        "y": 580,
+        "wires": [
+            [
+                "e84bb5d3086b3ff1",
+                "c8a0dc26f2d737e8"
+            ]
+        ]
+    },
+    {
+        "id": "e84bb5d3086b3ff1",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c8a0dc26f2d737e8",
+        "type": "change",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "mqtt-status",
+                "pt": "flow",
+                "to": "status",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d76a38f7fb472168",
+        "type": "mqtt out",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "topic": "buffertest",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "345c11e1ca053379",
+        "x": 1240,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "439b0df7b6e5d245",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "Buffer Data 1",
+        "func": "let status= flow.get(\"mqtt-status\") || {};\nlet buffer=flow.get(\"buffer\") || []; \n\nif (status.fill==\"green\")\n    return msg;\nelse\n{\n    node.log(\"buffering data\");\n    if (buffer.length <20)\n    {\nbuffer.push({\"payload\":msg.payload,\"topic\":\"stored data\"});\nflow.set(\"buffer\",buffer); //store data and try to resend\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 640,
+        "wires": [
+            [
+                "f7c533efa75c738f",
+                "d76a38f7fb472168"
+            ]
+        ]
+    },
+    {
+        "id": "f2b237b745f4b69e",
+        "type": "inject",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "Send stored data",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 770,
+        "y": 760,
+        "wires": [
+            [
+                "d60e2440f8ab14ac"
+            ]
+        ]
+    },
+    {
+        "id": "d60e2440f8ab14ac",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "resend buffered data 1",
+        "func": "let status= flow.get(\"mqtt-status\") || {};\nlet buffer=flow.get(\"buffer\") || []; \n\nif (status.fill==\"green\")\n{\nwhile (buffer.length >0)\n{\n    node.log(\"sending buffering data\");\nlet temp=buffer.pop();\nmsg.payload=temp.payload;\nmsg.topic=temp.topic;\nnode.send(msg);\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 760,
+        "wires": [
+            [
+                "d76a38f7fb472168"
+            ]
+        ]
+    },
+    {
+        "id": "6d53b817e05dee04",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "resent data after connection loss",
+        "info": "",
+        "x": 830,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "d493fb6f452c5edf",
+        "type": "mqtt in",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "topic": "buffertest",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "345c11e1ca053379",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 680,
+        "wires": [
+            [
+                "de12685f2c962b64"
+            ]
+        ]
+    },
+    {
+        "id": "de12685f2c962b64",
+        "type": "debug",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "debug 46",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "09bb36910bfc7658",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "sent or store data",
+        "info": "",
+        "x": 1000,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "3d6a83a52ec5e1ca",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "check status of mqtt out node",
+        "info": "",
+        "x": 380,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "6ccfcc36a3197045",
+        "type": "inject",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "manual trigger",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 570,
+        "y": 900,
+        "wires": [
+            [
+                "6cd85fc13a4eac12"
+            ]
+        ]
+    },
+    {
+        "id": "9f6f92b83402a916",
+        "type": "file in",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "file",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 990,
+        "y": 900,
+        "wires": [
+            [
+                "0c7956cfcc6fca35"
+            ]
+        ]
+    },
+    {
+        "id": "6cd85fc13a4eac12",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "get data file 1",
+        "func": "let data=global.get(\"data\") || {};\n\nmsg.filename =\"home/test.csv\";\nmsg.topic=\"test2\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 900,
+        "wires": [
+            [
+                "9f6f92b83402a916"
+            ]
+        ]
+    },
+    {
+        "id": "0c7956cfcc6fca35",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "Buffer Data 2",
+        "func": "let status= flow.get(\"mqtt-status\") || {};\nlet buffer=flow.get(\"buffer\") || []; \n\nif (status.fill==\"green\")\n    return msg;\nelse\n{\n    node.log(\"buffering data\");\n    if (buffer.length <20)\n    {\nbuffer.push({\"filename\":msg.filename,\"topic\":msg.topic});\nflow.set(\"buffer\",buffer); //store data and try to resend\n}\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1190,
+        "y": 900,
+        "wires": [
+            [
+                "d76a38f7fb472168"
+            ]
+        ]
+    },
+    {
+        "id": "10aa5346e880a610",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "store file while connection loss",
+        "info": "",
+        "x": 780,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "728676319f5d20b7",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "resend buffered data 2",
+        "func": "let status= flow.get(\"mqtt-status\") || {};\nlet buffer=flow.get(\"buffer\") || []; \n\nif (status.fill==\"green\")\n{\nwhile (buffer.length >0)\n{\n    node.log(\"sending buffering data\");\nlet temp=buffer.pop();\nmsg.filename=temp.filename;\nmsg.topic=temp.topic;\nnode.send(msg);\n}\n} ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 1040,
+        "wires": [
+            [
+                "e4167ebb90fec35b"
+            ]
+        ]
+    },
+    {
+        "id": "de5c289e8d5215fd",
+        "type": "file in",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "file",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 1270,
+        "y": 1040,
+        "wires": [
+            [
+                "d76a38f7fb472168"
+            ]
+        ]
+    },
+    {
+        "id": "e4167ebb90fec35b",
+        "type": "delay",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1060,
+        "y": 1040,
+        "wires": [
+            [
+                "de5c289e8d5215fd"
+            ]
+        ]
+    },
+    {
+        "id": "2f3c56f5f2fb5897",
+        "type": "inject",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "Send stored data",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "900",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 550,
+        "y": 1040,
+        "wires": [
+            [
+                "728676319f5d20b7"
+            ]
+        ]
+    },
+    {
+        "id": "bb4368b82566ded9",
+        "type": "comment",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "resend stored data",
+        "info": "",
+        "x": 570,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "2f6269ab492f4b30",
+        "type": "inject",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 1500,
+        "wires": [
+            [
+                "3620e20e685bedba"
+            ]
+        ]
+    },
+    {
+        "id": "3620e20e685bedba",
+        "type": "function",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "function 12",
+        "func": "msg.payload={\nc:55,\nd:545,\ne:562}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 1500,
+        "wires": [
+            [
+                "1c121fb387f139ce"
+            ]
+        ]
+    },
+    {
+        "id": "1c121fb387f139ce",
+        "type": "file",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "filename": "home/test.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 760,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "57dd60e09b4b47a6",
+        "type": "csv",
+        "z": "4a4a6f53a49dc7a1",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 610,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3062a34b40c5b07a",
+        "type": "OpcUa-Endpoint",
+        "endpoint": "opc.tcp://172.16.0.200:51310/CogentDataHub/DataAccess",
+        "secpol": "None",
+        "secmode": "None",
+        "none": true,
+        "login": false,
+        "usercert": false,
+        "usercertificate": "",
+        "userprivatekey": ""
+    },
+    {
+        "id": "345c11e1ca053379",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "10.8.0.15",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
