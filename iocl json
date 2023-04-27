@@ -1,0 +1,396 @@
+[
+    {
+        "id": "9f07bc8c23805058",
+        "type": "inject",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "01eef2e2b5a2319a",
+                "a5941939d3c11ed8"
+            ]
+        ]
+    },
+    {
+        "id": "01eef2e2b5a2319a",
+        "type": "file in",
+        "z": "d15f9a0759bcaf2b",
+        "name": "scaback",
+        "filename": "/var/www/iSolar/fetchDDT/csv/scaback.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "e6ec3838f8246ed3"
+            ]
+        ]
+    },
+    {
+        "id": "e6ec3838f8246ed3",
+        "type": "csv",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "c57e9949a6e62ec6"
+            ]
+        ]
+    },
+    {
+        "id": "83a6b151c51015b4",
+        "type": "mqtt out",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "topic": "scaback1",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d85bbcee29cc1f0f",
+        "x": 1260,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "402fa5fcf2a15297",
+        "type": "function",
+        "z": "d15f9a0759bcaf2b",
+        "name": "comparison",
+        "func": "var plantobj=[]\nfor (var i = 0; i < msg.payload.scaback.length;i++)\n{\n    for (var j = 0; j < msg.payload.test.length; j++)\n    {\n        var b = msg.payload.scaback[i].blockname\n        var b_ref = msg.payload.test[j].b\n        var d = msg.payload.scaback[i].dev\n        var d_ref = msg.payload.test[j].d\n        var f = msg.payload.scaback[i].chn\n        var f_ref = msg.payload.test[j].f\n        var value = msg.payload.scaback[i].value\n        var timestamp = msg.payload.scaback[i].ts*1000\n        if ((b==b_ref) && (d==d_ref) && (f == f_ref)&&(value!=\"NaN\")&&(timestamp!=0))\n        {\n        \n            var dateUTC1 = new Date(timestamp).toISOString().slice(0, 19);\n           // var dateUTC = dateUTC1 + 'Z';\n            var p = msg.payload.test[j].p\n            var b = msg.payload.scaback[i].blockname\n            var b_ref = msg.payload.test[j].b\n            var bd = msg.payload.test[j].bd\n            var d = msg.payload.scaback[i].dev\n            var d_ref = msg.payload.test[j].d\n            var dd = msg.payload.test[j].dd\n            var dt = msg.payload.test[j].dt\n            var f = msg.payload.scaback[i].chn\n            var f_ref = msg.payload.test[j].f\n            var fd = msg.payload.test[j].fd\n            var h = msg.payload.test[j].h\n            var id = msg.payload.test[j].id\n            var mn = msg.payload.test[j].mn\n            var u = msg.payload.test[j].u\n            var value = msg.payload.scaback[i].value\n            var text = msg.payload.test[j].text\n            var qu = msg.payload.test[j].qu\n           \n             var obj={\n                Time:dateUTC1,\n                value,   \n                qu,  \n                text,   \n                b, \n                bd,\n                d,\n                dd,\n                dt,\n                f,\n                fd,\n                h,   \n                id,\n                m: 1,   \n                p, \n                u,\n                mn   \n                \n                    }  \n          plantobj.push(obj)\n \n        }\n    }\n}\nmsg.payload=plantobj\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 220,
+        "wires": [
+            [
+                "30e5a72aab63d8af"
+            ]
+        ]
+    },
+    {
+        "id": "a5941939d3c11ed8",
+        "type": "template",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "S.No,id,b,d,f,bd,dd,dt,fd,h,m,p,qu,text,u,mn\n1,10153,B01,INV01,PAC,Block_1,B01_INV01,INV,Active_power,server_8282,1,IOCL,0,scaback,kW,scaback_csv\n2,10014,B01,INV01,FAC,Block_1,B01_INV01,INV,Frequency,server_8282,2,IOCL,0,scaback,Hz,scaback_csv\n3,10353,B01,INV02,PAC,Block_1,B01_INV02,INV,Active_power,server_8282,1,IOCL,0,scaback,kW,scaback_csv\n4,10214,B01,INV02,FAC,Block_1,B01_INV02,INV,Frequency,server_8282,2,IOCL,0,scaback,Hz,scaback_csv\n5,20153,B02,INV01,PAC,Block_2,B02_INV01,INV,Active_power,server_8282,1,IOCL,0,scaback,kW,scaback_csv\n6,20014,B02,INV01,FAC,Block_2,B02_INV01,INV,Frequency,server_8282,2,IOCL,0,scaback,Hz,scaback_csv\n7,20353,B02,INV02,PAC,Block_2,B02_INV02,INV,Active_power,server_8282,1,IOCL,0,scaback,kW,scaback_csv\n8,20214,B02,INV02,FAC,Block_2,B02_INV02,INV,Frequency,server_8282,2,IOCL,0,scaback,Hz,scaback_csv\n9,11011,B01,EM01,PAC,Block_1,B01_EM01,EM,Active_power,server_8282,3,IOCL,0,scaback,kW,scaback_csv\n10,21011,B02,EM01,PAC,Block_2,B02_EM01,EM,Active_power,server_8282,3,IOCL,0,scaback,kW,scaback_csv\n11,911139,CR,EM01,PAC,CR,CR_EM01,EM,Active_power,server_8282,1,IOCL,0,scaback,kW,scaback_csv\n12,911230,CR,EM02,PAC,CR,CR_EM02,EM,Active_power,server_8282,1,IOCL,0,scaback,kW,scaback_csv",
+        "output": "str",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "12baa7b65481b8b2"
+            ]
+        ]
+    },
+    {
+        "id": "12baa7b65481b8b2",
+        "type": "file",
+        "z": "d15f9a0759bcaf2b",
+        "name": "test csv",
+        "filename": "/home/test.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "61c92128a8f21349"
+            ]
+        ]
+    },
+    {
+        "id": "55b837748f23a974",
+        "type": "debug",
+        "z": "d15f9a0759bcaf2b",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "61c92128a8f21349",
+        "type": "csv",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 490,
+        "y": 240,
+        "wires": [
+            [
+                "d9aeea2a40420662"
+            ]
+        ]
+    },
+    {
+        "id": "c57e9949a6e62ec6",
+        "type": "change",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "scaback",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 180,
+        "wires": [
+            [
+                "4bd4f63766762df5"
+            ]
+        ]
+    },
+    {
+        "id": "d9aeea2a40420662",
+        "type": "change",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "test",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 240,
+        "wires": [
+            [
+                "4bd4f63766762df5"
+            ]
+        ]
+    },
+    {
+        "id": "79dc3633d666b166",
+        "type": "inject",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "ad70611da07c98c0"
+            ]
+        ]
+    },
+    {
+        "id": "ad70611da07c98c0",
+        "type": "http request",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://192.168.5.129:83/iec61850?block=simpleIOGenericIO&field=GGIO1.AnIn4.mag.f",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 510,
+        "y": 380,
+        "wires": [
+            [
+                "b6af03b13da018e0"
+            ]
+        ]
+    },
+    {
+        "id": "a41c894c461e94c8",
+        "type": "debug",
+        "z": "d15f9a0759bcaf2b",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b6af03b13da018e0",
+        "type": "change",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "api",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 380,
+        "wires": [
+            [
+                "a41c894c461e94c8"
+            ]
+        ]
+    },
+    {
+        "id": "30e5a72aab63d8af",
+        "type": "split",
+        "z": "d15f9a0759bcaf2b",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1130,
+        "y": 220,
+        "wires": [
+            [
+                "55b837748f23a974",
+                "83a6b151c51015b4"
+            ]
+        ]
+    },
+    {
+        "id": "4bd4f63766762df5",
+        "type": "function",
+        "z": "d15f9a0759bcaf2b",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch (msg.topic) {\n    case \"scaback\":\n        context.data.scaback = msg.payload;\n        msg = null;\n        break;\n    case \"test\":\n        context.data.test = msg.payload;\n        msg = null;\n        break;\n}\nif (context.data.scaback != null && context.data.test != null) {\n    var data_combine = {\n        \"scaback\": context.data.scaback,\n        \"test\": context.data.test\n\n    }\n    context.data = null\n    return { payload: data_combine };\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 220,
+        "wires": [
+            [
+                "402fa5fcf2a15297"
+            ]
+        ]
+    },
+    {
+        "id": "d85bbcee29cc1f0f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
