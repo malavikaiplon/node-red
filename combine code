@@ -1,0 +1,20 @@
+context.data = context.data || {};
+switch(msg.topic){
+    case "DELETE":
+        context.data.delete = msg.payload;
+        msg = null;
+        break;
+    case "PUT":
+        context.data.put = msg.payload;
+        msg = null;
+        break;
+}
+if(context.data.delete != null && context.data.put != null){
+    var data_combine = {
+        "delete": context.data.delete,
+        "put": context.data.put
+       
+    }
+    context.data = null
+    return {payload: data_combine};
+}  
