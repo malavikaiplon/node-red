@@ -1,0 +1,245 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "iPLON -mysql",
+      "description": "This is iplon api documentation",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:4600",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "MYSQL",
+        "description": "API for test MYSQL integration"
+      }
+    ],
+    "schemes": [
+      "http"
+    ],
+
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/table/{tablename}": {
+        "get": {
+          "tags": [
+            "Table"
+          ],
+          "summary": "Retrieve data from MySQL table",
+          "description": "Retrieves all data from the specified table in MySQL database",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "tablename",
+              "in": "path",
+              "description": "Name of the table to retrieve data from",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Data retrieved successfully",
+              "schema": {
+                "type": "array",
+                "items": {}
+              }
+            },
+            "404": {
+              "description": "Table not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/employee/{id}": {
+        "get": {
+          "tags": [
+            "Employee"
+          ],
+          "summary": "Retrieve data from MySQL table by ID",
+          "description": "Retrieves data from MySQL table by ID",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the record to retrieve",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Data retrieved successfully",
+              "schema": {
+                "type": "array",
+                "items": {}
+              }
+            },
+            "404": {
+              "description": "Record not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/addEmployee": {
+        "post": {
+          "tags": [
+            "Employee"
+          ],
+          "summary": "Add employee to MySQL database",
+          "description": "Adds an employee to MySQL database",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "employee",
+              "in": "body",
+              "description": "Employee object to add to database",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "Employee ID"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Employee name"
+                  },
+                  "Team": {
+                    "type": "string",
+                    "description": "Employee team"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Data retrieved successfully",
+              "schema": {
+                "type": "array",
+                "items": {}
+              }
+            },
+            "404": {
+              "description": "Record not found"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/update_employee": {
+        "put": {
+          "tags": [
+            "Employee"
+          ],
+          "summary": "Update an employee record",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/EmployeeUpdate"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Data updated successfully",
+              "schema": {
+                "$ref": "#/definitions/EmployeeUpdateResponse"
+              }
+            }
+          }
+        }
+      },
+      "/delete_employee": {
+        "delete": {
+          "tags": [
+            "Employee"
+          ],
+          "summary": "Delete an employee record by id",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "query",
+              "description": "ID of the record to delete",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Data deleted successfully",
+              "schema": {
+                "$ref": "#/definitions/DeleteEmployeeResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "EmployeeUpdate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "Team": {
+            "type": "string"
+          }
+        }
+      },
+      "EmployeeUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Team": {
+            "type": "string"
+          }
+        }
+      },
+      "DeleteEmployeeResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "enum": [
+              "Data deleted successfully"
+            ]
+          }
+        }
+      }
+    }
+  }
