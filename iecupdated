@@ -1,0 +1,337 @@
+[
+    {
+        "id": "dc3e887fef99b0e9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b225c09877364715",
+        "type": "http request",
+        "z": "dc3e887fef99b0e9",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 630,
+        "y": 280,
+        "wires": [
+            [
+                "61336c8ce003e856"
+            ]
+        ]
+    },
+    {
+        "id": "db2afc1b17f70f82",
+        "type": "function",
+        "z": "dc3e887fef99b0e9",
+        "name": "comparison",
+        "func": "var plantobj=[]\nfor (var i = 0; i < msg.payload.api.length;i++)\n{\n    for (var j = 0; j < msg.payload.test.length; j++)\n    {\n        var field = msg.payload.api[i].field\n        var fd = msg.payload.test[j].fv\n        var value = msg.payload.api[i].value\n        if(value==\"false\")\n        {value=0}\n        if (value == \"true\")\n        {value=1}\n        if ((field==fd))\n        {\n            var timestamp = new Date(msg.payload.api[i].time).getTime();\n            var dateUTC1 =msg.payload.api[i].time //.toISOString().slice(0, 19);\n           // var dateUTC = dateUTC1 + 'Z';\n            var p = msg.payload.test[j].p\n            var ip = msg.payload.test[j].ip\n            var b = msg.payload.test[j].b\n            var d = msg.payload.test[j].d\n            var td = msg.payload.test[j].tv\n            var f = msg.payload.test[j].f\n            var fc = msg.payload.test[j].fc\n            //var value = msg.payload.api[i].value\n \n           \n             var obj={\n                Time:dateUTC1,\n                value,   \n               b,\n               d,\n               f,\n               td,\n               fd  \n                \n                    }  \n          plantobj.push(obj)\n \n        }\n    }\n}\nmsg.payload=plantobj\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 360,
+        "wires": [
+            [
+                "7a6ca7e88a597a5a",
+                "840ed41694898897"
+            ]
+        ]
+    },
+    {
+        "id": "92193828fe0c3669",
+        "type": "file",
+        "z": "dc3e887fef99b0e9",
+        "name": "test csv",
+        "filename": "/home/test.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 440,
+        "y": 420,
+        "wires": [
+            [
+                "d51b6c6de0442cf4"
+            ]
+        ]
+    },
+    {
+        "id": "d51b6c6de0442cf4",
+        "type": "csv",
+        "z": "dc3e887fef99b0e9",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 590,
+        "y": 420,
+        "wires": [
+            [
+                "7c46d1cd3060b02c"
+            ]
+        ]
+    },
+    {
+        "id": "61336c8ce003e856",
+        "type": "change",
+        "z": "dc3e887fef99b0e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "api",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 360,
+        "wires": [
+            [
+                "3916634ece156634"
+            ]
+        ]
+    },
+    {
+        "id": "7c46d1cd3060b02c",
+        "type": "change",
+        "z": "dc3e887fef99b0e9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "test",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 420,
+        "wires": [
+            [
+                "3916634ece156634"
+            ]
+        ]
+    },
+    {
+        "id": "3916634ece156634",
+        "type": "function",
+        "z": "dc3e887fef99b0e9",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch (msg.topic) {\n    case \"api\":\n        context.data.api = msg.payload;\n        msg = null;\n        break;\n    case \"test\":\n        context.data.test = msg.payload;\n        msg = null;\n        break;\n}\nif (context.data.api != null && context.data.test != null) {\n    var data_combine = {\n        \"api\": context.data.api,\n        \"test\": context.data.test\n\n    }\n    context.data = null\n    return { payload: data_combine };\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "db2afc1b17f70f82"
+            ]
+        ]
+    },
+    {
+        "id": "840ed41694898897",
+        "type": "function",
+        "z": "dc3e887fef99b0e9",
+        "name": "influx table",
+        "func": "\n\nfor (var i = 0; i < msg.payload.length; i++) {\n       var obj = {};\n    \n    obj.payload =\n        [\n            {\n                measurement: \"iec61850\",\n                \n                fields: {\n\n                    value: msg.payload[i].value\n                    \n\n                },\n                tags: {\n                     b : msg.payload[i].b,\n                     d :msg.payload[i].d,\n                     f :msg.payload[i].f,\n                    td: msg.payload[i].td,\n                     fd : msg.payload[i].fd,\n                    \n\n                },\n\n                time:msg.payload[i].Time\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);\n}\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 520,
+        "wires": [
+            [
+                "24e7f4e862547418",
+                "c9117d8309ec11a9"
+            ]
+        ]
+    },
+    {
+        "id": "24e7f4e862547418",
+        "type": "debug",
+        "z": "dc3e887fef99b0e9",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "7a6ca7e88a597a5a",
+        "type": "debug",
+        "z": "dc3e887fef99b0e9",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "1b18d44680681a29",
+        "type": "function",
+        "z": "dc3e887fef99b0e9",
+        "name": "array of API",
+        "func": "//function sleep(ms) {\n // return new Promise(resolve => setTimeout(resolve, ms));\n//}\nmsg.url=[\n    \"http://192.168.33.10:84/iec61850?ip=192.168.33.6&p=102&tv=CSC211_1CTRL/BinInGGIO1.Ind1.t,CSC211_1CTRL/BinInGGIO1.Ind2.t,CSC211_1CTRL/BinInGGIO1.Ind3.t,CSC211_1CTRL/BinInGGIO1.Ind4.t,CSC211_1CTRL/BinInGGIO1.Ind5.t,CSC211_1CTRL/BinInGGIO1.Ind6.t,CSC211_1CTRL/BinInGGIO1.Ind7.t,CSC211_1CTRL/BinInGGIO1.Ind8.t,CSC211_1CTRL/BinInGGIO1.Ind9.t,CSC211_1CTRL/BinInGGIO1.Ind10.t&fv=CSC211_1CTRL/BinInGGIO1.Ind1.stVal,CSC211_1CTRL/BinInGGIO1.Ind2.stVal,CSC211_1CTRL/BinInGGIO1.Ind3.stVal,CSC211_1CTRL/BinInGGIO1.Ind4.stVal,CSC211_1CTRL/BinInGGIO1.Ind5.stVal,CSC211_1CTRL/BinInGGIO1.Ind6.stVal,CSC211_1CTRL/BinInGGIO1.Ind7.stVal,CSC211_1CTRL/BinInGGIO1.Ind8.stVal,CSC211_1CTRL/BinInGGIO1.Ind9.stVal,CSC211_1CTRL/BinInGGIO1.Ind10.stVal&fc=ST,ST,ST,ST,ST,ST,ST,ST,ST,ST\"\n]\nfor(var i = 0; i <msg.url.length; i++)\n{ \n    var url=msg.url[i]\n \n    var obj={\n    url\n}\n node.send(obj);\n   // await sleep(100);\n}\n\nreturn null\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "b225c09877364715"
+            ]
+        ]
+    },
+    {
+        "id": "8ccc0b2797593271",
+        "type": "template",
+        "z": "dc3e887fef99b0e9",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "s.no,ip,p,tv,fv,fc,b,d,f\n1,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind1.t,CSC211_1CTRL/BinInGGIO1.Ind1.stVal,ST,CR,GGIO1,AnIn1\n2,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind2.t,CSC211_1CTRL/BinInGGIO1.Ind2.stVal,ST,CR,GGIO1,AnIn2\n3,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind3.t,CSC211_1CTRL/BinInGGIO1.Ind3.stVal,ST,CR,GGIO1,AnIn3\n4,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind4.t,CSC211_1CTRL/BinInGGIO1.Ind4.stVal,ST,CR,GGIO1,AnIn4\n5,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind5.t,CSC211_1CTRL/BinInGGIO1.Ind5.stVal,ST,CR,GGIO1,Ind1\n6,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind6.t,CSC211_1CTRL/BinInGGIO1.Ind6.stVal,ST,CR,GGIO1,Ind2\n7,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind7.t,CSC211_1CTRL/BinInGGIO1.Ind7.stVal,ST,CR,GGIO1,Ind3\n8,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind8.t,CSC211_1CTRL/BinInGGIO1.Ind8.stVal,ST,CR,GGIO1,Ind4\n9,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind9.t,CSC211_1CTRL/BinInGGIO1.Ind9.stVal,ST,B01,LLN0,Beh\n10,127.0.0.1,102,CSC211_1CTRL/BinInGGIO1.Ind10.t,CSC211_1CTRL/BinInGGIO1.Ind10.stVal,ST,B01,LLN0,Health",
+        "output": "str",
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "92193828fe0c3669"
+            ]
+        ]
+    },
+    {
+        "id": "c9117d8309ec11a9",
+        "type": "influxdb batch",
+        "z": "dc3e887fef99b0e9",
+        "influxdb": "446e2b7f38a669ed",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "iplon",
+        "bucket": "iec61850",
+        "x": 1170,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "bd24262ef11849e0",
+        "type": "cronplus",
+        "z": "dc3e887fef99b0e9",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "persistDynamic": false,
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0/5 * * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 280,
+        "y": 240,
+        "wires": [
+            [
+                "1b18d44680681a29",
+                "8ccc0b2797593271"
+            ]
+        ]
+    },
+    {
+        "id": "446e2b7f38a669ed",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": "8087",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8087",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
