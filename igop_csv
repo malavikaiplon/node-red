@@ -1,0 +1,444 @@
+[
+    {
+        "id": "e6d11a9e6f95e836",
+        "type": "file in",
+        "z": "a6dbce1f496ecb79",
+        "name": "REF data",
+        "filename": "/home/iplon/Downloads/JD THOMAS NAME LIST.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 280,
+        "y": 520,
+        "wires": [
+            [
+                "7cdecb425db51dfd"
+            ]
+        ]
+    },
+    {
+        "id": "7cdecb425db51dfd",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 430,
+        "y": 520,
+        "wires": [
+            [
+                "855d9aa73601a84a"
+            ]
+        ]
+    },
+    {
+        "id": "855d9aa73601a84a",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 119",
+        "func": "var live_plant=flow.get(\"live_plant\")\nvar column = flow.get(\"column\")\nvar payload = flow.get(\"payload\");\nvar array=[]\nvar payload_array = []\nvar column_header=\"date\"\nfor (var k = 0; k < payload.length; k++)\n{\n    var final = [payload[k].col1, payload[k].col2, payload[k].col3, payload[k].col4, payload[k].col5, payload[k].col6, payload[k].col7, payload[k].col8, payload[k].col9, payload[k].col10, payload[k].col11, payload[k].col12, payload[k].col13, payload[k].col14, payload[k].col15, payload[k].col16, payload[k].col17, payload[k].col18, payload[k].col19, payload[k].col20, payload[k].col21]\npayload_array.push(final)\n}\n\n\nfor (var i = 0; i <msg.payload.length; i++)\n{\n    var Plant_Name=msg.payload[i][\"Plant Name\"]\n    var S_NO=msg.payload[i][\"S.NO\"]\n    var INV_NO=parseInt(msg.payload[i][\"NO OF INVERTER\"])\n  \n    if (live_plant == S_NO){ \n         for (var j = 1; j <=INV_NO; j++)\n         {\n             var WR =  \",WR_\"+j\n            var sy = \",Specific Yield_\" + j + \"(kWh / kWp)\"\n              column_header = column_header.concat(WR,sy);\n\n         }\n            \n   var obj={\n    Plant_Name,\n    S_NO,\n    INV_NO,\ncolumn_header\n}\n\narray.push(obj)  \n    }\n}\nmsg.payload=flow.get(\"payload\");\nmsg.topic=\"ref\"\nmsg.columns = column_header\nmsg.payload=payload_array\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "74cb329a82ba8baa"
+            ]
+        ]
+    },
+    {
+        "id": "72e30e2b1770580b",
+        "type": "inject",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 380,
+        "wires": [
+            [
+                "63870b99828e13cc",
+                "a89ceddea70fd1c7",
+                "53aa6862b0c57d3a"
+            ]
+        ]
+    },
+    {
+        "id": "63870b99828e13cc",
+        "type": "file in",
+        "z": "a6dbce1f496ecb79",
+        "name": "Meter data",
+        "filename": "/home/iplon/Downloads/IGOP/7964541_may.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": true,
+        "x": 350,
+        "y": 380,
+        "wires": [
+            [
+                "6198befe86e439ef"
+            ]
+        ]
+    },
+    {
+        "id": "d2745e9e617a81c2",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 121",
+        "func": "var array=[]\nvar Total_exp_WR1=0\nvar Total_exp_WR2=0\nvar Total_exp_WR3 = 0\nvar Total_ACT_WR1 = 0\nvar Total_ACT_WR2 = 0\nvar Total_ACT_WR3 = 0\nvar Total_gen_loss_WR1=0\nvar Total_gen_loss_WR2 = 0\nvar Total_gen_loss_WR3 = 0\nvar obj\nfor (var i = 0; i <= msg.payload.length; i++)\n{  if(i<msg.payload.length){\n    var DATE = msg.payload[i].date\n    var WR_1_kwh = (msg.payload[i].WR_1)/1000\n    var WR_1_Sp_Y = msg.payload[i][\"Specific Yield_1(kWh / kWp)\"]\n    var WR_2_kwh = (msg.payload[i].WR_2)/1000\n    var WR_2_Sp_Y = msg.payload[i][\"Specific Yield_2(kWh / kWp)\"]\n    var WR_3_kwh = msg.payload[i].WR_3\n    var WR_3_Sp_Y = msg.payload[i][\"Specific Yield_3(kWh / kWp)\"]\n    //var Total_Yield = msg.payload[i][\"Total Yield Wh\"]\n    //var AVG_Sp_Y = msg.payload[0][\"average specific yield (kWh / kWp)\"]\n    var Max_sy = Math.max(WR_1_Sp_Y, WR_2_Sp_Y, WR_2_Sp_Y)\n    var WR1_INV_CAPACITY=17\n    var WR2_INV_CAPACITY=18\n    var WR3_INV_CAPACITY = 19\n    var Expected_gen_WR1 = Max_sy * WR1_INV_CAPACITY\n    var Expected_gen_WR2=Max_sy*WR2_INV_CAPACITY\n    var Expected_gen_WR3 = Max_sy * WR3_INV_CAPACITY\n    Total_exp_WR1 = Total_exp_WR1 + Expected_gen_WR1\n    Total_exp_WR2 = Total_exp_WR2 + Expected_gen_WR2\n    Total_exp_WR3 = Total_exp_WR3 + Expected_gen_WR3\n    Total_ACT_WR1 = Total_ACT_WR1 + WR_1_kwh\n    Total_ACT_WR2 = Total_ACT_WR2 + WR_2_kwh\n    Total_ACT_WR3 = Total_ACT_WR3 + WR_3_kwh\n    var GEN_LOSS_WR1 = parseFloat(Expected_gen_WR1 - WR_1_kwh).toFixed(2);\n    var GEN_LOSS_WR2 = parseFloat(Expected_gen_WR2 - WR_2_kwh).toFixed(2);\n    var GEN_LOSS_WR3 = parseFloat(Expected_gen_WR3 - WR_3_kwh).toFixed(2);\n    Total_gen_loss_WR1 = Total_gen_loss_WR1 + (Expected_gen_WR1 - WR_1_kwh)\n    Total_gen_loss_WR2 = Total_gen_loss_WR2 + (Expected_gen_WR2 - WR_2_kwh)\n    Total_gen_loss_WR3 = Total_gen_loss_WR3 + (Expected_gen_WR3 - WR_3_kwh)\n    var total_act_gen = [Total_ACT_WR1, Total_ACT_WR2]\n    var total_exp_gen = [Total_exp_WR1, Total_exp_WR2]\n    var totalgen_loss = [Total_gen_loss_WR1, Total_gen_loss_WR2]\n    var PLANT_CAPACITY=[17,18]\n\n    obj = {\n        DATE,\n        \"WR 1 (kWh)\": WR_1_kwh,\n        \"Specific Yield (kWh / kWp)\":WR_1_Sp_Y,\n        \"WR 2 (kWh)\": WR_2_kwh,\n        \"Specific Yield2 (kWh / kWp)\":WR_2_Sp_Y,\n        WR_3_kwh,\n        WR_3_Sp_Y,\n        //\"Total Yield Wh\":Total_Yield,\n        //\"average specific yield (kWh / kWp)\":AVG_Sp_Y,\n        Max_sy,\n        Expected_gen_WR1,\n        Expected_gen_WR2,\n        Expected_gen_WR3,\n        GEN_LOSS_WR1,\n        GEN_LOSS_WR2,\n        GEN_LOSS_WR3,\n    }\n}\n   /* if (i == msg.payload.length) {\n        obj = {\n            DATE: \"\" + '\\n' +\"TOTAL\",\"WR 1 (kWh)\": \"\" + '\\n' + Total_ACT_WR1, \"Specific Yield (kWh / kWp)\": \"\" + '\\n' + \"\", \"WR 2 (kWh)\": \"\" + '\\n' + Total_ACT_WR2, \"Specific Yield2 (kWh / kWp)\": \"\" + '\\n' + \"\", \"Total Yield Wh\": \"\" + '\\n' + \"\", \"average specific yield (kWh / kWp)\": \"\" + '\\n' + \"\", \"Max_sy\": \"\", \"Expected_gen_WR1\": \"\" + '\\n' + Total_exp_WR1.toFixed(2), \"Expected_gen_WR2\": \"\" + '\\n' + Total_exp_WR2.toFixed(2), \"GEN_LOSS_WR1\": \"\" + '\\n' + Total_gen_loss_WR1.toFixed(2), \"GEN_LOSS_WR2\": \"\" + '\\n' + Total_gen_loss_WR2.toFixed(2)\n        }\n    }*/\n\n    array.push(obj)\n    \n}\nflow.set(\"out\", array);\nflow.set(\"totalgen_loss\",totalgen_loss)\nflow.set(\"total_act_gen\",total_act_gen)\nflow.set(\"total_exp_gen\", total_exp_gen)\nflow.set(\"PLANT_CAPACITY\",PLANT_CAPACITY)\nmsg.payload=array\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 480,
+        "wires": [
+            [
+                "a0b489beb071c6bc"
+            ]
+        ]
+    },
+    {
+        "id": "da3027f683fd17c2",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 470,
+        "y": 760,
+        "wires": [
+            [
+                "61413e22da58eb5e"
+            ]
+        ]
+    },
+    {
+        "id": "61413e22da58eb5e",
+        "type": "file",
+        "z": "a6dbce1f496ecb79",
+        "name": "TEST O/P",
+        "filename": "/home/iplon/Downloads/IGOP/finalcom.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 630,
+        "y": 760,
+        "wires": [
+            [
+                "37b9da5440cdfa99"
+            ]
+        ]
+    },
+    {
+        "id": "a0b489beb071c6bc",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "4c58f3be61676398",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "header correction",
+        "info": "",
+        "x": 360,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e6ca4aa9901a9388",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "6e7c19658a70629d",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 122",
+        "func": "\nvar plant = msg.filename.replace(/\\D/g, '');\nvar column=msg.column\nflow.set(\"live_plant\",plant)\nflow.set(\"column\", column)\nvar array=[]\nflow.set(\"payload\",msg.payload)\nmsg.payload=plant\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "479896c56167b006",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch (msg.topic) {\n    case \"live\":\n        context.data.live = msg.payload;\n        msg = null;\n        break;\n    case \"ref\":\n        context.data.ref = msg.payload;\n        msg = null;\n        break;\n}\nif (context.data.live != null && context.data.ref != null) {\n    var data_combine = {\n        \"live\": context.data.live,\n        \"ref\": context.data.ref\n\n    }\n    context.data = null\n    return { payload: data_combine };\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6198befe86e439ef",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ";",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "1",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 490,
+        "y": 380,
+        "wires": [
+            [
+                "6e7c19658a70629d"
+            ]
+        ]
+    },
+    {
+        "id": "74cb329a82ba8baa",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 710,
+        "y": 520,
+        "wires": [
+            [
+                "0e9ea093028c1913"
+            ]
+        ]
+    },
+    {
+        "id": "0e9ea093028c1913",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 830,
+        "y": 520,
+        "wires": [
+            [
+                "e6ca4aa9901a9388",
+                "d2745e9e617a81c2"
+            ]
+        ]
+    },
+    {
+        "id": "a89ceddea70fd1c7",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "e6d11a9e6f95e836"
+            ]
+        ]
+    },
+    {
+        "id": "46e30aaafeb51122",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "calculation",
+        "info": "",
+        "x": 280,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "37b9da5440cdfa99",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "53aa6862b0c57d3a",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 620,
+        "wires": [
+            [
+                "274c8cbd83109d18"
+            ]
+        ]
+    },
+    {
+        "id": "a079d32893c83a1d",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "report generation 1st TABLE",
+        "info": "",
+        "x": 320,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "6eced2a384b73d38",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "274c8cbd83109d18",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 125",
+        "func": "const array = flow.get(\"out\");\n\nfunction findNaNAndUndefined(array) {\n\n    const values = Object.values(array[0]);\n    const result = [];\n\n    for (let i = 0; i < values.length; i++) {\n        if (values[i] != null) {\n            result.push(values[i]);\n        }\n    }\n\n    return result;\n}\n\n// Example usage\n//const array = [{ a: 10, b: NaN, c: undefined }];\nconst foundValues = findNaNAndUndefined(array);\nmsg.payload=foundValues\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 620,
+        "wires": [
+            [
+                "6eced2a384b73d38"
+            ]
+        ]
+    }
+]
