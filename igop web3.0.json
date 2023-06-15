@@ -1,0 +1,953 @@
+[
+    {
+        "id": "a6dbce1f496ecb79",
+        "type": "tab",
+        "label": "IGOP web3.0",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d31a07ce5c153015",
+        "type": "fs-ops-dir",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "path": "/home/iplon/Downloads/IGOP/meters",
+        "pathType": "str",
+        "filter": "*",
+        "filterType": "str",
+        "dir": "payload",
+        "dirType": "msg",
+        "x": 320,
+        "y": 520,
+        "wires": [
+            [
+                "e8eb014869157c05"
+            ]
+        ]
+    },
+    {
+        "id": "54941110191b9675",
+        "type": "inject",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "d31a07ce5c153015"
+            ]
+        ]
+    },
+    {
+        "id": "4a197391c1243435",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "filename",
+        "func": "\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters/\" + msg.payload.filename\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 520,
+        "wires": [
+            [
+                "465cda62bb363149",
+                "88b4ebc81bf8bd8b",
+                "f0dc69f5060978df",
+                "c41c7cde1f841b92",
+                "fc0524647a0d3fc6",
+                "31b13ef317a0158c"
+            ]
+        ]
+    },
+    {
+        "id": "e8eb014869157c05",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 126",
+        "func": "function sleep(ms) {\n   return new Promise(resolve => setTimeout(resolve, ms));\n}\nfor (var i = 0; i < msg.payload.length; i++) {\n   \nvar obj={};\n    obj.payload = { filename: msg.payload[i]}\n\nnode.send(obj)\n    await sleep(15000);\n}\nreturn null ;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 520,
+        "wires": [
+            [
+                "4a197391c1243435"
+            ]
+        ]
+    },
+    {
+        "id": "465cda62bb363149",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 15",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "6cdbd358a0582f5a",
+        "type": "file in",
+        "z": "a6dbce1f496ecb79",
+        "name": "REF data",
+        "filename": "/home/iplon/Downloads/JD THOMAS NAME LIST.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 320,
+        "y": 980,
+        "wires": [
+            [
+                "b5fd69ee4fc5e63c"
+            ]
+        ]
+    },
+    {
+        "id": "b5fd69ee4fc5e63c",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 470,
+        "y": 980,
+        "wires": [
+            [
+                "055573b20d28bda5"
+            ]
+        ]
+    },
+    {
+        "id": "055573b20d28bda5",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 119",
+        "func": "var live_plant=flow.get(\"live_plant\")\nvar column = flow.get(\"column\")\nvar payload = flow.get(\"payload\");\nvar array=[]\nvar payload_array = []\nvar inv_array=[]\nfor (var k = 0; k < payload.length; k++)\n{\n    var final = [payload[k].col1, payload[k].col2, payload[k].col3, payload[k].col4, payload[k].col5, payload[k].col6, payload[k].col7, payload[k].col8, payload[k].col9, payload[k].col10, payload[k].col11, payload[k].col12, payload[k].col13, payload[k].col14, payload[k].col15, payload[k].col16, payload[k].col17, payload[k].col18, payload[k].col19, payload[k].col20, payload[k].col21]\npayload_array.push(final)\n}\nfor (var i = 0; i <msg.payload.length; i++)\n{\n    var Plant_Name=msg.payload[i][\"Plant Name\"]\n    var S_NO=msg.payload[i][\"S.NO\"]\n    var INV_NO=parseInt(msg.payload[i][\"NO OF INVERTER\"])\n  \n    if (live_plant == S_NO) \n      {\n             var capacity = [parseFloat(msg.payload[i].WR1) || \"null\",\n                             parseFloat(msg.payload[i].WR2) || \"null\",\n                             parseFloat(msg.payload[i].WR3) || \"null\",\n                             parseFloat(msg.payload[i].WR4) || \"null\",\n                             parseFloat(msg.payload[i].WR5) || \"null\",\n                             parseFloat(msg.payload[i].WR6) || \"null\",\n                             parseFloat(msg.payload[i].WR7) || \"null\",\n                             parseFloat(msg.payload[i].WR8) || \"null\",\n                             parseFloat(msg.payload[i].WR9) || \"null\",\n                             parseFloat(msg.payload[i].WR10) || \"null\"]\n                             \n                                  \n         \n        for (var j = 1; j <= INV_NO; j++) {\n            inv_array.push(\"WR\" + j)\n        }\n                \n   var obj={\n    Plant_Name,\n    S_NO,\n    INV_NO\n}\n      \narray.push(obj)     \n      }\n}\nmsg.columns = column\nmsg.payload=payload_array\nflow.set(\"inv_array\", inv_array)\nflow.set(\"INV_CAPACITY\", capacity);\nflow.set(\"plant_info\",array) \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 980,
+        "wires": [
+            [
+                "68583396b7f07f26"
+            ]
+        ]
+    },
+    {
+        "id": "31b13ef317a0158c",
+        "type": "file in",
+        "z": "a6dbce1f496ecb79",
+        "name": "Meter data",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": true,
+        "x": 210,
+        "y": 660,
+        "wires": [
+            [
+                "f66f25f5d78ee904"
+            ]
+        ]
+    },
+    {
+        "id": "b87eba4b7ea075fb",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 121",
+        "func": "var inv_cap=flow.get(\"INV_CAPACITY\");\nvar array=[]\n var Total_exp_WR1=0\n var Total_exp_WR2=0\n var Total_exp_WR3=0\n var Total_exp_WR4=0\n var Total_exp_WR5=0\n var Total_exp_WR6=0\n var Total_exp_WR7=0\n var Total_exp_WR8=0\n var Total_exp_WR9=0\n var Total_exp_WR10=0\nvar Total_ACT_WR1 = 0\nvar Total_ACT_WR2 = 0\nvar Total_ACT_WR3 = 0\nvar Total_ACT_WR4=0\nvar Total_ACT_WR5=0\nvar Total_ACT_WR6=0\nvar Total_ACT_WR7=0\nvar Total_ACT_WR8=0\nvar Total_ACT_WR9=0\nvar Total_ACT_WR10=0\nvar Total_gen_loss_WR1=0\nvar Total_gen_loss_WR2 = 0\nvar Total_gen_loss_WR3 = 0\nvar Total_gen_loss_WR4=0\nvar Total_gen_loss_WR5=0\nvar Total_gen_loss_WR6=0\nvar Total_gen_loss_WR7=0\nvar Total_gen_loss_WR8=0\nvar Total_gen_loss_WR9=0\nvar Total_gen_loss_WR10 = 0\nvar obj\nfor (var i = 0; i < msg.payload.length; i++)\n{  if(i<msg.payload.length){\n    var DATE = msg.payload[i].date\n    var WR_1_kwh = (msg.payload[i].WR1)/1000 \n    var WR_1_Sp_Y = msg.payload[i][\"Specific Yield_1(kWh / kWp)\"] \n    var WR_2_kwh = (msg.payload[i].WR2)/1000 \n    var WR_2_Sp_Y = msg.payload[i][\"Specific Yield_2(kWh / kWp)\"] \n    var WR_3_kwh = (msg.payload[i].WR3)/1000 \n    var WR_3_Sp_Y = msg.payload[i][\"Specific Yield_3(kWh / kWp)\"] \n    var WR_4_kwh = (msg.payload[i].WR4)/1000 \n    var WR_4_Sp_Y = msg.payload[i][\"Specific Yield_4(kWh / kWp)\"] \n    var WR_5_kwh = (msg.payload[i].WR5)/1000 \n    var WR_5_Sp_Y = msg.payload[i][\"Specific Yield_5(kWh / kWp)\"] \n    var WR_6_kwh = (msg.payload[i].WR6)/1000 \n    var WR_6_Sp_Y = msg.payload[i][\"Specific Yield_6(kWh / kWp)\"] \n    var WR_7_kwh = (msg.payload[i].WR7)/1000 \n    var WR_7_Sp_Y = msg.payload[i][\"Specific Yield_7(kWh / kWp)\"] \n    var WR_8_kwh = (msg.payload[i].WR8)/1000 \n    var WR_8_Sp_Y = msg.payload[i][\"Specific Yield_8(kWh / kWp)\"] \n    var WR_9_kwh = (msg.payload[i].WR9)/1000 \n    var WR_9_Sp_Y = msg.payload[i][\"Specific Yield_9(kWh / kWp)\"] \n    var WR_10_kwh = (msg.payload[i].WR10)/1000 \n    var WR_10_Sp_Y = msg.payload[i][\"Specific Yield_10(kWh / kWp)\"] \n\n    var Max_sy = Math.max(WR_1_Sp_Y || 0, WR_2_Sp_Y || 0, WR_2_Sp_Y || 0, WR_3_Sp_Y || 0, WR_4_Sp_Y || 0, WR_5_Sp_Y || 0, WR_6_Sp_Y || 0, WR_7_Sp_Y || 0, WR_8_Sp_Y || 0, WR_9_Sp_Y || 0, WR_10_Sp_Y || 0)\n\n    var WR1_INV_CAPACITY=inv_cap[0]\n    var WR2_INV_CAPACITY = inv_cap[1]\n    var WR3_INV_CAPACITY = inv_cap[2]\n    var WR4_INV_CAPACITY = inv_cap[3]\n    var WR5_INV_CAPACITY = inv_cap[4]\n    var WR6_INV_CAPACITY = inv_cap[5]\n    var WR7_INV_CAPACITY = inv_cap[6]\n    var WR8_INV_CAPACITY = inv_cap[7]\n    var WR9_INV_CAPACITY = inv_cap[8]\n    var WR10_INV_CAPACITY = inv_cap[9]\n\n    var Expected_gen_WR1 = Max_sy * WR1_INV_CAPACITY\n    var Expected_gen_WR2 =Max_sy * WR2_INV_CAPACITY\n    var Expected_gen_WR3 = Max_sy * WR3_INV_CAPACITY\n    var Expected_gen_WR4= Max_sy * WR4_INV_CAPACITY\n    var Expected_gen_WR5= Max_sy * WR5_INV_CAPACITY\n    var Expected_gen_WR6= Max_sy * WR6_INV_CAPACITY\n    var Expected_gen_WR7= Max_sy * WR7_INV_CAPACITY\n    var Expected_gen_WR8= Max_sy * WR8_INV_CAPACITY\n    var Expected_gen_WR9= Max_sy * WR9_INV_CAPACITY\n    var Expected_gen_WR10= Max_sy * WR10_INV_CAPACITY\n\n    Total_exp_WR1 = Total_exp_WR1 + Expected_gen_WR1\n    Total_exp_WR2 = Total_exp_WR2 + Expected_gen_WR2\n    Total_exp_WR3 = Total_exp_WR3 + Expected_gen_WR3\n    Total_exp_WR4 = Total_exp_WR4 + Expected_gen_WR4\n    Total_exp_WR5 = Total_exp_WR5 + Expected_gen_WR5\n    Total_exp_WR6 = Total_exp_WR6 + Expected_gen_WR6\n    Total_exp_WR7 = Total_exp_WR7 + Expected_gen_WR7\n    Total_exp_WR8 = Total_exp_WR8 + Expected_gen_WR8\n    Total_exp_WR9 = Total_exp_WR9 + Expected_gen_WR9\n    Total_exp_WR10= Total_exp_WR10 + Expected_gen_WR10\n\n    Total_ACT_WR1 = Total_ACT_WR1 + WR_1_kwh\n    Total_ACT_WR2 = Total_ACT_WR2 + WR_2_kwh\n    Total_ACT_WR3 = Total_ACT_WR3 + WR_3_kwh\n    Total_ACT_WR4 = Total_ACT_WR4 + WR_4_kwh\n    Total_ACT_WR5 = Total_ACT_WR5 + WR_5_kwh\n    Total_ACT_WR6 = Total_ACT_WR6 + WR_6_kwh\n    Total_ACT_WR7 = Total_ACT_WR7 + WR_7_kwh\n    Total_ACT_WR8 = Total_ACT_WR8 + WR_8_kwh\n    Total_ACT_WR9 = Total_ACT_WR9 + WR_9_kwh\n    Total_ACT_WR10 = Total_ACT_WR10 + WR_10_kwh\n    \n    if ((Expected_gen_WR1 != WR_1_kwh ) || (WR_1_kwh==0))\n    { var GEN_LOSS_WR1 = (Expected_gen_WR1 - WR_1_kwh) } else { GEN_LOSS_WR1 = \"0\"}\n    if ((Expected_gen_WR2 != WR_2_kwh) || (WR_2_kwh == 0))\n    { var GEN_LOSS_WR2 = (Expected_gen_WR2 - WR_2_kwh) } else { GEN_LOSS_WR2 = \"0\" }\n    if ((Expected_gen_WR3 != WR_3_kwh) || (WR_3_kwh == 0))\n    { var GEN_LOSS_WR3 = (Expected_gen_WR3 - WR_3_kwh) } else { GEN_LOSS_WR3 = \"0\" }\n    if ((Expected_gen_WR4 != WR_4_kwh) || (WR_4_kwh ==0))\n    { var GEN_LOSS_WR4 = (Expected_gen_WR4 - WR_4_kwh) } else { GEN_LOSS_WR4 = \"0\" }\n    if ((Expected_gen_WR5 != WR_5_kwh) || (WR_5_kwh ==0))\n    { var GEN_LOSS_WR5 = (Expected_gen_WR5 - WR_5_kwh)} else { GEN_LOSS_WR5 = \"0\" }\n    if ((Expected_gen_WR6 != WR_6_kwh) || (WR_6_kwh ==0))\n    { var GEN_LOSS_WR6 = (Expected_gen_WR6 - WR_6_kwh) } else { GEN_LOSS_WR6 = \"0\" }\n    if ((Expected_gen_WR7 != WR_7_kwh) || (WR_7_kwh ==0))\n    { var GEN_LOSS_WR7 = (Expected_gen_WR7 - WR_7_kwh) } else { GEN_LOSS_WR7 = \"0\" }\n    if ((Expected_gen_WR8 != WR_8_kwh) || (WR_8_kwh ==0))\n    { var GEN_LOSS_WR8 = (Expected_gen_WR8 - WR_8_kwh) } else { GEN_LOSS_WR8 = \"0\" }\n    if ((Expected_gen_WR9 != WR_9_kwh) || (WR_9_kwh ==0))\n    { var GEN_LOSS_WR9 = (Expected_gen_WR9 - WR_9_kwh) } else { GEN_LOSS_WR9 = \"0\" }\n    if ((Expected_gen_WR10 != WR_10_kwh) || (WR_10_kwh ==0))\n    { var GEN_LOSS_WR10 = (Expected_gen_WR10 - WR_10_kwh) } else { GEN_LOSS_WR10 = \"0\" }\n\n    Total_gen_loss_WR1 = Total_gen_loss_WR1 + (Expected_gen_WR1 - WR_1_kwh)\n    Total_gen_loss_WR2 = Total_gen_loss_WR2 + (Expected_gen_WR2 - WR_2_kwh)\n    Total_gen_loss_WR3 = Total_gen_loss_WR3 + (Expected_gen_WR3 - WR_3_kwh)\n    Total_gen_loss_WR4 = Total_gen_loss_WR4 + (Expected_gen_WR4 - WR_4_kwh)\n    Total_gen_loss_WR5 = Total_gen_loss_WR5 + (Expected_gen_WR5 - WR_5_kwh)\n    Total_gen_loss_WR6 = Total_gen_loss_WR6 + (Expected_gen_WR6 - WR_6_kwh)\n    Total_gen_loss_WR7 = Total_gen_loss_WR7 + (Expected_gen_WR7 - WR_7_kwh)\n    Total_gen_loss_WR8 = Total_gen_loss_WR8 + (Expected_gen_WR8 - WR_8_kwh)\n    Total_gen_loss_WR9 = Total_gen_loss_WR9 + (Expected_gen_WR9 - WR_9_kwh)\n    Total_gen_loss_WR10 = Total_gen_loss_WR10 + (Expected_gen_WR10 - WR_10_kwh)\n\n\n    var total_act_gen = [Total_ACT_WR1, Total_ACT_WR2, Total_ACT_WR3, Total_ACT_WR4 ,Total_ACT_WR5 ,Total_ACT_WR6 ,Total_ACT_WR7 ,Total_ACT_WR8 ,Total_ACT_WR9 ,Total_ACT_WR10]\n    var total_exp_gen = [Total_exp_WR1, Total_exp_WR2, Total_exp_WR3,Total_exp_WR4 ,Total_exp_WR5 ,Total_exp_WR6 ,Total_exp_WR7 ,Total_exp_WR8 ,Total_exp_WR9 ,Total_exp_WR10]\n    var totalgen_loss = [Total_gen_loss_WR1, Total_gen_loss_WR2,Total_gen_loss_WR3 ,Total_gen_loss_WR4 ,Total_gen_loss_WR5 ,Total_gen_loss_WR6 ,Total_gen_loss_WR7 ,Total_gen_loss_WR8 ,Total_gen_loss_WR9 ,Total_gen_loss_WR10]\n    var PLANT_CAPACITY=[17,18]\n\n    obj = {\n        DATE,\n         WR_1_kwh,\n         WR_1_Sp_Y,\n         WR_2_kwh,\n         WR_2_Sp_Y,\n         WR_3_kwh,\n         WR_3_Sp_Y,\n         WR_4_kwh,\n         WR_4_Sp_Y,\n         WR_5_kwh,\n         WR_5_Sp_Y,\n         WR_6_kwh,\n         WR_6_Sp_Y,\n         WR_7_kwh,\n         WR_7_Sp_Y,\n         WR_8_kwh,\n         WR_8_Sp_Y,\n         WR_9_kwh,\n         WR_9_Sp_Y,\n         WR_10_kwh,\n         WR_10_Sp_Y,\n         Max_sy,\n        Expected_gen_WR1,\n        Expected_gen_WR2,\n        Expected_gen_WR3,\n        Expected_gen_WR4,\n        Expected_gen_WR5,\n        Expected_gen_WR6,\n        Expected_gen_WR7,\n        Expected_gen_WR8,\n        Expected_gen_WR9,\n        Expected_gen_WR10,\n        GEN_LOSS_WR1,\n        GEN_LOSS_WR2,\n        GEN_LOSS_WR3,\n        GEN_LOSS_WR4,\n        GEN_LOSS_WR5,\n        GEN_LOSS_WR6,\n        GEN_LOSS_WR7,\n        GEN_LOSS_WR8,\n        GEN_LOSS_WR9,\n        GEN_LOSS_WR10,\n    }\n}\n   /* if (i == msg.payload.length) {\n        obj = {\n            DATE: \"null\" + '\\n' +\"TOTAL\",\"WR 1 (kWh)\": \"null\" + '\\n' + Total_ACT_WR1, \"Specific Yield (kWh / kWp)\": \"null\" + '\\n' + \"null\", \"WR 2 (kWh)\": \"null\" + '\\n' + Total_ACT_WR2, \"Specific Yield2 (kWh / kWp)\": \"null\" + '\\n' + \"null\", \"Total Yield Wh\": \"null\" + '\\n' + \"null\", \"average specific yield (kWh / kWp)\": \"null\" + '\\n' + \"null\", \"Max_sy\": \"null\", \"Expected_gen_WR1\": \"null\" + '\\n' + Total_exp_WR1.toFixed(2), \"Expected_gen_WR2\": \"null\" + '\\n' + Total_exp_WR2.toFixed(2), \"GEN_LOSS_WR1\": \"null\" + '\\n' + Total_gen_loss_WR1.toFixed(2), \"GEN_LOSS_WR2\": \"null\" + '\\n' + Total_gen_loss_WR2.toFixed(2)\n        }\n    }*/\n\n    array.push(obj)\n    \n}\nflow.set(\"out\", array);\nflow.set(\"totalgen_loss\",totalgen_loss)\nflow.set(\"total_act_gen\",total_act_gen)\nflow.set(\"total_exp_gen\", total_exp_gen)\nflow.set(\"PLANT_CAPACITY\",PLANT_CAPACITY)\nmsg.payload=array\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 1040,
+        "wires": [
+            [
+                "b563616ed2e322fe"
+            ]
+        ]
+    },
+    {
+        "id": "c801160d3cebf464",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 490,
+        "y": 1140,
+        "wires": [
+            [
+                "1a7f0518681bc1db"
+            ]
+        ]
+    },
+    {
+        "id": "92b994de0b189053",
+        "type": "file",
+        "z": "a6dbce1f496ecb79",
+        "name": "TEST O/P",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 810,
+        "y": 1140,
+        "wires": [
+            [
+                "2c3b1eca5a2a6921"
+            ]
+        ]
+    },
+    {
+        "id": "b563616ed2e322fe",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "fc5b44e1708cdcbb",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "header correction",
+        "info": "",
+        "x": 800,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "9d0fd4cb89d7b09f",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "17c4620d6d821d4d",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 122",
+        "func": "var results = []\nvar plant = msg.filename.replace(/\\D/g, '');\nflow.set(\"plant\", plant);\nvar column = msg.columns.split(',');\nflow.set(\"live_plant\",plant)\n var column_header=\"date\"\nfor (var i = 1; i < column.length; i++) {\n    var num = column[i].replace(/\\D/g, '');\n    var sy =\",Specific Yield_\" + num + \"(kWh / kWp)\"\n    if(num!=\"\"){\n    var WR=\",WR\"+num\n    column_header = column_header.concat(WR, sy);\n    }\nvar obj={\n    num, \n    sy,\n    column_header\n}\nresults.push(obj)\n}\nmsg.payload=results\nflow.set(\"column\", column_header)\n\nmsg.columns=column_header\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 660,
+        "wires": [
+            [
+                "597123327d04c4fb"
+            ]
+        ]
+    },
+    {
+        "id": "9b6621684678eba9",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "header",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 620,
+        "y": 660,
+        "wires": [
+            [
+                "17c4620d6d821d4d"
+            ]
+        ]
+    },
+    {
+        "id": "68583396b7f07f26",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 750,
+        "y": 980,
+        "wires": [
+            [
+                "a2e4b739c9150ae9"
+            ]
+        ]
+    },
+    {
+        "id": "a2e4b739c9150ae9",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 870,
+        "y": 980,
+        "wires": [
+            [
+                "9d0fd4cb89d7b09f",
+                "b87eba4b7ea075fb"
+            ]
+        ]
+    },
+    {
+        "id": "88b4ebc81bf8bd8b",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 180,
+        "y": 980,
+        "wires": [
+            [
+                "6cdbd358a0582f5a"
+            ]
+        ]
+    },
+    {
+        "id": "42b315e1e8c54e07",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "calculation",
+        "info": "",
+        "x": 620,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "2c3b1eca5a2a6921",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 10",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "c41c7cde1f841b92",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 1140,
+        "wires": [
+            [
+                "785d3dece03d8ecc"
+            ]
+        ]
+    },
+    {
+        "id": "88a08fcc67eaa7f7",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "report generation 1st TABLE",
+        "info": "",
+        "x": 580,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "597123327d04c4fb",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "785d3dece03d8ecc",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 125",
+        "func": "var array = flow.get(\"out\");\nvar result=[] \nvar final_out=[]\nvar column_header = \"DATE\"\nvar num;\nfor(var j = 0;j < array.length; j++ ){\n    result = []\n    const values = Object.values(array[j]);\n    const value_l = Object.values(array[0]).length;\n    const keys = Object.keys(array[0]);\n    for (let i = 0; i <value_l ; i++) {\n         if ((isNaN(values[i])&&(i!=0)))\n         {}\n         else{\n            result.push(values[i])\n            if(j==0){\n            var key=keys[i]\n            if(i!=0){\n            var column_header = column_header.concat(\",\",key); \n            }       \n            }   \n        }  \n    }\n    final_out.push(result)\n}\n\nmsg.payload=final_out\nmsg.columns = column_header\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 1140,
+        "wires": [
+            [
+                "c801160d3cebf464"
+            ]
+        ]
+    },
+    {
+        "id": "cddd021a592203fd",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "value",
+        "sep": ";",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "1",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 610,
+        "y": 700,
+        "wires": [
+            [
+                "d76101a2e206bd43"
+            ]
+        ]
+    },
+    {
+        "id": "e412fc8bc00a2ae6",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "d76101a2e206bd43",
+        "type": "change",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 700,
+        "wires": [
+            [
+                "e412fc8bc00a2ae6"
+            ]
+        ]
+    },
+    {
+        "id": "990d4ae241f29314",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 127",
+        "func": "\nvar totalgen_loss =flow.get(\"totalgen_loss\")\nvar total_act_gen=flow.get(\"total_act_gen\")\nvar total_exp_gen=flow.get(\"total_exp_gen\")\nvar INV_CAPACITY = flow.get(\"INV_CAPACITY\")\nvar inverter = flow.get(\"inv_array\")\nvar result\n\n//var Actual Generation_in_kWh=[]\nvar array=[]\nfor (var i = 0; i <inverter.length; i++)\n{\n    if (INV_CAPACITY[i]>=50)\n    {\n        var LOSS_IN_CURRENCY=totalgen_loss[i]*0.10\n    }\n    if (INV_CAPACITY[i] < 50) {\n        var LOSS_IN_CURRENCY = totalgen_loss[i] * 0.075\n    }\n    \nvar obj={\n    INVERTERS:inverter[i],\n    Capacity_in_kWp:INV_CAPACITY[i],\n    Actual_Generation_in_kWh: total_act_gen[i],\n    Expected_Generation_in_kWh: total_exp_gen[i],\n    Generation_Loss_in_kWh: totalgen_loss[i],\n    Loss_in_currency_Euro_Є:LOSS_IN_CURRENCY\n\n}\narray.push(obj)\n}\nmsg.payload=array\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1260,
+        "wires": [
+            [
+                "a873f1bbc447b242"
+            ]
+        ]
+    },
+    {
+        "id": "2441b18853373322",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "report generation 2nd TABLE",
+        "info": "",
+        "x": 580,
+        "y": 1220,
+        "wires": []
+    },
+    {
+        "id": "1a7f0518681bc1db",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "filename",
+        "func": "var plant=flow.get(\"plant\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters_report/\" + plant+\"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 1140,
+        "wires": [
+            [
+                "92b994de0b189053"
+            ]
+        ]
+    },
+    {
+        "id": "fc0524647a0d3fc6",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "6",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 180,
+        "y": 1260,
+        "wires": [
+            [
+                "990d4ae241f29314"
+            ]
+        ]
+    },
+    {
+        "id": "a873f1bbc447b242",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 530,
+        "y": 1260,
+        "wires": [
+            [
+                "207db2e101890ffb"
+            ]
+        ]
+    },
+    {
+        "id": "207db2e101890ffb",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "filename",
+        "func": "var plant=flow.get(\"plant\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters_report/\" + plant+\"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 1260,
+        "wires": [
+            [
+                "680fe68d874bdb27"
+            ]
+        ]
+    },
+    {
+        "id": "680fe68d874bdb27",
+        "type": "file",
+        "z": "a6dbce1f496ecb79",
+        "name": "TEST O/P",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 830,
+        "y": 1260,
+        "wires": [
+            [
+                "3f718a7d67b24c41"
+            ]
+        ]
+    },
+    {
+        "id": "f1d1e72fb273f714",
+        "type": "fs-ops-delete",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "path": "/home/iplon/Downloads/IGOP/meters",
+        "pathType": "str",
+        "filename": "payload.filename",
+        "filenameType": "msg",
+        "x": 790,
+        "y": 1460,
+        "wires": [
+            [
+                "b45a0e7891d25ee2"
+            ]
+        ]
+    },
+    {
+        "id": "b45a0e7891d25ee2",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 18",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "dadb9a746973d9a7",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "7",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 580,
+        "y": 1460,
+        "wires": [
+            [
+                "f1d1e72fb273f714"
+            ]
+        ]
+    },
+    {
+        "id": "cb46b1bc25965223",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "delete files from directory after report generation",
+        "info": "",
+        "x": 760,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "3f718a7d67b24c41",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 19",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "76742d15cd28b686",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 128",
+        "func": "\nvar plant =flow.get(\"plant_info\")\nvar array = [\n    {   HEADER:\"PLANT_NAME\",\n        plant_info: plant[0].Plant_Name\n    },\n    {\n        HEADER: \"S.NO \" ,\n        plant_info: plant[0].S_NO,       \n    },\n    {\n        HEADER: \"No of Inverters \",\n        plant_info: plant[0].INV_NO\n    }\n];\nmsg.payload=array\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 860,
+        "wires": [
+            [
+                "5c66103294e3553f"
+            ]
+        ]
+    },
+    {
+        "id": "d2a0ed11083c772f",
+        "type": "comment",
+        "z": "a6dbce1f496ecb79",
+        "name": "report generation plant info table",
+        "info": "",
+        "x": 630,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "43765228d00567bc",
+        "type": "debug",
+        "z": "a6dbce1f496ecb79",
+        "name": "debug 20",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "f0dc69f5060978df",
+        "type": "delay",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 160,
+        "y": 860,
+        "wires": [
+            [
+                "76742d15cd28b686"
+            ]
+        ]
+    },
+    {
+        "id": "e7d052b1fba968e4",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "filename",
+        "func": "var plant=flow.get(\"plant\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters_report/\" + plant+\"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 860,
+        "wires": [
+            [
+                "978cc278702f88c4"
+            ]
+        ]
+    },
+    {
+        "id": "978cc278702f88c4",
+        "type": "file",
+        "z": "a6dbce1f496ecb79",
+        "name": "TEST O/P",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 850,
+        "y": 860,
+        "wires": [
+            [
+                "43765228d00567bc"
+            ]
+        ]
+    },
+    {
+        "id": "5c66103294e3553f",
+        "type": "csv",
+        "z": "a6dbce1f496ecb79",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": true,
+        "include_null_values": true,
+        "x": 490,
+        "y": 860,
+        "wires": [
+            [
+                "e7d052b1fba968e4"
+            ]
+        ]
+    },
+    {
+        "id": "f66f25f5d78ee904",
+        "type": "function",
+        "z": "a6dbce1f496ecb79",
+        "name": "function 130",
+        "func": "\nlet text=msg.payload\nlet check = text.includes(\";\")\nif(check==false)\n{\n    var result = text.replaceAll(\",\", \";\");\n}\nelse{result=text}\n\nmsg.payload = result\nreturn (msg);",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 660,
+        "wires": [
+            [
+                "9b6621684678eba9",
+                "cddd021a592203fd"
+            ]
+        ]
+    }
+]
