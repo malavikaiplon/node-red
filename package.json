@@ -1,16 +1,18 @@
 {
-  "name": "mysql",
+  "name": "data-manupulation-grafana",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "npx nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "malavika",
+  "author": "",
   "license": "ISC",
   "dependencies": {
+    "@influxdata/influxdb-client": "^1.33.2",
+    "influx": "^5.9.3",
     "mysql": "^2.18.1",
-    "mysql2": "^3.2.4",
-    "swagger-ui-express": "^4.6.2"
+    "mysql2": "^3.4.2",
+    "nodemon": "^2.0.22"
   }
 }
