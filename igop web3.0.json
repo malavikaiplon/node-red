@@ -1,27 +1,35 @@
 [
     {
-        "id": "0ad08691b16996b7",
+        "id": "fb5bfb14f47e3d76",
+        "type": "tab",
+        "label": "wierig plants",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7a9deacde1eeb410",
         "type": "fs-ops-dir",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
-        "path": "/home/iplon/Downloads/IGOP/meters",
+        "path": "/home/iplon/Downloads/IGOP/wierig plants",
         "pathType": "str",
         "filter": "*",
         "filterType": "str",
         "dir": "payload",
         "dirType": "msg",
-        "x": 300,
-        "y": 120,
+        "x": 360,
+        "y": 80,
         "wires": [
             [
-                "665c45b9e8b794f7"
+                "04a935c6a43fdeb3"
             ]
         ]
     },
     {
-        "id": "4745770e924048ad",
+        "id": "1c342ca94acf0fd8",
         "type": "inject",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "props": [
             {
@@ -39,42 +47,42 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 140,
-        "y": 120,
+        "x": 200,
+        "y": 80,
         "wires": [
             [
-                "0ad08691b16996b7"
+                "7a9deacde1eeb410"
             ]
         ]
     },
     {
-        "id": "70b60d2db52e7165",
+        "id": "26bc7918ddf51ba5",
         "type": "function",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "file to read",
-        "func": "var filename = msg.payload.filename\nfunction getDate(d) {\n    var day, month, year;\n\n    var result = d.match(\"[0-9]{2}([\\-/ \\.])[0-9]{2}[\\-/ \\.][0-9]{4}\");\n    if (null != result) {\n        var dateSplitted = result[0].split(result[1]);\n        day = dateSplitted[0];\n        month = dateSplitted[1];\n        year = dateSplitted[2];\n    }\n    result = d.match(\"[0-9]{4}([\\-/ \\.])[0-9]{2}[\\-/ \\.][0-9]{2}\");\n    if (null != result) {\n        dateSplitted = result[0].split(result[1]);\n        day = dateSplitted[2];\n        month = dateSplitted[1];\n        year = dateSplitted[0];\n    }\n\n    if (month > 12) {\n        var aux = day;\n        day = month;\n        month = aux;\n    }\n    //return year + \"/\" + month + \"/\" + day;\n\n    function getMonthName(monthNumber) {\n        const date = new Date();\n        date.setMonth(monthNumber - 1);\n\n        return date.toLocaleString('en-US', { month: 'long' });\n    }\n    return getMonthName(month)\n}\n\nvar month_name = getDate(filename)\n\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters/\" + filename\nflow.set(\"month\", month_name);\nflow.set(\"filename\", filename);\nreturn msg;\n",
+        "func": "var filename = msg.payload.filename\nfunction getDate(d) {\n    var day, month, year;\n\n    var result = d.match(\"[0-9]{2}([\\-/ \\.])[0-9]{2}[\\-/ \\.][0-9]{4}\");\n    if (null != result) {\n        var dateSplitted = result[0].split(result[1]);\n        day = dateSplitted[0];\n        month = dateSplitted[1];\n        year = dateSplitted[2];\n    }\n    result = d.match(\"[0-9]{4}([\\-/ \\.])[0-9]{2}[\\-/ \\.][0-9]{2}\");\n    if (null != result) {\n        dateSplitted = result[0].split(result[1]);\n        day = dateSplitted[2];\n        month = dateSplitted[1];\n        year = dateSplitted[0];\n    }\n\n    if (month > 12) {\n        var aux = day;\n        day = month;\n        month = aux;\n    }\n    //return year + \"/\" + month + \"/\" + day;\n\n    function getMonthName(monthNumber) {\n        const date = new Date();\n        date.setMonth(monthNumber - 1);\n\n        return date.toLocaleString('en-US', { month: 'long' });\n    }\n    return getMonthName(month)\n}\n\nvar month_name = getDate(filename)\n\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/wierig plants/\" + filename\nflow.set(\"month\", month_name);\nflow.set(\"filename\", filename);\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 670,
-        "y": 120,
+        "x": 730,
+        "y": 80,
         "wires": [
             [
-                "5eec3b6cdafd5555",
-                "b2379ef02f2de6c5",
-                "331f80ddb5942826",
-                "630a27dc010a2718",
-                "1126849444fa55e0",
-                "d3ff46222391be1c"
+                "80dfe6643e13f10a",
+                "4a30c08b3e3420e6",
+                "c18e10044a0651ea",
+                "8922e3f053d3d383",
+                "f2480a44b00b5e65",
+                "37fe3565bf7b7c19"
             ]
         ]
     },
     {
-        "id": "665c45b9e8b794f7",
+        "id": "04a935c6a43fdeb3",
         "type": "function",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "file with delay",
         "func": "\nfunction sleep(ms) {\n   return new Promise(resolve => setTimeout(resolve, ms));\n}\nfor (var i = 0; i < msg.payload.length; i++) {\n   \nvar obj={};\n    obj.payload = { filename: msg.payload[i]}\n\nnode.send(obj)\n    await sleep(15000);\n}\nreturn null ;",
         "outputs": 1,
@@ -82,19 +90,19 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 120,
+        "x": 540,
+        "y": 80,
         "wires": [
             [
-                "70b60d2db52e7165"
+                "26bc7918ddf51ba5"
             ]
         ]
     },
     {
-        "id": "5eec3b6cdafd5555",
+        "id": "80dfe6643e13f10a",
         "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 173",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 193",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -103,14 +111,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 120,
+        "x": 930,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "b2379ef02f2de6c5",
+        "id": "4a30c08b3e3420e6",
         "type": "file in",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "Meter data",
         "filename": "filename",
         "filenameType": "msg",
@@ -119,47 +127,438 @@
         "sendError": false,
         "encoding": "none",
         "allProps": true,
-        "x": 190,
-        "y": 240,
+        "x": 250,
+        "y": 200,
         "wires": [
             [
-                "e67c92328912cedf"
+                "66bdfd63213967df"
             ]
         ]
     },
     {
-        "id": "3721892ab5816d4c",
-        "type": "comment",
-        "z": "9bb7160e32e22f02",
-        "name": "header correction",
-        "info": "",
-        "x": 820,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "2f881ec9b22860d0",
+        "id": "8e51d08a7ab21dca",
         "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "set header",
-        "func": "var results = []\nvar filename = flow.get(\"filename\");\nconst plant = filename.substring(0, filename.indexOf('_'));\nvar column = msg.columns.split(',');\n var column_header=\"date\"\nvar inv_array = []\nfor (var i = 1; i < column.length; i++) {\n\n    const parts = column[i].split(\" \");\n\n    // Extracting the desired part\n    const character = parts[1];\n\n    var num = character  //column[i].substring(column[i].indexOf(' '), column[i].IndexOf(' '))   //.replace(/\\D/g, ''); \n    var sy =\",Specific Yield_\" + num + \"(kWh / kWp)\"\n    var pattern = num.match(/^[0-9/]*$/);\n    if (pattern != null){\n        var WR = \",WR\" + pattern[0]\n        var inv = \"WR\" + pattern[0]\n        inv_array.push(inv)\n    column_header = column_header.concat(WR, sy);\n    }\nvar obj={\n    num, \n    sy,\n    column_header,\n    pattern\n}\nresults.push(obj)\n}\nmsg.payload=results\nflow.set(\"column\", column_header)\nflow.set(\"live_plant\", plant);\nflow.set(\"inv_array\", inv_array);\nmsg.columns=column_header\nreturn msg;",
+        "z": "fb5bfb14f47e3d76",
+        "name": "plant info",
+        "func": "\nvar plant =flow.get(\"plant_info\")\n\n\nvar array = [\n    {\n        HEADER: \"PLANT_NAME\",\n        plant_info: plant[0].Plant_Name\n    },\n    {\n        HEADER: \"S.NO\" ,\n        plant_info: plant[0].S_NO    \n    },\n    {\n        HEADER: \"No of Inverters \",\n        plant_info: plant[0].INV_NO\n    }\n];\nmsg.payload=array\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 810,
-        "y": 240,
+        "x": 420,
+        "y": 520,
         "wires": [
             [
-                "f248d8710692964b"
+                "afcfc0e8bd409479"
             ]
         ]
     },
     {
-        "id": "847870b6a16c1307",
+        "id": "8d99f3b58691b027",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report generation plant info table",
+        "info": "",
+        "x": 670,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8631d9e978ad8b77",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 194",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "8922e3f053d3d383",
+        "type": "delay",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 260,
+        "y": 520,
+        "wires": [
+            [
+                "8e51d08a7ab21dca"
+            ]
+        ]
+    },
+    {
+        "id": "29eeb88b6d38b0fc",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report file",
+        "func": "var plant = flow.get(\"live_plant\");\nvar month = flow.get(\"month\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/wierig_plants_\" + month + \"_report/\" + plant + \"_\" + month + \"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 520,
+        "wires": [
+            [
+                "ecd05ceabea4b38d"
+            ]
+        ]
+    },
+    {
+        "id": "ecd05ceabea4b38d",
+        "type": "file",
+        "z": "fb5bfb14f47e3d76",
+        "name": "TEST O/P",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 950,
+        "y": 520,
+        "wires": [
+            [
+                "8631d9e978ad8b77"
+            ]
+        ]
+    },
+    {
+        "id": "afcfc0e8bd409479",
         "type": "csv",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": true,
+        "include_null_values": true,
+        "x": 590,
+        "y": 520,
+        "wires": [
+            [
+                "29eeb88b6d38b0fc"
+            ]
+        ]
+    },
+    {
+        "id": "8b193dd3e8cf3d97",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 550,
+        "y": 660,
+        "wires": [
+            [
+                "c7260b2914b4a3fc"
+            ]
+        ]
+    },
+    {
+        "id": "4d857e174e6f1b91",
+        "type": "file",
+        "z": "fb5bfb14f47e3d76",
+        "name": "TEST O/P",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 850,
+        "y": 660,
+        "wires": [
+            [
+                "3aa42a4017894993"
+            ]
+        ]
+    },
+    {
+        "id": "3aa42a4017894993",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 195",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "f2480a44b00b5e65",
+        "type": "delay",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 240,
+        "y": 660,
+        "wires": [
+            [
+                "e167c29dd6050892"
+            ]
+        ]
+    },
+    {
+        "id": "8871bf0f02f04f70",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report generation 1st TABLE",
+        "info": "",
+        "x": 620,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "e167c29dd6050892",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "setup 1st Table",
+        "func": "var array = flow.get(\"out\");\nvar result=[] \nvar final_out=[]\nvar column_header = \"DATE\"\nvar num;\nfor(var j = 0;j < array.length; j++ ){\n    result = []\n    const values = Object.values(array[j]);\n    const value_l = Object.values(array[0]).length;\n    const keys = Object.keys(array[0]);\n    for (let i = 0; i <value_l ; i++) {\n         if ((isNaN(values[i])&&(i!=0)))\n         {}\n         else{\n            result.push(values[i])\n            if(j==0){\n            var key=keys[i]\n            if(i!=0){\n            var column_header = column_header.concat(\",\",key); \n            }       \n            }   \n        }  \n    }\n    final_out.push(result)\n}\n\nmsg.payload=final_out\nmsg.columns = column_header\nreturn msg; ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 660,
+        "wires": [
+            [
+                "8b193dd3e8cf3d97"
+            ]
+        ]
+    },
+    {
+        "id": "952674a9f88446d9",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report generation 2nd TABLE",
+        "info": "",
+        "x": 620,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "c7260b2914b4a3fc",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report file",
+        "func": "var plant=flow.get(\"live_plant\");\nvar month = flow.get(\"month\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/wierig_plants_\" + month + \"_report/\" + plant + \"_\" + month + \"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 660,
+        "wires": [
+            [
+                "4d857e174e6f1b91"
+            ]
+        ]
+    },
+    {
+        "id": "37fe3565bf7b7c19",
+        "type": "delay",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "6",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 780,
+        "wires": [
+            [
+                "dbd1427410bec1a5"
+            ]
+        ]
+    },
+    {
+        "id": "b45f7aefc8c2c33c",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 570,
+        "y": 780,
+        "wires": [
+            [
+                "37f9c42f9169b702"
+            ]
+        ]
+    },
+    {
+        "id": "37f9c42f9169b702",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report file",
+        "func": "var plant=flow.get(\"live_plant\");\nvar month = flow.get(\"month\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/wierig_plants_\" + month + \"_report/\" + plant + \"_\" + month + \"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 780,
+        "wires": [
+            [
+                "8db74edcca5b7c77"
+            ]
+        ]
+    },
+    {
+        "id": "8db74edcca5b7c77",
+        "type": "file",
+        "z": "fb5bfb14f47e3d76",
+        "name": "TEST O/P",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 870,
+        "y": 780,
+        "wires": [
+            [
+                "209267977c5a2efa"
+            ]
+        ]
+    },
+    {
+        "id": "209267977c5a2efa",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 196",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "ff6aa68b35f64978",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 201",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "3289e96c8538eebc",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "header correction",
+        "info": "",
+        "x": 940,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "24b4a026f81c2bfa",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "set header",
+        "func": "var results = []\nvar filename = flow.get(\"filename\");\nconst plant = filename.substring(0, filename.indexOf('_'));\nvar column = msg.columns.split(',');\n var column_header=\"date\"\nvar inv_array = []\nfor (var i = 1; i < column.length; i++) {\n    var check = column[i].match(\"WR\")\n    var inv_re = column[i].substring(0, column[i].indexOf('('));\n    if (column[i].match(\"WR\")) {\n        var num = column[i].match(/\\d+/g).map(Number);\n        var sy = \",Specific Yield_\" + inv_re\n        var WR = \",\" + inv_re\n        column_header = column_header.concat(WR, sy);\n    }\n    if ((inv_re != \"average specific yield \") && (inv_re != \"Specific Yield \") && (inv_re != \"\") && (check == null)) {\n        var sy = \",Specific Yield_\" + inv_re\n        var WR = \",\" + inv_re\n        column_header = column_header.concat(WR, sy);\n    }\n\nvar obj={\n    num, \n    sy,\n    column_header,\n    inv_re,\n    column:column[i]\n    \n}\nresults.push(obj)\n}\n\n\nmsg.payload=results\nflow.set(\"column\", column_header)\nflow.set(\"live_plant\", plant);\nflow.set(\"inv_array\", inv_array);\nmsg.columns=column_header\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 200,
+        "wires": [
+            [
+                "4ec7a5ff35910dea"
+            ]
+        ]
+    },
+    {
+        "id": "60aba45e106f2f6a",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
         "name": "header",
         "sep": ";",
         "hdrin": true,
@@ -171,19 +570,19 @@
         "strings": false,
         "include_empty_strings": false,
         "include_null_values": false,
-        "x": 640,
-        "y": 240,
+        "x": 760,
+        "y": 200,
         "wires": [
             [
-                "2f881ec9b22860d0"
+                "24b4a026f81c2bfa"
             ]
         ]
     },
     {
-        "id": "f248d8710692964b",
+        "id": "4ec7a5ff35910dea",
         "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 174",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 202",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -192,14 +591,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1020,
-        "y": 240,
+        "x": 1130,
+        "y": 200,
         "wires": []
     },
     {
-        "id": "eb7d8087b565397d",
+        "id": "fb110d48d8112634",
         "type": "csv",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "value",
         "sep": ";",
         "hdrin": false,
@@ -211,20 +610,20 @@
         "strings": false,
         "include_empty_strings": false,
         "include_null_values": false,
-        "x": 630,
-        "y": 280,
+        "x": 750,
+        "y": 240,
         "wires": [
             [
-                "dab3addc201791e0"
+                "c0c850939a041f19"
             ]
         ]
     },
     {
-        "id": "5930879e96205fe9",
+        "id": "1844dfe5069d6bc8",
         "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 175",
-        "active": false,
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 203",
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -232,14 +631,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1000,
-        "y": 280,
+        "x": 1120,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "dab3addc201791e0",
+        "id": "c0c850939a041f19",
         "type": "change",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "rules": [
             {
@@ -255,18 +654,18 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 800,
-        "y": 280,
+        "x": 920,
+        "y": 240,
         "wires": [
             [
-                "5930879e96205fe9"
+                "1844dfe5069d6bc8"
             ]
         ]
     },
     {
-        "id": "e67c92328912cedf",
+        "id": "66bdfd63213967df",
         "type": "function",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "check seperator",
         "func": "\nlet text=msg.payload\nlet check = text.includes(\";\")\nif(check==false)\n{\n    var result = text.replaceAll(\",\", \";\");\n}\nelse{result=text}\n\nmsg.payload = result\nreturn (msg);",
         "outputs": 1,
@@ -274,171 +673,39 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 240,
+        "x": 520,
+        "y": 200,
         "wires": [
             [
-                "847870b6a16c1307",
-                "eb7d8087b565397d"
+                "60aba45e106f2f6a",
+                "fb110d48d8112634"
             ]
         ]
     },
     {
-        "id": "83ceaa31ecf844ba",
-        "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "plant info",
-        "func": "\nvar plant =flow.get(\"plant_info\")\n\n\nvar array = [\n    {\n        HEADER: \"PLANT_NAME\",\n        plant_info: plant[0].Plant_Name\n    },\n    {\n        HEADER: \"S.NO\" ,\n        plant_info: plant[0].S_NO    \n    },\n    {\n        HEADER: \"No of Inverters \",\n        plant_info: plant[0].INV_NO\n    }\n];\nmsg.payload=array\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 360,
-        "y": 560,
-        "wires": [
-            [
-                "81cc0b873d5fe0c7"
-            ]
-        ]
-    },
-    {
-        "id": "5b5536221bf9b221",
-        "type": "comment",
-        "z": "9bb7160e32e22f02",
-        "name": "report generation plant info table",
-        "info": "",
-        "x": 610,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "bf56885e317507b5",
-        "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 176",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1060,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "630a27dc010a2718",
-        "type": "delay",
-        "z": "9bb7160e32e22f02",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "3",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 200,
-        "y": 560,
-        "wires": [
-            [
-                "83ceaa31ecf844ba"
-            ]
-        ]
-    },
-    {
-        "id": "c3ec01eaf367b828",
-        "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "report file",
-        "func": "var plant = flow.get(\"live_plant\");\nvar month = flow.get(\"month\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters_report/\" + plant+\"_\"+month+\"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 680,
-        "y": 560,
-        "wires": [
-            [
-                "c7698f3083019bc7"
-            ]
-        ]
-    },
-    {
-        "id": "c7698f3083019bc7",
-        "type": "file",
-        "z": "9bb7160e32e22f02",
-        "name": "TEST O/P",
-        "filename": "filename",
-        "filenameType": "msg",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 890,
-        "y": 560,
-        "wires": [
-            [
-                "bf56885e317507b5"
-            ]
-        ]
-    },
-    {
-        "id": "81cc0b873d5fe0c7",
-        "type": "csv",
-        "z": "9bb7160e32e22f02",
-        "name": "",
-        "sep": ",",
-        "hdrin": true,
-        "hdrout": "none",
-        "multi": "mult",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": true,
-        "include_null_values": true,
-        "x": 530,
-        "y": 560,
-        "wires": [
-            [
-                "c3ec01eaf367b828"
-            ]
-        ]
-    },
-    {
-        "id": "12d8f40f86001840",
+        "id": "ae6422af1260da22",
         "type": "file in",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "REF csv",
-        "filename": "/home/iplon/Downloads/JD THOMAS NAME LIST.csv",
+        "filename": "/home/iplon/Downloads/PLANT CAPACITY REF FILE/wierig plants name list 04.07.2023.csv",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
         "sendError": false,
         "encoding": "none",
         "allProps": false,
-        "x": 300,
-        "y": 400,
+        "x": 380,
+        "y": 380,
         "wires": [
             [
-                "3b3c2fb738eaa894"
+                "7a2905f65339ac90"
             ]
         ]
     },
     {
-        "id": "3b3c2fb738eaa894",
+        "id": "7a2905f65339ac90",
         "type": "csv",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "sep": ",",
         "hdrin": true,
@@ -450,57 +717,57 @@
         "strings": false,
         "include_empty_strings": false,
         "include_null_values": false,
-        "x": 430,
-        "y": 400,
+        "x": 510,
+        "y": 380,
         "wires": [
             [
-                "cde5022942afe7e1"
+                "78c1c09276672893"
             ]
         ]
     },
     {
-        "id": "cde5022942afe7e1",
+        "id": "78c1c09276672893",
         "type": "function",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "comparison with ref csv",
-        "func": "var live_plant =flow.get(\"live_plant\")\nvar column = flow.get(\"column\")\nvar payload = flow.get(\"payload\");\nvar array=[]\nvar payload_array = []\n\nfor (var k = 0; k < payload.length; k++)\n{\n    var final = [payload[k].col1, payload[k].col2, payload[k].col3, payload[k].col4, payload[k].col5, payload[k].col6, payload[k].col7, payload[k].col8, payload[k].col9, payload[k].col10, payload[k].col11, payload[k].col12, payload[k].col13, payload[k].col14, payload[k].col15, payload[k].col16, payload[k].col17, payload[k].col18, payload[k].col19, payload[k].col20, payload[k].col21]\npayload_array.push(final)\n}\nfor (var i = 0; i <msg.payload.length; i++)\n{\n    var Plant_Name=msg.payload[i][\"Plant Name\"]\n    var S_NO=msg.payload[i][\"S.NO\"]\n    var INV_NO=parseInt(msg.payload[i][\"NO OF INVERTER\"])\n  \n    if (live_plant == S_NO) \n      {\n             var capacity = [parseFloat(msg.payload[i].WR1) || \"null\",\n                             parseFloat(msg.payload[i].WR2) || \"null\",\n                             parseFloat(msg.payload[i].WR3) || \"null\",\n                             parseFloat(msg.payload[i].WR4) || \"null\",\n                             parseFloat(msg.payload[i].WR5) || \"null\",\n                             parseFloat(msg.payload[i].WR6) || \"null\",\n                             parseFloat(msg.payload[i].WR7) || \"null\",\n                             parseFloat(msg.payload[i].WR8) || \"null\",\n                             parseFloat(msg.payload[i].WR9) || \"null\",\n                             parseFloat(msg.payload[i].WR10) || \"null\",\n                             parseFloat(msg.payload[i].WR11) || \"null\",\n                             parseFloat(msg.payload[i].WR12) || \"null\",\n                             parseFloat(msg.payload[i].WR13) || \"null\",\n                             parseFloat(msg.payload[i][\"WR1/1\"]) || \"null\",\n                             parseFloat(msg.payload[i][\"WR1/2\"]) || \"null\",\n                             parseFloat(msg.payload[i][\"WR2/1\"]) || \"null\",\n                             parseFloat(msg.payload[i][\"WR2/2\"]) || \"null\"]\n                             \n                             \n                \n   var obj={\n    Plant_Name,\n    S_NO,\n    INV_NO\n}\n      \narray.push(obj)     \n      }\n}\nmsg.columns = column\nmsg.payload=payload_array\n\nflow.set(\"INV_CAPACITY\", capacity);\nflow.set(\"plant_info\",array) \nreturn msg;",
+        "func": "var live_plant = flow.get(\"live_plant\")\nvar column = flow.get(\"column\")\nvar payload = flow.get(\"payload\");\nvar array=[]\nvar payload_array = []\n\nfor (var k = 0; k < payload.length; k++)\n{\n    var final = [payload[k].col1, payload[k].col2, payload[k].col3, payload[k].col4, payload[k].col5, payload[k].col6, payload[k].col7, payload[k].col8, payload[k].col9, payload[k].col10, payload[k].col11, payload[k].col12, payload[k].col13, payload[k].col14, payload[k].col15, payload[k].col16, payload[k].col17, payload[k].col18, payload[k].col19, payload[k].col20, payload[k].col21, payload[k].col22, payload[k].col23, payload[k].col24, payload[k].col25, payload[k].col26, payload[k].col27, payload[k].col28, payload[k].col29, payload[k].col30, payload[k].col31, payload[k].col32, payload[k].col33, payload[k].col34, payload[k].col35, payload[k].col36, payload[k].col37, payload[k].col38, payload[k].col39, payload[k].col40, payload[k].col41, payload[k].col42, payload[k].col43, payload[k].col44, payload[k].col45, payload[k].col46, payload[k].col47, payload[k].col48, payload[k].col49, payload[k].col50, payload[k].col51, payload[k].col52, payload[k].col53, payload[k].col54, payload[k].col55, payload[k].col56, payload[k].col57, payload[k].col58, payload[k].col59, payload[k].col60, payload[k].col61, payload[k].col62, payload[k].col63, payload[k].col64, payload[k].col65, payload[k].col66, payload[k].col67, payload[k].col68, payload[k].col69, payload[k].col70, payload[k].col71, payload[k].col72, payload[k].col73, payload[k].col74, payload[k].col75, payload[k].col76, payload[k].col77, payload[k].col78, payload[k].col79, payload[k].col80, payload[k].col81, payload[k].col82, payload[k].col83, payload[k].col84, payload[k].col85, payload[k].col86, payload[k].col87, payload[k].col88, payload[k].col89, payload[k].col90, payload[k].col91, payload[k].col92, payload[k].col93, payload[k].col94, payload[k].col95, payload[k].col96, payload[k].col97, payload[k].col98, payload[k].col99, payload[k].col100]\npayload_array.push(final)\n}\nfor (var i = 0; i <msg.payload.length; i++)\n{\n    var Plant_Name=msg.payload[i][\"Plant Name\"]\n    var S_NO=msg.payload[i][\"S.NO\"]\n    var INV_NO=parseInt(msg.payload[i][\"NO OF INVERTER\"])\n  \n    if (live_plant == S_NO) \n      {\n             var capacity = [parseFloat(msg.payload[i].WR1) || \"null\",\n                             parseFloat(msg.payload[i].WR2) || \"null\",\n                             parseFloat(msg.payload[i].WR3) || \"null\",\n                             parseFloat(msg.payload[i].WR4) || \"null\",\n                             parseFloat(msg.payload[i].WR5) || \"null\",\n                             parseFloat(msg.payload[i].WR6) || \"null\",\n                             parseFloat(msg.payload[i].WR7) || \"null\",\n                             parseFloat(msg.payload[i].WR8) || \"null\",\n                             parseFloat(msg.payload[i].WR9) || \"null\",\n                             parseFloat(msg.payload[i].WR10) || \"null\",\n                             parseFloat(msg.payload[i].WR11) || \"null\",\n                             parseFloat(msg.payload[i].WR12) || \"null\",\n                             parseFloat(msg.payload[i].WR13) || \"null\",\n                             parseFloat(msg.payload[i].WR14) || \"null\",\n                             parseFloat(msg.payload[i].WR15) || \"null\",\n                             parseFloat(msg.payload[i].WR16) || \"null\",\n                             parseFloat(msg.payload[i].WR17) || \"null\",\n                             parseFloat(msg.payload[i].WR18) || \"null\",\n                             parseFloat(msg.payload[i].WR19) || \"null\",\n                             parseFloat(msg.payload[i].WR20) || \"null\",\n                             parseFloat(msg.payload[i].WR21) || \"null\",\n                             parseFloat(msg.payload[i].WR22) || \"null\",\n                             parseFloat(msg.payload[i].WR23) || \"null\",\n                             parseFloat(msg.payload[i].WR24) || \"null\",\n                             parseFloat(msg.payload[i].WR25) || \"null\",\n                             parseFloat(msg.payload[i].WR26) || \"null\",\n                             parseFloat(msg.payload[i].WR27) || \"null\",\n                 parseFloat(msg.payload[i].INV1) || \"null\",\n                 parseFloat(msg.payload[i].INV2) || \"null\",\n                 parseFloat(msg.payload[i].INV3) || \"null\",\n                 parseFloat(msg.payload[i].INV4) || \"null\",\n                 parseFloat(msg.payload[i].INV5) || \"null\",\n                 parseFloat(msg.payload[i].INV6) || \"null\",\n                 parseFloat(msg.payload[i].INV7) || \"null\",\n                 parseFloat(msg.payload[i].INV8) || \"null\",\n                 parseFloat(msg.payload[i].INV9) || \"null\",\n                 parseFloat(msg.payload[i].INV10) || \"null\",\n                 parseFloat(msg.payload[i].INV11) || \"null\",\n                 parseFloat(msg.payload[i].INV12) || \"null\",\n                 parseFloat(msg.payload[i].INV13) || \"null\",\n                 parseFloat(msg.payload[i].INV14) || \"null\",]\n                             \n                             \n                             \n                             \n                             \n                \n   var obj={\n    Plant_Name,\n    S_NO,\n    INV_NO\n}\n      \narray.push(obj)     \n      }\n}\nmsg.columns = column\nmsg.payload=payload_array\n\nflow.set(\"INV_CAPACITY\", capacity);\nflow.set(\"plant_info\",array) \nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 630,
-        "y": 400,
+        "x": 710,
+        "y": 380,
         "wires": [
             [
-                "3fa50c693cc73c8e"
+                "ead209fa97491e34"
             ]
         ]
     },
     {
-        "id": "d4805b5c314aece9",
+        "id": "49865531f2556642",
         "type": "function",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "calculation logic",
-        "func": "var inv_cap = flow.get(\"INV_CAPACITY\");\nvar array = []\nvar Total_exp_WR1 = 0\nvar Total_exp_WR2 = 0\nvar Total_exp_WR3 = 0\nvar Total_exp_WR4 = 0\nvar Total_exp_WR5 = 0\nvar Total_exp_WR6 = 0\nvar Total_exp_WR7 = 0\nvar Total_exp_WR8 = 0\nvar Total_exp_WR9 = 0\nvar Total_exp_WR10 = 0\nvar Total_exp_WR11 = 0\nvar Total_exp_WR12 = 0\nvar Total_exp_WR13 = 0\nvar Total_exp_WR1_1 = 0\nvar Total_exp_WR1_2 = 0\nvar Total_exp_WR2_1 = 0\nvar Total_exp_WR2_2 = 0\n\nvar Total_ACT_WR1 = 0\nvar Total_ACT_WR2 = 0\nvar Total_ACT_WR3 = 0\nvar Total_ACT_WR4 = 0\nvar Total_ACT_WR5 = 0\nvar Total_ACT_WR6 = 0\nvar Total_ACT_WR7 = 0\nvar Total_ACT_WR8 = 0\nvar Total_ACT_WR9 = 0\nvar Total_ACT_WR10 = 0\nvar Total_ACT_WR11 = 0\nvar Total_ACT_WR12 = 0\nvar Total_ACT_WR13 = 0\nvar Total_ACT_WR1_1 = 0\nvar Total_ACT_WR1_2 = 0\nvar Total_ACT_WR2_1 = 0\nvar Total_ACT_WR2_2 = 0\n\nvar Total_gen_loss_WR1 = 0\nvar Total_gen_loss_WR2 = 0\nvar Total_gen_loss_WR3 = 0\nvar Total_gen_loss_WR4 = 0\nvar Total_gen_loss_WR5 = 0\nvar Total_gen_loss_WR6 = 0\nvar Total_gen_loss_WR7 = 0\nvar Total_gen_loss_WR8 = 0\nvar Total_gen_loss_WR9 = 0\nvar Total_gen_loss_WR10 = 0\nvar Total_gen_loss_WR11 = 0\nvar Total_gen_loss_WR12 = 0\nvar Total_gen_loss_WR13 = 0\nvar Total_gen_loss_WR1_1 = 0\nvar Total_gen_loss_WR1_2 = 0\nvar Total_gen_loss_WR2_1 = 0\nvar Total_gen_loss_WR2_2 = 0\n\nvar obj\nfor (var i = 0; i < msg.payload.length; i++) {\n    if (i < msg.payload.length) {\n        var DATE = msg.payload[i].date\n        var WR_1_kwh = (msg.payload[i].WR1) / 1000\n        var WR_1_Sp_Y = msg.payload[i][\"Specific Yield_1(kWh / kWp)\"]\n        var WR_2_kwh = (msg.payload[i].WR2) / 1000\n        var WR_2_Sp_Y = msg.payload[i][\"Specific Yield_2(kWh / kWp)\"]\n        var WR_3_kwh = (msg.payload[i].WR3) / 1000\n        var WR_3_Sp_Y = msg.payload[i][\"Specific Yield_3(kWh / kWp)\"]\n        var WR_4_kwh = (msg.payload[i].WR4) / 1000\n        var WR_4_Sp_Y = msg.payload[i][\"Specific Yield_4(kWh / kWp)\"]\n        var WR_5_kwh = (msg.payload[i].WR5) / 1000\n        var WR_5_Sp_Y = msg.payload[i][\"Specific Yield_5(kWh / kWp)\"]\n        var WR_6_kwh = (msg.payload[i].WR6) / 1000\n        var WR_6_Sp_Y = msg.payload[i][\"Specific Yield_6(kWh / kWp)\"]\n        var WR_7_kwh = (msg.payload[i].WR7) / 1000\n        var WR_7_Sp_Y = msg.payload[i][\"Specific Yield_7(kWh / kWp)\"]\n        var WR_8_kwh = (msg.payload[i].WR8) / 1000\n        var WR_8_Sp_Y = msg.payload[i][\"Specific Yield_8(kWh / kWp)\"]\n        var WR_9_kwh = (msg.payload[i].WR9) / 1000\n        var WR_9_Sp_Y = msg.payload[i][\"Specific Yield_9(kWh / kWp)\"]\n        var WR_10_kwh = (msg.payload[i].WR10) / 1000\n        var WR_10_Sp_Y = msg.payload[i][\"Specific Yield_10(kWh / kWp)\"]\n        var WR_11_kwh = (msg.payload[i].WR11) / 1000\n        var WR_11_Sp_Y = msg.payload[i][\"Specific Yield_11(kWh / kWp)\"]\n        var WR_12_kwh = (msg.payload[i].WR12) / 1000\n        var WR_12_Sp_Y = msg.payload[i][\"Specific Yield_12(kWh / kWp)\"]\n        var WR_13_kwh = (msg.payload[i].WR13) / 1000\n        var WR_13_Sp_Y = msg.payload[i][\"Specific Yield_13(kWh / kWp)\"]\n        var WR_1_1_kwh = (msg.payload[i][\"WR1/1\"]) / 1000\n        var WR_1_1_Sp_Y = msg.payload[i][\"Specific Yield_1/1(kWh / kWp)\"]\n        var WR_1_2_kwh = (msg.payload[i][\"WR1/2\"]) / 1000\n        var WR_1_2_Sp_Y = msg.payload[i][\"Specific Yield_1/2(kWh / kWp)\"]\n        var WR_2_1_kwh = (msg.payload[i][\"WR2/1\"]) / 1000\n        var WR_2_1_Sp_Y = msg.payload[i][\"Specific Yield_2/1(kWh / kWp)\"]\n        var WR_2_2_kwh = (msg.payload[i][\"WR2/2\"]) / 1000\n        var WR_2_2_Sp_Y = msg.payload[i][\"Specific Yield_2/2(kWh / kWp)\"]\n\n        var Max_sy = Math.max(WR_1_Sp_Y || 0, WR_2_Sp_Y || 0, WR_3_Sp_Y || 0, WR_4_Sp_Y || 0, WR_5_Sp_Y || 0, WR_6_Sp_Y || 0, WR_7_Sp_Y || 0, WR_8_Sp_Y || 0, WR_9_Sp_Y || 0, WR_10_Sp_Y || 0,\n            WR_11_Sp_Y || 0, WR_12_Sp_Y || 0, WR_13_Sp_Y || 0, WR_1_1_Sp_Y || 0, WR_1_2_Sp_Y || 0, WR_2_1_Sp_Y || 0, WR_2_2_Sp_Y || 0)\n\n        var WR1_INV_CAPACITY = inv_cap[0]\n        var WR2_INV_CAPACITY = inv_cap[1]\n        var WR3_INV_CAPACITY = inv_cap[2]\n        var WR4_INV_CAPACITY = inv_cap[3]\n        var WR5_INV_CAPACITY = inv_cap[4]\n        var WR6_INV_CAPACITY = inv_cap[5]\n        var WR7_INV_CAPACITY = inv_cap[6]\n        var WR8_INV_CAPACITY = inv_cap[7]\n        var WR9_INV_CAPACITY = inv_cap[8]\n        var WR10_INV_CAPACITY = inv_cap[9]\n        var WR11_INV_CAPACITY = inv_cap[10]\n        var WR12_INV_CAPACITY = inv_cap[11]\n        var WR13_INV_CAPACITY = inv_cap[12]\n        var WR1_1_INV_CAPACITY = inv_cap[13]\n        var WR1_2_INV_CAPACITY = inv_cap[14]\n        var WR2_1_INV_CAPACITY = inv_cap[15]\n        var WR2_2_INV_CAPACITY = inv_cap[16]\n\n        var Expected_gen_WR1 = Max_sy * WR1_INV_CAPACITY\n        var Expected_gen_WR2 = Max_sy * WR2_INV_CAPACITY\n        var Expected_gen_WR3 = Max_sy * WR3_INV_CAPACITY\n        var Expected_gen_WR4 = Max_sy * WR4_INV_CAPACITY\n        var Expected_gen_WR5 = Max_sy * WR5_INV_CAPACITY\n        var Expected_gen_WR6 = Max_sy * WR6_INV_CAPACITY\n        var Expected_gen_WR7 = Max_sy * WR7_INV_CAPACITY\n        var Expected_gen_WR8 = Max_sy * WR8_INV_CAPACITY\n        var Expected_gen_WR9 = Max_sy * WR9_INV_CAPACITY\n        var Expected_gen_WR10 = Max_sy * WR10_INV_CAPACITY\n        var Expected_gen_WR11 = Max_sy * WR11_INV_CAPACITY\n        var Expected_gen_WR12 = Max_sy * WR12_INV_CAPACITY\n        var Expected_gen_WR13 = Max_sy * WR13_INV_CAPACITY\n        var Expected_gen_WR1_1 = Max_sy * WR1_1_INV_CAPACITY\n        var Expected_gen_WR1_2 = Max_sy * WR1_2_INV_CAPACITY\n        var Expected_gen_WR2_1 = Max_sy * WR2_1_INV_CAPACITY\n        var Expected_gen_WR2_2 = Max_sy * WR2_2_INV_CAPACITY\n\n        Total_exp_WR1 = Total_exp_WR1 + Expected_gen_WR1\n        Total_exp_WR2 = Total_exp_WR2 + Expected_gen_WR2\n        Total_exp_WR3 = Total_exp_WR3 + Expected_gen_WR3\n        Total_exp_WR4 = Total_exp_WR4 + Expected_gen_WR4\n        Total_exp_WR5 = Total_exp_WR5 + Expected_gen_WR5\n        Total_exp_WR6 = Total_exp_WR6 + Expected_gen_WR6\n        Total_exp_WR7 = Total_exp_WR7 + Expected_gen_WR7\n        Total_exp_WR8 = Total_exp_WR8 + Expected_gen_WR8\n        Total_exp_WR9 = Total_exp_WR9 + Expected_gen_WR9\n        Total_exp_WR10 = Total_exp_WR10 + Expected_gen_WR10\n        Total_exp_WR11 = Total_exp_WR11 + Expected_gen_WR11\n        Total_exp_WR12 = Total_exp_WR12 + Expected_gen_WR12\n        Total_exp_WR13 = Total_exp_WR13 + Expected_gen_WR13\n        Total_exp_WR1_1 = Total_exp_WR1_1 + Expected_gen_WR1_1\n        Total_exp_WR1_2 = Total_exp_WR1_2 + Expected_gen_WR1_2\n        Total_exp_WR2_1 = Total_exp_WR2_1 + Expected_gen_WR2_1\n        Total_exp_WR2_2 = Total_exp_WR2_2 + Expected_gen_WR2_2\n\n        Total_ACT_WR1 = Total_ACT_WR1 + WR_1_kwh\n        Total_ACT_WR2 = Total_ACT_WR2 + WR_2_kwh\n        Total_ACT_WR3 = Total_ACT_WR3 + WR_3_kwh\n        Total_ACT_WR4 = Total_ACT_WR4 + WR_4_kwh\n        Total_ACT_WR5 = Total_ACT_WR5 + WR_5_kwh\n        Total_ACT_WR6 = Total_ACT_WR6 + WR_6_kwh\n        Total_ACT_WR7 = Total_ACT_WR7 + WR_7_kwh\n        Total_ACT_WR8 = Total_ACT_WR8 + WR_8_kwh\n        Total_ACT_WR9 = Total_ACT_WR9 + WR_9_kwh\n        Total_ACT_WR10 = Total_ACT_WR10 + WR_10_kwh\n        Total_ACT_WR11 = Total_ACT_WR11 + WR_11_kwh\n        Total_ACT_WR12 = Total_ACT_WR12 + WR_12_kwh\n        Total_ACT_WR13 = Total_ACT_WR13 + WR_13_kwh\n        Total_ACT_WR1_1 = Total_ACT_WR1_1 + WR_1_1_kwh\n        Total_ACT_WR1_2 = Total_ACT_WR1_2 + WR_1_2_kwh\n        Total_ACT_WR2_1 = Total_ACT_WR2_1 + WR_2_1_kwh\n        Total_ACT_WR2_2 = Total_ACT_WR2_2 + WR_2_2_kwh\n\n        if ((Expected_gen_WR1 != WR_1_kwh) || (WR_1_kwh == 0)) { var GEN_LOSS_WR1 = (Expected_gen_WR1 - WR_1_kwh) } else { GEN_LOSS_WR1 = \"0\" }\n        if ((Expected_gen_WR2 != WR_2_kwh) || (WR_2_kwh == 0)) { var GEN_LOSS_WR2 = (Expected_gen_WR2 - WR_2_kwh) } else { GEN_LOSS_WR2 = \"0\" }\n        if ((Expected_gen_WR3 != WR_3_kwh) || (WR_3_kwh == 0)) { var GEN_LOSS_WR3 = (Expected_gen_WR3 - WR_3_kwh) } else { GEN_LOSS_WR3 = \"0\" }\n        if ((Expected_gen_WR4 != WR_4_kwh) || (WR_4_kwh == 0)) { var GEN_LOSS_WR4 = (Expected_gen_WR4 - WR_4_kwh) } else { GEN_LOSS_WR4 = \"0\" }\n        if ((Expected_gen_WR5 != WR_5_kwh) || (WR_5_kwh == 0)) { var GEN_LOSS_WR5 = (Expected_gen_WR5 - WR_5_kwh) } else { GEN_LOSS_WR5 = \"0\" }\n        if ((Expected_gen_WR6 != WR_6_kwh) || (WR_6_kwh == 0)) { var GEN_LOSS_WR6 = (Expected_gen_WR6 - WR_6_kwh) } else { GEN_LOSS_WR6 = \"0\" }\n        if ((Expected_gen_WR7 != WR_7_kwh) || (WR_7_kwh == 0)) { var GEN_LOSS_WR7 = (Expected_gen_WR7 - WR_7_kwh) } else { GEN_LOSS_WR7 = \"0\" }\n        if ((Expected_gen_WR8 != WR_8_kwh) || (WR_8_kwh == 0)) { var GEN_LOSS_WR8 = (Expected_gen_WR8 - WR_8_kwh) } else { GEN_LOSS_WR8 = \"0\" }\n        if ((Expected_gen_WR9 != WR_9_kwh) || (WR_9_kwh == 0)) { var GEN_LOSS_WR9 = (Expected_gen_WR9 - WR_9_kwh) } else { GEN_LOSS_WR9 = \"0\" }\n        if ((Expected_gen_WR10 != WR_10_kwh) || (WR_10_kwh == 0)) { var GEN_LOSS_WR10 = (Expected_gen_WR10 - WR_10_kwh) } else { GEN_LOSS_WR10 = \"0\" }\n        if ((Expected_gen_WR11 != WR_11_kwh) || (WR_11_kwh == 0)) { var GEN_LOSS_WR11 = (Expected_gen_WR11 - WR_11_kwh) } else { GEN_LOSS_WR11 = \"0\" }\n        if ((Expected_gen_WR12 != WR_12_kwh) || (WR_12_kwh == 0)) { var GEN_LOSS_WR12 = (Expected_gen_WR12 - WR_12_kwh) } else { GEN_LOSS_WR12 = \"0\" }\n        if ((Expected_gen_WR13 != WR_13_kwh) || (WR_13_kwh == 0)) { var GEN_LOSS_WR13 = (Expected_gen_WR13 - WR_13_kwh) } else { GEN_LOSS_WR13 = \"0\" }\n        if ((Expected_gen_WR1_1 != WR_1_1_kwh) || (WR_1_1_kwh == 0)) { var GEN_LOSS_WR1_1 = (Expected_gen_WR1_1 - WR_1_1_kwh) } else { GEN_LOSS_WR1_1 = \"0\" }\n        if ((Expected_gen_WR1_2 != WR_1_2_kwh) || (WR_1_2_kwh == 0)) { var GEN_LOSS_WR1_2 = (Expected_gen_WR1_2 - WR_1_2_kwh) } else { GEN_LOSS_WR1_2 = \"0\" }\n        if ((Expected_gen_WR2_1 != WR_2_1_kwh) || (WR_2_1_kwh == 0)) { var GEN_LOSS_WR2_1 = (Expected_gen_WR2_1 - WR_2_1_kwh) } else { GEN_LOSS_WR2_1 = \"0\" }\n        if ((Expected_gen_WR2_2 != WR_2_2_kwh) || (WR_2_2_kwh == 0)) { var GEN_LOSS_WR2_2 = (Expected_gen_WR2_2 - WR_2_2_kwh) } else { GEN_LOSS_WR2_2 = \"0\" }\n\n        Total_gen_loss_WR1 = Total_gen_loss_WR1 + (Expected_gen_WR1 - WR_1_kwh)\n        Total_gen_loss_WR2 = Total_gen_loss_WR2 + (Expected_gen_WR2 - WR_2_kwh)\n        Total_gen_loss_WR3 = Total_gen_loss_WR3 + (Expected_gen_WR3 - WR_3_kwh)\n        Total_gen_loss_WR4 = Total_gen_loss_WR4 + (Expected_gen_WR4 - WR_4_kwh)\n        Total_gen_loss_WR5 = Total_gen_loss_WR5 + (Expected_gen_WR5 - WR_5_kwh)\n        Total_gen_loss_WR6 = Total_gen_loss_WR6 + (Expected_gen_WR6 - WR_6_kwh)\n        Total_gen_loss_WR7 = Total_gen_loss_WR7 + (Expected_gen_WR7 - WR_7_kwh)\n        Total_gen_loss_WR8 = Total_gen_loss_WR8 + (Expected_gen_WR8 - WR_8_kwh)\n        Total_gen_loss_WR9 = Total_gen_loss_WR9 + (Expected_gen_WR9 - WR_9_kwh)\n        Total_gen_loss_WR10 = Total_gen_loss_WR10 + (Expected_gen_WR10 - WR_10_kwh)\n        Total_gen_loss_WR11 = Total_gen_loss_WR11 + (Expected_gen_WR11 - WR_11_kwh)\n        Total_gen_loss_WR12 = Total_gen_loss_WR12 + (Expected_gen_WR12 - WR_12_kwh)\n        Total_gen_loss_WR13 = Total_gen_loss_WR13 + (Expected_gen_WR13 - WR_13_kwh)\n        Total_gen_loss_WR1_1 = Total_gen_loss_WR1_1 + (Expected_gen_WR1_1 - WR_1_1_kwh)\n        Total_gen_loss_WR1_2 = Total_gen_loss_WR1_2 + (Expected_gen_WR1_2 - WR_1_2_kwh)\n        Total_gen_loss_WR2_1 = Total_gen_loss_WR2_1 + (Expected_gen_WR2_1 - WR_2_1_kwh)\n        Total_gen_loss_WR2_2 = Total_gen_loss_WR2_2 + (Expected_gen_WR2_2 - WR_2_2_kwh)\n\n\n        var total_act_gen = [{Total_ACT_WR1, Total_ACT_WR2, Total_ACT_WR3, Total_ACT_WR4, Total_ACT_WR5, Total_ACT_WR6, Total_ACT_WR7, Total_ACT_WR8, Total_ACT_WR9, Total_ACT_WR10,Total_ACT_WR11, Total_ACT_WR12, Total_ACT_WR13, Total_ACT_WR1_1, Total_ACT_WR1_2, Total_ACT_WR2_1, Total_ACT_WR2_2}]\n        var total_exp_gen = [Total_exp_WR1, Total_exp_WR2, Total_exp_WR3, Total_exp_WR4, Total_exp_WR5, Total_exp_WR6, Total_exp_WR7, Total_exp_WR8, Total_exp_WR9, Total_exp_WR10, Total_exp_WR11, Total_exp_WR12, Total_exp_WR13, Total_exp_WR1_1, Total_exp_WR1_2, Total_exp_WR2_1, Total_exp_WR2_2]\n        var totalgen_loss = [Total_gen_loss_WR1, Total_gen_loss_WR2, Total_gen_loss_WR3, Total_gen_loss_WR4, Total_gen_loss_WR5, Total_gen_loss_WR6, Total_gen_loss_WR7, Total_gen_loss_WR8, Total_gen_loss_WR9, Total_gen_loss_WR10,Total_gen_loss_WR11, Total_gen_loss_WR12, Total_gen_loss_WR13, Total_gen_loss_WR1_1, Total_gen_loss_WR1_2, Total_gen_loss_WR2_1, Total_gen_loss_WR2_2]\n\n\n        obj = {\n            DATE,\n            WR_1_kwh,\n            WR_1_Sp_Y,\n            WR_2_kwh,\n            WR_2_Sp_Y,\n            WR_3_kwh,\n            WR_3_Sp_Y,\n            WR_4_kwh,\n            WR_4_Sp_Y,\n            WR_5_kwh,\n            WR_5_Sp_Y,\n            WR_6_kwh,\n            WR_6_Sp_Y,\n            WR_7_kwh,\n            WR_7_Sp_Y,\n            WR_8_kwh,\n            WR_8_Sp_Y,\n            WR_9_kwh,\n            WR_9_Sp_Y,\n            WR_10_kwh,\n            WR_10_Sp_Y,\n            WR_11_kwh,\n            WR_11_Sp_Y,\n            WR_12_kwh,\n            WR_12_Sp_Y,\n            WR_13_kwh,\n            WR_13_Sp_Y,\n            \"WR_1/1_kwh\": WR_1_1_kwh,\n            \"WR_1/1_Sp_Y\": WR_1_1_Sp_Y,\n            \"WR_1/2_kwh\": WR_1_2_kwh,\n            \"WR_1/2_Sp_Y\": WR_1_2_Sp_Y,\n            \"WR_2/1_kwh\": WR_2_1_kwh,\n            \"WR_2/1_Sp_Y\": WR_2_1_Sp_Y,\n            \"WR_2/2_kwh\": WR_2_2_kwh,\n            \"WR_2/2_Sp_Y\": WR_2_2_Sp_Y,\n            Max_sy,\n            Expected_gen_WR1,\n            Expected_gen_WR2,\n            Expected_gen_WR3,\n            Expected_gen_WR4,\n            Expected_gen_WR5,\n            Expected_gen_WR6,\n            Expected_gen_WR7,\n            Expected_gen_WR8,\n            Expected_gen_WR9,\n            Expected_gen_WR10,\n            Expected_gen_WR11,\n            Expected_gen_WR12,\n            Expected_gen_WR13,\n            \"Expected_gen_WR1/1\": Expected_gen_WR1_1,\n            \"Expected_gen_WR1/2\": Expected_gen_WR1_2,\n            \"Expected_gen_WR2/1\": Expected_gen_WR2_1,\n            \"Expected_gen_WR2/2\": Expected_gen_WR2_2,\n            GEN_LOSS_WR1,\n            GEN_LOSS_WR2,\n            GEN_LOSS_WR3,\n            GEN_LOSS_WR4,\n            GEN_LOSS_WR5,\n            GEN_LOSS_WR6,\n            GEN_LOSS_WR7,\n            GEN_LOSS_WR8,\n            GEN_LOSS_WR9,\n            GEN_LOSS_WR10,\n            GEN_LOSS_WR11,\n            GEN_LOSS_WR12,\n            GEN_LOSS_WR13,\n            \"GEN_LOSS_WR1/1\": GEN_LOSS_WR1_1,\n            \"GEN_LOSS_WR1/2\": GEN_LOSS_WR1_2,\n            \"GEN_LOSS_WR2/1\": GEN_LOSS_WR2_1,\n            \"GEN_LOSS_WR2/2\": GEN_LOSS_WR2_2\n            \n\n        }\n    }\n    /* if (i == msg.payload.length) {\n         obj = {\n             DATE: \"null\" + '\\n' +\"TOTAL\",\"WR 1 (kWh)\": \"null\" + '\\n' + Total_ACT_WR1, \"Specific Yield (kWh / kWp)\": \"null\" + '\\n' + \"null\", \"WR 2 (kWh)\": \"null\" + '\\n' + Total_ACT_WR2, \"Specific Yield2 (kWh / kWp)\": \"null\" + '\\n' + \"null\", \"Total Yield Wh\": \"null\" + '\\n' + \"null\", \"average specific yield (kWh / kWp)\": \"null\" + '\\n' + \"null\", \"Max_sy\": \"null\", \"Expected_gen_WR1\": \"null\" + '\\n' + Total_exp_WR1.toFixed(2), \"Expected_gen_WR2\": \"null\" + '\\n' + Total_exp_WR2.toFixed(2), \"GEN_LOSS_WR1\": \"null\" + '\\n' + Total_gen_loss_WR1.toFixed(2), \"GEN_LOSS_WR2\": \"null\" + '\\n' + Total_gen_loss_WR2.toFixed(2)\n         }\n     }*/\n\n    array.push(obj)\n\n}\nflow.set(\"out\", array);\nflow.set(\"totalgen_loss\", totalgen_loss)\nflow.set(\"total_act_gen\", total_act_gen)\nflow.set(\"total_exp_gen\", total_exp_gen)\n\nmsg.payload = array\nreturn msg;",
+        "func": "var inv_cap = flow.get(\"INV_CAPACITY\");\nvar array = []\nvar Total_exp_WR1 = 0\nvar Total_exp_WR2 = 0\nvar Total_exp_WR3 = 0\nvar Total_exp_WR4 = 0\nvar Total_exp_WR5 = 0\nvar Total_exp_WR6 = 0\nvar Total_exp_WR7 = 0\nvar Total_exp_WR8 = 0\nvar Total_exp_WR9 = 0\nvar Total_exp_WR10 = 0\nvar Total_exp_WR11 = 0\nvar Total_exp_WR12 = 0\nvar Total_exp_WR13 = 0\nvar Total_exp_WR14 = 0\nvar Total_exp_WR15 = 0\nvar Total_exp_WR16 = 0\nvar Total_exp_WR17 = 0\nvar Total_exp_WR18 = 0\nvar Total_exp_WR19 = 0\nvar Total_exp_WR20 = 0\nvar Total_exp_WR21 = 0\nvar Total_exp_WR22 = 0\nvar Total_exp_WR23 = 0\nvar Total_exp_WR24 = 0\nvar Total_exp_WR25 = 0\nvar Total_exp_WR26 = 0\nvar Total_exp_WR27 = 0\nvar Total_exp_INV1 = 0\nvar Total_exp_INV2 = 0\nvar Total_exp_INV3 = 0\nvar Total_exp_INV4 = 0\nvar Total_exp_INV5 = 0\nvar Total_exp_INV6 = 0\nvar Total_exp_INV7 = 0\nvar Total_exp_INV8 = 0\nvar Total_exp_INV9 = 0\nvar Total_exp_INV10 = 0\nvar Total_exp_INV11 = 0\nvar Total_exp_INV12 = 0\nvar Total_exp_INV13 = 0\nvar Total_exp_INV14 = 0\n\n\n\nvar Total_ACT_WR1 = 0\nvar Total_ACT_WR2 = 0\nvar Total_ACT_WR3 = 0\nvar Total_ACT_WR4 = 0\nvar Total_ACT_WR5 = 0\nvar Total_ACT_WR6 = 0\nvar Total_ACT_WR7 = 0\nvar Total_ACT_WR8 = 0\nvar Total_ACT_WR9 = 0\nvar Total_ACT_WR10 = 0\nvar Total_ACT_WR11 = 0\nvar Total_ACT_WR12 = 0\nvar Total_ACT_WR13 = 0\nvar Total_ACT_WR14 = 0\nvar Total_ACT_WR15 = 0\nvar Total_ACT_WR16 = 0\nvar Total_ACT_WR17 = 0\nvar Total_ACT_WR18 = 0\nvar Total_ACT_WR19 = 0\nvar Total_ACT_WR20 = 0\nvar Total_ACT_WR21 = 0\nvar Total_ACT_WR22 = 0\nvar Total_ACT_WR23 = 0\nvar Total_ACT_WR24 = 0\nvar Total_ACT_WR25 = 0\nvar Total_ACT_WR26 = 0\nvar Total_ACT_WR27 = 0\nvar Total_ACT_INV1 = 0\nvar Total_ACT_INV2 = 0\nvar Total_ACT_INV3 = 0\nvar Total_ACT_INV4 = 0\nvar Total_ACT_INV5 = 0\nvar Total_ACT_INV6 = 0\nvar Total_ACT_INV7 = 0\nvar Total_ACT_INV8 = 0\nvar Total_ACT_INV9 = 0\nvar Total_ACT_INV10 = 0\nvar Total_ACT_INV11 = 0\nvar Total_ACT_INV12 = 0\nvar Total_ACT_INV13 = 0\nvar Total_ACT_INV14 = 0\n\nvar Total_gen_loss_WR1 = 0\nvar Total_gen_loss_WR2 = 0\nvar Total_gen_loss_WR3 = 0\nvar Total_gen_loss_WR4 = 0\nvar Total_gen_loss_WR5 = 0\nvar Total_gen_loss_WR6 = 0\nvar Total_gen_loss_WR7 = 0\nvar Total_gen_loss_WR8 = 0\nvar Total_gen_loss_WR9 = 0\nvar Total_gen_loss_WR10 = 0\nvar Total_gen_loss_WR11 = 0\nvar Total_gen_loss_WR12 = 0\nvar Total_gen_loss_WR13 = 0\nvar Total_gen_loss_WR14 = 0\nvar Total_gen_loss_WR15 = 0\nvar Total_gen_loss_WR16 = 0\nvar Total_gen_loss_WR17 = 0\nvar Total_gen_loss_WR18 = 0\nvar Total_gen_loss_WR19 = 0\nvar Total_gen_loss_WR20 = 0\nvar Total_gen_loss_WR21 = 0\nvar Total_gen_loss_WR22 = 0\nvar Total_gen_loss_WR23 = 0\nvar Total_gen_loss_WR24 = 0\nvar Total_gen_loss_WR25 = 0\nvar Total_gen_loss_WR26 = 0\nvar Total_gen_loss_WR27 = 0\nvar Total_gen_loss_INV1 = 0\nvar Total_gen_loss_INV2 = 0\nvar Total_gen_loss_INV3 = 0\nvar Total_gen_loss_INV4 = 0\nvar Total_gen_loss_INV5 = 0\nvar Total_gen_loss_INV6 = 0\nvar Total_gen_loss_INV7 = 0\nvar Total_gen_loss_INV8 = 0\nvar Total_gen_loss_INV9 = 0\nvar Total_gen_loss_INV10 = 0\nvar Total_gen_loss_INV11 = 0\nvar Total_gen_loss_INV12 = 0\nvar Total_gen_loss_INV13 = 0\nvar Total_gen_loss_INV14 = 0\n\n\nvar obj\nfor (var i = 0; i < msg.payload.length; i++) {\n    if (i < msg.payload.length) {\n        var DATE = msg.payload[i].date\n        var WR_1_kwh = (msg.payload[i][\"WR 1\"]/1000)\n        var WR_1_Sp_Y = msg.payload[i][\"Specific Yield_WR 1\"]\n        var WR_2_kwh = (msg.payload[i][\"WR 2\"]/1000)\n        var WR_2_Sp_Y = msg.payload[i][\"Specific Yield_WR 2\"]\n        var WR_3_kwh = (msg.payload[i][\"WR 3\"]/1000)\n        var WR_3_Sp_Y = msg.payload[i][\"Specific Yield_WR 3\"]\n        var WR_4_kwh = (msg.payload[i][\"WR 4\"]/1000)\n        var WR_4_Sp_Y = msg.payload[i][\"Specific Yield_WR 4\"]\n        var WR_5_kwh = (msg.payload[i][\"WR 5\"]/1000)\n        var WR_5_Sp_Y = msg.payload[i][\"Specific Yield_WR 5\"]\n        var WR_6_kwh = (msg.payload[i][\"WR 6\"]/1000)\n        var WR_6_Sp_Y = msg.payload[i][\"Specific Yield_WR 6\"]\n        var WR_7_kwh = (msg.payload[i][\"WR 7\"]/1000)\n        var WR_7_Sp_Y = msg.payload[i][\"Specific Yield_WR 7\"]\n        var WR_8_kwh = (msg.payload[i][\"WR 8\"]/1000)\n        var WR_8_Sp_Y = msg.payload[i][\"Specific Yield_WR 8\"]\n        var WR_9_kwh = (msg.payload[i][\"WR 9\"]/1000)\n        var WR_9_Sp_Y = msg.payload[i][\"Specific Yield_WR 9\"]\n        var WR_10_kwh = (msg.payload[i][\"WR 10\"]/1000)\n        var WR_10_Sp_Y = msg.payload[i][\"Specific Yield_WR 10\"]\n        var WR_11_kwh = (msg.payload[i][\"WR 11\"]/1000)\n        var WR_11_Sp_Y = msg.payload[i][\"Specific Yield_WR 11\"]\n        var WR_12_kwh = (msg.payload[i][\"WR 12\"]/1000)\n        var WR_12_Sp_Y = msg.payload[i][\"Specific Yield_WR 12\"]\n\n        var WR_13_kwh = (msg.payload[i][\"WR 13\"]/1000)\n              var WR_13_Sp_Y = msg.payload[i][\"Specific Yield_WR 13\"]\n\n        var WR_14_kwh = (msg.payload[i][\"WR 14\"]/1000)\n              var WR_14_Sp_Y = msg.payload[i][\"Specific Yield_WR 14\"]\n\n        var WR_15_kwh = (msg.payload[i][\"WR 15\"]/1000)\n              var WR_15_Sp_Y = msg.payload[i][\"Specific Yield_WR 15\"]\n\n        var WR_16_kwh = (msg.payload[i][\"WR 16\"]/1000)\n              var WR_16_Sp_Y = msg.payload[i][\"Specific Yield_WR 16\"]\n\n        var WR_17_kwh = (msg.payload[i][\"WR 17\"]/1000)\n              var WR_17_Sp_Y = msg.payload[i][\"Specific Yield_WR 17\"]\n\n        var WR_18_kwh = (msg.payload[i][\"WR 18\"]/1000)\n              var WR_18_Sp_Y = msg.payload[i][\"Specific Yield_WR 18\"]\n\n        var WR_19_kwh = (msg.payload[i][\"WR 19\"]/1000)\n              var WR_19_Sp_Y = msg.payload[i][\"Specific Yield_WR 19\"]\n\n        var WR_20_kwh = (msg.payload[i][\"WR 20\"]/1000)\n              var WR_20_Sp_Y = msg.payload[i][\"Specific Yield_WR 20\"]\n\n        var WR_21_kwh = (msg.payload[i][\"WR 21\"]/1000)\n              var WR_21_Sp_Y = msg.payload[i][\"Specific Yield_WR 21\"]\n\n        var WR_22_kwh = (msg.payload[i][\"WR 22\"]/1000)\n              var WR_22_Sp_Y = msg.payload[i][\"Specific Yield_WR 22\"]\n\n        var WR_23_kwh = (msg.payload[i][\"WR 23\"]/1000)\n              var WR_23_Sp_Y = msg.payload[i][\"Specific Yield_WR 23\"]\n\n        var WR_24_kwh = (msg.payload[i][\"WR 24\"]/1000)\n              var WR_24_Sp_Y = msg.payload[i][\"Specific Yield_WR 24\"]\n\n        var WR_25_kwh = (msg.payload[i][\"WR 25\"]/1000)\n              var WR_25_Sp_Y = msg.payload[i][\"Specific Yield_WR 25\"]\n\n        var WR_26_kwh = (msg.payload[i][\"WR 26\"]/1000)\n              var WR_26_Sp_Y = msg.payload[i][\"Specific Yield_WR 26\"]\n\n        var WR_27_kwh = (msg.payload[i][\"WR 27\"]/1000)\n              var WR_27_Sp_Y = msg.payload[i][\"Specific Yield_WR 27\"]\n\n        var INV_1_kwh = (msg.payload[i][\"INV 1\"] / 1000) || (msg.payload[i][\"INV1-W\"]/1000)\n        var INV_1_Sp_Y = msg.payload[i][\"Specific Yield_INV 1\"]||( msg.payload[i][\"Specific Yield_INV1-W\"])\n        var INV_2_kwh = (msg.payload[i][\"INV 2\"]/1000)||(msg.payload[i][\"INV2-W\"]/1000)\n        var INV_2_Sp_Y = msg.payload[i][\"Specific Yield_INV 2\"]||( msg.payload[i][\"Specific Yield_INV2-W\"])\n        var INV_3_kwh = (msg.payload[i][\"INV 3\"]/1000)||(msg.payload[i][\"INV3-W\"]/1000)\n        var INV_3_Sp_Y = msg.payload[i][\"Specific Yield_INV 3\"]||( msg.payload[i][\"Specific Yield_INV3-W\"])\n        var INV_4_kwh = (msg.payload[i][\"INV 4\"]/1000)||(msg.payload[i][\"INV4-W\"]/1000)\n        var INV_4_Sp_Y = msg.payload[i][\"Specific Yield_INV 4\"]||( msg.payload[i][\"Specific Yield_INV4-W\"])\n        var INV_5_kwh = (msg.payload[i][\"INV 5\"]/1000)||(msg.payload[i][\"INV5-W\"]/1000)\n        var INV_5_Sp_Y = msg.payload[i][\"Specific Yield_INV 5\"]||( msg.payload[i][\"Specific Yield_INV5-W\"])\n        var INV_6_kwh = (msg.payload[i][\"INV 6\"]/1000)||(msg.payload[i][\"INV6-W\"]/1000)\n        var INV_6_Sp_Y = msg.payload[i][\"Specific Yield_INV 6\"]||( msg.payload[i][\"Specific Yield_INV6-W\"])\n        var INV_7_kwh = (msg.payload[i][\"INV 7\"]/1000)||(msg.payload[i][\"INV7-W\"]/1000)\n        var INV_7_Sp_Y = msg.payload[i][\"Specific Yield_INV 7\"]||( msg.payload[i][\"Specific Yield_INV7-W\"])\n        var INV_8_kwh = (msg.payload[i][\"INV 8\"] / 1000) || (msg.payload[i][\"INV8-O\"]/1000)\n        var INV_8_Sp_Y = msg.payload[i][\"Specific Yield_INV 8\"]||( msg.payload[i][\"Specific Yield_INV8-O\"])\n        var INV_9_kwh = (msg.payload[i][\"INV 9\"]/1000)||(msg.payload[i][\"INV9-O\"]/1000)\n        var INV_9_Sp_Y = msg.payload[i][\"Specific Yield_INV 9\"]||( msg.payload[i][\"Specific Yield_INV9-O\"])\n        var INV_10_kwh = (msg.payload[i][\"INV 10\"]/1000)||(msg.payload[i][\"INV10-O\"]/1000)\n        var INV_10_Sp_Y = msg.payload[i][\"Specific Yield_INV 10\"]||( msg.payload[i][\"Specific Yield_INV10-O\"])\n        var INV_11_kwh = (msg.payload[i][\"INV 11\"]/1000)||(msg.payload[i][\"INV11-O\"]/1000)\n        var INV_11_Sp_Y = msg.payload[i][\"Specific Yield_INV 11\"]||( msg.payload[i][\"Specific Yield_INV11-O\"])\n        var INV_12_kwh = (msg.payload[i][\"INV 12\"]/1000)||(msg.payload[i][\"INV12-O\"]/1000)\n        var INV_12_Sp_Y = msg.payload[i][\"Specific Yield_INV 12\"] || (msg.payload[i][\"Specific Yield_INV12-O\"])\n        var INV_13_kwh = (msg.payload[i][\"INV 13\"]/1000)||(msg.payload[i][\"INV13-W\"]/1000)\n        var INV_13_Sp_Y = msg.payload[i][\"Specific Yield_INV 13\"]||( msg.payload[i][\"Specific Yield_INV13-W\"])\n        var INV_14_kwh = (msg.payload[i][\"INV 14\"]/1000)||(msg.payload[i][\"INV14-W\"]/1000)\n        var INV_14_Sp_Y = msg.payload[i][\"Specific Yield_INV 14\"] || (msg.payload[i][\"Specific Yield_INV14-W\"])\n\n       \n\n        var Max_sy = Math.max(WR_1_Sp_Y || 0, WR_2_Sp_Y || 0, WR_3_Sp_Y || 0, WR_4_Sp_Y || 0, WR_5_Sp_Y || 0, WR_6_Sp_Y || 0, WR_7_Sp_Y || 0, WR_8_Sp_Y || 0, WR_9_Sp_Y || 0, WR_10_Sp_Y || 0,\n            WR_11_Sp_Y || 0, WR_12_Sp_Y || 0, WR_13_Sp_Y || 0, WR_14_Sp_Y || 0, WR_15_Sp_Y || 0, WR_16_Sp_Y || 0, WR_17_Sp_Y || 0, WR_18_Sp_Y || 0, WR_19_Sp_Y || 0, WR_20_Sp_Y || 0,\n            WR_21_Sp_Y || 0, WR_22_Sp_Y || 0, WR_23_Sp_Y || 0, WR_24_Sp_Y || 0, WR_25_Sp_Y || 0, WR_26_Sp_Y || 0, WR_27_Sp_Y || 0, INV_1_Sp_Y || 0, INV_2_Sp_Y || 0, INV_3_Sp_Y || 0, INV_4_Sp_Y || 0, INV_5_Sp_Y || 0, INV_6_Sp_Y || 0, INV_7_Sp_Y || 0, INV_8_Sp_Y || 0, INV_9_Sp_Y || 0, INV_10_Sp_Y || 0,\n            INV_11_Sp_Y || 0, INV_12_Sp_Y || 0, INV_13_Sp_Y || 0, INV_14_Sp_Y || 0)\n\n        var WR1_INV_CAPACITY = inv_cap[0]\n        var WR2_INV_CAPACITY = inv_cap[1]\n        var WR3_INV_CAPACITY = inv_cap[2]\n        var WR4_INV_CAPACITY = inv_cap[3]\n        var WR5_INV_CAPACITY = inv_cap[4]\n        var WR6_INV_CAPACITY = inv_cap[5]\n        var WR7_INV_CAPACITY = inv_cap[6]\n        var WR8_INV_CAPACITY = inv_cap[7]\n        var WR9_INV_CAPACITY = inv_cap[8]\n        var WR10_INV_CAPACITY = inv_cap[9]\n        var WR11_INV_CAPACITY = inv_cap[10]\n        var WR12_INV_CAPACITY = inv_cap[11]\n        var WR13_INV_CAPACITY = inv_cap[12]\n        var WR14_INV_CAPACITY = inv_cap[13]\n        var WR15_INV_CAPACITY = inv_cap[14]\n        var WR16_INV_CAPACITY = inv_cap[15]\n        var WR17_INV_CAPACITY = inv_cap[16]\n        var WR18_INV_CAPACITY = inv_cap[17]\n        var WR19_INV_CAPACITY = inv_cap[18]\n        var WR20_INV_CAPACITY = inv_cap[19]\n        var WR21_INV_CAPACITY = inv_cap[20]\n        var WR22_INV_CAPACITY = inv_cap[21]\n        var WR23_INV_CAPACITY = inv_cap[22]\n        var WR24_INV_CAPACITY = inv_cap[23]\n        var WR25_INV_CAPACITY = inv_cap[24]\n        var WR26_INV_CAPACITY = inv_cap[25]\n        var WR27_INV_CAPACITY = inv_cap[26]\n        var INV1_INV_CAPACITY = inv_cap[27]\n        var INV2_INV_CAPACITY = inv_cap[28]\n        var INV3_INV_CAPACITY = inv_cap[29]\n        var INV4_INV_CAPACITY = inv_cap[30]\n        var INV5_INV_CAPACITY = inv_cap[31]\n        var INV6_INV_CAPACITY = inv_cap[32]\n        var INV7_INV_CAPACITY = inv_cap[33]\n        var INV8_INV_CAPACITY = inv_cap[34]\n        var INV9_INV_CAPACITY = inv_cap[35]\n        var INV10_INV_CAPACITY =inv_cap[36]\n        var INV11_INV_CAPACITY =inv_cap[37]\n        var INV12_INV_CAPACITY =inv_cap[38]\n        var INV13_INV_CAPACITY =inv_cap[39]\n        var INV14_INV_CAPACITY =inv_cap[40]\n  \n  \n\n        var Expected_gen_WR1 = Max_sy * WR1_INV_CAPACITY\n        var Expected_gen_WR2 = Max_sy * WR2_INV_CAPACITY\n        var Expected_gen_WR3 = Max_sy * WR3_INV_CAPACITY\n        var Expected_gen_WR4 = Max_sy * WR4_INV_CAPACITY\n        var Expected_gen_WR5 = Max_sy * WR5_INV_CAPACITY\n        var Expected_gen_WR6 = Max_sy * WR6_INV_CAPACITY\n        var Expected_gen_WR7 = Max_sy * WR7_INV_CAPACITY\n        var Expected_gen_WR8 = Max_sy * WR8_INV_CAPACITY\n        var Expected_gen_WR9 = Max_sy * WR9_INV_CAPACITY\n        var Expected_gen_WR10 = Max_sy * WR10_INV_CAPACITY\n        var Expected_gen_WR11 = Max_sy * WR11_INV_CAPACITY\n        var Expected_gen_WR12 = Max_sy * WR12_INV_CAPACITY\n        var Expected_gen_WR13 = Max_sy * WR13_INV_CAPACITY\n        var Expected_gen_WR14 = Max_sy * WR14_INV_CAPACITY\n        var Expected_gen_WR15 = Max_sy * WR15_INV_CAPACITY\n        var Expected_gen_WR16 = Max_sy * WR16_INV_CAPACITY\n        var Expected_gen_WR17 = Max_sy * WR17_INV_CAPACITY\n        var Expected_gen_WR18 = Max_sy * WR18_INV_CAPACITY\n        var Expected_gen_WR19 = Max_sy * WR19_INV_CAPACITY\n        var Expected_gen_WR20 = Max_sy * WR20_INV_CAPACITY\n        var Expected_gen_WR21 = Max_sy * WR21_INV_CAPACITY\n        var Expected_gen_WR22 = Max_sy * WR22_INV_CAPACITY\n        var Expected_gen_WR23 = Max_sy * WR23_INV_CAPACITY\n        var Expected_gen_WR24 = Max_sy * WR24_INV_CAPACITY\n        var Expected_gen_WR25 = Max_sy * WR25_INV_CAPACITY\n        var Expected_gen_WR26 = Max_sy * WR26_INV_CAPACITY\n        var Expected_gen_WR27 = Max_sy * WR27_INV_CAPACITY\n        var Expected_gen_INV1 = Max_sy * INV1_INV_CAPACITY\n        var Expected_gen_INV2 = Max_sy * INV2_INV_CAPACITY\n        var Expected_gen_INV3 = Max_sy * INV3_INV_CAPACITY\n        var Expected_gen_INV4 = Max_sy * INV4_INV_CAPACITY\n        var Expected_gen_INV5 = Max_sy * INV5_INV_CAPACITY\n        var Expected_gen_INV6 = Max_sy * INV6_INV_CAPACITY\n        var Expected_gen_INV7 = Max_sy * INV7_INV_CAPACITY\n        var Expected_gen_INV8 = Max_sy * INV8_INV_CAPACITY\n        var Expected_gen_INV9 = Max_sy * INV9_INV_CAPACITY\n        var Expected_gen_INV10 = Max_sy * INV10_INV_CAPACITY\n        var Expected_gen_INV11 = Max_sy * INV11_INV_CAPACITY\n        var Expected_gen_INV12 = Max_sy * INV12_INV_CAPACITY\n        var Expected_gen_INV13 = Max_sy * INV13_INV_CAPACITY\n        var Expected_gen_INV14 = Max_sy * INV14_INV_CAPACITY\n\n\n        Total_exp_WR1 = Total_exp_WR1 + Expected_gen_WR1\n        Total_exp_WR2 = Total_exp_WR2 + Expected_gen_WR2\n        Total_exp_WR3 = Total_exp_WR3 + Expected_gen_WR3\n        Total_exp_WR4 = Total_exp_WR4 + Expected_gen_WR4\n        Total_exp_WR5 = Total_exp_WR5 + Expected_gen_WR5\n        Total_exp_WR6 = Total_exp_WR6 + Expected_gen_WR6\n        Total_exp_WR7 = Total_exp_WR7 + Expected_gen_WR7\n        Total_exp_WR8 = Total_exp_WR8 + Expected_gen_WR8\n        Total_exp_WR9 = Total_exp_WR9 + Expected_gen_WR9\n        Total_exp_WR10 = Total_exp_WR10 + Expected_gen_WR10\n        Total_exp_WR11 = Total_exp_WR11 + Expected_gen_WR11\n        Total_exp_WR12 = Total_exp_WR12 + Expected_gen_WR12\n        Total_exp_WR13 = Total_exp_WR13 + Expected_gen_WR13\n        Total_exp_WR14 = Total_exp_WR14 + Expected_gen_WR14\n        Total_exp_WR15 = Total_exp_WR15 + Expected_gen_WR15\n        Total_exp_WR16 = Total_exp_WR16 + Expected_gen_WR16\n        Total_exp_WR17 = Total_exp_WR17 + Expected_gen_WR17\n        Total_exp_WR18 = Total_exp_WR18 + Expected_gen_WR18\n        Total_exp_WR19 = Total_exp_WR19 + Expected_gen_WR19\n        Total_exp_WR20 = Total_exp_WR20 + Expected_gen_WR20\n        Total_exp_WR21 = Total_exp_WR21 + Expected_gen_WR21\n        Total_exp_WR22 = Total_exp_WR22 + Expected_gen_WR22\n        Total_exp_WR23 = Total_exp_WR23 + Expected_gen_WR23\n        Total_exp_WR24 = Total_exp_WR24 + Expected_gen_WR24\n        Total_exp_WR25 = Total_exp_WR25 + Expected_gen_WR25\n        Total_exp_WR26 = Total_exp_WR26 + Expected_gen_WR26\n        Total_exp_WR27 = Total_exp_WR27 + Expected_gen_WR27\n        Total_exp_INV1 = Total_exp_INV1 + Expected_gen_INV1\n        Total_exp_INV2 = Total_exp_INV2 + Expected_gen_INV2\n        Total_exp_INV3 = Total_exp_INV3 + Expected_gen_INV3\n        Total_exp_INV4 = Total_exp_INV4 + Expected_gen_INV4\n        Total_exp_INV5 = Total_exp_INV5 + Expected_gen_INV5\n        Total_exp_INV6 = Total_exp_INV6 + Expected_gen_INV6\n        Total_exp_INV7 = Total_exp_INV7 + Expected_gen_INV7\n        Total_exp_INV8 = Total_exp_INV8 + Expected_gen_INV8\n        Total_exp_INV9 = Total_exp_INV9 + Expected_gen_INV9\n        Total_exp_INV10 = Total_exp_INV10 + Expected_gen_INV10\n        Total_exp_INV11 = Total_exp_INV11 + Expected_gen_INV11\n        Total_exp_INV12 = Total_exp_INV12 + Expected_gen_INV12\n        Total_exp_INV13 = Total_exp_INV13 + Expected_gen_INV13\n        Total_exp_INV14 = Total_exp_INV14 + Expected_gen_INV14\n     \n\n        Total_ACT_WR1 = Total_ACT_WR1 + WR_1_kwh\n        Total_ACT_WR2 = Total_ACT_WR2 + WR_2_kwh\n        Total_ACT_WR3 = Total_ACT_WR3 + WR_3_kwh\n        Total_ACT_WR4 = Total_ACT_WR4 + WR_4_kwh\n        Total_ACT_WR5 = Total_ACT_WR5 + WR_5_kwh\n        Total_ACT_WR6 = Total_ACT_WR6 + WR_6_kwh\n        Total_ACT_WR7 = Total_ACT_WR7 + WR_7_kwh\n        Total_ACT_WR8 = Total_ACT_WR8 + WR_8_kwh\n        Total_ACT_WR9 = Total_ACT_WR9 + WR_9_kwh\n        Total_ACT_WR10 = Total_ACT_WR10 + WR_10_kwh\n        Total_ACT_WR11 = Total_ACT_WR11 + WR_11_kwh\n        Total_ACT_WR12 = Total_ACT_WR12 + WR_12_kwh\n        Total_ACT_WR13 = Total_ACT_WR13 + WR_13_kwh\n        Total_ACT_WR14 = Total_ACT_WR14 + WR_14_kwh\n        Total_ACT_WR15 = Total_ACT_WR15 + WR_15_kwh\n        Total_ACT_WR16 = Total_ACT_WR16 + WR_16_kwh\n        Total_ACT_WR17 = Total_ACT_WR17 + WR_17_kwh\n        Total_ACT_WR18 = Total_ACT_WR18 + WR_18_kwh\n        Total_ACT_WR19 = Total_ACT_WR19 + WR_19_kwh\n        Total_ACT_WR20 = Total_ACT_WR20 + WR_20_kwh\n        Total_ACT_WR21 = Total_ACT_WR21 + WR_21_kwh\n        Total_ACT_WR22 = Total_ACT_WR22 + WR_22_kwh\n        Total_ACT_WR23 = Total_ACT_WR23 + WR_23_kwh\n        Total_ACT_WR24 = Total_ACT_WR24 + WR_24_kwh\n        Total_ACT_WR25 = Total_ACT_WR25 + WR_25_kwh\n        Total_ACT_WR26 = Total_ACT_WR26 + WR_26_kwh\n        Total_ACT_WR27 = Total_ACT_WR27 + WR_27_kwh\n        Total_ACT_INV1 = Total_ACT_INV1 + INV_1_kwh\n        Total_ACT_INV2 = Total_ACT_INV2 + INV_2_kwh\n        Total_ACT_INV3 = Total_ACT_INV3 + INV_3_kwh\n        Total_ACT_INV4 = Total_ACT_INV4 + INV_4_kwh\n        Total_ACT_INV5 = Total_ACT_INV5 + INV_5_kwh\n        Total_ACT_INV6 = Total_ACT_INV6 + INV_6_kwh\n        Total_ACT_INV7 = Total_ACT_INV7 + INV_7_kwh\n        Total_ACT_INV8 = Total_ACT_INV8 + INV_8_kwh\n        Total_ACT_INV9 = Total_ACT_INV9 + INV_9_kwh\n        Total_ACT_INV10 = Total_ACT_INV10 + INV_10_kwh\n        Total_ACT_INV11 = Total_ACT_INV11 + INV_11_kwh\n        Total_ACT_INV12 = Total_ACT_INV12 + INV_12_kwh\n        Total_ACT_INV13 = Total_ACT_INV13 + INV_13_kwh\n        Total_ACT_INV14 = Total_ACT_INV14 + INV_14_kwh\n    \n        if ((Expected_gen_WR1 != WR_1_kwh) || (WR_1_kwh == 0)) { var GEN_LOSS_WR1 = (Expected_gen_WR1 - WR_1_kwh) } else { GEN_LOSS_WR1 = \"0\" }\n        if ((Expected_gen_WR2 != WR_2_kwh) || (WR_2_kwh == 0)) { var GEN_LOSS_WR2 = (Expected_gen_WR2 - WR_2_kwh) } else { GEN_LOSS_WR2 = \"0\" }\n        if ((Expected_gen_WR3 != WR_3_kwh) || (WR_3_kwh == 0)) { var GEN_LOSS_WR3 = (Expected_gen_WR3 - WR_3_kwh) } else { GEN_LOSS_WR3 = \"0\" }\n        if ((Expected_gen_WR4 != WR_4_kwh) || (WR_4_kwh == 0)) { var GEN_LOSS_WR4 = (Expected_gen_WR4 - WR_4_kwh) } else { GEN_LOSS_WR4 = \"0\" }\n        if ((Expected_gen_WR5 != WR_5_kwh) || (WR_5_kwh == 0)) { var GEN_LOSS_WR5 = (Expected_gen_WR5 - WR_5_kwh) } else { GEN_LOSS_WR5 = \"0\" }\n        if ((Expected_gen_WR6 != WR_6_kwh) || (WR_6_kwh == 0)) { var GEN_LOSS_WR6 = (Expected_gen_WR6 - WR_6_kwh) } else { GEN_LOSS_WR6 = \"0\" }\n        if ((Expected_gen_WR7 != WR_7_kwh) || (WR_7_kwh == 0)) { var GEN_LOSS_WR7 = (Expected_gen_WR7 - WR_7_kwh) } else { GEN_LOSS_WR7 = \"0\" }\n        if ((Expected_gen_WR8 != WR_8_kwh) || (WR_8_kwh == 0)) { var GEN_LOSS_WR8 = (Expected_gen_WR8 - WR_8_kwh) } else { GEN_LOSS_WR8 = \"0\" }\n        if ((Expected_gen_WR9 != WR_9_kwh) || (WR_9_kwh == 0)) { var GEN_LOSS_WR9 = (Expected_gen_WR9 - WR_9_kwh) } else { GEN_LOSS_WR9 = \"0\" }\n        if ((Expected_gen_WR10 != WR_10_kwh) || (WR_10_kwh == 0)) { var GEN_LOSS_WR10 = (Expected_gen_WR10 - WR_10_kwh) } else { GEN_LOSS_WR10 = \"0\" }\n        if ((Expected_gen_WR11 != WR_11_kwh) || (WR_11_kwh == 0)) { var GEN_LOSS_WR11 = (Expected_gen_WR11 - WR_11_kwh) } else { GEN_LOSS_WR11 = \"0\" }\n        if ((Expected_gen_WR12 != WR_12_kwh) || (WR_12_kwh == 0)) { var GEN_LOSS_WR12 = (Expected_gen_WR12 - WR_12_kwh) } else { GEN_LOSS_WR12 = \"0\" }\n        if ((Expected_gen_WR13 != WR_13_kwh) || (WR_13_kwh == 0)) { var GEN_LOSS_WR13 = (Expected_gen_WR13 - WR_13_kwh) } else { GEN_LOSS_WR13 = \"0\" }\n        if ((Expected_gen_WR14 != WR_14_kwh) || (WR_14_kwh == 0)) { var GEN_LOSS_WR14 = (Expected_gen_WR14 - WR_14_kwh) } else { GEN_LOSS_WR14 = \"0\" }\n        if ((Expected_gen_WR15 != WR_15_kwh) || (WR_15_kwh == 0)) { var GEN_LOSS_WR15 = (Expected_gen_WR15 - WR_15_kwh) } else { GEN_LOSS_WR15 = \"0\" }\n        if ((Expected_gen_WR16 != WR_16_kwh) || (WR_16_kwh == 0)) { var GEN_LOSS_WR16 = (Expected_gen_WR16 - WR_16_kwh) } else { GEN_LOSS_WR16 = \"0\" }\n        if ((Expected_gen_WR17 != WR_17_kwh) || (WR_17_kwh == 0)) { var GEN_LOSS_WR17 = (Expected_gen_WR17 - WR_17_kwh) } else { GEN_LOSS_WR17 = \"0\" }\n        if ((Expected_gen_WR18 != WR_18_kwh) || (WR_18_kwh == 0)) { var GEN_LOSS_WR18 = (Expected_gen_WR18 - WR_18_kwh) } else { GEN_LOSS_WR18 = \"0\" }\n        if ((Expected_gen_WR19 != WR_19_kwh) || (WR_19_kwh == 0)) { var GEN_LOSS_WR19 = (Expected_gen_WR19 - WR_19_kwh) } else { GEN_LOSS_WR19 = \"0\" }\n        if ((Expected_gen_WR20 != WR_20_kwh) || (WR_20_kwh == 0)) { var GEN_LOSS_WR20 = (Expected_gen_WR10 - WR_20_kwh) } else { GEN_LOSS_WR20 = \"0\" }\n        if ((Expected_gen_WR21 != WR_21_kwh) || (WR_21_kwh == 0)) { var GEN_LOSS_WR21 = (Expected_gen_WR21 - WR_21_kwh) } else { GEN_LOSS_WR21 = \"0\" }\n        if ((Expected_gen_WR22 != WR_22_kwh) || (WR_22_kwh == 0)) { var GEN_LOSS_WR22 = (Expected_gen_WR22 - WR_22_kwh) } else { GEN_LOSS_WR22 = \"0\" }\n        if ((Expected_gen_WR23 != WR_23_kwh) || (WR_23_kwh == 0)) { var GEN_LOSS_WR23 = (Expected_gen_WR23 - WR_23_kwh) } else { GEN_LOSS_WR23 = \"0\" }\n        if ((Expected_gen_WR24 != WR_24_kwh) || (WR_24_kwh == 0)) { var GEN_LOSS_WR24 = (Expected_gen_WR24 - WR_24_kwh) } else { GEN_LOSS_WR24 = \"0\" }\n        if ((Expected_gen_WR25 != WR_25_kwh) || (WR_25_kwh == 0)) { var GEN_LOSS_WR25 = (Expected_gen_WR25 - WR_25_kwh) } else { GEN_LOSS_WR25 = \"0\" }\n        if ((Expected_gen_WR26 != WR_26_kwh) || (WR_26_kwh == 0)) { var GEN_LOSS_WR26 = (Expected_gen_WR26 - WR_26_kwh) } else { GEN_LOSS_WR26 = \"0\" }\n        if ((Expected_gen_WR27 != WR_27_kwh) || (WR_27_kwh == 0)) { var GEN_LOSS_WR27 = (Expected_gen_WR27 - WR_27_kwh) } else { GEN_LOSS_WR27 = \"0\" }\n        if ((Expected_gen_INV1 != INV_1_kwh) || (INV_1_kwh == 0)) { var GEN_LOSS_INV1 = (Expected_gen_INV1 - INV_1_kwh) } else { GEN_LOSS_INV1 = \"0\" }\n        if ((Expected_gen_INV2 != INV_2_kwh) || (INV_2_kwh == 0)) { var GEN_LOSS_INV2 = (Expected_gen_INV2 - INV_2_kwh) } else { GEN_LOSS_INV2 = \"0\" }\n        if ((Expected_gen_INV3 != INV_3_kwh) || (INV_3_kwh == 0)) { var GEN_LOSS_INV3 = (Expected_gen_INV3 - INV_3_kwh) } else { GEN_LOSS_INV3 = \"0\" }\n        if ((Expected_gen_INV4 != INV_4_kwh) || (INV_4_kwh == 0)) { var GEN_LOSS_INV4 = (Expected_gen_INV4 - INV_4_kwh) } else { GEN_LOSS_INV4 = \"0\" }\n        if ((Expected_gen_INV5 != INV_5_kwh) || (INV_5_kwh == 0)) { var GEN_LOSS_INV5 = (Expected_gen_INV5 - INV_5_kwh) } else { GEN_LOSS_INV5 = \"0\" }\n        if ((Expected_gen_INV6 != INV_6_kwh) || (INV_6_kwh == 0)) { var GEN_LOSS_INV6 = (Expected_gen_INV6 - INV_6_kwh) } else { GEN_LOSS_INV6 = \"0\" }\n        if ((Expected_gen_INV7 != INV_7_kwh) || (INV_7_kwh == 0)) { var GEN_LOSS_INV7 = (Expected_gen_INV7 - INV_7_kwh) } else { GEN_LOSS_INV7 = \"0\" }\n        if ((Expected_gen_INV8 != INV_8_kwh) || (INV_8_kwh == 0)) { var GEN_LOSS_INV8 = (Expected_gen_INV8 - INV_8_kwh) } else { GEN_LOSS_INV8 = \"0\" }\n        if ((Expected_gen_INV9 != INV_9_kwh) || (INV_9_kwh == 0)) { var GEN_LOSS_INV9 = (Expected_gen_INV9 - INV_9_kwh) } else { GEN_LOSS_INV9 = \"0\" }\n        if ((Expected_gen_INV10 != INV_10_kwh) || (INV_10_kwh == 0)) { var GEN_LOSS_INV10 = (Expected_gen_INV10 - INV_10_kwh) } else { GEN_LOSS_INV10 = \"0\" }\n        if ((Expected_gen_INV11 != INV_11_kwh) || (INV_11_kwh == 0)) { var GEN_LOSS_INV11 = (Expected_gen_INV11 - INV_11_kwh) } else { GEN_LOSS_INV11 = \"0\" }\n        if ((Expected_gen_INV12 != INV_12_kwh) || (INV_12_kwh == 0)) { var GEN_LOSS_INV12 = (Expected_gen_INV12 - INV_12_kwh) } else { GEN_LOSS_INV12 = \"0\" }\n        if ((Expected_gen_INV13 != INV_13_kwh) || (INV_13_kwh == 0)) { var GEN_LOSS_INV13 = (Expected_gen_INV13 - INV_13_kwh) } else { GEN_LOSS_INV13 = \"0\" }\n        if ((Expected_gen_INV14 != INV_14_kwh) || (INV_14_kwh == 0)) { var GEN_LOSS_INV14 = (Expected_gen_INV14 - INV_14_kwh) } else { GEN_LOSS_INV14 = \"0\" }\n\n\n        Total_gen_loss_WR1 = Total_gen_loss_WR1 + (Expected_gen_WR1 - WR_1_kwh)\n        Total_gen_loss_WR2 = Total_gen_loss_WR2 + (Expected_gen_WR2 - WR_2_kwh)\n        Total_gen_loss_WR3 = Total_gen_loss_WR3 + (Expected_gen_WR3 - WR_3_kwh)\n        Total_gen_loss_WR4 = Total_gen_loss_WR4 + (Expected_gen_WR4 - WR_4_kwh)\n        Total_gen_loss_WR5 = Total_gen_loss_WR5 + (Expected_gen_WR5 - WR_5_kwh)\n        Total_gen_loss_WR6 = Total_gen_loss_WR6 + (Expected_gen_WR6 - WR_6_kwh)\n        Total_gen_loss_WR7 = Total_gen_loss_WR7 + (Expected_gen_WR7 - WR_7_kwh)\n        Total_gen_loss_WR8 = Total_gen_loss_WR8 + (Expected_gen_WR8 - WR_8_kwh)\n        Total_gen_loss_WR9 = Total_gen_loss_WR9 + (Expected_gen_WR9 - WR_9_kwh)\n        Total_gen_loss_WR10 = Total_gen_loss_WR10 + (Expected_gen_WR10 - WR_10_kwh)\n        Total_gen_loss_WR11 = Total_gen_loss_WR11 + (Expected_gen_WR11 - WR_11_kwh)\n        Total_gen_loss_WR12 = Total_gen_loss_WR12 + (Expected_gen_WR12 - WR_12_kwh)\n        Total_gen_loss_WR13 = Total_gen_loss_WR13 + (Expected_gen_WR13 - WR_13_kwh)\n        Total_gen_loss_WR14 = Total_gen_loss_WR14 + (Expected_gen_WR14 - WR_14_kwh)\n        Total_gen_loss_WR15 = Total_gen_loss_WR15 + (Expected_gen_WR15 - WR_15_kwh)\n        Total_gen_loss_WR16 = Total_gen_loss_WR16 + (Expected_gen_WR16 - WR_16_kwh)\n        Total_gen_loss_WR17 = Total_gen_loss_WR17 + (Expected_gen_WR17 - WR_17_kwh)\n        Total_gen_loss_WR18 = Total_gen_loss_WR18 + (Expected_gen_WR18 - WR_18_kwh)\n        Total_gen_loss_WR19 = Total_gen_loss_WR19 + (Expected_gen_WR19 - WR_19_kwh)\n        Total_gen_loss_WR20 = Total_gen_loss_WR20 + (Expected_gen_WR20 - WR_20_kwh)\n        Total_gen_loss_WR21 = Total_gen_loss_WR21 + (Expected_gen_WR21 - WR_21_kwh)\n        Total_gen_loss_WR22 = Total_gen_loss_WR22 + (Expected_gen_WR22 - WR_22_kwh)\n        Total_gen_loss_WR23 = Total_gen_loss_WR23 + (Expected_gen_WR23 - WR_23_kwh)\n        Total_gen_loss_WR24 = Total_gen_loss_WR24 + (Expected_gen_WR24 - WR_24_kwh)\n        Total_gen_loss_WR25 = Total_gen_loss_WR25 + (Expected_gen_WR25 - WR_25_kwh)\n        Total_gen_loss_WR26 = Total_gen_loss_WR26 + (Expected_gen_WR26 - WR_26_kwh)\n        Total_gen_loss_WR27 = Total_gen_loss_WR27 + (Expected_gen_WR27 - WR_27_kwh)\n        Total_gen_loss_INV1 = Total_gen_loss_INV1 + (Expected_gen_INV1 - INV_1_kwh)\n        Total_gen_loss_INV2 = Total_gen_loss_INV2 + (Expected_gen_INV2 - INV_2_kwh)\n        Total_gen_loss_INV3 = Total_gen_loss_INV3 + (Expected_gen_INV3 - INV_3_kwh)\n        Total_gen_loss_INV4 = Total_gen_loss_INV4 + (Expected_gen_INV4 - INV_4_kwh)\n        Total_gen_loss_INV5 = Total_gen_loss_INV5 + (Expected_gen_INV5 - INV_5_kwh)\n        Total_gen_loss_INV6 = Total_gen_loss_INV6 + (Expected_gen_INV6 - INV_6_kwh)\n        Total_gen_loss_INV7 = Total_gen_loss_INV7 + (Expected_gen_INV7 - INV_7_kwh)\n        Total_gen_loss_INV8 = Total_gen_loss_INV8 + (Expected_gen_INV8 - INV_8_kwh)\n        Total_gen_loss_INV9 = Total_gen_loss_INV9 + (Expected_gen_INV9 - INV_9_kwh)\n        Total_gen_loss_INV10 = Total_gen_loss_INV10 + (Expected_gen_INV10 - INV_10_kwh)\n        Total_gen_loss_INV11 = Total_gen_loss_INV11 + (Expected_gen_INV11 - INV_11_kwh)\n        Total_gen_loss_INV12 = Total_gen_loss_INV12 + (Expected_gen_INV12 - INV_12_kwh)\n        Total_gen_loss_INV13 = Total_gen_loss_INV13 + (Expected_gen_INV13 - INV_13_kwh)\n        Total_gen_loss_INV14 = Total_gen_loss_INV14 + (Expected_gen_INV14 - INV_14_kwh)\n     \n        var total_act_gen = [{\n            Total_ACT_WR1, Total_ACT_WR2, Total_ACT_WR3, Total_ACT_WR4, Total_ACT_WR5, Total_ACT_WR6, Total_ACT_WR7, Total_ACT_WR8, Total_ACT_WR9, Total_ACT_WR10, Total_ACT_WR11, Total_ACT_WR12, Total_ACT_WR13,Total_ACT_WR14, Total_ACT_WR15, Total_ACT_WR16, Total_ACT_WR17, Total_ACT_WR18, Total_ACT_WR19, Total_ACT_WR20\n            , Total_ACT_WR21, Total_ACT_WR22, Total_ACT_WR23, Total_ACT_WR24, Total_ACT_WR25, Total_ACT_WR26, Total_ACT_WR27, Total_ACT_INV1, Total_ACT_INV2, Total_ACT_INV3, Total_ACT_INV4, Total_ACT_INV5, Total_ACT_INV6, Total_ACT_INV7, Total_ACT_INV8, Total_ACT_INV9, Total_ACT_INV10, Total_ACT_INV11, Total_ACT_INV12, Total_ACT_INV13, Total_ACT_INV14}]\n        var total_exp_gen = [Total_exp_WR1, Total_exp_WR2, Total_exp_WR3, Total_exp_WR4, Total_exp_WR5, Total_exp_WR6, Total_exp_WR7, Total_exp_WR8, Total_exp_WR9, Total_exp_WR10, Total_exp_WR11, Total_exp_WR12, Total_exp_WR13, Total_exp_WR14, Total_exp_WR15, Total_exp_WR16, Total_exp_WR17, Total_exp_WR18, Total_exp_WR19, Total_exp_WR20\n            , Total_exp_WR21, Total_exp_WR22, Total_exp_WR23, Total_exp_WR24, Total_exp_WR25, Total_exp_WR26, Total_exp_WR27, Total_exp_INV1, Total_exp_INV2, Total_exp_INV3, Total_exp_INV4, Total_exp_INV5, Total_exp_INV6, Total_exp_INV7, Total_exp_INV8, Total_exp_INV9, Total_exp_INV10, Total_exp_INV11, Total_exp_INV12, Total_exp_INV13, Total_exp_INV14 ]\n        var totalgen_loss = [Total_gen_loss_WR1, Total_gen_loss_WR2, Total_gen_loss_WR3, Total_gen_loss_WR4, Total_gen_loss_WR5, Total_gen_loss_WR6, Total_gen_loss_WR7, Total_gen_loss_WR8, Total_gen_loss_WR9, Total_gen_loss_WR10, Total_gen_loss_WR11, Total_gen_loss_WR12, Total_gen_loss_WR13, Total_gen_loss_WR14, Total_gen_loss_WR15, Total_gen_loss_WR16, Total_gen_loss_WR17, Total_gen_loss_WR18, Total_gen_loss_WR19, Total_gen_loss_WR20\n            , Total_gen_loss_WR21, Total_gen_loss_WR22, Total_gen_loss_WR23, Total_gen_loss_WR24, Total_gen_loss_WR25, Total_gen_loss_WR26, Total_gen_loss_WR27, Total_gen_loss_INV1, Total_gen_loss_INV2, Total_gen_loss_INV3, Total_gen_loss_INV4, Total_gen_loss_INV5, Total_gen_loss_INV6, Total_gen_loss_INV7, Total_gen_loss_INV8, Total_gen_loss_INV9, Total_gen_loss_INV10, Total_gen_loss_INV11, Total_gen_loss_INV12, Total_gen_loss_INV13, Total_gen_loss_INV14]\n\n\n        obj = {\n            DATE,\n            WR_1_kwh,\n            WR_1_Sp_Y,\n            WR_2_kwh,\n            WR_2_Sp_Y,\n            WR_3_kwh,\n            WR_3_Sp_Y,\n            WR_4_kwh,\n            WR_4_Sp_Y,\n            WR_5_kwh,\n            WR_5_Sp_Y,\n            WR_6_kwh,\n            WR_6_Sp_Y,\n            WR_7_kwh,\n            WR_7_Sp_Y,\n            WR_8_kwh,\n            WR_8_Sp_Y,\n            WR_9_kwh,\n            WR_9_Sp_Y,\n            WR_10_kwh,\n            WR_10_Sp_Y,\n            WR_11_kwh,\n            WR_11_Sp_Y,\n            WR_12_kwh,\n            WR_12_Sp_Y,\n            WR_13_kwh,\n            WR_13_Sp_Y,\n            WR_14_kwh,\n            WR_14_Sp_Y,\n            WR_15_kwh,\n            WR_15_Sp_Y,\n            WR_16_kwh,\n            WR_16_Sp_Y,\n            WR_17_kwh,\n            WR_17_Sp_Y,\n            WR_18_kwh,\n            WR_18_Sp_Y,\n            WR_19_kwh,\n            WR_19_Sp_Y,\n            WR_20_kwh,\n            WR_20_Sp_Y,\n            WR_21_kwh,\n            WR_21_Sp_Y,\n            WR_22_kwh,\n            WR_22_Sp_Y,\n            WR_23_kwh,\n            WR_23_Sp_Y,\n            WR_24_kwh,\n            WR_24_Sp_Y,\n            WR_25_kwh,\n            WR_25_Sp_Y,\n            WR_26_kwh,\n            WR_26_Sp_Y,\n            WR_27_kwh,\n            WR_27_Sp_Y, \n            INV_1_kwh,\n            INV_1_Sp_Y,\n            INV_2_kwh,\n            INV_2_Sp_Y,\n            INV_3_kwh,\n            INV_3_Sp_Y,\n            INV_4_kwh,\n            INV_4_Sp_Y,\n            INV_5_kwh,\n            INV_5_Sp_Y,\n            INV_6_kwh,\n            INV_6_Sp_Y,\n            INV_7_kwh,\n            INV_7_Sp_Y,\n            INV_8_kwh,\n            INV_8_Sp_Y,\n            INV_9_kwh,\n            INV_9_Sp_Y,\n            INV_10_kwh,\n            INV_10_Sp_Y,\n            INV_11_kwh,\n            INV_11_Sp_Y,\n            INV_12_kwh,\n            INV_12_Sp_Y,\n            INV_13_kwh,\n            INV_13_Sp_Y,\n            INV_14_kwh,\n            INV_14_Sp_Y,\n            Max_sy,\n\n            Expected_gen_WR1:Expected_gen_WR1.toFixed(2),\n            Expected_gen_WR2:Expected_gen_WR2.toFixed(2),\n            Expected_gen_WR3:Expected_gen_WR3.toFixed(2),\n            Expected_gen_WR4:Expected_gen_WR4.toFixed(2),\n            Expected_gen_WR5:Expected_gen_WR5.toFixed(2),\n            Expected_gen_WR6:Expected_gen_WR6.toFixed(2),\n            Expected_gen_WR7:Expected_gen_WR7.toFixed(2),\n            Expected_gen_WR8:Expected_gen_WR8.toFixed(2),\n            Expected_gen_WR9:Expected_gen_WR9.toFixed(2),\n            Expected_gen_WR10:Expected_gen_WR10.toFixed(2),\n            Expected_gen_WR11:Expected_gen_WR11.toFixed(2),\n            Expected_gen_WR12:Expected_gen_WR12.toFixed(2),\n            Expected_gen_WR13:Expected_gen_WR13.toFixed(2),\n            Expected_gen_WR14:Expected_gen_WR14.toFixed(2),\n            Expected_gen_WR15:Expected_gen_WR15.toFixed(2),\n            Expected_gen_WR16:Expected_gen_WR16.toFixed(2),\n            Expected_gen_WR17:Expected_gen_WR17.toFixed(2),\n            Expected_gen_WR18:Expected_gen_WR18.toFixed(2),\n            Expected_gen_WR19:Expected_gen_WR19.toFixed(2),\n            Expected_gen_WR20:Expected_gen_WR20.toFixed(2),\n            Expected_gen_WR21:Expected_gen_WR21.toFixed(2),\n            Expected_gen_WR22:Expected_gen_WR22.toFixed(2),\n            Expected_gen_WR23:Expected_gen_WR23.toFixed(2),\n            Expected_gen_WR24:Expected_gen_WR24.toFixed(2),\n            Expected_gen_WR25:Expected_gen_WR25.toFixed(2),\n            Expected_gen_WR26:Expected_gen_WR26.toFixed(2),\n            Expected_gen_WR27:Expected_gen_WR27.toFixed(2),\n            Expected_gen_INV1:Expected_gen_INV1.toFixed(2),\n            Expected_gen_INV2:Expected_gen_INV2.toFixed(2),\n            Expected_gen_INV3:Expected_gen_INV3.toFixed(2),\n            Expected_gen_INV4:Expected_gen_INV4.toFixed(2),\n            Expected_gen_INV5:Expected_gen_INV5.toFixed(2),\n            Expected_gen_INV6:Expected_gen_INV6.toFixed(2),\n            Expected_gen_INV7:Expected_gen_INV7.toFixed(2),\n            Expected_gen_INV8:Expected_gen_INV8.toFixed(2),\n            Expected_gen_INV9:Expected_gen_INV9.toFixed(2),\n            Expected_gen_INV10:Expected_gen_INV10.toFixed(2),\n            Expected_gen_INV11:Expected_gen_INV11.toFixed(2),\n            Expected_gen_INV12:Expected_gen_INV12.toFixed(2),\n            Expected_gen_INV13:Expected_gen_INV13.toFixed(2),\n            Expected_gen_INV14:Expected_gen_INV14.toFixed(2),\n        \n            GEN_LOSS_WR1:parseFloat(GEN_LOSS_WR1).toFixed(2),\n            GEN_LOSS_WR2:parseFloat(GEN_LOSS_WR2).toFixed(2),\n            GEN_LOSS_WR3:parseFloat(GEN_LOSS_WR3).toFixed(2),\n            GEN_LOSS_WR4:parseFloat(GEN_LOSS_WR4).toFixed(2),\n            GEN_LOSS_WR5:parseFloat(GEN_LOSS_WR5).toFixed(2),\n            GEN_LOSS_WR6:parseFloat(GEN_LOSS_WR6).toFixed(2),\n            GEN_LOSS_WR7:parseFloat(GEN_LOSS_WR7).toFixed(2),\n            GEN_LOSS_WR8:parseFloat(GEN_LOSS_WR8).toFixed(2),\n            GEN_LOSS_WR9:parseFloat(GEN_LOSS_WR9).toFixed(2),\n            GEN_LOSS_WR10:parseFloat(GEN_LOSS_WR10).toFixed(2),\n            GEN_LOSS_WR11:parseFloat(GEN_LOSS_WR11).toFixed(2),\n            GEN_LOSS_WR12:parseFloat(GEN_LOSS_WR12).toFixed(2),\n            GEN_LOSS_WR13:parseFloat(GEN_LOSS_WR13).toFixed(2),\n            GEN_LOSS_WR14:parseFloat(GEN_LOSS_WR14).toFixed(2),\n            GEN_LOSS_WR15:parseFloat(GEN_LOSS_WR15).toFixed(2),\n            GEN_LOSS_WR16:parseFloat(GEN_LOSS_WR16).toFixed(2),\n            GEN_LOSS_WR17:parseFloat(GEN_LOSS_WR17).toFixed(2),\n            GEN_LOSS_WR18:parseFloat(GEN_LOSS_WR18).toFixed(2),\n            GEN_LOSS_WR19:parseFloat(GEN_LOSS_WR19).toFixed(2),\n            GEN_LOSS_WR20:parseFloat(GEN_LOSS_WR20).toFixed(2),\n            GEN_LOSS_WR21:parseFloat(GEN_LOSS_WR21).toFixed(2),\n            GEN_LOSS_WR22:parseFloat(GEN_LOSS_WR22).toFixed(2),\n            GEN_LOSS_WR23:parseFloat(GEN_LOSS_WR23).toFixed(2),\n            GEN_LOSS_WR24:parseFloat(GEN_LOSS_WR24).toFixed(2),\n            GEN_LOSS_WR25:parseFloat(GEN_LOSS_WR25).toFixed(2),\n            GEN_LOSS_WR26:parseFloat(GEN_LOSS_WR26).toFixed(2),\n            GEN_LOSS_WR27:parseFloat(GEN_LOSS_WR27).toFixed(2),\n            GEN_LOSS_INV1:parseFloat(GEN_LOSS_INV1).toFixed(2),\n            GEN_LOSS_INV2:parseFloat(GEN_LOSS_INV2).toFixed(2),\n            GEN_LOSS_INV3:parseFloat(GEN_LOSS_INV3).toFixed(2),\n            GEN_LOSS_INV4:parseFloat(GEN_LOSS_INV4).toFixed(2),\n            GEN_LOSS_INV5:parseFloat(GEN_LOSS_INV5).toFixed(2),\n            GEN_LOSS_INV6:parseFloat(GEN_LOSS_INV6).toFixed(2),\n            GEN_LOSS_INV7:parseFloat(GEN_LOSS_INV7).toFixed(2),\n            GEN_LOSS_INV8:parseFloat(GEN_LOSS_INV8).toFixed(2),\n            GEN_LOSS_INV9:parseFloat(GEN_LOSS_INV9).toFixed(2),\n            GEN_LOSS_INV10:parseFloat(GEN_LOSS_INV10).toFixed(2),\n            GEN_LOSS_INV11:parseFloat(GEN_LOSS_INV11).toFixed(2),\n            GEN_LOSS_INV12:parseFloat(GEN_LOSS_INV12).toFixed(2),\n            GEN_LOSS_INV13:parseFloat(GEN_LOSS_INV13).toFixed(2),\n            GEN_LOSS_INV14:parseFloat(GEN_LOSS_INV14).toFixed(2),\n          \n        }\n    }\n   \n    array.push(obj)\n\n}\nflow.set(\"out\", array);\nflow.set(\"totalgen_loss\", totalgen_loss)\nflow.set(\"total_act_gen\", total_act_gen)\nflow.set(\"total_exp_gen\", total_exp_gen)\n\nmsg.payload = array\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 860,
-        "y": 460,
+        "x": 940,
+        "y": 440,
         "wires": [
             [
-                "c256c3a87cb7e12d"
+                "c8bbca448c65400c"
             ]
         ]
     },
     {
-        "id": "c256c3a87cb7e12d",
+        "id": "c8bbca448c65400c",
         "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 177",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 204",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -508,15 +775,15 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1040,
-        "y": 460,
+        "x": 1120,
+        "y": 440,
         "wires": []
     },
     {
-        "id": "38d46058b36cb374",
+        "id": "bc5d735c5b6e05e5",
         "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 178",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 205",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -525,14 +792,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1110,
-        "y": 400,
+        "x": 1190,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "3fa50c693cc73c8e",
+        "id": "ead209fa97491e34",
         "type": "csv",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "sep": ",",
         "hdrin": false,
@@ -544,18 +811,18 @@
         "strings": false,
         "include_empty_strings": false,
         "include_null_values": false,
-        "x": 810,
-        "y": 400,
+        "x": 890,
+        "y": 380,
         "wires": [
             [
-                "c4c032d6ce38e952"
+                "36fcc773b9d1fcff"
             ]
         ]
     },
     {
-        "id": "c4c032d6ce38e952",
+        "id": "36fcc773b9d1fcff",
         "type": "csv",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "sep": ",",
         "hdrin": true,
@@ -567,19 +834,19 @@
         "strings": false,
         "include_empty_strings": false,
         "include_null_values": false,
-        "x": 930,
-        "y": 400,
+        "x": 1010,
+        "y": 380,
         "wires": [
             [
-                "38d46058b36cb374",
-                "d4805b5c314aece9"
+                "bc5d735c5b6e05e5",
+                "49865531f2556642"
             ]
         ]
     },
     {
-        "id": "331f80ddb5942826",
+        "id": "c18e10044a0651ea",
         "type": "delay",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "pauseType": "delay",
         "timeout": "2",
@@ -593,288 +860,66 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 160,
-        "y": 400,
+        "x": 240,
+        "y": 380,
         "wires": [
             [
-                "12d8f40f86001840"
+                "ae6422af1260da22"
             ]
         ]
     },
     {
-        "id": "6941190dc8f863ed",
+        "id": "80064e4d815e3b45",
         "type": "comment",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "calculation",
         "info": "",
-        "x": 600,
-        "y": 340,
+        "x": 680,
+        "y": 320,
         "wires": []
     },
     {
-        "id": "e68bf38292544a42",
-        "type": "csv",
-        "z": "9bb7160e32e22f02",
-        "name": "",
-        "sep": ",",
-        "hdrin": true,
-        "hdrout": "all",
-        "multi": "mult",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": "",
-        "include_null_values": true,
-        "x": 490,
-        "y": 700,
-        "wires": [
-            [
-                "a61b7de10490b485"
-            ]
-        ]
-    },
-    {
-        "id": "d71570e3ddaf1d80",
-        "type": "file",
-        "z": "9bb7160e32e22f02",
-        "name": "TEST O/P",
-        "filename": "filename",
-        "filenameType": "msg",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "false",
-        "encoding": "none",
-        "x": 790,
-        "y": 700,
-        "wires": [
-            [
-                "dad89bd9348ada7c"
-            ]
-        ]
-    },
-    {
-        "id": "dad89bd9348ada7c",
-        "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 179",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 940,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "1126849444fa55e0",
-        "type": "delay",
-        "z": "9bb7160e32e22f02",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "4",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 180,
-        "y": 700,
-        "wires": [
-            [
-                "9479c7ab7639b185"
-            ]
-        ]
-    },
-    {
-        "id": "795c56ae9c2b1104",
-        "type": "comment",
-        "z": "9bb7160e32e22f02",
-        "name": "report generation 1st TABLE",
-        "info": "",
-        "x": 560,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "9479c7ab7639b185",
+        "id": "dbd1427410bec1a5",
         "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "setup 1st Table",
-        "func": "var array = flow.get(\"out\");\nvar result=[] \nvar final_out=[]\nvar column_header = \"DATE\"\nvar num;\nfor(var j = 0;j < array.length; j++ ){\n    result = []\n    const values = Object.values(array[j]);\n    const value_l = Object.values(array[0]).length;\n    const keys = Object.keys(array[0]);\n    for (let i = 0; i <value_l ; i++) {\n         if ((isNaN(values[i])&&(i!=0)))\n         {}\n         else{\n            result.push(values[i])\n            if(j==0){\n            var key=keys[i]\n            if(i!=0){\n            var column_header = column_header.concat(\",\",key); \n            }       \n            }   \n        }  \n    }\n    final_out.push(result)\n}\n\nmsg.payload=final_out\nmsg.columns = column_header\nreturn msg; ",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 340,
-        "y": 700,
-        "wires": [
-            [
-                "e68bf38292544a42"
-            ]
-        ]
-    },
-    {
-        "id": "52d742bef156a8d0",
-        "type": "function",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "setup 2nd Table",
-        "func": "\nvar totalgen_loss =flow.get(\"totalgen_loss\")\nvar total_act_gen=flow.get(\"total_act_gen\")\nvar total_exp_gen=flow.get(\"total_exp_gen\")\nvar INV_CAPACITY = flow.get(\"INV_CAPACITY\")\nvar inverter = flow.get(\"inv_array\")\nvar result\n\nvar sum=0\nvar Total_Actual_Generation_in_kWh=0\nvar Total_Expected_Generation_in_kWh=0\nvar Total_Generation_Loss_in_kWh=0\nvar Total_Loss_in_currency_Euro=0\n\nvar array=[]\nvar loss=[]\nvar total_loss=[]\nvar inv_name=[]\n\nconst values = Object.values(total_act_gen[0]);\nconst value_l = Object.values(total_act_gen[0]).length;\nconst keys = Object.keys(total_act_gen[0]);\nfor (var i = 0; i < inverter.length; i++) {\n    sum += INV_CAPACITY[i];\n    Total_Actual_Generation_in_kWh += total_act_gen[i]\n    Total_Expected_Generation_in_kWh += total_exp_gen[i]\n    Total_Generation_Loss_in_kWh += totalgen_loss[i]\n    \n}\n/*for (let j = 0; j < value_l; j++) {\n\n    var key = keys[j]\n    var character =key.match(/WR[\\w\\d]+/)[0]\n    inv_name.push(character)\n}*/\n       \n\nfor (var i = 0; i <=total_act_gen.length; i++){\n   \n    if (isNaN(total_exp_gen[i]))  { }\n else {   \n        var character = keys[i].match(/WR[\\w\\d]+/)[0]\n    if(sum >=50)\n    {\n        var LOSS_IN_CURRENCY=totalgen_loss[i]*0.075\n    }\n    if (sum < 50) {\n        var LOSS_IN_CURRENCY = totalgen_loss[i] * 0.10\n    }\nloss.push(LOSS_IN_CURRENCY)\n    Total_Loss_in_currency_Euro += loss[i]\n    total_loss.push(Total_Loss_in_currency_Euro)\nvar obj={\n    INVERTERS: character,\n    Capacity_in_kWp:INV_CAPACITY[i],\n    Actual_Generation_in_kWh: total_act_gen[i],\n    Expected_Generation_in_kWh: total_exp_gen[i],\n    Generation_Loss_in_kWh: totalgen_loss[i],\n    Loss_in_currency_Euro_Є:LOSS_IN_CURRENCY  \n}\n\n        if (i == total_act_gen.length)\n{\n    \n    obj = {\n        INVERTERS: \"TOTAL\",\n        Capacity_in_kWp: sum,\n        Actual_Generation_in_kWh: Total_Actual_Generation_in_kWh,\n        Expected_Generation_in_kWh:Total_Expected_Generation_in_kWh,\n        Generation_Loss_in_kWh: Total_Generation_Loss_in_kWh,\n        Loss_in_currency_Euro_Є:total_loss[i-1]\n    }\n}\n\narray.push(obj)\n}\n\n}\n\nmsg.payload=array\nreturn msg;",
+        "func": "\n\nvar totalgen_loss =flow.get(\"totalgen_loss\")\nvar total_act_gen=flow.get(\"total_act_gen\")\nvar total_exp_gen=flow.get(\"total_exp_gen\")\nvar INV_CAPACITY = flow.get(\"INV_CAPACITY\")\nvar inverter = flow.get(\"inv_array\")\nvar result\n\nvar array=[]\nvar loss=[]\n\nconst values = Object.values(total_act_gen[0])\nconst keys = Object.keys(total_act_gen[0]);\n\nfunction calculateSum(arr) {\n    var sum = 0;\n\n    for (var i = 0; i < arr.length; i++) {\n        if (typeof arr[i] === 'number' && !isNaN(arr[i])) {\n            sum += arr[i];\n        }\n    }\n    return sum;\n}\n\nvar plant_CAPACITY = calculateSum(INV_CAPACITY)\nvar Total_Actual_Generation_in_kWh = calculateSum(values)\nvar Total_Expected_Generation_in_kWh =calculateSum(total_exp_gen)\nvar Total_Generation_Loss_in_kWh = calculateSum(totalgen_loss)\n\nfor (var i = 0; i <= totalgen_loss.length; i++)\n{\n\n    if(i == totalgen_loss.length) {\n\n        var Total_Loss_in_currency_Euro = calculateSum(loss)\n\n        var obj = {\n            INVERTERS: \"TOTAL\",\n            Capacity_in_kWp: plant_CAPACITY.toFixed(2),\n            Actual_Generation_in_kWh: Total_Actual_Generation_in_kWh.toFixed(2),\n            Expected_Generation_in_kWh: Total_Expected_Generation_in_kWh.toFixed(2),\n            Generation_Loss_in_kWh: Total_Generation_Loss_in_kWh.toFixed(2),\n            Loss_in_currency_Euro_Є: Total_Loss_in_currency_Euro.toFixed(2),\n            \n        }\n        array.push(obj)\n    }\n    if (isNaN(totalgen_loss[i])) {}\n\n    else {\n        \n        const prefix = \"Total_ACT_\";\n        const inv_name = keys[i].replace(prefix, \"\");\n\n        if (plant_CAPACITY >=50)\n    {\n        var LOSS_IN_CURRENCY=totalgen_loss[i]*0.075\n    }\n        if (plant_CAPACITY < 50) {\n        var LOSS_IN_CURRENCY = totalgen_loss[i] * 0.10\n    }\n       loss.push(LOSS_IN_CURRENCY)\n obj={\n    INVERTERS:inv_name,\n     Capacity_in_kWp: INV_CAPACITY[i].toFixed(2),\n     Actual_Generation_in_kWh: values[i].toFixed(2),\n     Expected_Generation_in_kWh: total_exp_gen[i].toFixed(2),\n     Generation_Loss_in_kWh: totalgen_loss[i].toFixed(2),\n     Loss_in_currency_Euro_Є: LOSS_IN_CURRENCY.toFixed(2)\n  \n}   \narray.push(obj)\n}\n}\nmsg.payload=array\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 560,
-        "y": 1180,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b9bb011c94ce12d9",
-        "type": "comment",
-        "z": "9bb7160e32e22f02",
-        "name": "report generation 2nd TABLE",
-        "info": "",
-        "x": 560,
+        "x": 400,
         "y": 780,
-        "wires": []
-    },
-    {
-        "id": "a61b7de10490b485",
-        "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "report file",
-        "func": "var plant=flow.get(\"live_plant\");\nvar month = flow.get(\"month\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters_report/\" + plant + \"_\" + month + \"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 640,
-        "y": 700,
         "wires": [
             [
-                "d71570e3ddaf1d80"
+                "b45f7aefc8c2c33c"
             ]
         ]
     },
     {
-        "id": "d3ff46222391be1c",
-        "type": "delay",
-        "z": "9bb7160e32e22f02",
+        "id": "cab896ceef93390f",
+        "type": "fs-ops-dir",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
-        "pauseType": "delay",
-        "timeout": "6",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 160,
-        "y": 820,
+        "path": "/home/iplon/Downloads/IGOP/wierig plants",
+        "pathType": "str",
+        "filter": "*",
+        "filterType": "str",
+        "dir": "payload",
+        "dirType": "msg",
+        "x": 340,
+        "y": 1020,
         "wires": [
             [
-                "676527b94afa0cf0"
+                "8e629dbb8b5ae16a"
             ]
         ]
     },
     {
-        "id": "aeb839cc665ed043",
-        "type": "csv",
-        "z": "9bb7160e32e22f02",
-        "name": "",
-        "sep": ",",
-        "hdrin": true,
-        "hdrout": "all",
-        "multi": "mult",
-        "ret": "\\n",
-        "temp": "",
-        "skip": "0",
-        "strings": true,
-        "include_empty_strings": "",
-        "include_null_values": true,
-        "x": 510,
-        "y": 820,
-        "wires": [
-            [
-                "596b805c9f6bed8a"
-            ]
-        ]
-    },
-    {
-        "id": "596b805c9f6bed8a",
-        "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "report file",
-        "func": "var plant=flow.get(\"live_plant\");\nvar month = flow.get(\"month\");\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/meters_report/\" + plant + \"_\" + month + \"_report.csv\"\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n//msg.filename=\"Medak_\"+c+\".csv\"\n\nreturn msg;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 820,
-        "wires": [
-            [
-                "39e6c744cdbbb9f4"
-            ]
-        ]
-    },
-    {
-        "id": "39e6c744cdbbb9f4",
-        "type": "file",
-        "z": "9bb7160e32e22f02",
-        "name": "TEST O/P",
-        "filename": "filename",
-        "filenameType": "msg",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "false",
-        "encoding": "none",
-        "x": 810,
-        "y": 820,
-        "wires": [
-            [
-                "3e27492438b6c5f7"
-            ]
-        ]
-    },
-    {
-        "id": "3e27492438b6c5f7",
-        "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 180",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 990,
-        "y": 820,
-        "wires": []
-    },
-    {
-        "id": "ae8d2d0c30a71d7f",
+        "id": "917588e8f5bd7fd6",
         "type": "inject",
-        "z": "9bb7160e32e22f02",
+        "z": "fb5bfb14f47e3d76",
         "name": "",
         "props": [
             {
@@ -892,38 +937,105 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 380,
-        "y": 940,
+        "x": 180,
+        "y": 1020,
         "wires": [
             [
-                "17d748ac4b7ea9b4"
+                "6520061ff92298bb",
+                "88574b323c1804bc"
             ]
         ]
     },
     {
-        "id": "17d748ac4b7ea9b4",
+        "id": "32ce631e0dc523f2",
         "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "function 130",
-        "func": "var array = [\"WR7\", \"WR2\", \"WR6\", \"WR1\", \"WR4\", \"WR3\", \"WR5\"] \nmsg.payload=array.sort()\nreturn msg;",
+        "z": "fb5bfb14f47e3d76",
+        "name": "file to read",
+        "func": "var filename = msg.payload.filename\nfunction getDate(d) {\n    var day, month, year;\n\n    var result = d.match(\"[0-9]{2}([\\-/ \\.])[0-9]{2}[\\-/ \\.][0-9]{4}\");\n    if (null != result) {\n        var dateSplitted = result[0].split(result[1]);\n        day = dateSplitted[0];\n        month = dateSplitted[1];\n        year = dateSplitted[2];\n    }\n    result = d.match(\"[0-9]{4}([\\-/ \\.])[0-9]{2}[\\-/ \\.][0-9]{2}\");\n    if (null != result) {\n        dateSplitted = result[0].split(result[1]);\n        day = dateSplitted[2];\n        month = dateSplitted[1];\n        year = dateSplitted[0];\n    }\n\n    if (month > 12) {\n        var aux = day;\n        day = month;\n        month = aux;\n    }\n    //return year + \"/\" + month + \"/\" + day;\n\n    function getMonthName(monthNumber) {\n        const date = new Date();\n        date.setMonth(monthNumber - 1);\n\n        return date.toLocaleString('en-US', { month: 'long' });\n    }\n    return getMonthName(month)\n}\n\nvar month_name = getDate(filename)\n\nvar currentTime = new Date();\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\nmsg.filename = \"/home/iplon/Downloads/IGOP/wierig plants/\" + filename\nflow.set(\"month\", month_name);\nflow.set(\"filename\", filename);\nreturn msg;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 570,
-        "y": 940,
+        "x": 710,
+        "y": 1020,
         "wires": [
             [
-                "f0473ca49e5e6b24"
+                "79df602d721be97e"
             ]
         ]
     },
     {
-        "id": "f0473ca49e5e6b24",
+        "id": "8e629dbb8b5ae16a",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "file with delay",
+        "func": "\nfunction sleep(ms) {\n   return new Promise(resolve => setTimeout(resolve, ms));\n}\nfor (var i = 0; i < msg.payload.length; i++) {\n   \nvar obj={};\n    obj.payload = { filename: msg.payload[i]}\n\nnode.send(obj)\n    await sleep(15000);\n}\nreturn null ;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1020,
+        "wires": [
+            [
+                "32ce631e0dc523f2"
+            ]
+        ]
+    },
+    {
+        "id": "79df602d721be97e",
         "type": "debug",
-        "z": "9bb7160e32e22f02",
-        "name": "debug 181",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 277",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "6520061ff92298bb",
+        "type": "file in",
+        "z": "fb5bfb14f47e3d76",
+        "name": "Meter data",
+        "filename": "/home/iplon/Downloads/IGOP/wierig plants/1085435668_2023-05-01_2023-05-31.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": true,
+        "x": 230,
+        "y": 1140,
+        "wires": [
+            [
+                "ec738f2f6486bc7c"
+            ]
+        ]
+    },
+    {
+        "id": "0a715029f0f02738",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "report generation plant info table",
+        "info": "",
+        "x": 650,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "16ce6be8ab3ade9c",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 278",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -932,26 +1044,359 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 810,
-        "y": 940,
+        "y": 1240,
         "wires": []
     },
     {
-        "id": "676527b94afa0cf0",
+        "id": "98110b76042c6362",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "header correction",
+        "info": "",
+        "x": 920,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "7d12451578967bba",
         "type": "function",
-        "z": "9bb7160e32e22f02",
-        "name": "setup 2nd Table",
-        "func": "\nvar totalgen_loss =flow.get(\"totalgen_loss\")\nvar total_act_gen=flow.get(\"total_act_gen\")\nvar total_exp_gen=flow.get(\"total_exp_gen\")\nvar INV_CAPACITY = flow.get(\"INV_CAPACITY\")\nvar inverter = flow.get(\"inv_array\")\nvar result\n\nvar sum=0\nvar Total_Actual_Generation_in_kWh=0\nvar Total_Expected_Generation_in_kWh=0\nvar Total_Generation_Loss_in_kWh=0\nvar Total_Loss_in_currency_Euro=0\n\nvar array=[]\nvar loss=[]\nvar total_loss=[]\nconst values = Object.values(total_act_gen[0])\nconst keys = Object.keys(total_act_gen[0]);\n\nfor (var i = 0; i <= totalgen_loss.length; i++)\n{\n\n    if(i == totalgen_loss.length) {\n        obj = {\n            INVERTERS: \"TOTAL\",\n            Capacity_in_kWp: sum,\n            Actual_Generation_in_kWh: Total_Actual_Generation_in_kWh,\n            Expected_Generation_in_kWh: Total_Expected_Generation_in_kWh,\n            Generation_Loss_in_kWh: Total_Generation_Loss_in_kWh,\n            Loss_in_currency_Euro_Є: Total_Loss_in_currency_Euro\n        }\n        array.push(obj)\n    }\n    if (isNaN(totalgen_loss[i])) {}\n    else {\n        sum += INV_CAPACITY[i];\n        Total_Actual_Generation_in_kWh += values[i]\n        Total_Expected_Generation_in_kWh += total_exp_gen[i]\n        Total_Generation_Loss_in_kWh += totalgen_loss[i]\n    if(sum >=50)\n    {\n        var LOSS_IN_CURRENCY=totalgen_loss[i]*0.075\n    }\n    if (sum < 50) {\n        var LOSS_IN_CURRENCY = totalgen_loss[i] * 0.10\n    }\n        Total_Loss_in_currency_Euro +=LOSS_IN_CURRENCY\n\nvar obj={\n    INVERTERS: keys[i].match(/WR[\\w\\d]+/)[0],\n    Capacity_in_kWp:INV_CAPACITY[i],\n    Actual_Generation_in_kWh: values[i],\n    Expected_Generation_in_kWh: total_exp_gen[i],\n    Generation_Loss_in_kWh: totalgen_loss[i],\n    Loss_in_currency_Euro_Є:LOSS_IN_CURRENCY  \n}   \narray.push(obj)\n}\n}\nmsg.payload=array\nreturn msg;",
+        "z": "fb5bfb14f47e3d76",
+        "name": "set header",
+        "func": "var results = []\nvar filename = 1085435668// flow.get(\"filename\");\n//const plant = filename.substring(0, filename.indexOf('_'));\nvar column = msg.columns.split(',');\n var column_header=\"date\"\nvar inv_array = []\nfor (var i = 1; i < column.length; i++) {\n    var check = column[i].match(\"WR\")\n    var inv_re = column[i].substring(0, column[i].indexOf('('));\n    if (column[i].match(\"WR\")) {\n        var num = column[i].match(/\\d+/g).map(Number);\n        var sy = \",Specific Yield_\" + inv_re\n        var WR = \",\" + inv_re\n        column_header = column_header.concat(WR, sy);\n    }\n    if ((inv_re != \"average specific yield \") && (inv_re != \"Specific Yield \") && (inv_re != \"\") && (check == null)) {\n        var sy = \",Specific Yield_\" + inv_re\n        var WR = \",\" + inv_re\n        column_header = column_header.concat(WR, sy);\n    }\n\nvar obj={\n    num, \n    sy,\n    column_header,\n    inv_re,\n    column:column[i]\n    \n}\nresults.push(obj)\n}\n\n\nmsg.payload=results\nflow.set(\"column\", column_header)\n//flow.set(\"live_plant\", plant);\nflow.set(\"inv_array\", inv_array);\nmsg.columns=column_header\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 340,
-        "y": 820,
+        "x": 910,
+        "y": 1140,
         "wires": [
             [
-                "aeb839cc665ed043"
+                "1c4a38b735ec5912"
             ]
         ]
+    },
+    {
+        "id": "82b2ec54082b4369",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "header",
+        "sep": ";",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 740,
+        "y": 1140,
+        "wires": [
+            [
+                "7d12451578967bba"
+            ]
+        ]
+    },
+    {
+        "id": "1c4a38b735ec5912",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 279",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "0c3a3017efd0dfbd",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "value",
+        "sep": ";",
+        "hdrin": false,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "1",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 730,
+        "y": 1180,
+        "wires": [
+            [
+                "6002f66847fe4571"
+            ]
+        ]
+    },
+    {
+        "id": "3d27496784a87013",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 280",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "6002f66847fe4571",
+        "type": "change",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 1180,
+        "wires": [
+            [
+                "3d27496784a87013"
+            ]
+        ]
+    },
+    {
+        "id": "ec738f2f6486bc7c",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "check seperator",
+        "func": "\nlet text=msg.payload\nlet check = text.includes(\";\")\nif(check==false)\n{\n    var result = text.replaceAll(\",\", \";\");\n}\nelse{result=text}\n\nmsg.payload = result\nreturn (msg);",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 1140,
+        "wires": [
+            [
+                "82b2ec54082b4369",
+                "0c3a3017efd0dfbd"
+            ]
+        ]
+    },
+    {
+        "id": "6974e529d0466412",
+        "type": "file in",
+        "z": "fb5bfb14f47e3d76",
+        "name": "REF csv",
+        "filename": "/home/iplon/Downloads/PLANT CAPACITY REF FILE/wierig plants name list 04.07.2023.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 360,
+        "y": 1320,
+        "wires": [
+            [
+                "8cf7e96a37144d8e"
+            ]
+        ]
+    },
+    {
+        "id": "8cf7e96a37144d8e",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 490,
+        "y": 1320,
+        "wires": [
+            [
+                "119bcf5c4225ebe7"
+            ]
+        ]
+    },
+    {
+        "id": "119bcf5c4225ebe7",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "comparison with ref csv",
+        "func": "var live_plant = 1085435668//flow.get(\"live_plant\")\nvar column = flow.get(\"column\")\nvar payload = flow.get(\"payload\");\nvar array=[]\nvar payload_array = []\n\nfor (var k = 0; k < payload.length; k++)\n{\n    var final = [payload[k].col1, payload[k].col2, payload[k].col3, payload[k].col4, payload[k].col5, payload[k].col6, payload[k].col7, payload[k].col8, payload[k].col9, payload[k].col10, payload[k].col11, payload[k].col12, payload[k].col13, payload[k].col14, payload[k].col15, payload[k].col16, payload[k].col17, payload[k].col18, payload[k].col19, payload[k].col20, payload[k].col21, payload[k].col22, payload[k].col23, payload[k].col24, payload[k].col25, payload[k].col26, payload[k].col27, payload[k].col28, payload[k].col29, payload[k].col30, payload[k].col31, payload[k].col32, payload[k].col33, payload[k].col34, payload[k].col35, payload[k].col36, payload[k].col37, payload[k].col38, payload[k].col39, payload[k].col40, payload[k].col41, payload[k].col42, payload[k].col43, payload[k].col44, payload[k].col45, payload[k].col46, payload[k].col47, payload[k].col48, payload[k].col49, payload[k].col50, payload[k].col51, payload[k].col52, payload[k].col53, payload[k].col54, payload[k].col55, payload[k].col56, payload[k].col57, payload[k].col58, payload[k].col59, payload[k].col60, payload[k].col61, payload[k].col62, payload[k].col63, payload[k].col64, payload[k].col65, payload[k].col66, payload[k].col67, payload[k].col68, payload[k].col69, payload[k].col70, payload[k].col71, payload[k].col72, payload[k].col73, payload[k].col74, payload[k].col75, payload[k].col76, payload[k].col77, payload[k].col78, payload[k].col79, payload[k].col80, payload[k].col81, payload[k].col82, payload[k].col83, payload[k].col84, payload[k].col85, payload[k].col86, payload[k].col87, payload[k].col88, payload[k].col89, payload[k].col90, payload[k].col91, payload[k].col92, payload[k].col93, payload[k].col94, payload[k].col95, payload[k].col96, payload[k].col97, payload[k].col98, payload[k].col99, payload[k].col100]\npayload_array.push(final)\n}\nfor (var i = 0; i <msg.payload.length; i++)\n{\n    var Plant_Name=msg.payload[i][\"Plant Name\"]\n    var S_NO=msg.payload[i][\"S.NO\"]\n    var INV_NO=parseInt(msg.payload[i][\"NO OF INVERTER\"])\n  \n    if (live_plant == S_NO) \n      {\n             var capacity = [parseFloat(msg.payload[i].WR1) || \"null\",\n                             parseFloat(msg.payload[i].WR2) || \"null\",\n                             parseFloat(msg.payload[i].WR3) || \"null\",\n                             parseFloat(msg.payload[i].WR4) || \"null\",\n                             parseFloat(msg.payload[i].WR5) || \"null\",\n                             parseFloat(msg.payload[i].WR6) || \"null\",\n                             parseFloat(msg.payload[i].WR7) || \"null\",\n                             parseFloat(msg.payload[i].WR8) || \"null\",\n                             parseFloat(msg.payload[i].WR9) || \"null\",\n                             parseFloat(msg.payload[i].WR10) || \"null\",\n                             parseFloat(msg.payload[i].WR11) || \"null\",\n                             parseFloat(msg.payload[i].WR12) || \"null\",\n                             parseFloat(msg.payload[i].WR13) || \"null\",\n                             parseFloat(msg.payload[i].WR14) || \"null\",\n                             parseFloat(msg.payload[i].WR15) || \"null\",\n                             parseFloat(msg.payload[i].WR16) || \"null\",\n                             parseFloat(msg.payload[i].WR17) || \"null\",\n                             parseFloat(msg.payload[i].WR18) || \"null\",\n                             parseFloat(msg.payload[i].WR19) || \"null\",\n                             parseFloat(msg.payload[i].WR20) || \"null\",\n                             parseFloat(msg.payload[i].WR21) || \"null\",\n                             parseFloat(msg.payload[i].WR22) || \"null\",\n                             parseFloat(msg.payload[i].WR23) || \"null\",\n                             parseFloat(msg.payload[i].WR24) || \"null\",\n                             parseFloat(msg.payload[i].WR25) || \"null\",\n                             parseFloat(msg.payload[i].WR26) || \"null\",\n                             parseFloat(msg.payload[i].WR27) || \"null\",\n                 parseFloat(msg.payload[i].INV1) || \"null\",\n                 parseFloat(msg.payload[i].INV2) || \"null\",\n                 parseFloat(msg.payload[i].INV3) || \"null\",\n                 parseFloat(msg.payload[i].INV4) || \"null\",\n                 parseFloat(msg.payload[i].INV5) || \"null\",\n                 parseFloat(msg.payload[i].INV6) || \"null\",\n                 parseFloat(msg.payload[i].INV7) || \"null\",\n                 parseFloat(msg.payload[i].INV8) || \"null\",\n                 parseFloat(msg.payload[i].INV9) || \"null\",\n                 parseFloat(msg.payload[i].INV10) || \"null\",\n                 parseFloat(msg.payload[i].INV11) || \"null\",\n                 parseFloat(msg.payload[i].INV12) || \"null\",\n                 parseFloat(msg.payload[i].INV13) || \"null\",\n                 parseFloat(msg.payload[i].INV14) || \"null\",]\n                             \n                             \n                             \n                             \n                             \n                \n   var obj={\n    Plant_Name,\n    S_NO,\n    INV_NO\n}\n      \narray.push(obj)     \n      }\n}\nmsg.columns = column\nmsg.payload=payload_array\n\nflow.set(\"INV_CAPACITY\", capacity);\nflow.set(\"plant_info\",array) \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 1320,
+        "wires": [
+            [
+                "47ee2a51142660cc"
+            ]
+        ]
+    },
+    {
+        "id": "dc85ef8cf7f81869",
+        "type": "function",
+        "z": "fb5bfb14f47e3d76",
+        "name": "calculation logic",
+        "func": "var inv_cap = flow.get(\"INV_CAPACITY\");\nvar array = []\nvar Total_exp_WR1 = 0\nvar Total_exp_WR2 = 0\nvar Total_exp_WR3 = 0\nvar Total_exp_WR4 = 0\nvar Total_exp_WR5 = 0\nvar Total_exp_WR6 = 0\nvar Total_exp_WR7 = 0\nvar Total_exp_WR8 = 0\nvar Total_exp_WR9 = 0\nvar Total_exp_WR10 = 0\nvar Total_exp_WR11 = 0\nvar Total_exp_WR12 = 0\nvar Total_exp_WR13 = 0\nvar Total_exp_WR14 = 0\nvar Total_exp_WR15 = 0\nvar Total_exp_WR16 = 0\nvar Total_exp_WR17 = 0\nvar Total_exp_WR18 = 0\nvar Total_exp_WR19 = 0\nvar Total_exp_WR20 = 0\nvar Total_exp_WR21 = 0\nvar Total_exp_WR22 = 0\nvar Total_exp_WR23 = 0\nvar Total_exp_WR24 = 0\nvar Total_exp_WR25 = 0\nvar Total_exp_WR26 = 0\nvar Total_exp_WR27 = 0\nvar Total_exp_INV1 = 0\nvar Total_exp_INV2 = 0\nvar Total_exp_INV3 = 0\nvar Total_exp_INV4 = 0\nvar Total_exp_INV5 = 0\nvar Total_exp_INV6 = 0\nvar Total_exp_INV7 = 0\nvar Total_exp_INV8 = 0\nvar Total_exp_INV9 = 0\nvar Total_exp_INV10 = 0\nvar Total_exp_INV11 = 0\nvar Total_exp_INV12 = 0\nvar Total_exp_INV13 = 0\nvar Total_exp_INV14 = 0\n\n\n\nvar Total_ACT_WR1 = 0\nvar Total_ACT_WR2 = 0\nvar Total_ACT_WR3 = 0\nvar Total_ACT_WR4 = 0\nvar Total_ACT_WR5 = 0\nvar Total_ACT_WR6 = 0\nvar Total_ACT_WR7 = 0\nvar Total_ACT_WR8 = 0\nvar Total_ACT_WR9 = 0\nvar Total_ACT_WR10 = 0\nvar Total_ACT_WR11 = 0\nvar Total_ACT_WR12 = 0\nvar Total_ACT_WR13 = 0\nvar Total_ACT_WR14 = 0\nvar Total_ACT_WR15 = 0\nvar Total_ACT_WR16 = 0\nvar Total_ACT_WR17 = 0\nvar Total_ACT_WR18 = 0\nvar Total_ACT_WR19 = 0\nvar Total_ACT_WR20 = 0\nvar Total_ACT_WR21 = 0\nvar Total_ACT_WR22 = 0\nvar Total_ACT_WR23 = 0\nvar Total_ACT_WR24 = 0\nvar Total_ACT_WR25 = 0\nvar Total_ACT_WR26 = 0\nvar Total_ACT_WR27 = 0\nvar Total_ACT_INV1 = 0\nvar Total_ACT_INV2 = 0\nvar Total_ACT_INV3 = 0\nvar Total_ACT_INV4 = 0\nvar Total_ACT_INV5 = 0\nvar Total_ACT_INV6 = 0\nvar Total_ACT_INV7 = 0\nvar Total_ACT_INV8 = 0\nvar Total_ACT_INV9 = 0\nvar Total_ACT_INV10 = 0\nvar Total_ACT_INV11 = 0\nvar Total_ACT_INV12 = 0\nvar Total_ACT_INV13 = 0\nvar Total_ACT_INV14 = 0\n\nvar Total_gen_loss_WR1 = 0\nvar Total_gen_loss_WR2 = 0\nvar Total_gen_loss_WR3 = 0\nvar Total_gen_loss_WR4 = 0\nvar Total_gen_loss_WR5 = 0\nvar Total_gen_loss_WR6 = 0\nvar Total_gen_loss_WR7 = 0\nvar Total_gen_loss_WR8 = 0\nvar Total_gen_loss_WR9 = 0\nvar Total_gen_loss_WR10 = 0\nvar Total_gen_loss_WR11 = 0\nvar Total_gen_loss_WR12 = 0\nvar Total_gen_loss_WR13 = 0\nvar Total_gen_loss_WR14 = 0\nvar Total_gen_loss_WR15 = 0\nvar Total_gen_loss_WR16 = 0\nvar Total_gen_loss_WR17 = 0\nvar Total_gen_loss_WR18 = 0\nvar Total_gen_loss_WR19 = 0\nvar Total_gen_loss_WR20 = 0\nvar Total_gen_loss_WR21 = 0\nvar Total_gen_loss_WR22 = 0\nvar Total_gen_loss_WR23 = 0\nvar Total_gen_loss_WR24 = 0\nvar Total_gen_loss_WR25 = 0\nvar Total_gen_loss_WR26 = 0\nvar Total_gen_loss_WR27 = 0\nvar Total_gen_loss_INV1 = 0\nvar Total_gen_loss_INV2 = 0\nvar Total_gen_loss_INV3 = 0\nvar Total_gen_loss_INV4 = 0\nvar Total_gen_loss_INV5 = 0\nvar Total_gen_loss_INV6 = 0\nvar Total_gen_loss_INV7 = 0\nvar Total_gen_loss_INV8 = 0\nvar Total_gen_loss_INV9 = 0\nvar Total_gen_loss_INV10 = 0\nvar Total_gen_loss_INV11 = 0\nvar Total_gen_loss_INV12 = 0\nvar Total_gen_loss_INV13 = 0\nvar Total_gen_loss_INV14 = 0\n\n\nvar obj\nfor (var i = 0; i < msg.payload.length; i++) {\n    if (i < msg.payload.length) {\n        var DATE = msg.payload[i].date\n        var WR_1_kwh = (msg.payload[i][\"WR 1\"]/1000)\n        var WR_1_Sp_Y = msg.payload[i][\"Specific Yield_WR 1\"]\n        var WR_2_kwh = (msg.payload[i][\"WR 2\"]/1000)\n        var WR_2_Sp_Y = msg.payload[i][\"Specific Yield_WR 2\"]\n        var WR_3_kwh = (msg.payload[i][\"WR 3\"]/1000)\n        var WR_3_Sp_Y = msg.payload[i][\"Specific Yield_WR 3\"]\n        var WR_4_kwh = (msg.payload[i][\"WR 4\"]/1000)\n        var WR_4_Sp_Y = msg.payload[i][\"Specific Yield_WR 4\"]\n        var WR_5_kwh = (msg.payload[i][\"WR 5\"]/1000)\n        var WR_5_Sp_Y = msg.payload[i][\"Specific Yield_WR 5\"]\n        var WR_6_kwh = (msg.payload[i][\"WR 6\"]/1000)\n        var WR_6_Sp_Y = msg.payload[i][\"Specific Yield_WR 6\"]\n        var WR_7_kwh = (msg.payload[i][\"WR 7\"]/1000)\n        var WR_7_Sp_Y = msg.payload[i][\"Specific Yield_WR 7\"]\n        var WR_8_kwh = (msg.payload[i][\"WR 8\"]/1000)\n        var WR_8_Sp_Y = msg.payload[i][\"Specific Yield_WR 8\"]\n        var WR_9_kwh = (msg.payload[i][\"WR 9\"]/1000)\n        var WR_9_Sp_Y = msg.payload[i][\"Specific Yield_WR 9\"]\n        var WR_10_kwh = (msg.payload[i][\"WR 10\"]/1000)\n        var WR_10_Sp_Y = msg.payload[i][\"Specific Yield_WR 10\"]\n        var WR_11_kwh = (msg.payload[i][\"WR 11\"]/1000)\n        var WR_11_Sp_Y = msg.payload[i][\"Specific Yield_WR 11\"]\n        var WR_12_kwh = (msg.payload[0][\"WR 12\"]/1000)\n        var WR_12_Sp_Y = msg.payload[0][\"Specific Yield_WR 1\"]\n\n        var WR_13_kwh = (msg.payload[0][\"WR 13\"]/1000)\n              var WR_13_Sp_Y = msg.payload[0][\"Specific Yield_WR 13\"]\n\n        var WR_14_kwh = (msg.payload[0][\"WR 14\"]/1000)\n              var WR_14_Sp_Y = msg.payload[0][\"Specific Yield_WR 14\"]\n\n        var WR_15_kwh = (msg.payload[0][\"WR 15\"]/1000)\n              var WR_15_Sp_Y = msg.payload[0][\"Specific Yield_WR 15\"]\n\n        var WR_16_kwh = (msg.payload[0][\"WR 16\"]/1000)\n              var WR_16_Sp_Y = msg.payload[0][\"Specific Yield_WR 16\"]\n\n        var WR_17_kwh = (msg.payload[0][\"WR 17\"]/1000)\n              var WR_17_Sp_Y = msg.payload[0][\"Specific Yield_WR 17\"]\n\n        var WR_18_kwh = (msg.payload[0][\"WR 18\"]/1000)\n              var WR_18_Sp_Y = msg.payload[0][\"Specific Yield_WR 18\"]\n\n        var WR_19_kwh = (msg.payload[0][\"WR 19\"]/1000)\n              var WR_19_Sp_Y = msg.payload[0][\"Specific Yield_WR 19\"]\n\n        var WR_20_kwh = (msg.payload[0][\"WR 20\"]/1000)\n              var WR_20_Sp_Y = msg.payload[0][\"Specific Yield_WR 20\"]\n\n        var WR_21_kwh = (msg.payload[0][\"WR 21\"]/1000)\n              var WR_21_Sp_Y = msg.payload[0][\"Specific Yield_WR 21\"]\n\n        var WR_22_kwh = (msg.payload[0][\"WR 22\"]/1000)\n              var WR_22_Sp_Y = msg.payload[0][\"Specific Yield_WR 22\"]\n\n        var WR_23_kwh = (msg.payload[0][\"WR 23\"]/1000)\n              var WR_23_Sp_Y = msg.payload[0][\"Specific Yield_WR 23\"]\n\n        var WR_24_kwh = (msg.payload[0][\"WR 24\"]/1000)\n              var WR_24_Sp_Y = msg.payload[0][\"Specific Yield_WR 24\"]\n\n        var WR_25_kwh = (msg.payload[0][\"WR 25\"]/1000)\n              var WR_25_Sp_Y = msg.payload[0][\"Specific Yield_WR 25\"]\n\n        var WR_26_kwh = (msg.payload[0][\"WR 26\"]/1000)\n              var WR_26_Sp_Y = msg.payload[0][\"Specific Yield_WR 26\"]\n\n        var WR_27_kwh = (msg.payload[0][\"WR 27\"]/1000)\n              var WR_27_Sp_Y = msg.payload[0][\"Specific Yield_WR 27\"]\n\n        var INV_1_kwh = (msg.payload[i][\"INV 1\"] / 1000) || (msg.payload[i][\"INV1-W\"]/1000)\n        var INV_1_Sp_Y = msg.payload[i][\"Specific Yield_INV 1\"]||( msg.payload[i][\"Specific Yield_INV1-W\"])\n        var INV_2_kwh = (msg.payload[i][\"INV 2\"]/1000)||(msg.payload[i][\"INV2-W\"]/1000)\n        var INV_2_Sp_Y = msg.payload[i][\"Specific Yield_INV 2\"]||( msg.payload[i][\"Specific Yield_INV2-W\"])\n        var INV_3_kwh = (msg.payload[i][\"INV 3\"]/1000)||(msg.payload[i][\"INV3-W\"]/1000)\n        var INV_3_Sp_Y = msg.payload[i][\"Specific Yield_INV 3\"]||( msg.payload[i][\"Specific Yield_INV3-W\"])\n        var INV_4_kwh = (msg.payload[i][\"INV 4\"]/1000)||(msg.payload[i][\"INV4-W\"]/1000)\n        var INV_4_Sp_Y = msg.payload[i][\"Specific Yield_INV 4\"]||( msg.payload[i][\"Specific Yield_INV4-W\"])\n        var INV_5_kwh = (msg.payload[i][\"INV 5\"]/1000)||(msg.payload[i][\"INV5-W\"]/1000)\n        var INV_5_Sp_Y = msg.payload[i][\"Specific Yield_INV 5\"]||( msg.payload[i][\"Specific Yield_INV5-W\"])\n        var INV_6_kwh = (msg.payload[i][\"INV 6\"]/1000)||(msg.payload[i][\"INV6-W\"]/1000)\n        var INV_6_Sp_Y = msg.payload[i][\"Specific Yield_INV 6\"]||( msg.payload[i][\"Specific Yield_INV6-W\"])\n        var INV_7_kwh = (msg.payload[i][\"INV 7\"]/1000)||(msg.payload[i][\"INV7-W\"]/1000)\n        var INV_7_Sp_Y = msg.payload[i][\"Specific Yield_INV 7\"]||( msg.payload[i][\"Specific Yield_INV7-W\"])\n        var INV_8_kwh = (msg.payload[i][\"INV 8\"] / 1000) || (msg.payload[i][\"INV8-O\"]/1000)\n        var INV_8_Sp_Y = msg.payload[i][\"Specific Yield_INV 8\"]||( msg.payload[i][\"Specific Yield_INV8-O\"])\n        var INV_9_kwh = (msg.payload[i][\"INV 9\"]/1000)||(msg.payload[i][\"INV9-O\"]/1000)\n        var INV_9_Sp_Y = msg.payload[i][\"Specific Yield_INV 9\"]||( msg.payload[i][\"Specific Yield_INV9-O\"])\n        var INV_10_kwh = (msg.payload[i][\"INV 10\"]/1000)||(msg.payload[i][\"INV10-O\"]/1000)\n        var INV_10_Sp_Y = msg.payload[i][\"Specific Yield_INV 10\"]||( msg.payload[i][\"Specific Yield_INV10-O\"])\n        var INV_11_kwh = (msg.payload[i][\"INV 11\"]/1000)||(msg.payload[i][\"INV11-O\"]/1000)\n        var INV_11_Sp_Y = msg.payload[i][\"Specific Yield_INV 11\"]||( msg.payload[i][\"Specific Yield_INV11-O\"])\n        var INV_12_kwh = (msg.payload[0][\"INV 12\"]/1000)||(msg.payload[0][\"INV12-O\"]/1000)\n        var INV_12_Sp_Y = msg.payload[0][\"Specific Yield_INV 1\"] || (msg.payload[0][\"Specific Yield_INV12-O\"])\n        var INV_13_kwh = (msg.payload[0][\"INV 13\"]/1000)||(msg.payload[0][\"INV13-W\"]/1000)\n        var INV_13_Sp_Y = msg.payload[0][\"Specific Yield_INV 13\"]||( msg.payload[0][\"Specific Yield_INV13-W\"])\n        var INV_14_kwh = (msg.payload[0][\"INV 14\"]/1000)||(msg.payload[0][\"INV14-W\"]/1000)\n        var INV_14_Sp_Y = msg.payload[0][\"Specific Yield_INV 14\"] || (msg.payload[0][\"Specific Yield_INV14-W\"])\n\n       \n\n        var Max_sy = Math.max(WR_1_Sp_Y || 0, WR_2_Sp_Y || 0, WR_3_Sp_Y || 0, WR_4_Sp_Y || 0, WR_5_Sp_Y || 0, WR_6_Sp_Y || 0, WR_7_Sp_Y || 0, WR_8_Sp_Y || 0, WR_9_Sp_Y || 0, WR_10_Sp_Y || 0,\n            WR_11_Sp_Y || 0, WR_12_Sp_Y || 0, WR_13_Sp_Y || 0, WR_14_Sp_Y || 0, WR_15_Sp_Y || 0, WR_16_Sp_Y || 0, WR_17_Sp_Y || 0, WR_18_Sp_Y || 0, WR_19_Sp_Y || 0, WR_20_Sp_Y || 0,\n            WR_21_Sp_Y || 0, WR_22_Sp_Y || 0, WR_23_Sp_Y || 0, WR_24_Sp_Y || 0, WR_25_Sp_Y || 0, WR_26_Sp_Y || 0, WR_27_Sp_Y || 0, INV_1_Sp_Y || 0, INV_2_Sp_Y || 0, INV_3_Sp_Y || 0, INV_4_Sp_Y || 0, INV_5_Sp_Y || 0, INV_6_Sp_Y || 0, INV_7_Sp_Y || 0, INV_8_Sp_Y || 0, INV_9_Sp_Y || 0, INV_10_Sp_Y || 0,\n            INV_11_Sp_Y || 0, INV_12_Sp_Y || 0, INV_13_Sp_Y || 0, INV_14_Sp_Y || 0)\n\n        var WR1_INV_CAPACITY = inv_cap[0]\n        var WR2_INV_CAPACITY = inv_cap[1]\n        var WR3_INV_CAPACITY = inv_cap[2]\n        var WR4_INV_CAPACITY = inv_cap[3]\n        var WR5_INV_CAPACITY = inv_cap[4]\n        var WR6_INV_CAPACITY = inv_cap[5]\n        var WR7_INV_CAPACITY = inv_cap[6]\n        var WR8_INV_CAPACITY = inv_cap[7]\n        var WR9_INV_CAPACITY = inv_cap[8]\n        var WR10_INV_CAPACITY = inv_cap[9]\n        var WR11_INV_CAPACITY = inv_cap[10]\n        var WR12_INV_CAPACITY = inv_cap[11]\n        var WR13_INV_CAPACITY = inv_cap[12]\n        var WR14_INV_CAPACITY = inv_cap[13]\n        var WR15_INV_CAPACITY = inv_cap[14]\n        var WR16_INV_CAPACITY = inv_cap[15]\n        var WR17_INV_CAPACITY = inv_cap[16]\n        var WR18_INV_CAPACITY = inv_cap[17]\n        var WR19_INV_CAPACITY = inv_cap[18]\n        var WR20_INV_CAPACITY = inv_cap[19]\n        var WR21_INV_CAPACITY = inv_cap[20]\n        var WR22_INV_CAPACITY = inv_cap[21]\n        var WR23_INV_CAPACITY = inv_cap[22]\n        var WR24_INV_CAPACITY = inv_cap[23]\n        var WR25_INV_CAPACITY = inv_cap[24]\n        var WR26_INV_CAPACITY = inv_cap[25]\n        var WR27_INV_CAPACITY = inv_cap[26]\n        var INV1_INV_CAPACITY = inv_cap[0]\n        var INV2_INV_CAPACITY = inv_cap[1]\n        var INV3_INV_CAPACITY = inv_cap[2]\n        var INV4_INV_CAPACITY = inv_cap[3]\n        var INV5_INV_CAPACITY = inv_cap[4]\n        var INV6_INV_CAPACITY = inv_cap[5]\n        var INV7_INV_CAPACITY = inv_cap[6]\n        var INV8_INV_CAPACITY = inv_cap[7]\n        var INV9_INV_CAPACITY = inv_cap[8]\n        var INV10_INV_CAPACITY = inv_cap[9]\n        var INV11_INV_CAPACITY = inv_cap[10]\n        var INV12_INV_CAPACITY = inv_cap[11]\n        var INV13_INV_CAPACITY = inv_cap[12]\n        var INV14_INV_CAPACITY = inv_cap[13]\n  \n  \n\n        var Expected_gen_WR1 = Max_sy * WR1_INV_CAPACITY\n        var Expected_gen_WR2 = Max_sy * WR2_INV_CAPACITY\n        var Expected_gen_WR3 = Max_sy * WR3_INV_CAPACITY\n        var Expected_gen_WR4 = Max_sy * WR4_INV_CAPACITY\n        var Expected_gen_WR5 = Max_sy * WR5_INV_CAPACITY\n        var Expected_gen_WR6 = Max_sy * WR6_INV_CAPACITY\n        var Expected_gen_WR7 = Max_sy * WR7_INV_CAPACITY\n        var Expected_gen_WR8 = Max_sy * WR8_INV_CAPACITY\n        var Expected_gen_WR9 = Max_sy * WR9_INV_CAPACITY\n        var Expected_gen_WR10 = Max_sy * WR10_INV_CAPACITY\n        var Expected_gen_WR11 = Max_sy * WR11_INV_CAPACITY\n        var Expected_gen_WR12 = Max_sy * WR12_INV_CAPACITY\n        var Expected_gen_WR13 = Max_sy * WR13_INV_CAPACITY\n        var Expected_gen_WR14 = Max_sy * WR14_INV_CAPACITY\n        var Expected_gen_WR15 = Max_sy * WR15_INV_CAPACITY\n        var Expected_gen_WR16 = Max_sy * WR16_INV_CAPACITY\n        var Expected_gen_WR17 = Max_sy * WR17_INV_CAPACITY\n        var Expected_gen_WR18 = Max_sy * WR18_INV_CAPACITY\n        var Expected_gen_WR19 = Max_sy * WR19_INV_CAPACITY\n        var Expected_gen_WR20 = Max_sy * WR20_INV_CAPACITY\n        var Expected_gen_WR21 = Max_sy * WR21_INV_CAPACITY\n        var Expected_gen_WR22 = Max_sy * WR22_INV_CAPACITY\n        var Expected_gen_WR23 = Max_sy * WR23_INV_CAPACITY\n        var Expected_gen_WR24 = Max_sy * WR24_INV_CAPACITY\n        var Expected_gen_WR25 = Max_sy * WR25_INV_CAPACITY\n        var Expected_gen_WR26 = Max_sy * WR26_INV_CAPACITY\n        var Expected_gen_WR27 = Max_sy * WR27_INV_CAPACITY\n        var Expected_gen_INV1 = Max_sy * INV1_INV_CAPACITY\n        var Expected_gen_INV2 = Max_sy * INV2_INV_CAPACITY\n        var Expected_gen_INV3 = Max_sy * INV3_INV_CAPACITY\n        var Expected_gen_INV4 = Max_sy * INV4_INV_CAPACITY\n        var Expected_gen_INV5 = Max_sy * INV5_INV_CAPACITY\n        var Expected_gen_INV6 = Max_sy * INV6_INV_CAPACITY\n        var Expected_gen_INV7 = Max_sy * INV7_INV_CAPACITY\n        var Expected_gen_INV8 = Max_sy * INV8_INV_CAPACITY\n        var Expected_gen_INV9 = Max_sy * INV9_INV_CAPACITY\n        var Expected_gen_INV10 = Max_sy * INV10_INV_CAPACITY\n        var Expected_gen_INV11 = Max_sy * INV11_INV_CAPACITY\n        var Expected_gen_INV12 = Max_sy * INV12_INV_CAPACITY\n        var Expected_gen_INV13 = Max_sy * INV13_INV_CAPACITY\n        var Expected_gen_INV14 = Max_sy * INV14_INV_CAPACITY\n\n\n        Total_exp_WR1 = Total_exp_WR1 + Expected_gen_WR1\n        Total_exp_WR2 = Total_exp_WR2 + Expected_gen_WR2\n        Total_exp_WR3 = Total_exp_WR3 + Expected_gen_WR3\n        Total_exp_WR4 = Total_exp_WR4 + Expected_gen_WR4\n        Total_exp_WR5 = Total_exp_WR5 + Expected_gen_WR5\n        Total_exp_WR6 = Total_exp_WR6 + Expected_gen_WR6\n        Total_exp_WR7 = Total_exp_WR7 + Expected_gen_WR7\n        Total_exp_WR8 = Total_exp_WR8 + Expected_gen_WR8\n        Total_exp_WR9 = Total_exp_WR9 + Expected_gen_WR9\n        Total_exp_WR10 = Total_exp_WR10 + Expected_gen_WR10\n        Total_exp_WR11 = Total_exp_WR11 + Expected_gen_WR11\n        Total_exp_WR12 = Total_exp_WR12 + Expected_gen_WR12\n        Total_exp_WR13 = Total_exp_WR13 + Expected_gen_WR13\n        Total_exp_WR14 = Total_exp_WR14 + Expected_gen_WR14\n        Total_exp_WR15 = Total_exp_WR15 + Expected_gen_WR15\n        Total_exp_WR16 = Total_exp_WR16 + Expected_gen_WR16\n        Total_exp_WR17 = Total_exp_WR17 + Expected_gen_WR17\n        Total_exp_WR18 = Total_exp_WR18 + Expected_gen_WR18\n        Total_exp_WR19 = Total_exp_WR19 + Expected_gen_WR19\n        Total_exp_WR20 = Total_exp_WR20 + Expected_gen_WR20\n        Total_exp_WR21 = Total_exp_WR21 + Expected_gen_WR21\n        Total_exp_WR22 = Total_exp_WR22 + Expected_gen_WR22\n        Total_exp_WR23 = Total_exp_WR23 + Expected_gen_WR23\n        Total_exp_WR24 = Total_exp_WR24 + Expected_gen_WR24\n        Total_exp_WR25 = Total_exp_WR25 + Expected_gen_WR25\n        Total_exp_WR26 = Total_exp_WR26 + Expected_gen_WR26\n        Total_exp_WR27 = Total_exp_WR27 + Expected_gen_WR27\n        Total_exp_INV1 = Total_exp_INV1 + Expected_gen_INV1\n        Total_exp_INV2 = Total_exp_INV2 + Expected_gen_INV2\n        Total_exp_INV3 = Total_exp_INV3 + Expected_gen_INV3\n        Total_exp_INV4 = Total_exp_INV4 + Expected_gen_INV4\n        Total_exp_INV5 = Total_exp_INV5 + Expected_gen_INV5\n        Total_exp_INV6 = Total_exp_INV6 + Expected_gen_INV6\n        Total_exp_INV7 = Total_exp_INV7 + Expected_gen_INV7\n        Total_exp_INV8 = Total_exp_INV8 + Expected_gen_INV8\n        Total_exp_INV9 = Total_exp_INV9 + Expected_gen_INV9\n        Total_exp_INV10 = Total_exp_INV10 + Expected_gen_INV10\n        Total_exp_INV11 = Total_exp_INV11 + Expected_gen_INV11\n        Total_exp_INV12 = Total_exp_INV12 + Expected_gen_INV12\n        Total_exp_INV13 = Total_exp_INV13 + Expected_gen_INV13\n        Total_exp_INV14 = Total_exp_INV14 + Expected_gen_INV14\n     \n\n        Total_ACT_WR1 = Total_ACT_WR1 + WR_1_kwh\n        Total_ACT_WR2 = Total_ACT_WR2 + WR_2_kwh\n        Total_ACT_WR3 = Total_ACT_WR3 + WR_3_kwh\n        Total_ACT_WR4 = Total_ACT_WR4 + WR_4_kwh\n        Total_ACT_WR5 = Total_ACT_WR5 + WR_5_kwh\n        Total_ACT_WR6 = Total_ACT_WR6 + WR_6_kwh\n        Total_ACT_WR7 = Total_ACT_WR7 + WR_7_kwh\n        Total_ACT_WR8 = Total_ACT_WR8 + WR_8_kwh\n        Total_ACT_WR9 = Total_ACT_WR9 + WR_9_kwh\n        Total_ACT_WR10 = Total_ACT_WR10 + WR_10_kwh\n        Total_ACT_WR11 = Total_ACT_WR11 + WR_11_kwh\n        Total_ACT_WR12 = Total_ACT_WR12 + WR_12_kwh\n        Total_ACT_WR13 = Total_ACT_WR13 + WR_13_kwh\n        Total_ACT_WR14 = Total_ACT_WR14 + WR_14_kwh\n        Total_ACT_WR15 = Total_ACT_WR15 + WR_15_kwh\n        Total_ACT_WR16 = Total_ACT_WR16 + WR_16_kwh\n        Total_ACT_WR17 = Total_ACT_WR17 + WR_17_kwh\n        Total_ACT_WR18 = Total_ACT_WR18 + WR_18_kwh\n        Total_ACT_WR19 = Total_ACT_WR19 + WR_19_kwh\n        Total_ACT_WR20 = Total_ACT_WR20 + WR_20_kwh\n        Total_ACT_WR21 = Total_ACT_WR21 + WR_21_kwh\n        Total_ACT_WR22 = Total_ACT_WR22 + WR_22_kwh\n        Total_ACT_WR23 = Total_ACT_WR23 + WR_23_kwh\n        Total_ACT_WR24 = Total_ACT_WR24 + WR_24_kwh\n        Total_ACT_WR25 = Total_ACT_WR25 + WR_25_kwh\n        Total_ACT_WR26 = Total_ACT_WR26 + WR_26_kwh\n        Total_ACT_WR27 = Total_ACT_WR27 + WR_27_kwh\n        Total_ACT_INV1 = Total_ACT_INV1 + INV_1_kwh\n        Total_ACT_INV2 = Total_ACT_INV2 + INV_2_kwh\n        Total_ACT_INV3 = Total_ACT_INV3 + INV_3_kwh\n        Total_ACT_INV4 = Total_ACT_INV4 + INV_4_kwh\n        Total_ACT_INV5 = Total_ACT_INV5 + INV_5_kwh\n        Total_ACT_INV6 = Total_ACT_INV6 + INV_6_kwh\n        Total_ACT_INV7 = Total_ACT_INV7 + INV_7_kwh\n        Total_ACT_INV8 = Total_ACT_INV8 + INV_8_kwh\n        Total_ACT_INV9 = Total_ACT_INV9 + INV_9_kwh\n        Total_ACT_INV10 = Total_ACT_INV10 + INV_10_kwh\n        Total_ACT_INV11 = Total_ACT_INV11 + INV_11_kwh\n        Total_ACT_INV12 = Total_ACT_INV12 + INV_12_kwh\n        Total_ACT_INV13 = Total_ACT_INV13 + INV_13_kwh\n        Total_ACT_INV14 = Total_ACT_INV14 + INV_14_kwh\n    \n        if ((Expected_gen_WR1 != WR_1_kwh) || (WR_1_kwh == 0)) { var GEN_LOSS_WR1 = (Expected_gen_WR1 - WR_1_kwh) } else { GEN_LOSS_WR1 = \"0\" }\n        if ((Expected_gen_WR2 != WR_2_kwh) || (WR_2_kwh == 0)) { var GEN_LOSS_WR2 = (Expected_gen_WR2 - WR_2_kwh) } else { GEN_LOSS_WR2 = \"0\" }\n        if ((Expected_gen_WR3 != WR_3_kwh) || (WR_3_kwh == 0)) { var GEN_LOSS_WR3 = (Expected_gen_WR3 - WR_3_kwh) } else { GEN_LOSS_WR3 = \"0\" }\n        if ((Expected_gen_WR4 != WR_4_kwh) || (WR_4_kwh == 0)) { var GEN_LOSS_WR4 = (Expected_gen_WR4 - WR_4_kwh) } else { GEN_LOSS_WR4 = \"0\" }\n        if ((Expected_gen_WR5 != WR_5_kwh) || (WR_5_kwh == 0)) { var GEN_LOSS_WR5 = (Expected_gen_WR5 - WR_5_kwh) } else { GEN_LOSS_WR5 = \"0\" }\n        if ((Expected_gen_WR6 != WR_6_kwh) || (WR_6_kwh == 0)) { var GEN_LOSS_WR6 = (Expected_gen_WR6 - WR_6_kwh) } else { GEN_LOSS_WR6 = \"0\" }\n        if ((Expected_gen_WR7 != WR_7_kwh) || (WR_7_kwh == 0)) { var GEN_LOSS_WR7 = (Expected_gen_WR7 - WR_7_kwh) } else { GEN_LOSS_WR7 = \"0\" }\n        if ((Expected_gen_WR8 != WR_8_kwh) || (WR_8_kwh == 0)) { var GEN_LOSS_WR8 = (Expected_gen_WR8 - WR_8_kwh) } else { GEN_LOSS_WR8 = \"0\" }\n        if ((Expected_gen_WR9 != WR_9_kwh) || (WR_9_kwh == 0)) { var GEN_LOSS_WR9 = (Expected_gen_WR9 - WR_9_kwh) } else { GEN_LOSS_WR9 = \"0\" }\n        if ((Expected_gen_WR10 != WR_10_kwh) || (WR_10_kwh == 0)) { var GEN_LOSS_WR10 = (Expected_gen_WR10 - WR_10_kwh) } else { GEN_LOSS_WR10 = \"0\" }\n        if ((Expected_gen_WR11 != WR_11_kwh) || (WR_11_kwh == 0)) { var GEN_LOSS_WR11 = (Expected_gen_WR11 - WR_11_kwh) } else { GEN_LOSS_WR11 = \"0\" }\n        if ((Expected_gen_WR12 != WR_12_kwh) || (WR_12_kwh == 0)) { var GEN_LOSS_WR12 = (Expected_gen_WR12 - WR_12_kwh) } else { GEN_LOSS_WR12 = \"0\" }\n        if ((Expected_gen_WR13 != WR_13_kwh) || (WR_13_kwh == 0)) { var GEN_LOSS_WR13 = (Expected_gen_WR13 - WR_13_kwh) } else { GEN_LOSS_WR13 = \"0\" }\n        if ((Expected_gen_WR14 != WR_14_kwh) || (WR_14_kwh == 0)) { var GEN_LOSS_WR14 = (Expected_gen_WR14 - WR_14_kwh) } else { GEN_LOSS_WR14 = \"0\" }\n        if ((Expected_gen_WR15 != WR_15_kwh) || (WR_15_kwh == 0)) { var GEN_LOSS_WR15 = (Expected_gen_WR15 - WR_15_kwh) } else { GEN_LOSS_WR15 = \"0\" }\n        if ((Expected_gen_WR16 != WR_16_kwh) || (WR_16_kwh == 0)) { var GEN_LOSS_WR16 = (Expected_gen_WR16 - WR_16_kwh) } else { GEN_LOSS_WR16 = \"0\" }\n        if ((Expected_gen_WR17 != WR_17_kwh) || (WR_17_kwh == 0)) { var GEN_LOSS_WR17 = (Expected_gen_WR17 - WR_17_kwh) } else { GEN_LOSS_WR17 = \"0\" }\n        if ((Expected_gen_WR18 != WR_18_kwh) || (WR_18_kwh == 0)) { var GEN_LOSS_WR18 = (Expected_gen_WR18 - WR_18_kwh) } else { GEN_LOSS_WR18 = \"0\" }\n        if ((Expected_gen_WR19 != WR_19_kwh) || (WR_19_kwh == 0)) { var GEN_LOSS_WR19 = (Expected_gen_WR19 - WR_19_kwh) } else { GEN_LOSS_WR19 = \"0\" }\n        if ((Expected_gen_WR20 != WR_20_kwh) || (WR_20_kwh == 0)) { var GEN_LOSS_WR20 = (Expected_gen_WR10 - WR_20_kwh) } else { GEN_LOSS_WR20 = \"0\" }\n        if ((Expected_gen_WR21 != WR_21_kwh) || (WR_21_kwh == 0)) { var GEN_LOSS_WR21 = (Expected_gen_WR21 - WR_21_kwh) } else { GEN_LOSS_WR21 = \"0\" }\n        if ((Expected_gen_WR22 != WR_22_kwh) || (WR_22_kwh == 0)) { var GEN_LOSS_WR22 = (Expected_gen_WR22 - WR_22_kwh) } else { GEN_LOSS_WR22 = \"0\" }\n        if ((Expected_gen_WR23 != WR_23_kwh) || (WR_23_kwh == 0)) { var GEN_LOSS_WR23 = (Expected_gen_WR23 - WR_23_kwh) } else { GEN_LOSS_WR23 = \"0\" }\n        if ((Expected_gen_WR24 != WR_24_kwh) || (WR_24_kwh == 0)) { var GEN_LOSS_WR24 = (Expected_gen_WR24 - WR_24_kwh) } else { GEN_LOSS_WR24 = \"0\" }\n        if ((Expected_gen_WR25 != WR_25_kwh) || (WR_25_kwh == 0)) { var GEN_LOSS_WR25 = (Expected_gen_WR25 - WR_25_kwh) } else { GEN_LOSS_WR25 = \"0\" }\n        if ((Expected_gen_WR26 != WR_26_kwh) || (WR_26_kwh == 0)) { var GEN_LOSS_WR26 = (Expected_gen_WR26 - WR_26_kwh) } else { GEN_LOSS_WR26 = \"0\" }\n        if ((Expected_gen_WR27 != WR_27_kwh) || (WR_27_kwh == 0)) { var GEN_LOSS_WR27 = (Expected_gen_WR27 - WR_27_kwh) } else { GEN_LOSS_WR27 = \"0\" }\n        if ((Expected_gen_INV1 != INV_1_kwh) || (INV_1_kwh == 0)) { var GEN_LOSS_INV1 = (Expected_gen_INV1 - INV_1_kwh) } else { GEN_LOSS_INV1 = \"0\" }\n        if ((Expected_gen_INV2 != INV_2_kwh) || (INV_2_kwh == 0)) { var GEN_LOSS_INV2 = (Expected_gen_INV2 - INV_2_kwh) } else { GEN_LOSS_INV2 = \"0\" }\n        if ((Expected_gen_INV3 != INV_3_kwh) || (INV_3_kwh == 0)) { var GEN_LOSS_INV3 = (Expected_gen_INV3 - INV_3_kwh) } else { GEN_LOSS_INV3 = \"0\" }\n        if ((Expected_gen_INV4 != INV_4_kwh) || (INV_4_kwh == 0)) { var GEN_LOSS_INV4 = (Expected_gen_INV4 - INV_4_kwh) } else { GEN_LOSS_INV4 = \"0\" }\n        if ((Expected_gen_INV5 != INV_5_kwh) || (INV_5_kwh == 0)) { var GEN_LOSS_INV5 = (Expected_gen_INV5 - INV_5_kwh) } else { GEN_LOSS_INV5 = \"0\" }\n        if ((Expected_gen_INV6 != INV_6_kwh) || (INV_6_kwh == 0)) { var GEN_LOSS_INV6 = (Expected_gen_INV6 - INV_6_kwh) } else { GEN_LOSS_INV6 = \"0\" }\n        if ((Expected_gen_INV7 != INV_7_kwh) || (INV_7_kwh == 0)) { var GEN_LOSS_INV7 = (Expected_gen_INV7 - INV_7_kwh) } else { GEN_LOSS_INV7 = \"0\" }\n        if ((Expected_gen_INV8 != INV_8_kwh) || (INV_8_kwh == 0)) { var GEN_LOSS_INV8 = (Expected_gen_INV8 - INV_8_kwh) } else { GEN_LOSS_INV8 = \"0\" }\n        if ((Expected_gen_INV9 != INV_9_kwh) || (INV_9_kwh == 0)) { var GEN_LOSS_INV9 = (Expected_gen_INV9 - INV_9_kwh) } else { GEN_LOSS_INV9 = \"0\" }\n        if ((Expected_gen_INV10 != INV_10_kwh) || (INV_10_kwh == 0)) { var GEN_LOSS_INV10 = (Expected_gen_INV10 - INV_10_kwh) } else { GEN_LOSS_INV10 = \"0\" }\n        if ((Expected_gen_INV11 != INV_11_kwh) || (INV_11_kwh == 0)) { var GEN_LOSS_INV11 = (Expected_gen_INV11 - INV_11_kwh) } else { GEN_LOSS_INV11 = \"0\" }\n        if ((Expected_gen_INV12 != INV_12_kwh) || (INV_12_kwh == 0)) { var GEN_LOSS_INV12 = (Expected_gen_INV12 - INV_12_kwh) } else { GEN_LOSS_INV12 = \"0\" }\n        if ((Expected_gen_INV13 != INV_13_kwh) || (INV_13_kwh == 0)) { var GEN_LOSS_INV13 = (Expected_gen_INV13 - INV_13_kwh) } else { GEN_LOSS_INV13 = \"0\" }\n        if ((Expected_gen_INV14 != INV_14_kwh) || (INV_14_kwh == 0)) { var GEN_LOSS_INV14 = (Expected_gen_INV14 - INV_14_kwh) } else { GEN_LOSS_INV14 = \"0\" }\n\n\n        Total_gen_loss_WR1 = Total_gen_loss_WR1 + (Expected_gen_WR1 - WR_1_kwh)\n        Total_gen_loss_WR2 = Total_gen_loss_WR2 + (Expected_gen_WR2 - WR_2_kwh)\n        Total_gen_loss_WR3 = Total_gen_loss_WR3 + (Expected_gen_WR3 - WR_3_kwh)\n        Total_gen_loss_WR4 = Total_gen_loss_WR4 + (Expected_gen_WR4 - WR_4_kwh)\n        Total_gen_loss_WR5 = Total_gen_loss_WR5 + (Expected_gen_WR5 - WR_5_kwh)\n        Total_gen_loss_WR6 = Total_gen_loss_WR6 + (Expected_gen_WR6 - WR_6_kwh)\n        Total_gen_loss_WR7 = Total_gen_loss_WR7 + (Expected_gen_WR7 - WR_7_kwh)\n        Total_gen_loss_WR8 = Total_gen_loss_WR8 + (Expected_gen_WR8 - WR_8_kwh)\n        Total_gen_loss_WR9 = Total_gen_loss_WR9 + (Expected_gen_WR9 - WR_9_kwh)\n        Total_gen_loss_WR10 = Total_gen_loss_WR10 + (Expected_gen_WR10 - WR_10_kwh)\n        Total_gen_loss_WR11 = Total_gen_loss_WR11 + (Expected_gen_WR11 - WR_11_kwh)\n        Total_gen_loss_WR12 = Total_gen_loss_WR12 + (Expected_gen_WR12 - WR_12_kwh)\n        Total_gen_loss_WR13 = Total_gen_loss_WR13 + (Expected_gen_WR13 - WR_13_kwh)\n        Total_gen_loss_WR14 = Total_gen_loss_WR14 + (Expected_gen_WR14 - WR_14_kwh)\n        Total_gen_loss_WR15 = Total_gen_loss_WR15 + (Expected_gen_WR15 - WR_15_kwh)\n        Total_gen_loss_WR16 = Total_gen_loss_WR16 + (Expected_gen_WR16 - WR_16_kwh)\n        Total_gen_loss_WR17 = Total_gen_loss_WR17 + (Expected_gen_WR17 - WR_17_kwh)\n        Total_gen_loss_WR18 = Total_gen_loss_WR18 + (Expected_gen_WR18 - WR_18_kwh)\n        Total_gen_loss_WR19 = Total_gen_loss_WR19 + (Expected_gen_WR19 - WR_19_kwh)\n        Total_gen_loss_WR20 = Total_gen_loss_WR20 + (Expected_gen_WR20 - WR_20_kwh)\n        Total_gen_loss_WR21 = Total_gen_loss_WR21 + (Expected_gen_WR21 - WR_21_kwh)\n        Total_gen_loss_WR22 = Total_gen_loss_WR22 + (Expected_gen_WR22 - WR_22_kwh)\n        Total_gen_loss_WR23 = Total_gen_loss_WR23 + (Expected_gen_WR23 - WR_23_kwh)\n        Total_gen_loss_WR24 = Total_gen_loss_WR24 + (Expected_gen_WR24 - WR_24_kwh)\n        Total_gen_loss_WR25 = Total_gen_loss_WR25 + (Expected_gen_WR25 - WR_25_kwh)\n        Total_gen_loss_WR26 = Total_gen_loss_WR26 + (Expected_gen_WR26 - WR_26_kwh)\n        Total_gen_loss_WR27 = Total_gen_loss_WR27 + (Expected_gen_WR27 - WR_27_kwh)\n        Total_gen_loss_INV1 = Total_gen_loss_INV1 + (Expected_gen_INV1 - INV_1_kwh)\n        Total_gen_loss_INV2 = Total_gen_loss_INV2 + (Expected_gen_INV2 - INV_2_kwh)\n        Total_gen_loss_INV3 = Total_gen_loss_INV3 + (Expected_gen_INV3 - INV_3_kwh)\n        Total_gen_loss_INV4 = Total_gen_loss_INV4 + (Expected_gen_INV4 - INV_4_kwh)\n        Total_gen_loss_INV5 = Total_gen_loss_INV5 + (Expected_gen_INV5 - INV_5_kwh)\n        Total_gen_loss_INV6 = Total_gen_loss_INV6 + (Expected_gen_INV6 - INV_6_kwh)\n        Total_gen_loss_INV7 = Total_gen_loss_INV7 + (Expected_gen_INV7 - INV_7_kwh)\n        Total_gen_loss_INV8 = Total_gen_loss_INV8 + (Expected_gen_INV8 - INV_8_kwh)\n        Total_gen_loss_INV9 = Total_gen_loss_INV9 + (Expected_gen_INV9 - INV_9_kwh)\n        Total_gen_loss_INV10 = Total_gen_loss_INV10 + (Expected_gen_INV10 - INV_10_kwh)\n        Total_gen_loss_INV11 = Total_gen_loss_INV11 + (Expected_gen_INV11 - INV_11_kwh)\n        Total_gen_loss_INV12 = Total_gen_loss_INV12 + (Expected_gen_INV12 - INV_12_kwh)\n        Total_gen_loss_INV13 = Total_gen_loss_INV13 + (Expected_gen_INV13 - INV_13_kwh)\n        Total_gen_loss_INV14 = Total_gen_loss_INV14 + (Expected_gen_INV14 - INV_14_kwh)\n     \n        var total_act_gen = [{\n            Total_ACT_WR1, Total_ACT_WR2, Total_ACT_WR3, Total_ACT_WR4, Total_ACT_WR5, Total_ACT_WR6, Total_ACT_WR7, Total_ACT_WR8, Total_ACT_WR9, Total_ACT_WR10, Total_ACT_WR11, Total_ACT_WR12, Total_ACT_WR13,Total_ACT_WR14, Total_ACT_WR15, Total_ACT_WR16, Total_ACT_WR17, Total_ACT_WR18, Total_ACT_WR19, Total_ACT_WR20\n            , Total_ACT_WR21, Total_ACT_WR22, Total_ACT_WR23, Total_ACT_WR24, Total_ACT_WR25, Total_ACT_WR26, Total_ACT_WR27, Total_ACT_INV1, Total_ACT_INV2, Total_ACT_INV3, Total_ACT_INV4, Total_ACT_INV5, Total_ACT_INV6, Total_ACT_INV7, Total_ACT_INV8, Total_ACT_INV9, Total_ACT_INV10, Total_ACT_INV11, Total_ACT_INV12, Total_ACT_INV13, Total_ACT_INV14}]\n        var total_exp_gen = [Total_exp_WR1, Total_exp_WR2, Total_exp_WR3, Total_exp_WR4, Total_exp_WR5, Total_exp_WR6, Total_exp_WR7, Total_exp_WR8, Total_exp_WR9, Total_exp_WR10, Total_exp_WR11, Total_exp_WR12, Total_exp_WR13, Total_exp_WR14, Total_exp_WR15, Total_exp_WR16, Total_exp_WR17, Total_exp_WR18, Total_exp_WR19, Total_exp_WR20\n            , Total_exp_WR21, Total_exp_WR22, Total_exp_WR23, Total_exp_WR24, Total_exp_WR25, Total_exp_WR26, Total_exp_WR27, Total_exp_INV1, Total_exp_INV2, Total_exp_INV3, Total_exp_INV4, Total_exp_INV5, Total_exp_INV6, Total_exp_INV7, Total_exp_INV8, Total_exp_INV9, Total_exp_INV10, Total_exp_INV11, Total_exp_INV12, Total_exp_INV13, Total_exp_INV14 ]\n        var totalgen_loss = [Total_gen_loss_WR1, Total_gen_loss_WR2, Total_gen_loss_WR3, Total_gen_loss_WR4, Total_gen_loss_WR5, Total_gen_loss_WR6, Total_gen_loss_WR7, Total_gen_loss_WR8, Total_gen_loss_WR9, Total_gen_loss_WR10, Total_gen_loss_WR11, Total_gen_loss_WR12, Total_gen_loss_WR13, Total_gen_loss_WR14, Total_gen_loss_WR15, Total_gen_loss_WR16, Total_gen_loss_WR17, Total_gen_loss_WR18, Total_gen_loss_WR19, Total_gen_loss_WR20\n            , Total_gen_loss_WR21, Total_gen_loss_WR22, Total_gen_loss_WR23, Total_gen_loss_WR24, Total_gen_loss_WR25, Total_gen_loss_WR26, Total_gen_loss_WR27, Total_gen_loss_INV1, Total_gen_loss_INV2, Total_gen_loss_INV3, Total_gen_loss_INV4, Total_gen_loss_INV5, Total_gen_loss_INV6, Total_gen_loss_INV7, Total_gen_loss_INV8, Total_gen_loss_INV9, Total_gen_loss_INV10, Total_gen_loss_INV11, Total_gen_loss_INV12, Total_gen_loss_INV13, Total_gen_loss_INV14]\n\n\n        obj = {\n            DATE,\n            WR_1_kwh,\n            WR_1_Sp_Y,\n            WR_2_kwh,\n            WR_2_Sp_Y,\n            WR_3_kwh,\n            WR_3_Sp_Y,\n            WR_4_kwh,\n            WR_4_Sp_Y,\n            WR_5_kwh,\n            WR_5_Sp_Y,\n            WR_6_kwh,\n            WR_6_Sp_Y,\n            WR_7_kwh,\n            WR_7_Sp_Y,\n            WR_8_kwh,\n            WR_8_Sp_Y,\n            WR_9_kwh,\n            WR_9_Sp_Y,\n            WR_10_kwh,\n            WR_10_Sp_Y,\n            WR_11_kwh,\n            WR_11_Sp_Y,\n            WR_12_kwh,\n            WR_12_Sp_Y,\n            WR_13_kwh,\n            WR_13_Sp_Y,\n            WR_14_kwh,\n            WR_14_Sp_Y,\n            WR_15_kwh,\n            WR_15_Sp_Y,\n            WR_16_kwh,\n            WR_16_Sp_Y,\n            WR_17_kwh,\n            WR_17_Sp_Y,\n            WR_18_kwh,\n            WR_18_Sp_Y,\n            WR_19_kwh,\n            WR_19_Sp_Y,\n            WR_20_kwh,\n            WR_20_Sp_Y,\n            WR_21_kwh,\n            WR_21_Sp_Y,\n            WR_22_kwh,\n            WR_22_Sp_Y,\n            WR_23_kwh,\n            WR_23_Sp_Y,\n            WR_24_kwh,\n            WR_24_Sp_Y,\n            WR_25_kwh,\n            WR_25_Sp_Y,\n            WR_26_kwh,\n            WR_26_Sp_Y,\n            WR_27_kwh,\n            WR_27_Sp_Y, \n            INV_1_kwh,\n            INV_1_Sp_Y,\n            INV_2_kwh,\n            INV_2_Sp_Y,\n            INV_3_kwh,\n            INV_3_Sp_Y,\n            INV_4_kwh,\n            INV_4_Sp_Y,\n            INV_5_kwh,\n            INV_5_Sp_Y,\n            INV_6_kwh,\n            INV_6_Sp_Y,\n            INV_7_kwh,\n            INV_7_Sp_Y,\n            INV_8_kwh,\n            INV_8_Sp_Y,\n            INV_9_kwh,\n            INV_9_Sp_Y,\n            INV_10_kwh,\n            INV_10_Sp_Y,\n            INV_11_kwh,\n            INV_11_Sp_Y,\n            INV_12_kwh,\n            INV_12_Sp_Y,\n            INV_13_kwh,\n            INV_13_Sp_Y,\n            INV_14_kwh,\n            INV_14_Sp_Y,\n            Max_sy,\n\n            Expected_gen_WR1:Expected_gen_WR1.toFixed(2),\n            Expected_gen_WR2:Expected_gen_WR2.toFixed(2),\n            Expected_gen_WR3:Expected_gen_WR3.toFixed(2),\n            Expected_gen_WR4:Expected_gen_WR4.toFixed(2),\n            Expected_gen_WR5:Expected_gen_WR5.toFixed(2),\n            Expected_gen_WR6:Expected_gen_WR6.toFixed(2),\n            Expected_gen_WR7:Expected_gen_WR7.toFixed(2),\n            Expected_gen_WR8:Expected_gen_WR8.toFixed(2),\n            Expected_gen_WR9:Expected_gen_WR9.toFixed(2),\n            Expected_gen_WR10:Expected_gen_WR10.toFixed(2),\n            Expected_gen_WR11:Expected_gen_WR11.toFixed(2),\n            Expected_gen_WR12:Expected_gen_WR12.toFixed(2),\n            Expected_gen_WR13:Expected_gen_WR13.toFixed(2),\n            Expected_gen_WR14:Expected_gen_WR14.toFixed(2),\n            Expected_gen_WR15:Expected_gen_WR15.toFixed(2),\n            Expected_gen_WR16:Expected_gen_WR16.toFixed(2),\n            Expected_gen_WR17:Expected_gen_WR17.toFixed(2),\n            Expected_gen_WR18:Expected_gen_WR18.toFixed(2),\n            Expected_gen_WR19:Expected_gen_WR19.toFixed(2),\n            Expected_gen_WR20:Expected_gen_WR20.toFixed(2),\n            Expected_gen_WR21:Expected_gen_WR21.toFixed(2),\n            Expected_gen_WR22:Expected_gen_WR22.toFixed(2),\n            Expected_gen_WR23:Expected_gen_WR23.toFixed(2),\n            Expected_gen_WR24:Expected_gen_WR24.toFixed(2),\n            Expected_gen_WR25:Expected_gen_WR25.toFixed(2),\n            Expected_gen_WR26:Expected_gen_WR26.toFixed(2),\n            Expected_gen_WR27:Expected_gen_WR27.toFixed(2),\n            Expected_gen_INV1:Expected_gen_INV1,\n            Expected_gen_INV2:Expected_gen_INV2,\n            Expected_gen_INV3:Expected_gen_INV3,\n            Expected_gen_INV4:Expected_gen_INV4,\n            Expected_gen_INV5:Expected_gen_INV5,\n            Expected_gen_INV6:Expected_gen_INV6,\n            Expected_gen_INV7:Expected_gen_INV7,\n            Expected_gen_INV8:Expected_gen_INV8,\n            Expected_gen_INV9:Expected_gen_INV9,\n            Expected_gen_INV10:Expected_gen_INV10.toFixed(2),\n            Expected_gen_INV11:Expected_gen_INV11.toFixed(2),\n            Expected_gen_INV12:Expected_gen_INV12.toFixed(2),\n            Expected_gen_INV13:Expected_gen_INV13.toFixed(2),\n            Expected_gen_INV14:Expected_gen_INV14.toFixed(2),\n        \n            GEN_LOSS_WR1:parseFloat(GEN_LOSS_WR1).toFixed(2),\n            GEN_LOSS_WR2:parseFloat(GEN_LOSS_WR2).toFixed(2),\n            GEN_LOSS_WR3:parseFloat(GEN_LOSS_WR3).toFixed(2),\n            GEN_LOSS_WR4:parseFloat(GEN_LOSS_WR4).toFixed(2),\n            GEN_LOSS_WR5:parseFloat(GEN_LOSS_WR5).toFixed(2),\n            GEN_LOSS_WR6:parseFloat(GEN_LOSS_WR6).toFixed(2),\n            GEN_LOSS_WR7:parseFloat(GEN_LOSS_WR7).toFixed(2),\n            GEN_LOSS_WR8:parseFloat(GEN_LOSS_WR8).toFixed(2),\n            GEN_LOSS_WR9:parseFloat(GEN_LOSS_WR9).toFixed(2),\n            GEN_LOSS_WR10:parseFloat(GEN_LOSS_WR10).toFixed(2),\n            GEN_LOSS_WR11:parseFloat(GEN_LOSS_WR11).toFixed(2),\n            GEN_LOSS_WR12:parseFloat(GEN_LOSS_WR12).toFixed(2),\n            GEN_LOSS_WR13:parseFloat(GEN_LOSS_WR13).toFixed(2),\n            GEN_LOSS_WR14:parseFloat(GEN_LOSS_WR14).toFixed(2),\n            GEN_LOSS_WR15:parseFloat(GEN_LOSS_WR15).toFixed(2),\n            GEN_LOSS_WR16:parseFloat(GEN_LOSS_WR16).toFixed(2),\n            GEN_LOSS_WR17:parseFloat(GEN_LOSS_WR17).toFixed(2),\n            GEN_LOSS_WR18:parseFloat(GEN_LOSS_WR18).toFixed(2),\n            GEN_LOSS_WR19:parseFloat(GEN_LOSS_WR19).toFixed(2),\n            GEN_LOSS_WR20:parseFloat(GEN_LOSS_WR20).toFixed(2),\n            GEN_LOSS_WR21:parseFloat(GEN_LOSS_WR21).toFixed(2),\n            GEN_LOSS_WR22:parseFloat(GEN_LOSS_WR22).toFixed(2),\n            GEN_LOSS_WR23:parseFloat(GEN_LOSS_WR23).toFixed(2),\n            GEN_LOSS_WR24:parseFloat(GEN_LOSS_WR24).toFixed(2),\n            GEN_LOSS_WR25:parseFloat(GEN_LOSS_WR25).toFixed(2),\n            GEN_LOSS_WR26:parseFloat(GEN_LOSS_WR26).toFixed(2),\n            GEN_LOSS_WR27:parseFloat(GEN_LOSS_WR27).toFixed(2),\n            GEN_LOSS_INV1:parseFloat(GEN_LOSS_INV1).toFixed(2),\n            GEN_LOSS_INV2:parseFloat(GEN_LOSS_INV2).toFixed(2),\n            GEN_LOSS_INV3:parseFloat(GEN_LOSS_INV3).toFixed(2),\n            GEN_LOSS_INV4:parseFloat(GEN_LOSS_INV4).toFixed(2),\n            GEN_LOSS_INV5:parseFloat(GEN_LOSS_INV5).toFixed(2),\n            GEN_LOSS_INV6:parseFloat(GEN_LOSS_INV6).toFixed(2),\n            GEN_LOSS_INV7:parseFloat(GEN_LOSS_INV7).toFixed(2),\n            GEN_LOSS_INV8:parseFloat(GEN_LOSS_INV8).toFixed(2),\n            GEN_LOSS_INV9:parseFloat(GEN_LOSS_INV9).toFixed(2),\n            GEN_LOSS_INV10:parseFloat(GEN_LOSS_INV10).toFixed(2),\n            GEN_LOSS_INV11:parseFloat(GEN_LOSS_INV11).toFixed(2),\n            GEN_LOSS_INV12:parseFloat(GEN_LOSS_INV12).toFixed(2),\n            GEN_LOSS_INV13:parseFloat(GEN_LOSS_INV13).toFixed(2),\n            GEN_LOSS_INV14:parseFloat(GEN_LOSS_INV14).toFixed(2),\n          \n        }\n    }\n   \n    array.push(obj)\n\n}\nflow.set(\"out\", array);\nflow.set(\"totalgen_loss\", totalgen_loss)\nflow.set(\"total_act_gen\", total_act_gen)\nflow.set(\"total_exp_gen\", total_exp_gen)\n\nmsg.payload = array\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 920,
+        "y": 1380,
+        "wires": [
+            [
+                "3b58ca66da0a566a"
+            ]
+        ]
+    },
+    {
+        "id": "3b58ca66da0a566a",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 281",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 1380,
+        "wires": []
+    },
+    {
+        "id": "a96965039a7774cd",
+        "type": "debug",
+        "z": "fb5bfb14f47e3d76",
+        "name": "debug 282",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "47ee2a51142660cc",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "sep": ",",
+        "hdrin": false,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 870,
+        "y": 1320,
+        "wires": [
+            [
+                "60a05733853a1af1"
+            ]
+        ]
+    },
+    {
+        "id": "60a05733853a1af1",
+        "type": "csv",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 990,
+        "y": 1320,
+        "wires": [
+            [
+                "a96965039a7774cd",
+                "dc85ef8cf7f81869"
+            ]
+        ]
+    },
+    {
+        "id": "88574b323c1804bc",
+        "type": "delay",
+        "z": "fb5bfb14f47e3d76",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 1320,
+        "wires": [
+            [
+                "6974e529d0466412"
+            ]
+        ]
+    },
+    {
+        "id": "eeb9b3ecd7137b71",
+        "type": "comment",
+        "z": "fb5bfb14f47e3d76",
+        "name": "calculation",
+        "info": "",
+        "x": 660,
+        "y": 1260,
+        "wires": []
     }
 ]
