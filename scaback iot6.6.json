@@ -1,0 +1,757 @@
+[
+    {
+        "id": "68e5922aae9a83b7",
+        "type": "tab",
+        "label": "scaback IoT 6.6",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "75bed3df292d6aab",
+        "type": "fs-ops-dir",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "path": "/mnt/docker_common/scaback",
+        "pathType": "str",
+        "filter": "*",
+        "filterType": "str",
+        "dir": "payload",
+        "dirType": "msg",
+        "x": 260,
+        "y": 420,
+        "wires": [
+            [
+                "78a9e3aaccf44c95"
+            ]
+        ]
+    },
+    {
+        "id": "c6b6bac62401e9fb",
+        "type": "file in",
+        "z": "68e5922aae9a83b7",
+        "name": "scaback",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "2e2a935fa1981502"
+            ]
+        ]
+    },
+    {
+        "id": "2e2a935fa1981502",
+        "type": "csv",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 690,
+        "y": 400,
+        "wires": [
+            [
+                "6d34399ecf212823"
+            ]
+        ]
+    },
+    {
+        "id": "5165b8e5b0cf91b0",
+        "type": "template",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "fields,unit\nA.Ms.Watt,kW\nAlimTemperature,DEGC\nAT,DEGC\nAT_15,DEGC\nAT_60,DEGC\nB.Ms.Watt,kW\nBATT,\nBR,V\nCosPhi,\nE-Total,kWh\nEA+,kWh\nEA-,kWh\nEAF+,kWh\nEAF-,kWh\nEP+,kWh\nEP-,kWh\nEQ+lag,kWh\nEQ+lead,kWh\nEQ-lag,kWh\nEQ-lead,kWh\nEQC+,kWh\nEQC-,kWh\nEQI+,kWh\nEQI-,kWh\nES+,kWh\nES-,kWh\nE_DAY,kWh\nE_Month,kWh\nE_partial,kWh\nE_Q,kWh\nE_S,kWh\nE_Total,kWh\nE_Total_G,kWh\nE_Total_RAW,kWh\nE_WEEK,kWh\nE_YEAR,kWh\nFAC,Hz\nFac-delta+,Hz\nFac-delta+Fast,Hz\nFac-delta-,Hz\nFac-delta-Fast,Hz\nFac-Limit,Hz\nFac-Max-Fast-Tm,s\nFac-Max-Tm,s\nFac-Min-Fast-Tm,s\nFac-Min-Tm,s\nFac-Srr,Hz\nFac-Start,Hz\nFAC1,Hz\nFAC2,Hz\nFAC3,Hz\nFactory-Test,\nFAC_10MW,Hz\nFAC_20MW,Hz\nFAC_2MW,Hz\nFAC_MV,Hz\nFanA1Speed,rpm\nFanA2Speed,rpm\nFanA3Speed,rpm\nFanB1Speed,rpm\nFanB2Speed,rpm\nFanB3Speed,rpm\nFanB4Speed,rpm\nFREQ,Hz\nFWDSECONDS,s\nh-on,h\nh-Total,h\nHeatsinkTemperature,DEGC\nIAC,A\nIac-Ist,A\nIac-Soll,A\nIAC1,A\nIAC1_avg5min,A\nIAC2,A\nIAC2_avg5min,A\nIAC3,A\nIAC3_avg5min,A\nIACN,A\nIAC_alarm,A\nIAC_avg5min,A\nIAC_mean,A\nIDC,A\nIDC01,A\nIDC02,A\nIDC03,A\nIDC04,A\nIDC05,A\nIDC06,A\nIDC07,A\nIDC08,A\nIDC09,A\nIDC10,A\nIDC11,A\nIDC12,A\nIDC13,A\nIDC14,A\nIDC15,A\nIDC16,A\nIDC1,A\nIDC1_Alarm,\nIDC1_Alrm,\nIDC1_avg1min,A\nIDC1_avg5min,A\nIDC1_max,A\nIDC2,A\nIDC2_Alarm,\nIDC2_Alrm,\nIDC2_avg1min,A\nIDC2_avg5min,A\nIDC2_max,A\nIDC3,A\nIDC3_Alarm,\nIDC3_Alrm,\nIDC3_avg1min,A\nIDC3_avg5min,A\nIDC4,A\nIDC4_Alarm,\nIDC4_Alrm,\nIDC4_avg1min,A\nIDC4_avg5min,A\nIDC5,A\nIDC5_Alarm,\nIDC5_Alrm,\nIDC5_avg1min,A\nIDC5_avg5min,A\nIDC6,A\nIDC6_Alarm,\nIDC6_Alrm,\nIDC6_avg1min,A\nIDC6_avg5min,A\nIDC7,A\nIDC8,A\nIDC9,A\nIDCTotal,A\nIDC_avg5min,A\nIDC_load,A\nIDC_now,A\nIDC_total_load,A\nIpv,A\nIscr_1,A\nIscr_15,A\nIscr_5,A\nIsc_1,A\nIsc_15,A\nIsc_5,A\nIX_hi,\nIX_lo,\nKVAH,kVAh\nMF_hi,\nMF_lo,\nOpHrs,h\nOpHrs_Day,h\nPAC,kW\nPAC1,kW\nPAC1_MV,kW\nPAC2,kW\nPAC2_MV,kW\nPAC3,kW\nPAC3_MV,kW\nPACA,kW\nPACB,kW\nPACC,kW\nPAC_10,kW\nPAC_avg5min,kW\nPAC_float,kW\nPAC_HIGH,kW\nPAC_IN1_R1,kW\nPAC_IN2_R1,kW\nPAC_LF_10MW,kW\nPAC_LF_20MW,kW\nPAC_LF_2MW,kW\nPAC_LOW,kW\nPAC_MAX,kW\nPAC_MAX_TIME,kW\nPAC_MIN,kW\nPAC_MV,kW\nPAC_OUT_R1,kW\nPAC_STF1_20MW,kW\nPAC_STF2_20MW,kW\nPDC,kW\nPDC1,kW\nPDC2,kW\nPDC3,kW\nPDC_avg5min,kW\nPF,\nPHI1,DEG\nPHI2,DEG\nPHI3,DEG\nPKT,kW\nPX_hi,\nPX_lo,\nQAC,kVAr\nRH,%\nRH_15,%\nRH_60,%\nRUN_HOUR,h\nRY,V\nSAC,kVA\nSac,kVA\nSoilingCalcState_1,\nSoilingCalcState_15,\nSoilingCalcState_5,\nSoilingLoss_1,%\nSoilingLoss_15,%\nSoilingLoss_5,%\nSR1,W/mSQUA\nSR1_15,W/mSQUA\nSR1_60,W/mSQUA\nSR2,W/mSQUA\nSR2_15,W/mSQUA\nSR2_60,W/mSQUA\nSUN_24,h\nSUN_60,h\nT1,DEGC\nT2,DEGC\nT3,DEGC\nT3_300,DEGC\nT3_900,DEGC\nT3_R,DEGC\nT4,DEGC\nTref_1,DEGC\nTref_15,DEGC\nTref_5,DEGC\nTsoil_1,DEGC\nTsoil_15,DEGC\nTsoil_5,DEGC\nTSP,DEGC\nTSP_15,DEGC\nTSP_24,DEGC\nTSP_60,DEGC\nU1,\nU1_300,W/mSQUA\nU1_900,W/mSQUA\nU1_R,W/mSQUA\nU2,V\nU2_300,V\nU2_900,V\nU2_R,V\nU3,V\nU4,V\nU4_300,W/mSQUA\nU4_900,W/mSQUA\nU4_R,W/mSQUA\nUAC,V\nUac-BFR-Fakt,\nUac-Max,V\nUac-Max-Fast,V\nUac-Max-Fast-Tm,V\nUac-Max-Tm,V\nUac-Min-Fast,V\nUac-Min,V\nUac-Min-Fast-Tm,s\nUac-Min-Tm,s\nUac-Srr,V\nUac-SRR-Fakt,V\nUAC1,V\nUAC2,V\nUAC3,V\nUAC12,V\nUAC23,V\nUAC31,V\nUAC_10MW,V\nUAC_20MW,V\nUAC_2MW,V\nUDC,V\nUDC1,V\nUDC2,V\nUDC3,V\nUDC4,V\nUDC_av5min,V\nUDC_avg5min,V\nUpv-Ist,\nVBulk+,V\nVBulk-,V\nVX_hi,\nVX_lo,\nWD,DEG\nWD_15,DEG\nWD_15_Sig,\nWD_60,DEG\nWD_60_Sig,\nWS,m/s\nWS_15,m/s\nWS_15_Max,m/s\nWS_60,m/s\nWS_60_Max,m/s\nYB,V\n\n",
+        "output": "str",
+        "x": 560,
+        "y": 440,
+        "wires": [
+            [
+                "d2ec140bb0fb65d2"
+            ]
+        ]
+    },
+    {
+        "id": "d2ec140bb0fb65d2",
+        "type": "csv",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 690,
+        "y": 440,
+        "wires": [
+            [
+                "d2520157a6be8f1a"
+            ]
+        ]
+    },
+    {
+        "id": "6d34399ecf212823",
+        "type": "change",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "scaback",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 400,
+        "wires": [
+            [
+                "0e866fc0e458681e",
+                "4e6fc4435219cd60"
+            ]
+        ]
+    },
+    {
+        "id": "d2520157a6be8f1a",
+        "type": "change",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "unit",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 440,
+        "wires": [
+            [
+                "0e866fc0e458681e"
+            ]
+        ]
+    },
+    {
+        "id": "0e866fc0e458681e",
+        "type": "function",
+        "z": "68e5922aae9a83b7",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch (msg.topic) {\n    case \"scaback\":\n        context.data.scaback = msg.payload;\n        msg = null;\n        break;\n    case \"unit\":\n        context.data.unit = msg.payload;\n        msg = null;\n        break;\n}\nif (context.data.scaback != null && context.data.unit != null) {\n    var data_combine = {\n        \"scaback\": context.data.scaback,\n        \"unit\": context.data.unit\n\n    }\n    context.data = null\n    return { payload: data_combine };\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 420,
+        "wires": [
+            [
+                "41ed9193399af8cc",
+                "b10f109b76926623"
+            ]
+        ]
+    },
+    {
+        "id": "528cede5a26c96bf",
+        "type": "comment",
+        "z": "68e5922aae9a83b7",
+        "name": "Scaback Data Flow",
+        "info": "",
+        "x": 230,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "78a9e3aaccf44c95",
+        "type": "function",
+        "z": "68e5922aae9a83b7",
+        "name": "file to read",
+        "func": "const delete_array = flow.get(\"delete_array\")\nvar send_file=msg.payload.filename\nfor (var i = 0; i < msg.payload.length; i++) {\n    for (var j = 0; j < delete_array.length; j++) {\n        if (msg.payload[i] != delete_array[j])\n        {\n          msg.filename = \"/mnt/docker_common/scaback/\" + msg.payload[i]\n          node.send(msg)\n       \n        }\n        return null\n    }\n    return null \n}\nreturn null",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 420,
+        "wires": [
+            [
+                "b5f52164d481c2b0",
+                "c6b6bac62401e9fb",
+                "5165b8e5b0cf91b0"
+            ]
+        ]
+    },
+    {
+        "id": "14efe2e71f945c20",
+        "type": "tcp request",
+        "z": "68e5922aae9a83b7",
+        "name": "influx status",
+        "server": "localhost",
+        "port": "8086",
+        "out": "sit",
+        "ret": "buffer",
+        "splitc": " ",
+        "newline": "",
+        "trim": false,
+        "tls": "",
+        "x": 290,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "464d1ea49e9c0693",
+        "type": "inject",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "14efe2e71f945c20"
+            ]
+        ]
+    },
+    {
+        "id": "41ed9193399af8cc",
+        "type": "function",
+        "z": "68e5922aae9a83b7",
+        "name": "comparison",
+        "func": "var status = flow.get(\"influx-status\")\nif (status.fill == 'green') {\n    var plantobj = []\n    for (var i = 0; i < msg.payload.scaback.length; i++) {\n        if ((msg.payload.scaback[i].value != \"NaN\") && (msg.payload.scaback[i].value != \"nan\") && (msg.payload.scaback[i].value != \"inf\") && (msg.payload.scaback[i].value != \"-inf\")) {\n            var dateUTC1 = msg.payload.scaback[i].ts //).toISOString().slice(0, 19);\n            var p = \"INDIGRID\"\n            var b;\n            var bd;\n            var d;\n            var dd;\n            var dt;\n            var f;\n            var fd;\n            var h = \"server8481\"\n            var iid;\n            var value;\n            var text = \"\"\n            var qu = 0\n            var u;\n            for (var j = 0; j < msg.payload.unit.length; j++) {\n                var f_ref = msg.payload.unit[j].fields\n                b = msg.payload.scaback[i].blockname\n                d = msg.payload.scaback[i].dev\n                dd = b + \"_\" + d\n                f = msg.payload.scaback[i].chn\n                fd = msg.payload.scaback[i].chn\n                iid = msg.payload.scaback[i][\"#id\"]\n                value = msg.payload.scaback[i].value\n                if (b.match(\"B\")) { bd = b.replace(/B/g, \"BLOCK_\"); }\n                if (b.match(\"WS\")) { bd = \"WS\" } else { bd = b }\n                if (d.match(\"EM\")) { dt = \"EM\" }\n                if (d.match(\"INV\")) { dt = \"INV\" }\n                if (d.match(\"IO\")) { dt = \"IO\" }\n                if (d.match(\"WS\")) { dt = \"WS\" }\n                if (f == f_ref) { u = msg.payload.unit[j].unit; break; }\n                else { u = \"\" }\n\n            }\n            var obj = {\n                Time: dateUTC1,\n                value,\n                qu,\n                text,\n                b,\n                bd,\n                d,\n                dd,\n                dt,\n                f,\n                fd,\n                h,\n                iid,\n                m: 1,\n                p,\n                u\n            }\n            plantobj.push(obj)\n        }\n    }\n    msg.payload = plantobj\n    return msg;\n}\nelse { return null; }",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1130,
+        "y": 420,
+        "wires": [
+            [
+                "6e2a56a53f0a783b",
+                "489f56cd6669afb6"
+            ]
+        ]
+    },
+    {
+        "id": "3cc404281786fb81",
+        "type": "fs-ops-delete",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "path": "/mnt/docker_common/scaback",
+        "pathType": "str",
+        "filename": "payload",
+        "filenameType": "msg",
+        "x": 1130,
+        "y": 360,
+        "wires": [
+            [
+                "602fd27f78343db6"
+            ]
+        ]
+    },
+    {
+        "id": "b5f52164d481c2b0",
+        "type": "debug",
+        "z": "68e5922aae9a83b7",
+        "name": "debug 83",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6f001527bf976c23",
+        "type": "change",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "delete_array",
+                "pt": "flow",
+                "to": "[\"scabackFast_1690871836559.csv.unsent\"]",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1240,
+        "y": 240,
+        "wires": [
+            [
+                "ec090da4e2766d53"
+            ]
+        ]
+    },
+    {
+        "id": "67f09a9f087219cc",
+        "type": "inject",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1050,
+        "y": 240,
+        "wires": [
+            [
+                "6f001527bf976c23"
+            ]
+        ]
+    },
+    {
+        "id": "81fda8940b9c6621",
+        "type": "debug",
+        "z": "68e5922aae9a83b7",
+        "name": "debug 86",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "4623188e349c3f07",
+        "type": "inject",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.2",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "75bed3df292d6aab"
+            ]
+        ]
+    },
+    {
+        "id": "a73fad567e101cb9",
+        "type": "debug",
+        "z": "68e5922aae9a83b7",
+        "name": "debug 87",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "602fd27f78343db6",
+        "type": "function",
+        "z": "68e5922aae9a83b7",
+        "name": "function 130",
+        "func": "const delete_array = flow.get(\"delete_array\");\n\ndelete_array.push(msg.payload)\nflow.set(\"delete_array\", delete_array)\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 360,
+        "wires": [
+            [
+                "81fda8940b9c6621"
+            ]
+        ]
+    },
+    {
+        "id": "4e6fc4435219cd60",
+        "type": "function",
+        "z": "68e5922aae9a83b7",
+        "name": "function",
+        "func": "\nvar status = flow.get(\"influx-status\")\nif (status.fill == 'green') {\n\nconst str =msg.filename\nconst afterLastSlash = str.slice(str.lastIndexOf('/') + 1);\nconsole.log(afterLastSlash); \n\nmsg.payload = afterLastSlash\nreturn msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 360,
+        "wires": [
+            [
+                "3cc404281786fb81"
+            ]
+        ]
+    },
+    {
+        "id": "22a00ffad329d575",
+        "type": "status",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "scope": [
+            "14efe2e71f945c20"
+        ],
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "63566ff617be02a6"
+            ]
+        ]
+    },
+    {
+        "id": "63566ff617be02a6",
+        "type": "change",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "influx-status",
+                "pt": "flow",
+                "to": "status",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7100641c44f3e2de",
+        "type": "catch",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "scope": [
+            "14efe2e71f945c20"
+        ],
+        "uncaught": false,
+        "x": 850,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e2a56a53f0a783b",
+        "type": "mqtt out",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "topic": "scaback",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d85bbcee29cc1f0f",
+        "x": 1300,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "c10f9e434e906c36",
+        "type": "influxdb batch",
+        "z": "68e5922aae9a83b7",
+        "influxdb": "33f460a4c4855dbc",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "influx",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "iplon",
+        "bucket": "iSolar",
+        "x": 1010,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "04dd76c2b028e164",
+        "type": "function",
+        "z": "68e5922aae9a83b7",
+        "name": "influx data",
+        "func": "\nfor (var i = 0; i < msg.payload.length; i++) {\n\n    if ((msg.payload[i].value != \"NaN\") && (msg.payload[i].value != \"nan\") && (msg.payload[i].value != \"inf\") && (msg.payload[i].value != \"-inf\")) {\n        var time = new Date(msg.payload[i].Time*1000).getTime() \n    var obj = {};\n    obj.payload =\n\n        [\n            {\n                measurement: \"v\",\n\n                fields: {\n\n                    value: msg.payload[i].value,\n                    qu: msg.payload[i].qu,\n                    text: msg.payload[i].text\n                },\n                tags: {\n\n                    b: msg.payload[i].b,\n                    bd: msg.payload[i].bd,\n                    d: msg.payload[i].d,\n                    dd: msg.payload[i].dd,\n                    dt: msg.payload[i].dt,\n                    f: msg.payload[i].f,\n                    fd: msg.payload[i].fd,\n                    h: msg.payload[i].h,\n                    iid: msg.payload[i].iid,\n                    m: msg.payload[i].m,\n                    p: msg.payload[i].p,\n                    u: msg.payload[i].u\n\n                },\n\n                timestamp:time,\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);\n}\n}\n return null",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 600,
+        "wires": [
+            [
+                "c10f9e434e906c36",
+                "a73fad567e101cb9"
+            ]
+        ]
+    },
+    {
+        "id": "ca1bb475b673b720",
+        "type": "amqp-in",
+        "z": "68e5922aae9a83b7",
+        "name": "",
+        "broker": "e51f9084c202c559",
+        "prefetch": 0,
+        "noAck": true,
+        "exchangeName": "",
+        "exchangeType": "topic",
+        "exchangeRoutingKey": "scaback",
+        "exchangeDurable": true,
+        "queueName": "scaback",
+        "queueExclusive": false,
+        "queueDurable": true,
+        "queueAutoDelete": false,
+        "headers": "{}",
+        "x": 680,
+        "y": 600,
+        "wires": [
+            [
+                "04dd76c2b028e164"
+            ]
+        ]
+    },
+    {
+        "id": "ec090da4e2766d53",
+        "type": "debug",
+        "z": "68e5922aae9a83b7",
+        "name": "debug 88",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "fa7c75e24d08384b",
+        "type": "comment",
+        "z": "68e5922aae9a83b7",
+        "name": "influxdb status checking and flow setting",
+        "info": "",
+        "x": 310,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4b1e3f51325f31e4",
+        "type": "comment",
+        "z": "68e5922aae9a83b7",
+        "name": "mqtt subscribe to influxdb",
+        "info": "",
+        "x": 670,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "4df406245bf81994",
+        "type": "comment",
+        "z": "68e5922aae9a83b7",
+        "name": "delete flow creation and deletion",
+        "info": "",
+        "x": 1090,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5330bee76946bae7",
+        "type": "comment",
+        "z": "68e5922aae9a83b7",
+        "name": "file deletion after mqtt publish",
+        "info": "",
+        "x": 1040,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "489f56cd6669afb6",
+        "type": "debug",
+        "z": "68e5922aae9a83b7",
+        "name": "debug 89",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1220,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b10f109b76926623",
+        "type": "debug",
+        "z": "68e5922aae9a83b7",
+        "name": "debug 90",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "d85bbcee29cc1f0f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "33f460a4c4855dbc",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "e51f9084c202c559",
+        "type": "amqp-broker",
+        "name": "",
+        "host": "localhost",
+        "port": "5672",
+        "vhost": "",
+        "tls": false,
+        "credsFromSettings": false
+    }
+]

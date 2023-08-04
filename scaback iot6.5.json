@@ -1,0 +1,433 @@
+[
+    {
+        "id": "30e28570323d4bd3",
+        "type": "inject",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "props": [],
+        "repeat": "15",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 1100,
+        "wires": [
+            [
+                "678972dd7e3f0875",
+                "b610ecb3af09c5fd"
+            ]
+        ]
+    },
+    {
+        "id": "678972dd7e3f0875",
+        "type": "file in",
+        "z": "039100de6f5d358c",
+        "name": "scaback",
+        "filename": "/var/www/iSolar/fetchDDT/csv/scaback.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 320,
+        "y": 1100,
+        "wires": [
+            [
+                "b791a4012a9fe367"
+            ]
+        ]
+    },
+    {
+        "id": "b791a4012a9fe367",
+        "type": "csv",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 450,
+        "y": 1100,
+        "wires": [
+            [
+                "2d5eb2042c3a6310"
+            ]
+        ]
+    },
+    {
+        "id": "08fdaa44710e9a57",
+        "type": "mqtt out",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "topic": "scaback",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d85bbcee29cc1f0f",
+        "x": 1360,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "50ebeae3549f44f8",
+        "type": "function",
+        "z": "039100de6f5d358c",
+        "name": "comparison",
+        "func": "\nvar status = flow.get(\"influx-status\")\nif (status.fill == 'green') {\n\n    var plantobj = []\n    for (var i = 0; i < msg.payload.scaback.length; i++) {\n        for (var j = 0; j < msg.payload.unit.length; j++) {\n            var f_ref = msg.payload.unit[j].fields\n\n            var dateUTC1 = msg.payload.scaback[i].ts //).toISOString().slice(0, 19);\n            var p = \"INDIGRID\"\n            var b = msg.payload.scaback[i].blockname\n            var d = msg.payload.scaback[i].dev\n            var dd = b + \"_\" + d\n            var f = msg.payload.scaback[i].chn\n            var fd = msg.payload.scaback[i].chn\n            var h = \"server8481\"\n            var iid = msg.payload.scaback[i][\"#id\"]\n            var value = msg.payload.scaback[i].value\n            var text = \"\"\n            var qu = 0\n            if (b.match(\"B\")) { var bd = b.replace(/B/g, \"BLOCK_\"); }\n            if (b.match(\"WS\")) { bd = \"WS\" }\n            else { bd = b }\n            if (d.match(\"EM\")) { var dt = \"EM\" }\n            if (d.match(\"INV\")) { var dt = \"INV\" }\n            if (d.match(\"IO\")) { var dt = \"IO\" }\n            if (d.match(\"WS\")) { var dt = \"WS\" }\n            if (f == f_ref) { var u = msg.payload.unit[j].unit } else { u = \"\" }\n\n            var obj = {\n                Time: dateUTC1,\n                value,\n                qu,\n                text,\n                b,\n                bd,\n                d,\n                dd,\n                dt,\n                f,\n                fd,\n                h,\n                iid,\n                m: 1,\n                p,\n                u\n\n            }\n        }\n        plantobj.push(obj)\n    }\n    msg.payload = plantobj\n    return msg;\n}\nelse { msg.payload=\"disconnected\"\nreturn msg}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 1140,
+        "wires": [
+            [
+                "55c881aee0406978"
+            ]
+        ]
+    },
+    {
+        "id": "b610ecb3af09c5fd",
+        "type": "template",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "fields,unit\nA.Ms.Watt,kW\nAlimTemperature,DEGC\nAT,DEGC\nAT_15,DEGC\nAT_60,DEGC\nB.Ms.Watt,kW\nBATT,\nBR,V\nCosPhi,\nE-Total,kWh\nEA+,kWh\nEA-,kWh\nEAF+,kWh\nEAF-,kWh\nEP+,kWh\nEP-,kWh\nEQ+lag,kWh\nEQ+lead,kWh\nEQ-lag,kWh\nEQ-lead,kWh\nEQC+,kWh\nEQC-,kWh\nEQI+,kWh\nEQI-,kWh\nES+,kWh\nES-,kWh\nE_DAY,kWh\nE_Month,kWh\nE_partial,kWh\nE_Q,kWh\nE_S,kWh\nE_Total,kWh\nE_Total_G,kWh\nE_Total_RAW,kWh\nE_WEEK,kWh\nE_YEAR,kWh\nFAC,Hz\nFac-delta+,Hz\nFac-delta+Fast,Hz\nFac-delta-,Hz\nFac-delta-Fast,Hz\nFac-Limit,Hz\nFac-Max-Fast-Tm,s\nFac-Max-Tm,s\nFac-Min-Fast-Tm,s\nFac-Min-Tm,s\nFac-Srr,Hz\nFac-Start,Hz\nFAC1,Hz\nFAC2,Hz\nFAC3,Hz\nFactory-Test,\nFAC_10MW,Hz\nFAC_20MW,Hz\nFAC_2MW,Hz\nFAC_MV,Hz\nFanA1Speed,rpm\nFanA2Speed,rpm\nFanA3Speed,rpm\nFanB1Speed,rpm\nFanB2Speed,rpm\nFanB3Speed,rpm\nFanB4Speed,rpm\nFREQ,Hz\nFWDSECONDS,s\nh-on,h\nh-Total,h\nHeatsinkTemperature,DEGC\nIAC,A\nIac-Ist,A\nIac-Soll,A\nIAC1,A\nIAC1_avg5min,A\nIAC2,A\nIAC2_avg5min,A\nIAC3,A\nIAC3_avg5min,A\nIACN,A\nIAC_alarm,A\nIAC_avg5min,A\nIAC_mean,A\nIDC,A\nIDC01,A\nIDC02,A\nIDC03,A\nIDC04,A\nIDC05,A\nIDC06,A\nIDC07,A\nIDC08,A\nIDC09,A\nIDC10,A\nIDC11,A\nIDC12,A\nIDC13,A\nIDC14,A\nIDC15,A\nIDC16,A\nIDC1,A\nIDC1_Alarm,\nIDC1_Alrm,\nIDC1_avg1min,A\nIDC1_avg5min,A\nIDC1_max,A\nIDC2,A\nIDC2_Alarm,\nIDC2_Alrm,\nIDC2_avg1min,A\nIDC2_avg5min,A\nIDC2_max,A\nIDC3,A\nIDC3_Alarm,\nIDC3_Alrm,\nIDC3_avg1min,A\nIDC3_avg5min,A\nIDC4,A\nIDC4_Alarm,\nIDC4_Alrm,\nIDC4_avg1min,A\nIDC4_avg5min,A\nIDC5,A\nIDC5_Alarm,\nIDC5_Alrm,\nIDC5_avg1min,A\nIDC5_avg5min,A\nIDC6,A\nIDC6_Alarm,\nIDC6_Alrm,\nIDC6_avg1min,A\nIDC6_avg5min,A\nIDC7,A\nIDC8,A\nIDC9,A\nIDCTotal,A\nIDC_avg5min,A\nIDC_load,A\nIDC_now,A\nIDC_total_load,A\nIpv,A\nIscr_1,A\nIscr_15,A\nIscr_5,A\nIsc_1,A\nIsc_15,A\nIsc_5,A\nIX_hi,\nIX_lo,\nKVAH,kVAh\nMF_hi,\nMF_lo,\nOpHrs,h\nOpHrs_Day,h\nPAC,kW\nPAC1,kW\nPAC1_MV,kW\nPAC2,kW\nPAC2_MV,kW\nPAC3,kW\nPAC3_MV,kW\nPACA,kW\nPACB,kW\nPACC,kW\nPAC_10,kW\nPAC_avg5min,kW\nPAC_float,kW\nPAC_HIGH,kW\nPAC_IN1_R1,kW\nPAC_IN2_R1,kW\nPAC_LF_10MW,kW\nPAC_LF_20MW,kW\nPAC_LF_2MW,kW\nPAC_LOW,kW\nPAC_MAX,kW\nPAC_MAX_TIME,kW\nPAC_MIN,kW\nPAC_MV,kW\nPAC_OUT_R1,kW\nPAC_STF1_20MW,kW\nPAC_STF2_20MW,kW\nPDC,kW\nPDC1,kW\nPDC2,kW\nPDC3,kW\nPDC_avg5min,kW\nPF,\nPHI1,DEG\nPHI2,DEG\nPHI3,DEG\nPKT,kW\nPX_hi,\nPX_lo,\nQAC,kVAr\nRH,%\nRH_15,%\nRH_60,%\nRUN_HOUR,h\nRY,V\nSAC,kVA\nSac,kVA\nSoilingCalcState_1,\nSoilingCalcState_15,\nSoilingCalcState_5,\nSoilingLoss_1,%\nSoilingLoss_15,%\nSoilingLoss_5,%\nSR1,W/mSQUA\nSR1_15,W/mSQUA\nSR1_60,W/mSQUA\nSR2,W/mSQUA\nSR2_15,W/mSQUA\nSR2_60,W/mSQUA\nSUN_24,h\nSUN_60,h\nT1,DEGC\nT2,DEGC\nT3,DEGC\nT3_300,DEGC\nT3_900,DEGC\nT3_R,DEGC\nT4,DEGC\nTref_1,DEGC\nTref_15,DEGC\nTref_5,DEGC\nTsoil_1,DEGC\nTsoil_15,DEGC\nTsoil_5,DEGC\nTSP,DEGC\nTSP_15,DEGC\nTSP_24,DEGC\nTSP_60,DEGC\nU1,\nU1_300,W/mSQUA\nU1_900,W/mSQUA\nU1_R,W/mSQUA\nU2,V\nU2_300,V\nU2_900,V\nU2_R,V\nU3,V\nU4,V\nU4_300,W/mSQUA\nU4_900,W/mSQUA\nU4_R,W/mSQUA\nUAC,V\nUac-BFR-Fakt,\nUac-Max,V\nUac-Max-Fast,V\nUac-Max-Fast-Tm,V\nUac-Max-Tm,V\nUac-Min-Fast,V\nUac-Min,V\nUac-Min-Fast-Tm,s\nUac-Min-Tm,s\nUac-Srr,V\nUac-SRR-Fakt,V\nUAC1,V\nUAC2,V\nUAC3,V\nUAC12,V\nUAC23,V\nUAC31,V\nUAC_10MW,V\nUAC_20MW,V\nUAC_2MW,V\nUDC,V\nUDC1,V\nUDC2,V\nUDC3,V\nUDC4,V\nUDC_av5min,V\nUDC_avg5min,V\nUpv-Ist,\nVBulk+,V\nVBulk-,V\nVX_hi,\nVX_lo,\nWD,DEG\nWD_15,DEG\nWD_15_Sig,\nWD_60,DEG\nWD_60_Sig,\nWS,m/s\nWS_15,m/s\nWS_15_Max,m/s\nWS_60,m/s\nWS_60_Max,m/s\nYB,V\n\n",
+        "output": "str",
+        "x": 320,
+        "y": 1180,
+        "wires": [
+            [
+                "c82af9a113a9bb20"
+            ]
+        ]
+    },
+    {
+        "id": "60430ed7af6a3507",
+        "type": "debug",
+        "z": "039100de6f5d358c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "c82af9a113a9bb20",
+        "type": "csv",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 450,
+        "y": 1180,
+        "wires": [
+            [
+                "5462ce1775dd26b0"
+            ]
+        ]
+    },
+    {
+        "id": "2d5eb2042c3a6310",
+        "type": "change",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "scaback",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 1100,
+        "wires": [
+            [
+                "6c7c9141723ed1b6"
+            ]
+        ]
+    },
+    {
+        "id": "5462ce1775dd26b0",
+        "type": "change",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "unit",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 1180,
+        "wires": [
+            [
+                "6c7c9141723ed1b6"
+            ]
+        ]
+    },
+    {
+        "id": "aae396c86946aee0",
+        "type": "split",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1210,
+        "y": 1140,
+        "wires": [
+            [
+                "08fdaa44710e9a57"
+            ]
+        ]
+    },
+    {
+        "id": "6c7c9141723ed1b6",
+        "type": "function",
+        "z": "039100de6f5d358c",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch (msg.topic) {\n    case \"scaback\":\n        context.data.scaback = msg.payload;\n        msg = null;\n        break;\n    case \"unit\":\n        context.data.unit = msg.payload;\n        msg = null;\n        break;\n}\nif (context.data.scaback != null && context.data.unit != null) {\n    var data_combine = {\n        \"scaback\": context.data.scaback,\n        \"unit\": context.data.unit\n\n    }\n    context.data = null\n    return { payload: data_combine };\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 1140,
+        "wires": [
+            [
+                "50ebeae3549f44f8"
+            ]
+        ]
+    },
+    {
+        "id": "f0295ff68733bc89",
+        "type": "comment",
+        "z": "039100de6f5d358c",
+        "name": "Scaback Data Flow",
+        "info": "",
+        "x": 130,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "7e89c298cd895e73",
+        "type": "tcp request",
+        "z": "039100de6f5d358c",
+        "name": "influx status",
+        "server": "localhost",
+        "port": "8086",
+        "out": "sit",
+        "ret": "buffer",
+        "splitc": " ",
+        "newline": "",
+        "trim": false,
+        "tls": "",
+        "x": 310,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "657ad2572f83e880",
+        "type": "inject",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 860,
+        "wires": [
+            [
+                "7e89c298cd895e73"
+            ]
+        ]
+    },
+    {
+        "id": "73d313517a16ad91",
+        "type": "status",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "scope": [
+            "7e89c298cd895e73"
+        ],
+        "x": 460,
+        "y": 860,
+        "wires": [
+            [
+                "961873569eac70f9"
+            ]
+        ]
+    },
+    {
+        "id": "961873569eac70f9",
+        "type": "change",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "influx-status",
+                "pt": "flow",
+                "to": "status",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7e0b771685fd0912",
+        "type": "catch",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "scope": [
+            "7e89c298cd895e73"
+        ],
+        "uncaught": false,
+        "x": 870,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33c8b2137bab81e1",
+        "type": "comment",
+        "z": "039100de6f5d358c",
+        "name": "influxdb status checking and flow setting",
+        "info": "",
+        "x": 330,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "55c881aee0406978",
+        "type": "switch",
+        "z": "039100de6f5d358c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "disconnected",
+                "vt": "str"
+            },
+            {
+                "t": "neq",
+                "v": "disconnected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1050,
+        "y": 1140,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d85bbcee29cc1f0f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
