@@ -1,0 +1,233 @@
+api gateway links
+
+  https://medium.com/@oyedejipeace/building-a-simple-microservices-app-with-express-gateway-a8fd49d81aeb
+
+  https://tanmay-patil.medium.com/introduction-to-api-gateway-using-express-gateway-part-2-authorization-using-jwt-77b74cfd8766
+
+
+https://dev.to/apisix/centralized-authentication-with-apache-apisix-plugins-30fo
+
+https://medium.com/application-development/introduction-to-api-gateway-for-micro-services-using-express-gateway-ef4f51cff5a3
+
+https://gist.github.com/vkarpov15/8bcab907c961cab3740e2e1216ea93d2
+
+
+APACHE API SIX
+
+https://boburmirzo.github.io/apisix-workshop/ 
+
+https://www.youtube.com/watch?v=MUTtj5mtZc0
+
+https://middlewaretechnologies.in/2023/03/how-to-use-opensource-apache-apisix-as-an-api-gateway.html
+
+
+
+
+
+APACHE API
+
+ curl "http://192.168.1.9:9180/apisix/admin/services/" -H 'X-API-KEY: dd1c9f034335f136f87ad84b625c8f1'
+
+
+
+ curl "http://192.168.1.9:9180/apisix/admin/upstreams/1" \
+-H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -X PUT -d '
+{
+  "type": "roundrobin",
+  "nodes": {
+    "192.168.1.9:6500": 1
+  }
+}'
+
+
+
+
+curl "http://192.168.1.9:9180/apisix/admin/routes/1" -H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -X PUT -d '
+{
+  "methods": ["GET"],
+  "uri": "/influx",
+  "upstream_id": "1"
+}'
+
+Step 1: Create a consumer object, and set the attributes of basic key-auth.
+
+
+curl http://192.168.1.9:9180/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "username": "iplon",
+    "plugins": {
+        "basic-auth": {
+            "username": "iplon",
+            "password": "iplon321"
+        }
+    }
+}'
+
+add a Route and allow basic-auth to control the requests by specifying them in plugins settings:
+
+curl http://192.168.1.9:9180/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "methods": ["GET"],
+    "uri": "/influx",
+    "plugins": {
+        "basic-auth": {}
+    },
+    "upstream_id": "1"
+}'
+
+
+To enable key-auth plugin, two steps need to be done:
+
+Step 1: Create a consumer object, and set the attributes of plugin key-auth.
+
+
+curl http://192.168.1.9:9180/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "username": "example_username",
+    "plugins": {
+        "key-auth": {
+            "key": "iplon321chennai456"
+        }
+    }
+}'
+
+Step 2: After we enabled key-auth plugin, we can create a new route and apply key-auth plugin configuration. For simplicity, we can keep JSON Object for key-auth plugin as an empty.
+
+
+JWT Plugin:
+
+
+  Let's apply the JWT plugin to our existing API. We update the existing Consumer plugin config with JWT-related configuration: 
+
+curl http://192.168.1.9:9180/apisix/admin/consumers -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "username": "iplon",
+    "plugins": {
+        "jwt-auth": {
+            "key": "iplonkey",
+            "secret": "iplonindia321"
+        }
+    }
+}'
+
+We can now add the jwt-auth plugin to the Route we have created previously:
+
+curl http://192.168.1.9:9180/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "methods": ["GET"],
+    "uri": "/influx",
+    "plugins": {
+        "jwt-auth": {}
+    },
+    "upstream_id": "1"
+}'
+
+
+curl http://192.168.1.9:9180/apisix/admin/routes/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "methods": ["GET"],
+    "uri": "/influx",
+    "plugins": {
+        "jwt-auth": {}
+    },
+    "upstream": {
+        "type": "roundrobin",
+        "nodes": {
+            "192.168.1.9:6500": 1
+        }
+    }
+}'
+
+
+curl http://192.168.1.9:9180/apisix/admin/routes/jas -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "uri": "/apisix/plugin/jwt/sign",
+    "plugins": {
+        "public-api": {}
+    }
+}'
+
+
+curl http://192.168.1.9:9080/apisix/plugin/jwt/sign?key=iplon-key -i
+
+curl -i -X GET http://192.168.1.9:9080/influx?org=5&p=egauge&id=75568&d=EM01&f=EAE&Start_Limit=-5d&ZoneInfo=000 -H 'Authorization:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1NDk4ODcsImtleSI6ImlwbG9ua2V5In0.ke-DK9U7yDN0eggCc2OKVeOYRCUh75wdnKW1HdR-ru0'
+
+curl http://192.168.1.9:9080/influx?org=5&p=egauge&id=75568&d=EM01&f=EAE&Start_Limit=-5d&ZoneInfo=000 -H 'Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1NDk4ODcsImtleSI6ImlwbG9ua2V5In0.ke-DK9U7yDN0eggCc2OKVeOYRCUh75wdnKW1HdR-ru0' -i
+
+curl -i -X GET "http://192.168.1.9:9080/arraymeter?org=5&p=egauge&id=75568&d=EM01&f=EAE&Start_Limit=-5d&ZoneInfo=000" -H 'apikey: auth-one' -i
+
+  apisix-dashboard:
+    image: apache/apisix-dashboard:3.0.0-alpine
+    restart: always
+    volumes:
+    - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    ports:
+    - "9000:9000"
+    networks:
+      apisix: 
+
+      eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1NTMxODQsImtleSI6ImlwbG9uLWtleSJ9.j69-7U6THustdY1IHxeV3qfRXRTNl7HeX45rcH5SvRI
+
+
+
+
+      curl -XPUT 192.168.1.9:9180/apisix/admin/routes/1 -H "X-API-KEY: edd1c9f034335f136f87ad84b625c8f1" -d '{
+    "uri":"/influx",
+    "plugins": {
+        "openid-connect": {
+            "client_id": "iplon",
+            "client_secret": "79b76b31-09f0-4482-b4de-df8af2e569d5",
+            "discovery": "http://127.0.0.1:8080/realms/apisix/.well-known/openid-configuration",
+            "scope": "openid profile",
+            "bearer_only": false,
+            "realm": "apisix",
+            "redirect_uri": "http://192.168.1.9:9080/influx?org=5&p=egauge&id=75568&d=EM01&f=EAE&Start_Limit=-5d&ZoneInfo=000",
+            "logout_path": "/influx/logout"
+        }
+    },
+    "upstream":{
+        "type":"roundrobin",
+        "nodes":{
+            "192.168.1.9:6500": 1
+        }
+    }
+}'
+
+
+curl \
+  -d "client_id=myclient" \
+  -d "username=myuser" \
+  -d "password=iplon321" \
+  -d "grant_type=password" \
+  -d "client_secret=GkXTGuspjvb8nDkfKlHVCggNXPL8pynm" \
+  "http://localhost:8080/auth/realms/myrealm/protocol/openid-connect/token"
+
+curl -L -X POST 'http://localhost:8080/auth/realms/myrealm/protocol/openid-connect/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=myclient' \
+--data-urlencode 'grant_type=password' \
+--data-urlencode 'client_secret= \
+--data-urlencode 'scope=openid' \
+--data-urlencode 'username=emuhamma' \
+--data-urlencode 'password=1'
+
+curl http://192.168.1.9:9180/apisix/admin/routes/5 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+{
+    "uri": "/hello",
+    "plugins": {
+        "authz-keycloak": {
+            "token_endpoint": "http://127.0.0.1:8090/auth/realms/myrealm/protocol/openid-connect/token",
+            "permissions": ["resource name#scope name"],
+            "client_id": "myclient"
+        }
+    },
+    "upstream": {
+        "type": "roundrobin",
+        "nodes": {
+            "192.168.1.9:5500": 1
+        }
+    }
+}'
+
+
+curl http://192.168.1.9:9080/hello -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkX0wyelVrb0RzT2I3bkNMal9FYnItbEhlRnNGX2kxdHNzTkQtZTIySjNJIn0.eyJleHAiOjE2OTM5MTY4NjgsImlhdCI6MTY5MzkxNjU2OCwianRpIjoiYzExNTc5ODYtY2RkYi00ZDU0LTgzZTMtZjgyNDY4N2Q2MjY4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL215cmVhbG0iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiOTRlYzg1NWUtNTE1Zi00MjE1LWI0NjgtYzNmZTI0MDFjNzdjIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibXljbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiNWMwNzhjNzMtYWZmMy00MmQyLTgzOWQtYTJlYzY2YzkyNWI2IiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJteXVzZXIifQ.JwySrB-nDJmzRL5FiwuM8boEnhnDfPzwPNssxlGRHZ6VoVEgQ_ohu3OmbljMYyRGvfzOHU0v5JziEgKyNYlYdO2g8gBS_53MF2wT_6Ykp5Q7Z8WmpC-rbyFRn2nZFR1IhzSlc0VdH^CN8FT0T5IGfaJOUECD82vbCVLgIKCuJgmf8zucPaMlfoFtcJA9ACrSXkpK7uQVpXlCz7zaizrC_HQnqvlbpItAI_kLoZsm-1FSmT4D8j7iW3ZDV_04zu8IIUyyt9RxCabSOiTU1kssJ4orx-Gn7w-ltFdfep-Y8AmpJS14L_Da8vlWfNeEeXJkvESt3Is6iNOGqMGsvgnbrw"
