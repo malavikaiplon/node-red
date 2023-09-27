@@ -1,0 +1,77 @@
+[
+    {
+        "id": "3b54a219.b12d4e",
+        "type": "inject",
+        "z": "67ac21ea7605a192",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 210,
+        "y": 1100,
+        "wires": [
+            [
+                "85a767e0.79acf8"
+            ]
+        ]
+    },
+    {
+        "id": "85a767e0.79acf8",
+        "type": "function",
+        "z": "67ac21ea7605a192",
+        "name": "Reload MSG",
+        "func": "msg.headers = {\n    \"Node-RED-Deployment-Type\":\"reload\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 1100,
+        "wires": [
+            [
+                "2c0ba43f.97d61c"
+            ]
+        ]
+    },
+    {
+        "id": "2c0ba43f.97d61c",
+        "type": "http request",
+        "z": "67ac21ea7605a192",
+        "name": "http: Localhost",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:1880/flows",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "credentials": {},
+        "x": 548,
+        "y": 1100,
+        "wires": [
+            [
+                "4e147d27.754094"
+            ]
+        ]
+    },
+    {
+        "id": "4e147d27.754094",
+        "type": "debug",
+        "z": "67ac21ea7605a192",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 723,
+        "y": 1100,
+        "wires": []
+    }
+]
