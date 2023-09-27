@@ -1,0 +1,111 @@
+[
+    {
+        "id": "3b54a219.b12d4e",
+        "type": "inject",
+        "z": "67ac21ea7605a192",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 210,
+        "y": 1100,
+        "wires": [
+            [
+                "cb790cc106f71bba"
+            ]
+        ]
+    },
+    {
+        "id": "2c0ba43f.97d61c",
+        "type": "http request",
+        "z": "67ac21ea7605a192",
+        "name": "http: Localhost",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:1880/flows",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 520,
+        "y": 1100,
+        "wires": [
+            [
+                "4e147d27.754094"
+            ]
+        ]
+    },
+    {
+        "id": "4e147d27.754094",
+        "type": "debug",
+        "z": "67ac21ea7605a192",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 710,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "cb790cc106f71bba",
+        "type": "function",
+        "z": "67ac21ea7605a192",
+        "name": "function 3",
+        "func": "var error_message=global.get(\"error\")\n\nif (error_message ==\"Error: Invalid username\")\n{\n    msg.headers = {\n        \"Node-RED-Deployment-Type\": \"reload\"\n    }\nreturn msg;\n}\nelse{return null}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1100,
+        "wires": [
+            [
+                "2c0ba43f.97d61c"
+            ]
+        ]
+    },
+    {
+        "id": "2eb35717f1b38acc",
+        "type": "change",
+        "z": "67ac21ea7605a192",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "error",
+                "pt": "global",
+                "to": "control.error",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    }
+]
