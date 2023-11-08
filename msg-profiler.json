@@ -1,0 +1,547 @@
+[
+    {
+        "id": "c7f153d4a5c6901b",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Inject message",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello timer",
+        "payloadType": "str",
+        "x": 120,
+        "y": 760,
+        "wires": [
+            [
+                "3c41739798bfb3ea"
+            ]
+        ]
+    },
+    {
+        "id": "3c41739798bfb3ea",
+        "type": "msg-time-profiler",
+        "z": "f6f2187d.f17ca8",
+        "inputField": "topic",
+        "outputField": "_msgtracing",
+        "profileMode": "inline",
+        "autoStart": true,
+        "outputs": 1,
+        "name": "",
+        "x": 290,
+        "y": 760,
+        "wires": [
+            [
+                "ef6872e5c99b835d"
+            ]
+        ]
+    },
+    {
+        "id": "ceb8c364016af1cb",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Chain completed",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "ef6872e5c99b835d",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "100000 msg function",
+        "func": "\nlet array=[]\nfor(let i=0;i<=100000;i++)\n{\n    array.push(\"testing\"+i)\n}\nmsg.payload=array\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 760,
+        "wires": [
+            [
+                "f9f81430dd46c1a1"
+            ]
+        ]
+    },
+    {
+        "id": "f9f81430dd46c1a1",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "10000 msg function",
+        "func": "let array=[]\nfor(let i=0;i<=10000;i++)\n{\n    array.push(\"testing\"+i)\n}\nmsg.payload=array\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 760,
+        "wires": [
+            [
+                "59bb8adb5bed6d69"
+            ]
+        ]
+    },
+    {
+        "id": "0dc8a6373bac9418",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Compose chart data",
+        "func": "if (msg._msgtracing) {\n    var chartInput = {\n        \"series\": [\"X\"],\n        \"data\": [[]],\n        \"labels\": []\n    };\n    \n    msg._msgtracing.profile.forEach(function(profileLine) {\n        chartInput.data[0].push(profileLine.duration);\n        chartInput.labels.push(profileLine.node.name);\n    });\n    \n    /*var m={\n        \"series\":[\"X\"],\n        \"data\":[[5,3,6]],\n        \"labels\":[\"Jan\",\"Feb\",\"Mar\"]\n    };*/\n    return { payload:[chartInput] };\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 900,
+        "wires": [
+            [
+                "26010ec635702f1c",
+                "431d98231d6cf991"
+            ]
+        ]
+    },
+    {
+        "id": "26010ec635702f1c",
+        "type": "ui_chart",
+        "z": "f6f2187d.f17ca8",
+        "name": "Bar chart",
+        "group": "89749fb7.87f01",
+        "order": 3,
+        "width": "7",
+        "height": "6",
+        "label": "Msg timing TEST1- Bar chart",
+        "chartType": "horizontalBar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": "30",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 800,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "431d98231d6cf991",
+        "type": "ui_chart",
+        "z": "f6f2187d.f17ca8",
+        "name": "Pie chart",
+        "group": "89749fb7.87f01",
+        "order": 3,
+        "width": "7",
+        "height": "6",
+        "label": "Msg timing TEST 1 - Pie chart",
+        "chartType": "pie",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": "30",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 800,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59bb8adb5bed6d69",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "3 loop function(9999 msg)",
+        "func": "let array=[]\nfor(let i=0;i<=100;i++)\n{\n    for(let j=0;j<=10;j++)\n    {\n     for(let j=0;j<=8;j++){\n        array.push(\"loop \"+j+\"of \"+i)\n     }\n    }\n    \n}\nmsg.payload=array\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 760,
+        "wires": [
+            [
+                "ceb8c364016af1cb",
+                "0dc8a6373bac9418"
+            ]
+        ]
+    },
+    {
+        "id": "ae29eb5c720f441a",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Inject message",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello timer",
+        "payloadType": "str",
+        "x": 120,
+        "y": 1100,
+        "wires": [
+            [
+                "1f903bd8a07b37b0"
+            ]
+        ]
+    },
+    {
+        "id": "1f903bd8a07b37b0",
+        "type": "msg-time-profiler",
+        "z": "f6f2187d.f17ca8",
+        "inputField": "topic",
+        "outputField": "_msgtracing",
+        "profileMode": "inline",
+        "autoStart": true,
+        "outputs": 1,
+        "name": "",
+        "x": 270,
+        "y": 1100,
+        "wires": [
+            [
+                "4156d4952da616c9"
+            ]
+        ]
+    },
+    {
+        "id": "96fc8f73b80c9176",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Chain completed 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "428eb5f21b47c496",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Compose chart data",
+        "func": "if (msg._msgtracing) {\n    var chartInput = {\n        \"series\": [\"X\"],\n        \"data\": [[]],\n        \"labels\": []\n    };\n    \n    msg._msgtracing.profile.forEach(function(profileLine) {\n        chartInput.data[0].push(profileLine.duration);\n        chartInput.labels.push(profileLine.node.name);\n    });\n    \n    /*var m={\n        \"series\":[\"X\"],\n        \"data\":[[5,3,6]],\n        \"labels\":[\"Jan\",\"Feb\",\"Mar\"]\n    };*/\n    return { payload:[chartInput] };\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 1240,
+        "wires": [
+            [
+                "5a37bc40322fa786",
+                "cac3d408f3f77297"
+            ]
+        ]
+    },
+    {
+        "id": "5a37bc40322fa786",
+        "type": "ui_chart",
+        "z": "f6f2187d.f17ca8",
+        "name": "Bar chart",
+        "group": "89749fb7.87f01",
+        "order": 3,
+        "width": "7",
+        "height": "6",
+        "label": "Msg timing  TEST 2- Bar chart",
+        "chartType": "horizontalBar",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": "30",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 840,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cac3d408f3f77297",
+        "type": "ui_chart",
+        "z": "f6f2187d.f17ca8",
+        "name": "Pie chart",
+        "group": "89749fb7.87f01",
+        "order": 3,
+        "width": "7",
+        "height": "6",
+        "label": "Msg timing TEST-2 - Pie chart",
+        "chartType": "pie",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": "30",
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 840,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a88acc07bdf8251a",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "3 loop function(9999 msg)",
+        "func": "let array=[]\nfor(let i=0;i<=100;i++)\n{\n    for(let j=0;j<=10;j++)\n    {\n     for(let j=0;j<=8;j++){\n        array.push(\"loop \"+j+\"of \"+i)\n     }\n    }\n    \n}\nmsg.payload=array\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 1100,
+        "wires": [
+            [
+                "33c01ff8a539bb20"
+            ]
+        ]
+    },
+    {
+        "id": "4156d4952da616c9",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "if condition function",
+        "func": "var num1 =5\nvar num2 =7\nvar colour=\"RED\"\n if (colour==\"RED\"){var colour_check=true}\n else(colour_check=false)\nvar obj={Total:num1+num2,\ncolour_check}\nmsg.payload=(obj)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1100,
+        "wires": [
+            [
+                "7ef155c964a1b143"
+            ]
+        ]
+    },
+    {
+        "id": "7ef155c964a1b143",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "switch ",
+        "property": "payload.colour_check",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 590,
+        "y": 1100,
+        "wires": [
+            [
+                "a88acc07bdf8251a"
+            ]
+        ]
+    },
+    {
+        "id": "33c01ff8a539bb20",
+        "type": "split",
+        "z": "f6f2187d.f17ca8",
+        "name": "split",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 990,
+        "y": 1100,
+        "wires": [
+            [
+                "e4682bc8a6ecb5ba"
+            ]
+        ]
+    },
+    {
+        "id": "e4682bc8a6ecb5ba",
+        "type": "join",
+        "z": "f6f2187d.f17ca8",
+        "name": "join",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "9999",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 640,
+        "y": 1180,
+        "wires": [
+            [
+                "96fc8f73b80c9176",
+                "428eb5f21b47c496"
+            ]
+        ]
+    },
+    {
+        "id": "be85e387108e86f4",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "TEST 2",
+        "info": "",
+        "x": 230,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "3912a33606154432",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "TEST 1",
+        "info": "",
+        "x": 230,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "89749fb7.87f01",
+        "type": "ui_group",
+        "name": "Message Profiler",
+        "tab": "d7901f40.2659d",
+        "order": 2,
+        "disp": true,
+        "width": "16",
+        "collapse": false
+    },
+    {
+        "id": "d7901f40.2659d",
+        "type": "ui_tab",
+        "name": "Charts",
+        "icon": "dashboard",
+        "order": 40,
+        "disabled": false,
+        "hidden": false
+    }
+]
