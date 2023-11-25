@@ -1,0 +1,131 @@
+[
+    {
+        "id": "ebf6cb8.83c77b8",
+        "type": "inject",
+        "z": "a10c026d66400747",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "testing",
+        "payloadType": "str",
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "eef58b40d8232d28"
+            ]
+        ]
+    },
+    {
+        "id": "44e82706f78a61c9",
+        "type": "debug",
+        "z": "a10c026d66400747",
+        "name": "debug 1641",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c232bd3c530343f5",
+        "type": "ftp in",
+        "z": "a10c026d66400747",
+        "ftp": "3fd032a6129a2c4a",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "name": "",
+        "x": 790,
+        "y": 460,
+        "wires": [
+            [
+                "44e82706f78a61c9"
+            ]
+        ]
+    },
+    {
+        "id": "c8e588338613bdd0",
+        "type": "function",
+        "z": "a10c026d66400747",
+        "name": "filename",
+        "func": "var currentTime = new Date();\n\nvar currentOffset = currentTime.getTimezoneOffset();\n\nvar ISTOffset = 330;   // IST offset UTC +5:30 \n\nvar today = new Date(currentTime.getTime() + (ISTOffset + currentOffset)*60000);\nvar dd = String(today.getDate()).padStart(2, '0');\nvar mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!\nvar yyyy = today.getFullYear();\nvar today1 = dd + '_' + mm + '_' + yyyy;\n\nvar c =today1;\ncontext.set('c',c)\n\n\nmsg.localFilename = msg.payload\n//msg.payload.filename=\"/ftp/solarlog/archive\"\nmsg.filename=\"ftp/files/Amp_arjun_21_11_2023.csv\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 460,
+        "wires": [
+            [
+                "c232bd3c530343f5"
+            ]
+        ]
+    },
+    {
+        "id": "73f2bb46fa959852",
+        "type": "file in",
+        "z": "a10c026d66400747",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 480,
+        "y": 460,
+        "wires": [
+            [
+                "c8e588338613bdd0"
+            ]
+        ]
+    },
+    {
+        "id": "eef58b40d8232d28",
+        "type": "function",
+        "z": "a10c026d66400747",
+        "name": "local path*",
+        "func": "\nvar date = flow.get(\"Amplus_Arjun_2mw_filename\")\n\nvar path = \"C:/Users/malav/OneDrive/Documents/Amp_34_CR_EM_21_11_2023.csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "73f2bb46fa959852"
+            ]
+        ]
+    },
+    {
+        "id": "3fd032a6129a2c4a",
+        "type": "ftp",
+        "host": "ftp-test.iplon.co.in",
+        "port": "",
+        "secureOptions": "",
+        "user": "bala",
+        "connTimeout": "",
+        "pasvTimeout": "",
+        "keepalive": ""
+    }
+]
