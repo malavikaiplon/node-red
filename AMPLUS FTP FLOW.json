@@ -1,0 +1,1849 @@
+[
+    {
+        "id": "ae03f6e9848cea2e",
+        "type": "tab",
+        "label": "Amplus Arjun final ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8f2424ab7079c48e",
+        "type": "group",
+        "z": "ae03f6e9848cea2e",
+        "name": "FTP FLOW",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "c0258aa53f12f2f1",
+            "8761fdd54091b9bb",
+            "551ca1c55b259055"
+        ],
+        "x": 254,
+        "y": 579,
+        "w": 672,
+        "h": 82
+    },
+    {
+        "id": "3b836c526cd05b27",
+        "type": "group",
+        "z": "ae03f6e9848cea2e",
+        "name": "READ FILE FLOW FOR TESTING",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "f9fff06b23b7dde3",
+            "796ecdee15f553cc",
+            "75b7f8d0e9e0475d",
+            "90f449f875e9dda9"
+        ],
+        "x": 254,
+        "y": 739,
+        "w": 772,
+        "h": 82
+    },
+    {
+        "id": "0f4af4dfa39f522d",
+        "type": "group",
+        "z": "ae03f6e9848cea2e",
+        "name": "Amplus_Arjun 2MW LOCAL FILE SAVE FLOW",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "678e684af4713eda",
+            "78d9700b8ac772bb",
+            "c1011baed4f9adc8",
+            "639af0eafe684f5d",
+            "d75140678ab554ab",
+            "e56a2b0f73ae7df2",
+            "f1a02481ec79727f",
+            "891141135585f826",
+            "729e728f635cf8c6",
+            "8d51a085637c2b18",
+            "6ed6ee6ab1e2da8f",
+            "eef58b40d8232d28",
+            "6eae6312daaf8167",
+            "b163ce9e3b4696de",
+            "0456a9feee75b291",
+            "ff9bb1ce54948b65",
+            "6bf944d0fdc2bdce",
+            "f0d0fba7a99f92c3",
+            "109fe8725a4e07e5",
+            "c0db4205b019dd6b",
+            "7913a5d6c45d8406",
+            "347b8759592738ba",
+            "af270ff5e4699bfd",
+            "3899b57917221742",
+            "c790dd1816676f34",
+            "94f1e6f0e647314f",
+            "1fa05ca86ba454a0",
+            "b2e6cfd4b709ec3a",
+            "68f7c2215f677459"
+        ],
+        "x": 154,
+        "y": 59,
+        "w": 1352,
+        "h": 482
+    },
+    {
+        "id": "c3292ae2241eabb5",
+        "type": "group",
+        "z": "ae03f6e9848cea2e",
+        "name": "FTP FLOW",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "3cd8767a04301ef5",
+            "27224bb9962ce24b",
+            "52d637cbaf614565"
+        ],
+        "x": 274,
+        "y": 1439,
+        "w": 672,
+        "h": 82
+    },
+    {
+        "id": "37279e7a76f42853",
+        "type": "group",
+        "z": "ae03f6e9848cea2e",
+        "name": "READ FILE FLOW FOR TESTING",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "50694e6e67550234",
+            "c1e9fc95b4aa5f5a",
+            "7276892dc07e32c6",
+            "383b4ccb9b82e42a"
+        ],
+        "x": 254,
+        "y": 1599,
+        "w": 772,
+        "h": 82
+    },
+    {
+        "id": "1d8857883953dc5b",
+        "type": "group",
+        "z": "ae03f6e9848cea2e",
+        "name": "Amplus Arjun_2MW PART 2 LOCAL FILE SAVE FLOW",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "b9cead2700f53822",
+            "233dbeda4f985046",
+            "533b78d1fdab4f8f",
+            "59d7ac5c0ee4f0b1",
+            "4e07643d1396e3e6",
+            "2fce77dd5f21afba",
+            "aae46f09cb086d43",
+            "cf56900de6304ac6",
+            "49a620668b3db23f",
+            "b8ac07584717f0cd",
+            "83cf7c09a7d12053",
+            "3ec64a619da5f86b",
+            "69fa16a8ea62548a",
+            "2b221a16b5c9804e",
+            "cf8cea4c1113c94d",
+            "34b17233a7911b83",
+            "8098e0d81b9447b4",
+            "31e83487f1e17e9e",
+            "9e3b401fe0f1a2a2",
+            "1975e5bed18b0581",
+            "958ffc040a4bbca8",
+            "97e246e8b37cb7b7",
+            "17310f62c50e2d98",
+            "df899fea074bfe52",
+            "6aa3461dc1101475",
+            "ce32d341c11c40cb",
+            "ecc996f1bba0f0a4"
+        ],
+        "x": 134,
+        "y": 899,
+        "w": 1392,
+        "h": 442
+    },
+    {
+        "id": "f9fff06b23b7dde3",
+        "type": "file in",
+        "z": "ae03f6e9848cea2e",
+        "g": "3b836c526cd05b27",
+        "name": "READ FILE",
+        "filename": "/data/ftp/Amp_Arjun_2MW-TEST/25-11-2023.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 780,
+        "wires": [
+            [
+                "796ecdee15f553cc"
+            ]
+        ]
+    },
+    {
+        "id": "796ecdee15f553cc",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "3b836c526cd05b27",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 730,
+        "y": 780,
+        "wires": [
+            [
+                "90f449f875e9dda9"
+            ]
+        ]
+    },
+    {
+        "id": "75b7f8d0e9e0475d",
+        "type": "inject",
+        "z": "ae03f6e9848cea2e",
+        "g": "3b836c526cd05b27",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 360,
+        "y": 780,
+        "wires": [
+            [
+                "f9fff06b23b7dde3"
+            ]
+        ]
+    },
+    {
+        "id": "90f449f875e9dda9",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "3b836c526cd05b27",
+        "name": "debug 1643",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "678e684af4713eda",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "Amp_Arjun_2MW",
+        "func": "for (let i = 0; i < msg.payload.length; i++) {\n\n  let P = msg.payload[i].P\n  let BD = msg.payload[i].BD\n  let device = msg.payload[i].device\n  let field = msg.payload[i].field\n  let Bucket = msg.payload[i].Bucket\n  let Table = msg.payload[i].Table\n  let Frequency = msg.payload[i].Frequency\n\n  // Get the current date and time\n  var currentDate = new Date();\n\n  // Set the minutes to the start of the last 60-minute interval and seconds/milliseconds to 0\n  currentDate.setMinutes(currentDate.getMinutes() - 15, 0, 0);\n\n  var tstart = currentDate.getTime();\n  let tend = new Date().getTime()\n\n  const startTimestamp = new Date(tstart).toISOString(); // Replace with your start epoch timestamp\n  const endTimestamp = new Date(tend).toISOString(); // Use current time as the end timestamp\n\n  let q = `from(bucket: \"${Bucket}\") |> range(start: -30m) |> filter(fn: (r) => r[\"_measurement\"] == \"${Table}\") |> filter(fn: (r) => r[\"p\"] == \"${P}\") |> filter(fn: (r) => r[\"bd\"] == \"${BD}\") |> filter(fn: (r) => r[\"d\"] == \"${device}\") |> filter(fn: (r) => r[\"f\"] == \"${field}\") |> filter(fn: (r) => r[\"_field\"] == \"value\") |> aggregateWindow(every: ${Frequency}, fn: last, createEmpty: false) |> fill(column: \"_value\", usePrevious: true) |> yield(name: \"${device}_${field}\")`\n\n  msg.query = q\n  node.send(msg);\n  msg.test = { tstart, tend }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "78d9700b8ac772bb"
+            ]
+        ]
+    },
+    {
+        "id": "78d9700b8ac772bb",
+        "type": "influxdb in",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "influxdb": "7cc8205662b7a984",
+        "name": "influx*",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "ampluslakeasia",
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "f1a02481ec79727f"
+            ]
+        ]
+    },
+    {
+        "id": "c1011baed4f9adc8",
+        "type": "cronplus",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "influx",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */2 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "68f7c2215f677459"
+            ]
+        ]
+    },
+    {
+        "id": "639af0eafe684f5d",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"influx\":\n        context.data.influx = msg.payload;\n        msg = null;\n        break;\n    case \"keys\":\n        context.data.keys = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.influx != null && context.data.keys != null){\n    var data_combine = {\n        \"influx\": context.data.influx,\n        \"keys\": context.data.keys\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 300,
+        "wires": [
+            [
+                "891141135585f826"
+            ]
+        ]
+    },
+    {
+        "id": "d75140678ab554ab",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "678e684af4713eda",
+                "e56a2b0f73ae7df2"
+            ]
+        ]
+    },
+    {
+        "id": "e56a2b0f73ae7df2",
+        "type": "change",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "keys",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "keys",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 240,
+        "wires": [
+            [
+                "639af0eafe684f5d"
+            ]
+        ]
+    },
+    {
+        "id": "f1a02481ec79727f",
+        "type": "join",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "join *",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "248",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 590,
+        "y": 300,
+        "wires": [
+            [
+                "729e728f635cf8c6"
+            ]
+        ]
+    },
+    {
+        "id": "891141135585f826",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "csv structuring",
+        "func": "let keys = msg.payload.keys;\n\n// Function to extract values for a specific device and field\nfunction extractValues(data, keys) {\n    for (var i = 0; i < keys.length; i++) {\n        var keyObject = keys[i];\n\n        // Check if the data matches the specified device and field\n        if (data.d == keyObject.device && data.f == keyObject.field) {\n            // Build the key for the result\n            let Column_Name = keyObject.Column_Name;\n            let value = data._value;\n            if (value !== undefined && value !== \"\") {\n                return { Column_Name: Column_Name, value: value };\n            }\n        }\n    }\n}\n\n// Assume msg.payload.influx is an array of arrays\nvar inputArray = msg.payload.influx;\n\n// Initialize an object to store combined data\nvar combinedData = {};\n\n// Maintain the order of keys\nvar outputKeys = [\"Date_Time\"].concat(keys.map(function (keyObject) {\n    return keyObject.Column_Name;\n}));\n\n// Check if inputArray is empty\nif (inputArray.length == 0) {\n    // Get the current timestamp\n    const timeNow = Date.now();\n    // Round to the previous 5th minute\n    const roundedTimestamp = new Date(Math.floor(timeNow / (5 * 60 * 1000)) * (5 * 60 * 1000));\n    // Format the rounded timestamp in \"dd-MM-yyyy HH:mm\" format\n    const currentTimestamp = `${(\"0\" + roundedTimestamp.getDate()).slice(-2)}-${(\"0\" + (roundedTimestamp.getMonth() + 1)).slice(-2)}-${roundedTimestamp.getFullYear()} ${(\"0\" + roundedTimestamp.getHours()).slice(-2)}:${(\"0\" + roundedTimestamp.getMinutes()).slice(-2)}`;\n // Create an entry for the Date_Time with undefined values for all keys\n    combinedData[currentTimestamp] = { Date_Time: currentTimestamp };\n    keys.forEach(function (keyObject) {\n        combinedData[currentTimestamp][keyObject.Column_Name] = undefined;\n    });\n} else {\n    // Iterate through each array in the inputArrays\n    for (var i = 0; i < inputArray.length; i++) {\n        var currentObject = inputArray[i];\n\n        // Extract Date_Time and value from the current object using the new keys array\n        var Date_Time = new Date(currentObject._time).toISOString().slice(0, 16);\n        var keyValue = extractValues(currentObject, keys);\n        var dateObject = new Date(currentObject._time);\n\n        dateObject.setMinutes(dateObject.getMinutes() - 5);\n        // Format the date to the desired format\n        var formattedDate = `${(\"0\" + dateObject.getDate()).slice(-2)}-${(\"0\" + (dateObject.getMonth() + 1)).slice(-2)}-${dateObject.getFullYear()} ${(\"0\" + dateObject.getHours()).slice(-2)}:${(\"0\" + dateObject.getMinutes()).slice(-2)}`;\n\n        // Check if the Date_Time already exists in the combinedData object\n        if (!combinedData[Date_Time]) {\n            // If not, create an entry for that Date_Time\n            combinedData[Date_Time] = {\n                Date_Time: formattedDate\n            };\n        }\n        // Add the key-value pair to the object for the Date_Time\n        if (keyValue !== undefined) {\n            combinedData[Date_Time][keyValue.Column_Name] = keyValue.value;\n        }\n    }\n}\n\n// Output the final result maintaining the order of keys\nmsg.payload = Object.values(combinedData).map(function (entry) {\n    var orderedEntry = {};\n    outputKeys.forEach(function (key) {\n        orderedEntry[key] = entry[key];\n    });\n    return orderedEntry;\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 300,
+        "wires": [
+            [
+                "94f1e6f0e647314f"
+            ]
+        ]
+    },
+    {
+        "id": "729e728f635cf8c6",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "last timestamp",
+        "func": "// Sample array of arrays\nvar arraysList = msg.payload\n\n// Using map to extract the last element from each array\nvar lastElements = arraysList.map(function (arr) {\n    // Check if the array is not empty\n    if (arr.length > 0) {\n        // Return the last element\n        return arr[arr.length - 2];\n    }\n});\n\n// Filtering out undefined values (empty arrays)\nlastElements = lastElements.filter(function (element) {\n    return element !== undefined;\n});\n\nmsg.payload =lastElements\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "639af0eafe684f5d"
+            ]
+        ]
+    },
+    {
+        "id": "8d51a085637c2b18",
+        "type": "cronplus",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 0 0 * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 260,
+        "y": 100,
+        "wires": [
+            [
+                "3899b57917221742"
+            ]
+        ]
+    },
+    {
+        "id": "6ed6ee6ab1e2da8f",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 830,
+        "y": 500,
+        "wires": [
+            [
+                "eef58b40d8232d28"
+            ]
+        ]
+    },
+    {
+        "id": "eef58b40d8232d28",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "local path*",
+        "func": "\nvar date = flow.get(\"Amplus_Arjun_2mw_filename\")\n\nvar path = \"/data/ftp/Amp_Arjun_2MW-TEST/\"+date+\".csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 970,
+        "y": 500,
+        "wires": [
+            [
+                "6eae6312daaf8167"
+            ]
+        ]
+    },
+    {
+        "id": "6eae6312daaf8167",
+        "type": "file",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "file save",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1120,
+        "y": 500,
+        "wires": [
+            [
+                "b163ce9e3b4696de"
+            ]
+        ]
+    },
+    {
+        "id": "b163ce9e3b4696de",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "out1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "0456a9feee75b291",
+        "type": "template",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "config file*",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "S.No,Bucket,Table,P,BD,device,field,Frequency,Column_Name\n1,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM02,PAC,5m,VCB_EM_Active_Power(kW)\n2,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM02,QAC,5m,VCB_EM_Reactive_Power(kVAr)\n3,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM02,PF,5m,VCB_EM_Power_Factor(-)\n4,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM02,UAC,5m,VCB_EM_AC_Voltage(V)\n5,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM02,IAC,5m,VCB_EM_AC_Current(A)\n6,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM02,EAE,5m,VCB_EM_Meter_Reading(kWh)\n7,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM01,PAC,5m,INV_AUX_EM_Active_Power(kW)\n8,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM01,QAC,5m,INV_AUX_EM_Reactive_Power(kVAr)\n9,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM01,PF,5m,INV_AUX_EM_Power_Factor(-)\n10,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM01,UAC,5m,INV_AUX_EM_AC_Voltage(V)\n11,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM01,IAC,5m,INV_AUX_EM_AC_Current(A)\n12,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM01,EAE,5m,INV_AUX_EM_Meter_Reading(kWh)\n13,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM03,PAC,5m,ACDB_EM_Active_Power(kW)\n14,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM03,QAC,5m,ACDB_EM_Reactive_Power(kVAr)\n15,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM03,PF,5m,ACDB_EM_Power_Factor(-)\n16,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM03,UAC,5m,ACDB_EM_AC_Voltage(V)\n17,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM03,IAC,5m,ACDB_EM_AC_Current(A)\n18,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,EM03,EAE,5m,ACDB_EM_Meter_Reading(kWh)\n19,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV01,PAC,5m,INV1_AC_Power(kW)\n20,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV01,UAC,5m,INV1_AC_Voltage(V)\n21,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV01,IAC,5m,INV1_AC_Current(A)\n22,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV01,UDC,5m,INV1_DC_Voltage(V)\n23,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV01,IDC,5m,INV1_DC_Current(A)\n24,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV01,FAC,5m,INV1_Frequency(Hz)\n25,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV02,PAC,5m,INV2_AC_Power(kW)\n26,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV02,UAC,5m,INV2_AC_Voltage(V)\n27,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV02,IAC,5m,INV2_AC_Current(A)\n28,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV02,UDC,5m,INV2_DC_Voltage(V)\n29,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV02,IDC,5m,INV2_DC_Current(A)\n30,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,INV02,FAC,5m,INV2_Frequency(Hz)\n31,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC01,5m,SMU1_IDC1(A)\n32,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC02,5m,SMU1_IDC2(A)\n33,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC03,5m,SMU1_IDC3(A)\n34,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC04,5m,SMU1_IDC4(A)\n35,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC05,5m,SMU1_IDC5(A)\n36,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC06,5m,SMU1_IDC6(A)\n37,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC07,5m,SMU1_IDC7(A)\n38,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC08,5m,SMU1_IDC8(A)\n39,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC09,5m,SMU1_IDC9(A)\n40,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC10,5m,SMU1_IDC10(A)\n41,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC11,5m,SMU1_IDC11(A)\n42,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC12,5m,SMU1_IDC12(A)\n43,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC13,5m,SMU1_IDC13(A)\n44,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC14,5m,SMU1_IDC14(A)\n45,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC15,5m,SMU1_IDC15(A)\n46,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC16,5m,SMU1_IDC16(A)\n47,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC17,5m,SMU1_IDC17(A)\n48,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC18,5m,SMU1_IDC18(A)\n49,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC19,5m,SMU1_IDC19(A)\n50,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC20,5m,SMU1_IDC20(A)\n51,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC21,5m,SMU1_IDC21(A)\n52,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC22,5m,SMU1_IDC22(A)\n53,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC23,5m,SMU1_IDC23(A)\n54,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU01,IDC24,5m,SMU1_IDC24(A)\n55,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC01,5m,SMU2_IDC1(A)\n56,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC02,5m,SMU2_IDC2(A)\n57,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC03,5m,SMU2_IDC3(A)\n58,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC04,5m,SMU2_IDC4(A)\n59,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC05,5m,SMU2_IDC5(A)\n60,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC06,5m,SMU2_IDC6(A)\n61,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC07,5m,SMU2_IDC7(A)\n62,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC08,5m,SMU2_IDC8(A)\n63,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC09,5m,SMU2_IDC9(A)\n64,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC10,5m,SMU2_IDC10(A)\n65,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC11,5m,SMU2_IDC11(A)\n66,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC12,5m,SMU2_IDC12(A)\n67,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC13,5m,SMU2_IDC13(A)\n68,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC14,5m,SMU2_IDC14(A)\n69,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC15,5m,SMU2_IDC15(A)\n70,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC16,5m,SMU2_IDC16(A)\n71,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC17,5m,SMU2_IDC17(A)\n72,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC18,5m,SMU2_IDC18(A)\n73,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC19,5m,SMU2_IDC19(A)\n74,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC20,5m,SMU2_IDC20(A)\n75,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC21,5m,SMU2_IDC21(A)\n76,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC22,5m,SMU2_IDC22(A)\n77,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC23,5m,SMU2_IDC23(A)\n78,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU02,IDC24,5m,SMU2_IDC24(A)\n79,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC01,5m,SMU3_IDC1(A)\n80,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC02,5m,SMU3_IDC2(A)\n81,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC03,5m,SMU3_IDC3(A)\n82,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC04,5m,SMU3_IDC4(A)\n83,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC05,5m,SMU3_IDC5(A)\n84,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC06,5m,SMU3_IDC6(A)\n85,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC07,5m,SMU3_IDC7(A)\n86,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC08,5m,SMU3_IDC8(A)\n87,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC09,5m,SMU3_IDC9(A)\n88,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC10,5m,SMU3_IDC10(A)\n89,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC11,5m,SMU3_IDC11(A)\n90,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC12,5m,SMU3_IDC12(A)\n91,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC13,5m,SMU3_IDC13(A)\n92,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC14,5m,SMU3_IDC14(A)\n93,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC15,5m,SMU3_IDC15(A)\n94,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC16,5m,SMU3_IDC16(A)\n95,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC17,5m,SMU3_IDC17(A)\n96,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC18,5m,SMU3_IDC18(A)\n97,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC19,5m,SMU3_IDC19(A)\n98,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC20,5m,SMU3_IDC20(A)\n99,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC21,5m,SMU3_IDC21(A)\n100,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC22,5m,SMU3_IDC22(A)\n101,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC23,5m,SMU3_IDC23(A)\n102,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU03,IDC24,5m,SMU3_IDC24(A)\n103,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC01,5m,SMU4_IDC1(A)\n104,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC02,5m,SMU4_IDC2(A)\n105,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC03,5m,SMU4_IDC3(A)\n106,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC04,5m,SMU4_IDC4(A)\n107,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC05,5m,SMU4_IDC5(A)\n108,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC06,5m,SMU4_IDC6(A)\n109,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC07,5m,SMU4_IDC7(A)\n110,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC08,5m,SMU4_IDC8(A)\n111,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC09,5m,SMU4_IDC9(A)\n112,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC10,5m,SMU4_IDC10(A)\n113,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC11,5m,SMU4_IDC11(A)\n114,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC12,5m,SMU4_IDC12(A)\n115,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC13,5m,SMU4_IDC13(A)\n116,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC14,5m,SMU4_IDC14(A)\n117,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC15,5m,SMU4_IDC15(A)\n118,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC16,5m,SMU4_IDC16(A)\n119,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC17,5m,SMU4_IDC17(A)\n120,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC18,5m,SMU4_IDC18(A)\n121,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC19,5m,SMU4_IDC19(A)\n122,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC20,5m,SMU4_IDC20(A)\n123,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC21,5m,SMU4_IDC21(A)\n124,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC22,5m,SMU4_IDC22(A)\n125,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC23,5m,SMU4_IDC23(A)\n126,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU04,IDC24,5m,SMU4_IDC24(A)\n127,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC01,5m,SMU5_IDC1(A)\n128,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC02,5m,SMU5_IDC2(A)\n129,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC03,5m,SMU5_IDC3(A)\n130,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC04,5m,SMU5_IDC4(A)\n131,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC05,5m,SMU5_IDC5(A)\n132,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC06,5m,SMU5_IDC6(A)\n133,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC07,5m,SMU5_IDC7(A)\n134,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC08,5m,SMU5_IDC8(A)\n135,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC09,5m,SMU5_IDC9(A)\n136,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC10,5m,SMU5_IDC10(A)\n137,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC11,5m,SMU5_IDC11(A)\n138,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC12,5m,SMU5_IDC12(A)\n139,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC13,5m,SMU5_IDC13(A)\n140,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC14,5m,SMU5_IDC14(A)\n141,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC15,5m,SMU5_IDC15(A)\n142,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC16,5m,SMU5_IDC16(A)\n143,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC17,5m,SMU5_IDC17(A)\n144,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC18,5m,SMU5_IDC18(A)\n145,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC19,5m,SMU5_IDC19(A)\n146,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC20,5m,SMU5_IDC20(A)\n147,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC21,5m,SMU5_IDC21(A)\n148,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC22,5m,SMU5_IDC22(A)\n149,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC23,5m,SMU5_IDC23(A)\n150,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU05,IDC24,5m,SMU5_IDC24(A)\n151,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC01,5m,SMU6_IDC1(A)\n152,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC02,5m,SMU6_IDC2(A)\n153,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC03,5m,SMU6_IDC3(A)\n154,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC04,5m,SMU6_IDC4(A)\n155,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC05,5m,SMU6_IDC5(A)\n156,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC06,5m,SMU6_IDC6(A)\n157,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC07,5m,SMU6_IDC7(A)\n158,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC08,5m,SMU6_IDC8(A)\n159,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC09,5m,SMU6_IDC9(A)\n160,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC10,5m,SMU6_IDC10(A)\n161,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC11,5m,SMU6_IDC11(A)\n162,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC12,5m,SMU6_IDC12(A)\n163,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC13,5m,SMU6_IDC13(A)\n164,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC14,5m,SMU6_IDC14(A)\n165,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC15,5m,SMU6_IDC15(A)\n166,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC16,5m,SMU6_IDC16(A)\n167,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC17,5m,SMU6_IDC17(A)\n168,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC18,5m,SMU6_IDC18(A)\n169,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC19,5m,SMU6_IDC19(A)\n170,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC20,5m,SMU6_IDC20(A)\n171,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC21,5m,SMU6_IDC21(A)\n172,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC22,5m,SMU6_IDC22(A)\n173,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC23,5m,SMU6_IDC23(A)\n174,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU06,IDC24,5m,SMU6_IDC24(A)\n175,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC01,5m,SMU7_IDC1(A)\n176,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC02,5m,SMU7_IDC2(A)\n177,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC03,5m,SMU7_IDC3(A)\n178,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC04,5m,SMU7_IDC4(A)\n179,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC05,5m,SMU7_IDC5(A)\n180,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC06,5m,SMU7_IDC6(A)\n181,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC07,5m,SMU7_IDC7(A)\n182,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC08,5m,SMU7_IDC8(A)\n183,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC09,5m,SMU7_IDC9(A)\n184,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC10,5m,SMU7_IDC10(A)\n185,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC11,5m,SMU7_IDC11(A)\n186,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC12,5m,SMU7_IDC12(A)\n187,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC13,5m,SMU7_IDC13(A)\n188,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC14,5m,SMU7_IDC14(A)\n189,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC15,5m,SMU7_IDC15(A)\n190,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC16,5m,SMU7_IDC16(A)\n191,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC17,5m,SMU7_IDC17(A)\n192,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC18,5m,SMU7_IDC18(A)\n193,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC19,5m,SMU7_IDC19(A)\n194,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC20,5m,SMU7_IDC20(A)\n195,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC21,5m,SMU7_IDC21(A)\n196,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC22,5m,SMU7_IDC22(A)\n197,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC23,5m,SMU7_IDC23(A)\n198,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU07,IDC24,5m,SMU7_IDC24(A)\n199,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC01,5m,SMU8_IDC1(A)\n200,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC02,5m,SMU8_IDC2(A)\n201,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC03,5m,SMU8_IDC3(A)\n202,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC04,5m,SMU8_IDC4(A)\n203,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC05,5m,SMU8_IDC5(A)\n204,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC06,5m,SMU8_IDC6(A)\n205,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC07,5m,SMU8_IDC7(A)\n206,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC08,5m,SMU8_IDC8(A)\n207,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC09,5m,SMU8_IDC9(A)\n208,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC10,5m,SMU8_IDC10(A)\n209,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC11,5m,SMU8_IDC11(A)\n210,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC12,5m,SMU8_IDC12(A)\n211,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC13,5m,SMU8_IDC13(A)\n212,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC14,5m,SMU8_IDC14(A)\n213,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC15,5m,SMU8_IDC15(A)\n214,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC16,5m,SMU8_IDC16(A)\n215,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC17,5m,SMU8_IDC17(A)\n216,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC18,5m,SMU8_IDC18(A)\n217,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC19,5m,SMU8_IDC19(A)\n218,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC20,5m,SMU8_IDC20(A)\n219,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC21,5m,SMU8_IDC21(A)\n220,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC22,5m,SMU8_IDC22(A)\n221,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC23,5m,SMU8_IDC23(A)\n222,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU08,IDC24,5m,SMU8_IDC24(A)\n223,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC01,5m,SMU9_IDC1(A)\n224,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC02,5m,SMU9_IDC2(A)\n225,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC03,5m,SMU9_IDC3(A)\n226,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC04,5m,SMU9_IDC4(A)\n227,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC05,5m,SMU9_IDC5(A)\n228,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC06,5m,SMU9_IDC6(A)\n229,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC07,5m,SMU9_IDC7(A)\n230,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC08,5m,SMU9_IDC8(A)\n231,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC09,5m,SMU9_IDC9(A)\n232,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC10,5m,SMU9_IDC10(A)\n233,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC11,5m,SMU9_IDC11(A)\n234,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC12,5m,SMU9_IDC12(A)\n235,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC13,5m,SMU9_IDC13(A)\n236,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC14,5m,SMU9_IDC14(A)\n237,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC15,5m,SMU9_IDC15(A)\n238,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC16,5m,SMU9_IDC16(A)\n239,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC17,5m,SMU9_IDC17(A)\n240,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC18,5m,SMU9_IDC18(A)\n241,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC19,5m,SMU9_IDC19(A)\n242,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC20,5m,SMU9_IDC20(A)\n243,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC21,5m,SMU9_IDC21(A)\n244,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC22,5m,SMU9_IDC22(A)\n245,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC23,5m,SMU9_IDC23(A)\n246,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC24,5m,SMU9_IDC24(A)\n247,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC23,5m,SMU9_IDC23(A)\n248,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU09,IDC24,5m,SMU9_IDC24(A)",
+        "output": "str",
+        "x": 530,
+        "y": 240,
+        "wires": [
+            [
+                "d75140678ab554ab"
+            ]
+        ]
+    },
+    {
+        "id": "ff9bb1ce54948b65",
+        "type": "file",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "back up file save",
+        "filename": "/data/ftp/backup.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 490,
+        "y": 400,
+        "wires": [
+            [
+                "af270ff5e4699bfd"
+            ]
+        ]
+    },
+    {
+        "id": "6bf944d0fdc2bdce",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 310,
+        "y": 400,
+        "wires": [
+            [
+                "ff9bb1ce54948b65"
+            ]
+        ]
+    },
+    {
+        "id": "f0d0fba7a99f92c3",
+        "type": "file in",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "filename": "/data/ftp/backup.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 840,
+        "y": 400,
+        "wires": [
+            [
+                "109fe8725a4e07e5"
+            ]
+        ]
+    },
+    {
+        "id": "109fe8725a4e07e5",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 1010,
+        "y": 400,
+        "wires": [
+            [
+                "7913a5d6c45d8406"
+            ]
+        ]
+    },
+    {
+        "id": "c0db4205b019dd6b",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "final",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "7913a5d6c45d8406",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "file filtering",
+        "func": "let array = msg.payload;\nlet specificDateTimeToRemove = \"Date_Time\"; // Replace with the specific Date_Time you want to remove\n\n// Use a Set to keep track of unique Date_Time values\nlet uniqueDateTimes = new Set();\n\n// Use filter to remove items with repeating Date_Time or a specific Date_Time\narray = array.filter(item => {\n    // Check if the Date_Time is unique and not equal to the specificDateTimeToRemove\n    if (!uniqueDateTimes.has(item.Date_Time) && item.Date_Time !== specificDateTimeToRemove) {\n        uniqueDateTimes.add(item.Date_Time);\n        return true; // Keep the item in the array\n    }\n    return false; // Remove the item from the array\n});\n\nmsg.payload = array;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1210,
+        "y": 400,
+        "wires": [
+            [
+                "6ed6ee6ab1e2da8f",
+                "c0db4205b019dd6b"
+            ]
+        ]
+    },
+    {
+        "id": "347b8759592738ba",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": " check today obj",
+        "func": "let obj_date = msg.payload.Date_Time;\nlet dateComponents = obj_date.split(' ');\nlet datePart = dateComponents[0];\n\nvar dateObject = new Date();\ndateObject.setMinutes(dateObject.getMinutes() - 5);\n// Format the date to the desired format\nvar formattedDate = `${(\"0\" + dateObject.getDate()).slice(-2)}-${(\"0\" + (dateObject.getMonth() + 1)).slice(-2)}-${dateObject.getFullYear()} ${(\"0\" + dateObject.getHours()).slice(-2)}:${(\"0\" + dateObject.getMinutes()).slice(-2)}`;\nvar todayDate = formattedDate.split(' ')[0];\n\nif (datePart == todayDate) {\n    flow.set(\"Amplus_Arjun_2mw_filename\", todayDate);\n    return msg;\n} else {\n    node.warn(`Date did not match: obj_date=${obj_date}, todayDate=${todayDate}`);\n    return null;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 300,
+        "wires": [
+            [
+                "6bf944d0fdc2bdce"
+            ]
+        ]
+    },
+    {
+        "id": "af270ff5e4699bfd",
+        "type": "delay",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "5s",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 670,
+        "y": 400,
+        "wires": [
+            [
+                "f0d0fba7a99f92c3"
+            ]
+        ]
+    },
+    {
+        "id": "3899b57917221742",
+        "type": "file",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "back up file delete",
+        "filename": "/data/ftp/backup.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "c790dd1816676f34"
+            ]
+        ]
+    },
+    {
+        "id": "c790dd1816676f34",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "debug 1644",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c0258aa53f12f2f1",
+        "type": "inject",
+        "z": "ae03f6e9848cea2e",
+        "g": "8f2424ab7079c48e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 360,
+        "y": 620,
+        "wires": [
+            [
+                "551ca1c55b259055"
+            ]
+        ]
+    },
+    {
+        "id": "8761fdd54091b9bb",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "8f2424ab7079c48e",
+        "name": "debug 1645",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "551ca1c55b259055",
+        "type": "ftp in",
+        "z": "ae03f6e9848cea2e",
+        "g": "8f2424ab7079c48e",
+        "ftp": "c0174b344b23a44d",
+        "operation": "put",
+        "filename": "25nov2023.csv",
+        "localFilename": "/data/ftp/Amp_Arjun_2MW-TEST/25-11-2023.csv",
+        "workdir": "ftp/files/",
+        "savedir": "",
+        "name": "",
+        "x": 650,
+        "y": 620,
+        "wires": [
+            [
+                "8761fdd54091b9bb"
+            ]
+        ]
+    },
+    {
+        "id": "94f1e6f0e647314f",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "last obj",
+        "func": "let arrayOfObjects=msg.payload\n// Check if the array is not empty\nif (arrayOfObjects.length > 0) {\n    // Extract the last object from the array\n    var lastObject = arrayOfObjects[arrayOfObjects.length - 1];\nmsg.payload=lastObject\n\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1220,
+        "y": 300,
+        "wires": [
+            [
+                "347b8759592738ba"
+            ]
+        ]
+    },
+    {
+        "id": "3cd8767a04301ef5",
+        "type": "inject",
+        "z": "ae03f6e9848cea2e",
+        "g": "c3292ae2241eabb5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 380,
+        "y": 1480,
+        "wires": [
+            [
+                "52d637cbaf614565"
+            ]
+        ]
+    },
+    {
+        "id": "27224bb9962ce24b",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "c3292ae2241eabb5",
+        "name": "debug 1648",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "52d637cbaf614565",
+        "type": "ftp in",
+        "z": "ae03f6e9848cea2e",
+        "g": "c3292ae2241eabb5",
+        "ftp": "c0174b344b23a44d",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "workdir": "",
+        "savedir": "",
+        "name": "",
+        "x": 630,
+        "y": 1480,
+        "wires": [
+            [
+                "27224bb9962ce24b"
+            ]
+        ]
+    },
+    {
+        "id": "50694e6e67550234",
+        "type": "file in",
+        "z": "ae03f6e9848cea2e",
+        "g": "37279e7a76f42853",
+        "name": "READ FILE",
+        "filename": "/data/ftp/Amp_Arjun_2MW_Part2-TEST/25-11-2023.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 550,
+        "y": 1640,
+        "wires": [
+            [
+                "c1e9fc95b4aa5f5a"
+            ]
+        ]
+    },
+    {
+        "id": "c1e9fc95b4aa5f5a",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "37279e7a76f42853",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 730,
+        "y": 1640,
+        "wires": [
+            [
+                "383b4ccb9b82e42a"
+            ]
+        ]
+    },
+    {
+        "id": "7276892dc07e32c6",
+        "type": "inject",
+        "z": "ae03f6e9848cea2e",
+        "g": "37279e7a76f42853",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 360,
+        "y": 1640,
+        "wires": [
+            [
+                "50694e6e67550234"
+            ]
+        ]
+    },
+    {
+        "id": "383b4ccb9b82e42a",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "37279e7a76f42853",
+        "name": "debug 1649",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "b9cead2700f53822",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "Amp_Arjun_2MW_Part 2",
+        "func": "for (let i = 0; i < msg.payload.length; i++) {\n\n  let P = msg.payload[i].P\n  let BD = msg.payload[i].BD\n  let device = msg.payload[i].device\n  let field = msg.payload[i].field\n  let Bucket = msg.payload[i].Bucket\n  let Table = msg.payload[i].Table\n  let Frequency = msg.payload[i].Frequency\n\n  // Get the current date and time\n  var currentDate = new Date();\n\n  // Set the minutes to the start of the last 60-minute interval and seconds/milliseconds to 0\n  currentDate.setMinutes(currentDate.getMinutes() - 15, 0, 0);\n\n  var tstart = currentDate.getTime();\n  let tend = new Date().getTime()\n\n  const startTimestamp = new Date(tstart).toISOString(); // Replace with your start epoch timestamp\n  const endTimestamp = new Date(tend).toISOString(); // Use current time as the end timestamp\n\n  let q = `from(bucket: \"${Bucket}\") |> range(start: -30m) |> filter(fn: (r) => r[\"_measurement\"] == \"${Table}\") |> filter(fn: (r) => r[\"p\"] == \"${P}\") |> filter(fn: (r) => r[\"bd\"] == \"${BD}\") |> filter(fn: (r) => r[\"d\"] == \"${device}\") |> filter(fn: (r) => r[\"f\"] == \"${field}\") |> filter(fn: (r) => r[\"_field\"] == \"value\") |> aggregateWindow(every: ${Frequency}, fn: last, createEmpty: false) |> fill(column: \"_value\", usePrevious: true) |> yield(name: \"${device}_${field}\")`\n\n  msg.query = q\n  node.send(msg);\n  msg.test = { tstart, tend }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1100,
+        "wires": [
+            [
+                "233dbeda4f985046"
+            ]
+        ]
+    },
+    {
+        "id": "233dbeda4f985046",
+        "type": "influxdb in",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "influxdb": "7cc8205662b7a984",
+        "name": "influx*",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "ampluslakeasia",
+        "x": 510,
+        "y": 1100,
+        "wires": [
+            [
+                "aae46f09cb086d43"
+            ]
+        ]
+    },
+    {
+        "id": "533b78d1fdab4f8f",
+        "type": "cronplus",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "influx",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */3 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 240,
+        "y": 1040,
+        "wires": [
+            [
+                "ecc996f1bba0f0a4"
+            ]
+        ]
+    },
+    {
+        "id": "59d7ac5c0ee4f0b1",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"influx\":\n        context.data.influx = msg.payload;\n        msg = null;\n        break;\n    case \"keys\":\n        context.data.keys = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.influx != null && context.data.keys != null){\n    var data_combine = {\n        \"influx\": context.data.influx,\n        \"keys\": context.data.keys\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 1100,
+        "wires": [
+            [
+                "cf56900de6304ac6"
+            ]
+        ]
+    },
+    {
+        "id": "4e07643d1396e3e6",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 650,
+        "y": 1040,
+        "wires": [
+            [
+                "b9cead2700f53822",
+                "2fce77dd5f21afba"
+            ]
+        ]
+    },
+    {
+        "id": "2fce77dd5f21afba",
+        "type": "change",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "keys",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "keys",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 1040,
+        "wires": [
+            [
+                "59d7ac5c0ee4f0b1"
+            ]
+        ]
+    },
+    {
+        "id": "aae46f09cb086d43",
+        "type": "join",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "join *",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "165",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 630,
+        "y": 1100,
+        "wires": [
+            [
+                "49a620668b3db23f"
+            ]
+        ]
+    },
+    {
+        "id": "cf56900de6304ac6",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "csv structuring",
+        "func": "let keys = msg.payload.keys;\n\n// Function to extract values for a specific device and field\nfunction extractValues(data, keys) {\n    for (var i = 0; i < keys.length; i++) {\n        var keyObject = keys[i];\n\n        // Check if the data matches the specified device and field\n        if (data.d == keyObject.device && data.f == keyObject.field) {\n            // Build the key for the result\n            let Column_Name = keyObject.Column_Name;\n            let value = data._value;\n            if (value !== undefined && value !== \"\") {\n                return { Column_Name: Column_Name, value: value };\n            }\n        }\n    }\n}\n\n// Assume msg.payload.influx is an array of arrays\nvar inputArray = msg.payload.influx;\n\n// Initialize an object to store combined data\nvar combinedData = {};\n\n// Maintain the order of keys\nvar outputKeys = [\"Date_Time\"].concat(keys.map(function (keyObject) {\n    return keyObject.Column_Name;\n}));\n\n// Check if inputArray is empty\nif (inputArray.length == 0) {\n    // Get the current timestamp\n    const timeNow = Date.now();\n\n    // Round to the previous 5th minute\n    const roundedTimestamp = new Date(Math.floor(timeNow / (5 * 60 * 1000)) * (5 * 60 * 1000));\n\n    // Format the rounded timestamp in \"dd-MM-yyyy HH:mm\" format\n    const currentTimestamp = `${(\"0\" + roundedTimestamp.getDate()).slice(-2)}-${(\"0\" + (roundedTimestamp.getMonth() + 1)).slice(-2)}-${roundedTimestamp.getFullYear()} ${(\"0\" + roundedTimestamp.getHours()).slice(-2)}:${(\"0\" + roundedTimestamp.getMinutes()).slice(-2)}`;\n\n    // Create an entry for the Date_Time with undefined values for all keys\n    combinedData[currentTimestamp] = { Date_Time: currentTimestamp };\n    keys.forEach(function (keyObject) {\n        combinedData[currentTimestamp][keyObject.Column_Name] = undefined;\n    });\n} else {\n    // Iterate through each array in the inputArrays\n    for (var i = 0; i < inputArray.length; i++) {\n        var currentObject = inputArray[i];\n\n        // Extract Date_Time and value from the current object using the new keys array\n        var Date_Time = new Date(currentObject._time).toISOString().slice(0, 16);\n        var keyValue = extractValues(currentObject, keys);\n        var dateObject = new Date(currentObject._time);\n\n        dateObject.setMinutes(dateObject.getMinutes() - 5);\n        // Format the date to the desired format\n        var formattedDate = `${(\"0\" + dateObject.getDate()).slice(-2)}-${(\"0\" + (dateObject.getMonth() + 1)).slice(-2)}-${dateObject.getFullYear()} ${(\"0\" + dateObject.getHours()).slice(-2)}:${(\"0\" + dateObject.getMinutes()).slice(-2)}`;\n\n        // Check if the Date_Time already exists in the combinedData object\n        if (!combinedData[Date_Time]) {\n            // If not, create an entry for that Date_Time\n            combinedData[Date_Time] = {\n                Date_Time: formattedDate\n            };\n        }\n        // Add the key-value pair to the object for the Date_Time\n        if (keyValue !== undefined) {\n            combinedData[Date_Time][keyValue.Column_Name] = keyValue.value;\n        }\n    }\n}\n\n// Output the final result maintaining the order of keys\nmsg.payload = Object.values(combinedData).map(function (entry) {\n    var orderedEntry = {};\n    outputKeys.forEach(function (key) {\n        orderedEntry[key] = entry[key];\n    });\n    return orderedEntry;\n});\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 1100,
+        "wires": [
+            [
+                "ce32d341c11c40cb"
+            ]
+        ]
+    },
+    {
+        "id": "49a620668b3db23f",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "last timestamp",
+        "func": "// Sample array of arrays\nvar arraysList = msg.payload\n\n// Using map to extract the last element from each array\nvar lastElements = arraysList.map(function (arr) {\n    // Check if the array is not empty\n    if (arr.length > 0) {\n        // Return the last element\n        return arr[arr.length - 2];\n    }\n});\n\n// Filtering out undefined values (empty arrays)\nlastElements = lastElements.filter(function (element) {\n    return element !== undefined;\n});\n\nmsg.payload =lastElements\n\nreturn msg\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 1100,
+        "wires": [
+            [
+                "59d7ac5c0ee4f0b1"
+            ]
+        ]
+    },
+    {
+        "id": "b8ac07584717f0cd",
+        "type": "cronplus",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 0 0 * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 240,
+        "y": 940,
+        "wires": [
+            [
+                "df899fea074bfe52"
+            ]
+        ]
+    },
+    {
+        "id": "83cf7c09a7d12053",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 870,
+        "y": 1300,
+        "wires": [
+            [
+                "3ec64a619da5f86b"
+            ]
+        ]
+    },
+    {
+        "id": "3ec64a619da5f86b",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "local path*",
+        "func": "\nvar date = flow.get(\"Amplus_Arjun_2mw_Part2_filename\")\n\nvar path = \"/data/ftp/Amp_Arjun_2MW_Part2-TEST/\"+date+\".csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1010,
+        "y": 1300,
+        "wires": [
+            [
+                "69fa16a8ea62548a"
+            ]
+        ]
+    },
+    {
+        "id": "69fa16a8ea62548a",
+        "type": "file",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "file save",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1160,
+        "y": 1300,
+        "wires": [
+            [
+                "2b221a16b5c9804e"
+            ]
+        ]
+    },
+    {
+        "id": "2b221a16b5c9804e",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "out1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "cf8cea4c1113c94d",
+        "type": "template",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "config file*",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "S.No,Bucket,Table,P,BD,device,field,Frequency,Column_Name\n1,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC1,5m,SMU10_IDC1(A)\n2,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC2,5m,SMU10_IDC2(A)\n3,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC3,5m,SMU10_IDC3(A)\n4,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC4,5m,SMU10_IDC4(A)\n5,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC5,5m,SMU10_IDC5(A)\n6,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC6,5m,SMU10_IDC6(A)\n7,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC7,5m,SMU10_IDC7(A)\n8,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC8,5m,SMU10_IDC8(A)\n9,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC9,5m,SMU10_IDC9(A)\n10,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC10,5m,SMU10_IDC10(A)\n11,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC11,5m,SMU10_IDC11(A)\n12,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC12,5m,SMU10_IDC12(A)\n13,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC13,5m,SMU10_IDC13(A)\n14,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC14,5m,SMU10_IDC14(A)\n15,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC15,5m,SMU10_IDC15(A)\n16,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC16,5m,SMU10_IDC16(A)\n17,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC17,5m,SMU10_IDC17(A)\n18,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC18,5m,SMU10_IDC18(A)\n19,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC19,5m,SMU10_IDC19(A)\n20,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC20,5m,SMU10_IDC20(A)\n21,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC21,5m,SMU10_IDC21(A)\n22,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC22,5m,SMU10_IDC22(A)\n23,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU10,IDC23,5m,SMU10_IDC23(A)\n24,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC1,5m,SMU11_IDC1(A)\n25,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC2,5m,SMU11_IDC2(A)\n26,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC3,5m,SMU11_IDC3(A)\n27,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC4,5m,SMU11_IDC4(A)\n28,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC5,5m,SMU11_IDC5(A)\n29,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC6,5m,SMU11_IDC6(A)\n30,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC7,5m,SMU11_IDC7(A)\n31,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC8,5m,SMU11_IDC8(A)\n32,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC9,5m,SMU11_IDC9(A)\n33,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC10,5m,SMU11_IDC10(A)\n34,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC11,5m,SMU11_IDC11(A)\n35,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC12,5m,SMU11_IDC12(A)\n36,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC13,5m,SMU11_IDC13(A)\n37,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC14,5m,SMU11_IDC14(A)\n38,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC15,5m,SMU11_IDC15(A)\n39,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC16,5m,SMU11_IDC16(A)\n40,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC17,5m,SMU11_IDC17(A)\n41,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC18,5m,SMU11_IDC18(A)\n42,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC19,5m,SMU11_IDC19(A)\n43,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC20,5m,SMU11_IDC20(A)\n44,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC21,5m,SMU11_IDC21(A)\n45,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC22,5m,SMU11_IDC22(A)\n46,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC23,5m,SMU11_IDC23(A)\n47,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU11,IDC24,5m,SMU11_IDC24(A)\n48,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC1,5m,SMU12_IDC1(A)\n49,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC2,5m,SMU12_IDC2(A)\n50,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC3,5m,SMU12_IDC3(A)\n51,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC4,5m,SMU12_IDC4(A)\n52,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC5,5m,SMU12_IDC5(A)\n53,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC6,5m,SMU12_IDC6(A)\n54,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC7,5m,SMU12_IDC7(A)\n55,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC8,5m,SMU12_IDC8(A)\n56,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC9,5m,SMU12_IDC9(A)\n57,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC10,5m,SMU12_IDC10(A)\n58,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC11,5m,SMU12_IDC11(A)\n59,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC12,5m,SMU12_IDC12(A)\n60,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC13,5m,SMU12_IDC13(A)\n61,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC14,5m,SMU12_IDC14(A)\n62,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC15,5m,SMU12_IDC15(A)\n63,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC16,5m,SMU12_IDC16(A)\n64,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC17,5m,SMU12_IDC17(A)\n65,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC18,5m,SMU12_IDC18(A)\n66,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC19,5m,SMU12_IDC19(A)\n67,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC20,5m,SMU12_IDC20(A)\n68,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC21,5m,SMU12_IDC21(A)\n69,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC22,5m,SMU12_IDC22(A)\n70,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC23,5m,SMU12_IDC23(A)\n71,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU12,IDC24,5m,SMU12_IDC24(A)\n72,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC1,5m,SMU13_IDC1(A)\n73,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC2,5m,SMU13_IDC2(A)\n74,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC3,5m,SMU13_IDC3(A)\n75,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC4,5m,SMU13_IDC4(A)\n76,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC5,5m,SMU13_IDC5(A)\n77,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC6,5m,SMU13_IDC6(A)\n78,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC7,5m,SMU13_IDC7(A)\n79,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC8,5m,SMU13_IDC8(A)\n80,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC9,5m,SMU13_IDC9(A)\n81,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC10,5m,SMU13_IDC10(A)\n82,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC11,5m,SMU13_IDC11(A)\n83,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC12,5m,SMU13_IDC12(A)\n84,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC13,5m,SMU13_IDC13(A)\n85,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC14,5m,SMU13_IDC14(A)\n86,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC15,5m,SMU13_IDC15(A)\n87,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC16,5m,SMU13_IDC16(A)\n88,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC17,5m,SMU13_IDC17(A)\n89,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC18,5m,SMU13_IDC18(A)\n90,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC19,5m,SMU13_IDC19(A)\n91,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC20,5m,SMU13_IDC20(A)\n92,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC21,5m,SMU13_IDC21(A)\n93,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC22,5m,SMU13_IDC22(A)\n94,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC23,5m,SMU13_IDC23(A)\n95,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU13,IDC24,5m,SMU13_IDC24(A)\n96,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC1,5m,SMU14_IDC1(A)\n97,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC2,5m,SMU14_IDC2(A)\n98,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC3,5m,SMU14_IDC3(A)\n99,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC4,5m,SMU14_IDC4(A)\n100,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC5,5m,SMU14_IDC5(A)\n101,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC6,5m,SMU14_IDC6(A)\n102,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC7,5m,SMU14_IDC7(A)\n103,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC8,5m,SMU14_IDC8(A)\n104,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC9,5m,SMU14_IDC9(A)\n105,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC10,5m,SMU14_IDC10(A)\n106,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC11,5m,SMU14_IDC11(A)\n107,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC12,5m,SMU14_IDC12(A)\n108,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC13,5m,SMU14_IDC13(A)\n109,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC14,5m,SMU14_IDC14(A)\n110,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC15,5m,SMU14_IDC15(A)\n111,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC16,5m,SMU14_IDC16(A)\n112,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC17,5m,SMU14_IDC17(A)\n113,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC18,5m,SMU14_IDC18(A)\n114,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC19,5m,SMU14_IDC19(A)\n115,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC20,5m,SMU14_IDC20(A)\n116,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC21,5m,SMU14_IDC21(A)\n117,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC22,5m,SMU14_IDC22(A)\n118,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC23,5m,SMU14_IDC23(A)\n119,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU14,IDC24,5m,SMU14_IDC24(A)\n120,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC1,5m,SMU15_IDC1(A)\n121,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC2,5m,SMU15_IDC2(A)\n122,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC3,5m,SMU15_IDC3(A)\n123,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC4,5m,SMU15_IDC4(A)\n124,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC5,5m,SMU15_IDC5(A)\n125,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC6,5m,SMU15_IDC6(A)\n126,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC7,5m,SMU15_IDC7(A)\n127,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC8,5m,SMU15_IDC8(A)\n128,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC9,5m,SMU15_IDC9(A)\n129,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC10,5m,SMU15_IDC10(A)\n130,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC11,5m,SMU15_IDC11(A)\n131,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC12,5m,SMU15_IDC12(A)\n132,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC13,5m,SMU15_IDC13(A)\n133,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC14,5m,SMU15_IDC14(A)\n134,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC15,5m,SMU15_IDC15(A)\n135,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC16,5m,SMU15_IDC16(A)\n136,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC17,5m,SMU15_IDC17(A)\n137,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC18,5m,SMU15_IDC18(A)\n138,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC19,5m,SMU15_IDC19(A)\n139,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC20,5m,SMU15_IDC20(A)\n140,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC21,5m,SMU15_IDC21(A)\n141,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC22,5m,SMU15_IDC22(A)\n142,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU15,IDC23,5m,SMU15_IDC23(A)\n143,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC1,5m,SMU16_IDC1(A)\n144,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC2,5m,SMU16_IDC2(A)\n145,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC3,5m,SMU16_IDC3(A)\n146,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC4,5m,SMU16_IDC4(A)\n147,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC5,5m,SMU16_IDC5(A)\n148,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC6,5m,SMU16_IDC6(A)\n149,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC7,5m,SMU16_IDC7(A)\n150,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC8,5m,SMU16_IDC8(A)\n151,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC9,5m,SMU16_IDC9(A)\n152,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC10,5m,SMU16_IDC10(A)\n153,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC11,5m,SMU16_IDC11(A)\n154,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC12,5m,SMU16_IDC12(A)\n155,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC13,5m,SMU16_IDC13(A)\n156,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC14,5m,SMU16_IDC14(A)\n157,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC15,5m,SMU16_IDC15(A)\n158,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC16,5m,SMU16_IDC16(A)\n159,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC17,5m,SMU16_IDC17(A)\n160,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC18,5m,SMU16_IDC18(A)\n161,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC19,5m,SMU16_IDC19(A)\n162,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC20,5m,SMU16_IDC20(A)\n163,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC21,5m,SMU16_IDC21(A)\n164,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC22,5m,SMU16_IDC22(A)\n165,amplusmicrogrid,v,Amplus CK Motherson,Amplus Arjun 2MW,SMU16,IDC23,5m,SMU16_IDC23(A)\n",
+        "output": "str",
+        "x": 510,
+        "y": 1040,
+        "wires": [
+            [
+                "4e07643d1396e3e6"
+            ]
+        ]
+    },
+    {
+        "id": "34b17233a7911b83",
+        "type": "file",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "back up file save*",
+        "filename": "/data/ftp/Amplus_Arjun_2mw_Part2/backup.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 530,
+        "y": 1200,
+        "wires": [
+            [
+                "17310f62c50e2d98"
+            ]
+        ]
+    },
+    {
+        "id": "8098e0d81b9447b4",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 370,
+        "y": 1200,
+        "wires": [
+            [
+                "34b17233a7911b83"
+            ]
+        ]
+    },
+    {
+        "id": "31e83487f1e17e9e",
+        "type": "file in",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "read file*",
+        "filename": "/data/ftp/Amplus_Arjun_2mw_Part2/backup.csv",
+        "filenameType": "str",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 840,
+        "y": 1200,
+        "wires": [
+            [
+                "9e3b401fe0f1a2a2"
+            ]
+        ]
+    },
+    {
+        "id": "9e3b401fe0f1a2a2",
+        "type": "csv",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 970,
+        "y": 1200,
+        "wires": [
+            [
+                "958ffc040a4bbca8"
+            ]
+        ]
+    },
+    {
+        "id": "1975e5bed18b0581",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "final",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1330,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "958ffc040a4bbca8",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "file filtering",
+        "func": "let array = msg.payload;\nlet specificDateTimeToRemove = \"Date_Time\"; // Replace with the specific Date_Time you want to remove\n\n// Use a Set to keep track of unique Date_Time values\nlet uniqueDateTimes = new Set();\n\n// Use filter to remove items with repeating Date_Time or a specific Date_Time\narray = array.filter(item => {\n    // Check if the Date_Time is unique and not equal to the specificDateTimeToRemove\n    if (!uniqueDateTimes.has(item.Date_Time) && item.Date_Time !== specificDateTimeToRemove) {\n        uniqueDateTimes.add(item.Date_Time);\n        return true; // Keep the item in the array\n    }\n    return false; // Remove the item from the array\n});\n\nmsg.payload = array;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 1200,
+        "wires": [
+            [
+                "83cf7c09a7d12053",
+                "1975e5bed18b0581"
+            ]
+        ]
+    },
+    {
+        "id": "97e246e8b37cb7b7",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": " check today obj*",
+        "func": "let obj_date = msg.payload.Date_Time;\nlet dateComponents = obj_date.split(' ');\nlet datePart = dateComponents[0];\n\nvar dateObject = new Date();\ndateObject.setMinutes(dateObject.getMinutes() - 5);\n// Format the date to the desired format\nvar formattedDate = `${(\"0\" + dateObject.getDate()).slice(-2)}-${(\"0\" + (dateObject.getMonth() + 1)).slice(-2)}-${dateObject.getFullYear()} ${(\"0\" + dateObject.getHours()).slice(-2)}:${(\"0\" + dateObject.getMinutes()).slice(-2)}`;\nvar todayDate = formattedDate.split(' ')[0];\n\nif (datePart == todayDate) {\n    flow.set(\"Amplus_Arjun_2mw_Part2_filename\", todayDate);\n    return msg;\n} else {\n    node.warn(`Date did not match: obj_date=${obj_date}, todayDate=${todayDate}`);\n    return null;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 1100,
+        "wires": [
+            [
+                "8098e0d81b9447b4"
+            ]
+        ]
+    },
+    {
+        "id": "17310f62c50e2d98",
+        "type": "delay",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "5s",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 710,
+        "y": 1200,
+        "wires": [
+            [
+                "31e83487f1e17e9e"
+            ]
+        ]
+    },
+    {
+        "id": "df899fea074bfe52",
+        "type": "file",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "back up file delete",
+        "filename": "/data/ftp/Amplus_Arjun_2mw_Part2/backup.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "delete",
+        "encoding": "none",
+        "x": 430,
+        "y": 940,
+        "wires": [
+            [
+                "6aa3461dc1101475"
+            ]
+        ]
+    },
+    {
+        "id": "6aa3461dc1101475",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "debug 1650",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "ce32d341c11c40cb",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "last obj",
+        "func": "let arrayOfObjects=msg.payload\n// Check if the array is not empty\nif (arrayOfObjects.length > 0) {\n    // Extract the last object from the array\n    var lastObject = arrayOfObjects[arrayOfObjects.length - 1];\nmsg.payload=lastObject\n\nreturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1260,
+        "y": 1100,
+        "wires": [
+            [
+                "97e246e8b37cb7b7"
+            ]
+        ]
+    },
+    {
+        "id": "1fa05ca86ba454a0",
+        "type": "catch",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "",
+        "scope": [
+            "78d9700b8ac772bb"
+        ],
+        "uncaught": false,
+        "x": 250,
+        "y": 180,
+        "wires": [
+            [
+                "b2e6cfd4b709ec3a"
+            ]
+        ]
+    },
+    {
+        "id": "20b7d0e5b469e42a",
+        "type": "catch",
+        "z": "ae03f6e9848cea2e",
+        "name": "",
+        "scope": [
+            "78d9700b8ac772bb"
+        ],
+        "uncaught": false,
+        "x": 1250,
+        "y": 740,
+        "wires": [
+            [
+                "585f1f0dee107cec"
+            ]
+        ]
+    },
+    {
+        "id": "585f1f0dee107cec",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "name": "debug 1651",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1430,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "b2e6cfd4b709ec3a",
+        "type": "debug",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "debug 1652",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "ecc996f1bba0f0a4",
+        "type": "delay",
+        "z": "ae03f6e9848cea2e",
+        "g": "1d8857883953dc5b",
+        "name": "5s",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 1040,
+        "wires": [
+            [
+                "cf8cea4c1113c94d"
+            ]
+        ]
+    },
+    {
+        "id": "68f7c2215f677459",
+        "type": "delay",
+        "z": "ae03f6e9848cea2e",
+        "g": "0f4af4dfa39f522d",
+        "name": "5s",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "0456a9feee75b291"
+            ]
+        ]
+    },
+    {
+        "id": "2c37b6e64a1105f6",
+        "type": "function",
+        "z": "ae03f6e9848cea2e",
+        "name": "filename*",
+        "func": "\nvar date = flow.get(\"Amplus_Arjun_2mw_filename\")\n\nmsg.payload.data = \"/data/ftp/Amp_Arjun_2MW-TEST/\" + date + \".csv\"\n\n//msg.payload.filename=\"/ftp/solarlog/archive\"\n\nmsg.filename = \"25nov2023.csv\"\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1400,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cc8205662b7a984",
+        "type": "influxdb",
+        "hostname": "192.168.63.84",
+        "port": "8086",
+        "protocol": "http",
+        "database": "iSolar",
+        "name": "",
+        "usetls": false,
+        "tls": "c563e3c6072c32be",
+        "influxdbVersion": "2.0",
+        "url": "https://influx-amplasia.iplon.co.in/",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "c0174b344b23a44d",
+        "type": "ftp",
+        "host": "ftp-test.iplon.co.in",
+        "port": "",
+        "secureOptions": "",
+        "user": "bala",
+        "connTimeout": "",
+        "pasvTimeout": "",
+        "keepalive": "",
+        "password": "iplon@321"
+    },
+    {
+        "id": "c563e3c6072c32be",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
