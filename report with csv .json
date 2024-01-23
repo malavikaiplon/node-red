@@ -1,0 +1,538 @@
+[
+    {
+        "id": "a3b343dcd8e18eb1",
+        "type": "tab",
+        "label": "Kenya Mail",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "72c837d7467cccba",
+        "type": "http request",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://ired.iplon.co.in/africa/Kenya",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 370,
+        "y": 1020,
+        "wires": [
+            [
+                "06637088a48ebf2b"
+            ]
+        ]
+    },
+    {
+        "id": "2ef7f2347a87a1e9",
+        "type": "comment",
+        "z": "a3b343dcd8e18eb1",
+        "name": "Mail configuration",
+        "info": "",
+        "x": 180,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "156ce44cf3d6bfd1",
+        "type": "cronplus",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "date",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 10 22 * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 180,
+        "y": 1020,
+        "wires": [
+            [
+                "72c837d7467cccba"
+            ]
+        ]
+    },
+    {
+        "id": "9a230cf5ddac36fc",
+        "type": "e-mail",
+        "z": "a3b343dcd8e18eb1",
+        "server": "smtp.gmail.com",
+        "port": "25",
+        "secure": false,
+        "tls": true,
+        "name": "venkateshprabhu@iplon.in,giri@premiersolargroup.com",
+        "dname": "Mail ",
+        "x": 730,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "06637088a48ebf2b",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "func": "\nvar date = flow.get(\"date\")\nconst inputDate = date;\nconst [day, month, year] = inputDate.split(\"-\");\n\n// Create a Date object using the parsed values\nconst dateObject = new Date(`${year}-${month}-${day}`);\n\n// Get the month abbreviation (e.g., \"Nov\")\nconst monthAbbreviation = dateObject.toLocaleString('default', { month: 'short' });\n\n// Formatted result\nconst Month_Year = `${monthAbbreviation}_${year}`;\n// Assuming msg.attachments is an array containing file paths\n\n msg.topic = \"iPLON_Daily Generation Report_ Razco\";\n msg.description = \" Dear Sunalpha Team, PFA DGR \"\n \nmsg.content= [\n    {\n\n        value: msg.payload,\n\n    }\n],\nmsg.attachments = [\n    {\n        //description: \" Dear Sunalpha Team, PFA DGR \",\n        filename: Month_Year +\".csv\",\n        path: \"/data/mail_alert/Kenya/\" + Month_Year + \".csv\",\n\n    }\n\n    // Add more attachments as needed\n];\n\n\nnode.warn(\"sucess\")\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 1020,
+        "wires": [
+            [
+                "9a230cf5ddac36fc"
+            ]
+        ]
+    },
+    {
+        "id": "0703b1907afa22b9",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "query ",
+        "func": "let queries = []; // Array to store query strings\n\nfor (let i = 0; i < msg.payload.length; i++) {\nlet P = msg.payload[i].P\nlet BD = msg.payload[i].BD\nlet device = msg.payload[i].device\nlet field = msg.payload[i].field\nlet Bucket = msg.payload[i].Bucket\nlet Table = msg.payload[i].Table\nlet Frequency = msg.payload[i].Frequency\n\n/*var $today = new Date();\nvar d = new Date($today);\nd.setDate($today.getDate());\nd.setHours(0, 0, 0, 0);\n*/\n\n    var d = new Date();\n    d.setDate(1);\n    d.setHours(0, 5, 0, 0);\nvar tstart = d.getTime();\n// Get the current date and time\nconst timeNow = Date.now();\n\n// Round to the previous 5th minute\nconst roundedTimestamp = new Date(Math.floor(timeNow / (5 * 60 * 1000)) * (5 * 60 * 1000));\n\n// Set the minutes to the start of the last 60-minute interval and seconds/milliseconds to 0\n//currentDate.setMinutes(currentDate.getMinutes() - 15, 0, 0);\n\n//var tstart = currentDate.getTime();\nlet tend = new Date().getTime()\n\nconst startTimestamp = new Date(tstart).toISOString(); // Replace with your start epoch timestamp\nconst endTimestamp = new Date(tend).toISOString(); // Use current time as the end timestamp\n\n    let q = `from(bucket: \"${Bucket}\") |> range(start:${startTimestamp}, stop:${endTimestamp}) |> filter(fn: (r) => r[\"_measurement\"] == \"${Table}\") |> filter(fn: (r) => r[\"p\"] == \"${P}\") |> filter(fn: (r) => r[\"bd\"] == \"${BD}\") |> filter(fn: (r) => r[\"d\"] == \"${device}\") |> filter(fn: (r) => r[\"f\"] == \"${field}\") |> filter(fn: (r) => r[\"_field\"] == \"value\") |> aggregateWindow(every: ${Frequency}, fn: last, createEmpty: true) |> yield(name: \"${device}_${field}\")`\n\nqueries.push(q); // Add the query to the array\n}\n\n// Join the array of queries with a semicolon and assign to msg.query\nmsg.query = queries.join('');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 740,
+        "wires": [
+            [
+                "54112f11b638b716",
+                "a686c880dc91e3c4"
+            ]
+        ]
+    },
+    {
+        "id": "afd8d3ddfca875b5",
+        "type": "csv",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 470,
+        "y": 660,
+        "wires": [
+            [
+                "0703b1907afa22b9",
+                "3dc2a7393754f550"
+            ]
+        ]
+    },
+    {
+        "id": "d069ba5d245f7bea",
+        "type": "template",
+        "z": "a3b343dcd8e18eb1",
+        "name": "config file*",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "S.No,Bucket,Table,P,BD,device,field,Frequency,Column_Name\n1,kalpa,v,Kalpapower450kW,Kalpapower200kW,EM01,EAE_DAY,3h,\"Solar_Day(kWh)\"\n2,kalpa,v,Kalpapower450kW,Kalpapower200kW,ZE_VIEW,EAI_DAY,3h,\"GRID_Consumption(kWh)\"\n3,kalpa,v,Kalpapower450kW,Kalpapower200kW,WS,SOLAR_RADIATION_CUM,3h,\"Radiation_Day(kWh/M2)\"\n",
+        "output": "str",
+        "x": 290,
+        "y": 660,
+        "wires": [
+            [
+                "afd8d3ddfca875b5"
+            ]
+        ]
+    },
+    {
+        "id": "3dc2a7393754f550",
+        "type": "change",
+        "z": "a3b343dcd8e18eb1",
+        "name": "keys",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "keys",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 660,
+        "wires": [
+            [
+                "b96ed7e276ba0ee0"
+            ]
+        ]
+    },
+    {
+        "id": "5d01de10e933bde8",
+        "type": "cronplus",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "commandResponseMsgOutput": "output1",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "influx",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 0 22 * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 120,
+        "y": 660,
+        "wires": [
+            [
+                "d069ba5d245f7bea"
+            ]
+        ]
+    },
+    {
+        "id": "527d5cf51e926482",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "csv structurising",
+        "func": "let keys = msg.payload.keys;\n\n// Function to extract values for a specific device and field\nfunction extractValues(data, keys) {\n    for (var i = 0; i < keys.length; i++) {\n        var keyObject = keys[i];\n\n        // Check if the data matches the specified device and field\n        if (data.d == keyObject.device && data.f == keyObject.field) {\n            // Build the key for the result\n            let Column_Name = keyObject.Column_Name;\n            let value = data._value;\n            if (value !== undefined && value !== \"\") {\n                return { Column_Name: Column_Name, value: value };\n            }\n        }\n    }\n}\n\n// Assume msg.payload.influx is an array of arrays\nvar inputArrays = msg.payload.influx;\n\n// Initialize an object to store combined data\nvar combinedData = {};\n\n// Maintain the order of keys\nvar outputKeys = [\"Date_Time\"].concat(keys.map(function (keyObject) {\n    return keyObject.Column_Name;\n}));\n\n// Iterate through each object in the inputArrays\nfor (var i = 0; i < inputArrays.length; i++) {\n    // Get the current object\n    var currentObject = inputArrays[i];\n\n    // Extract Date_Time and value from the current object using the new keys array\n    var Date_Time = new Date(currentObject._time).toISOString().slice(0, 16);\n    var keyValue = extractValues(currentObject, keys);\n    var dateObject = new Date(currentObject._time);\n\n    dateObject.setMinutes(dateObject.getMinutes() );\n    var formattedDate = `${(\"0\" + dateObject.getDate()).slice(-2)}-${(\"0\" + (dateObject.getMonth() + 1)).slice(-2)}-${dateObject.getFullYear()} ${(\"0\" + dateObject.getHours()).slice(-2)}:${(\"0\" + dateObject.getMinutes()).slice(-2)}`;\n    var TodaysDate = `${(\"0\" + dateObject.getDate()).slice(-2)}-${(\"0\" + (dateObject.getMonth() + 1)).slice(-2)}-${dateObject.getFullYear()}`;\n    var check_time=\"20:30\"\n    var real_time = `${(\"0\" + dateObject.getHours()).slice(-2)}:${(\"0\" + dateObject.getMinutes()).slice(-2)}`\nif(real_time==check_time){\n    // Check if the Date_Time already exists in the combinedData object\n    if (!combinedData[Date_Time]) {\n        // If not, create an entry for that Date_Time\n        combinedData[Date_Time] = {\n            Date_Time: formattedDate\n        };\n    }\n\n    // Add the key-value pair to the object for the Date_Time\n    if (keyValue !== undefined) {\n        combinedData[Date_Time][keyValue.Column_Name] = keyValue.value;\n    }\n}\n}\n// Output the final result maintaining the order of keys\nmsg.payload = Object.values(combinedData).map(function (entry) {\n    var orderedEntry = {};\n    outputKeys.forEach(function (key) {\n        orderedEntry[key] = entry[key];\n    });\n    return orderedEntry;\n});\nflow.set(\"date\",TodaysDate)\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 700,
+        "wires": [
+            [
+                "6d7f010f5886b62d"
+            ]
+        ]
+    },
+    {
+        "id": "6d7f010f5886b62d",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "fill null",
+        "func": "function replaceUndefinedWithNull(obj) {\n  for (const key in obj) {\n    if (obj.hasOwnProperty(key) && typeof obj[key] === 'undefined') {\n      obj[key] = null;\n    }\n  }\n  return obj; // Return the modified object\n}\n\nlet payload = msg.payload;\n\nif (Array.isArray(payload)) {\n  for (let i = 0; i < payload.length; i++) {\n    if (payload[i] && typeof payload[i] === 'object') {\n      msg.payload[i] = replaceUndefinedWithNull(payload[i]);\n    }\n  }\n} else if (payload && typeof payload === 'object') {\n  msg.payload = replaceUndefinedWithNull(payload);\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 700,
+        "wires": [
+            [
+                "a44134e53ce4e8c7",
+                "bbd00e5efa36af0b",
+                "57d086cbf06d25d0"
+            ]
+        ]
+    },
+    {
+        "id": "b96ed7e276ba0ee0",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "combine",
+        "func": "context.data = context.data || {};\nswitch(msg.topic){\n    case \"influx\":\n        context.data.influx = msg.payload;\n        msg = null;\n        break;\n    case \"keys\":\n        context.data.keys = msg.payload;\n        msg = null;\n        break;\n}\nif(context.data.influx != null && context.data.keys != null){\n    var data_combine = {\n        \"influx\": context.data.influx,\n        \"keys\": context.data.keys\n       \n    }\n    context.data = null\n    return {payload: data_combine};\n}  ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 700,
+        "wires": [
+            [
+                "527d5cf51e926482"
+            ]
+        ]
+    },
+    {
+        "id": "b5abf0b433504157",
+        "type": "debug",
+        "z": "a3b343dcd8e18eb1",
+        "name": "2mw",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1330,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "a44134e53ce4e8c7",
+        "type": "csv",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 1310,
+        "y": 700,
+        "wires": [
+            [
+                "d890a22553db89ab"
+            ]
+        ]
+    },
+    {
+        "id": "d890a22553db89ab",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "local path*",
+        "func": "\nvar date = flow.get(\"date\")\nconst inputDate = date;\nconst [day, month, year] = inputDate.split(\"-\");\n\n// Create a Date object using the parsed values\nconst dateObject = new Date(`${year}-${month}-${day}`);\n\n// Get the month abbreviation (e.g., \"Nov\")\nconst monthAbbreviation = dateObject.toLocaleString('default', { month: 'short' });\n\n// Formatted result\nconst Month_Year = `${monthAbbreviation}_${year}`;\n\nvar path = \"/data/mail_alert/Kenya/\"+Month_Year+\".csv\"\nmsg.filename = path\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 780,
+        "wires": [
+            [
+                "84e96492ce32f829"
+            ]
+        ]
+    },
+    {
+        "id": "84e96492ce32f829",
+        "type": "file",
+        "z": "a3b343dcd8e18eb1",
+        "name": "file save",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 1180,
+        "y": 780,
+        "wires": [
+            [
+                "b5abf0b433504157"
+            ]
+        ]
+    },
+    {
+        "id": "97061b2225ca76e2",
+        "type": "template",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "\n<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Common Table</title>\n    <style>\n        /* Optional: Add some basic styling to the table */\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin-top: 20px;\n        }\n\n        th,\n        td {\n            border: 1px solid #ddd;\n            padding: 8px;\n            text-align: left;\n        }\n\n        th {\n            background-color: #f2f2f2;\n        }\n    </style>\n</head>\n\n<body>\n    <h2 style=\"float: left;margin-left:15px;color:black;\">Generation Report - {{time}} \n    </h2>\n \n    <table>\n        <thead>\n            <th style=\"text-align: left;color: white;background-color: #3366b8;\" colspan=\"6\"> Plant Overview - Razco Limited 225kWp (Kenya)\n                - Chennai)</th>\n            <tr>\n                <th>EM Generation (kWh)</th>\n                <th>Grid Consumption (kWh)</th>\n                <th>Day Solar Radiation (kWh/M2)</th>\n    \n               \n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>{{value1}}</td>\n                <td>{{value2}}</td>\n                <td>{{value3}}</td>\n    \n        </tbody>\n    </table>\n\n</body>\n\n</html>",
+        "output": "str",
+        "x": 1000,
+        "y": 860,
+        "wires": [
+            [
+                "6311ca7803cac275"
+            ]
+        ]
+    },
+    {
+        "id": "bbd00e5efa36af0b",
+        "type": "debug",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "6311ca7803cac275",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "function 464",
+        "func": "flow.set(\"out\",msg.payload)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1170,
+        "y": 860,
+        "wires": [
+            [
+                "bbd00e5efa36af0b"
+            ]
+        ]
+    },
+    {
+        "id": "57d086cbf06d25d0",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "function 465",
+        "func": "var length=msg.payload.length-1\nmsg.value1 = msg.payload[length][\"Solar_Day(kWh)\"]; \nmsg.value2 = msg.payload[length][\"GRID_Consumption(kWh)\"];\nmsg.value3 = msg.payload[length][\"Radiation_Day(kWh/M2)\"];\n\nmsg.time = msg.payload[length].Date_Time.slice(0,10)\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 860,
+        "wires": [
+            [
+                "97061b2225ca76e2"
+            ]
+        ]
+    },
+    {
+        "id": "a686c880dc91e3c4",
+        "type": "debug",
+        "z": "a3b343dcd8e18eb1",
+        "name": "2mw",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "query",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "54112f11b638b716",
+        "type": "influxdb in",
+        "z": "a3b343dcd8e18eb1",
+        "influxdb": "dd04d92d3d5b3211",
+        "name": "Kenya",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "microgridlakeafrica",
+        "x": 650,
+        "y": 740,
+        "wires": [
+            [
+                "b96ed7e276ba0ee0"
+            ]
+        ]
+    },
+    {
+        "id": "f0b7404025862bd2",
+        "type": "http in",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "url": "/africa/Kenya",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 310,
+        "y": 480,
+        "wires": [
+            [
+                "2de2426287dca194"
+            ]
+        ]
+    },
+    {
+        "id": "0cfc3b016ecfbbb8",
+        "type": "http response",
+        "z": "a3b343dcd8e18eb1",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 630,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2de2426287dca194",
+        "type": "function",
+        "z": "a3b343dcd8e18eb1",
+        "name": "function 466",
+        "func": "msg.payload=flow.get(\"out\")\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 480,
+        "wires": [
+            [
+                "0cfc3b016ecfbbb8"
+            ]
+        ]
+    },
+    {
+        "id": "dd04d92d3d5b3211",
+        "type": "influxdb",
+        "hostname": "http://34.93.63.75",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "Kenya",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://influx-africa.iplon.co.in",
+        "timeout": "",
+        "rejectUnauthorized": false
+    }
+]

@@ -1,0 +1,321 @@
+[
+    {
+        "id": "297196417fda0874",
+        "type": "template",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "\n<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Common Table</title>\n    <style>\n        /* Optional: Add some basic styling to the table */\n        table {\n            width: 100%;\n            border-collapse: collapse;\n            margin-top: 20px;\n        }\n\n        th,\n        td {\n            border: 1px solid #ddd;\n            padding: 8px;\n            text-align: left;\n        }\n\n        th {\n            background-color: #f2f2f2;\n        }\n    </style>\n</head>\n\n<body>\n    <h2 style=\"float: left;margin-left:15px;color:black;\">Generation Report - {{time}} \n    </h2>\n    <img src=\"https://github.com/poornimadevipalanisamy/Report-automation/blob/main/sugal-logo-379x128-128x43.jpg?raw=true\" class=\"hello\" width=\"200\" height=\"50\" align=\"right\" >\n\n    <table>\n        <thead>\n            <th style=\"text-align: left;color: white;background-color: #3366b8;\" colspan=\"6\">SUN ALPHA 500kW (Sholavaram\n                - Chennai)</th>\n            <tr>\n                <th>INV1 (kWh)</th>\n                <th>INV2 (kWh)</th>\n                <th>INV3 (kWh)</th>\n                <th>INV4 (kWh)</th>\n                <th>Total INV Yield (kWh)</th>\n                <th>Specific Yield (kWh/kWp)</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td>{{value1}}</td>\n                <td>{{value2}}</td>\n                <td>{{value3}}</td>\n                <td>{{value4}}</td>\n                <td>{{value5}}</td>\n                <td>{{value6}}</td>\n        </tbody>\n    </table>\n\n</body>\n\n</html>",
+        "output": "str",
+        "x": 980,
+        "y": 860,
+        "wires": [
+            [
+                "d85087fcc258a6bf"
+            ]
+        ]
+    },
+    {
+        "id": "9a31859dbe9c09ae",
+        "type": "http in",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "url": "/dev/test",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 330,
+        "y": 1000,
+        "wires": [
+            [
+                "cea24383303ce049"
+            ]
+        ]
+    },
+    {
+        "id": "d4e4b19f029a6449",
+        "type": "http response",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 670,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "72c837d7467cccba",
+        "type": "http request",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://ired.iplon.co.in/dev/test",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 510,
+        "y": 1120,
+        "wires": [
+            [
+                "ae7b53bdaf745c5f",
+                "cb7fd0e3206835b1"
+            ]
+        ]
+    },
+    {
+        "id": "fc456b3eeb18ed24",
+        "type": "inject",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 1120,
+        "wires": [
+            [
+                "72c837d7467cccba"
+            ]
+        ]
+    },
+    {
+        "id": "ae7b53bdaf745c5f",
+        "type": "debug",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "cb7fd0e3206835b1",
+        "type": "e-mail",
+        "z": "9507ccfe4f39318f",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "poornimadevi2610@gmail.com",
+        "dname": "",
+        "x": 710,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "1c1ae11140f23aae",
+        "type": "debug",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "75ac5ec052357a25",
+        "type": "function",
+        "z": "9507ccfe4f39318f",
+        "name": "function 459",
+        "func": "msg.value1 = msg.payload[0]._value ;\nmsg.value2 = msg.payload[1]._value;\nmsg.value3 = msg.payload[2]._value;\nmsg.value4 = msg.payload[3]._value;\nmsg.value5 = msg.payload[4]._value;\nmsg.value6 = msg.payload[5]._value;\nmsg.time = new Date().toLocaleDateString()\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 860,
+        "wires": [
+            [
+                "297196417fda0874",
+                "1c1ae11140f23aae"
+            ]
+        ]
+    },
+    {
+        "id": "9068f3a6de3d3511",
+        "type": "debug",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1310,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "d85087fcc258a6bf",
+        "type": "function",
+        "z": "9507ccfe4f39318f",
+        "name": "function 460",
+        "func": "flow.set(\"out\",msg.payload)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1130,
+        "y": 860,
+        "wires": [
+            [
+                "9068f3a6de3d3511"
+            ]
+        ]
+    },
+    {
+        "id": "cea24383303ce049",
+        "type": "function",
+        "z": "9507ccfe4f39318f",
+        "name": "function 461",
+        "func": "let out=flow.get(\"out\")\nmsg.payload=out\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 1000,
+        "wires": [
+            [
+                "d4e4b19f029a6449"
+            ]
+        ]
+    },
+    {
+        "id": "8d73fc4b7f8d1eca",
+        "type": "function",
+        "z": "9507ccfe4f39318f",
+        "name": "cum_edc",
+        "func": "\n var $today = new Date();\n var d = new Date($today);\n d.setDate($today.getDate()-1);\n d.setHours(23,55,0,0);\n \n var d2 = new Date($today);\n d2.setDate($today.getDate());\n d2.setHours(0,0,0,0);\n \n  var d1=msg.payload\n  var tstart=new Date(d).toISOString();\n  var tend= new Date(d2).toISOString();\n\nvar q1 = 'from(bucket: \"sunalpha\")|> range(start:' + tstart + ' , stop:' + tend + ' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"bd\"] == \"SUN_ALPHA_962kW\")|> filter(fn: (r) =>  r[\"d\"] == \"INV01\")|> filter(fn: (r) => r[\"f\"] == \"EAE_DAY\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"EAEDAY1\") from(bucket: \"sunalpha\")|> range(start:' + tstart + ' , stop:' + tend + ' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"bd\"] == \"SUN_ALPHA_962kW\")|> filter(fn: (r) =>  r[\"d\"] == \"INV02\")|> filter(fn: (r) => r[\"f\"] == \"EAE_DAY\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"EAEDAY2\") from(bucket: \"sunalpha\")|> range(start:' + tstart + ' , stop:' + tend + ' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"bd\"] == \"SUN_ALPHA_962kW\")|> filter(fn: (r) =>  r[\"d\"] == \"INV03\")|> filter(fn: (r) => r[\"f\"] == \"EAE_DAY\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"EAEDAY3\") from(bucket: \"sunalpha\")|> range(start:' + tstart + ' , stop:' + tend + ' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"bd\"] == \"SUN_ALPHA_962kW\")|> filter(fn: (r) =>  r[\"d\"] == \"INV04\")|> filter(fn: (r) => r[\"f\"] == \"EAE_DAY\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"EAEDAY4\") from(bucket: \"sunalpha\")|> range(start:' + tstart + ' , stop:' + tend + ' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"bd\"] == \"SUN_ALPHA_962kW\")|> filter(fn: (r) =>  r[\"d\"] == \"INV01\")|> filter(fn: (r) => r[\"f\"] == \"TOTAL_EAE_DAY\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"EAEDAY\") from(bucket: \"sunalpha\")|> range(start:' + tstart + ' , stop:' + tend + ' )|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"bd\"] == \"SUN_ALPHA_962kW\")|> filter(fn: (r) =>  r[\"d\"] == \"INV01\")|> filter(fn: (r) => r[\"f\"] == \"TOTAL_SPECIFIC_YIELD\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|>aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"SPECIFIC_YIELD\")'\n\nmsg.query = q1\nmsg.payload=tend\nreturn msg;\n \n \n \n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 860,
+        "wires": [
+            [
+                "5495e8e95adc46e8"
+            ]
+        ]
+    },
+    {
+        "id": "5495e8e95adc46e8",
+        "type": "influxdb in",
+        "z": "9507ccfe4f39318f",
+        "influxdb": "dd04d92d3d5b3211",
+        "name": "sunalpha",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "microgridonelakeasia",
+        "x": 640,
+        "y": 860,
+        "wires": [
+            [
+                "75ac5ec052357a25"
+            ]
+        ]
+    },
+    {
+        "id": "9096a191f8693277",
+        "type": "inject",
+        "z": "9507ccfe4f39318f",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 320,
+        "y": 860,
+        "wires": [
+            [
+                "8d73fc4b7f8d1eca"
+            ]
+        ]
+    },
+    {
+        "id": "e3c5a933e39c18cd",
+        "type": "comment",
+        "z": "9507ccfe4f39318f",
+        "name": "Data fetching from influxdb",
+        "info": "",
+        "x": 370,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "f5d03f9f0ef523e7",
+        "type": "comment",
+        "z": "9507ccfe4f39318f",
+        "name": "API creation",
+        "info": "",
+        "x": 330,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "2ef7f2347a87a1e9",
+        "type": "comment",
+        "z": "9507ccfe4f39318f",
+        "name": "Mail configuration",
+        "info": "",
+        "x": 340,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "dd04d92d3d5b3211",
+        "type": "influxdb",
+        "hostname": "http://34.93.63.75",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "sunalpha-enerlife",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://influx-asia1.iplon.co.in/",
+        "rejectUnauthorized": false
+    }
+]
