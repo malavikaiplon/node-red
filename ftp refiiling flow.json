@@ -1,0 +1,159 @@
+[
+    {
+        "id": "91e5a8a9a60753d2",
+        "type": "ftp in",
+        "z": "b66bd877793ab767",
+        "ftp": "39b7f82a69c06ae4",
+        "operation": "put",
+        "filename": "",
+        "localFilename": "",
+        "name": "",
+        "x": 1230,
+        "y": 2480,
+        "wires": [
+            [
+                "8892095c7f1d39db"
+            ]
+        ]
+    },
+    {
+        "id": "8892095c7f1d39db",
+        "type": "debug",
+        "z": "b66bd877793ab767",
+        "name": "debug 1910",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1390,
+        "y": 2480,
+        "wires": []
+    },
+    {
+        "id": "f608b8702710938c",
+        "type": "function",
+        "z": "b66bd877793ab767",
+        "name": "local path*",
+        "func": "\nvar date = flow.get(\"date\")\nfor(var i=10;i<25;i++)\n{\nvar path = `/data/ftp/AMP34_INV1A_SMU/${i}-01-2024.csv`\n\n    msg.filename = path\n    node.send(msg)\n}\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 2480,
+        "wires": [
+            [
+                "70d59adfcc8cdc62"
+            ]
+        ]
+    },
+    {
+        "id": "70d59adfcc8cdc62",
+        "type": "file in",
+        "z": "b66bd877793ab767",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 680,
+        "y": 2480,
+        "wires": [
+            [
+                "9c974c5b0981c3bd"
+            ]
+        ]
+    },
+    {
+        "id": "9c974c5b0981c3bd",
+        "type": "function",
+        "z": "b66bd877793ab767",
+        "name": "filename",
+        "func": "const filePath = msg.filename;\nconst fileName = filePath.slice(filePath.lastIndexOf('/') + 1);\n\nvar path = `/IPLON/Jan_2024/AMP34_INV1A_SMU/${fileName}`\n    msg.localFilename = msg.payload\n    msg.filename = path\n    node.send(msg)\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 2480,
+        "wires": [
+            [
+                "3a241624110135f4"
+            ]
+        ]
+    },
+    {
+        "id": "c7c21a9b468e8192",
+        "type": "inject",
+        "z": "b66bd877793ab767",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 360,
+        "y": 2480,
+        "wires": [
+            [
+                "f608b8702710938c"
+            ]
+        ]
+    },
+    {
+        "id": "3a241624110135f4",
+        "type": "delay",
+        "z": "b66bd877793ab767",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1040,
+        "y": 2480,
+        "wires": [
+            [
+                "91e5a8a9a60753d2"
+            ]
+        ]
+    },
+    {
+        "id": "39b7f82a69c06ae4",
+        "type": "ftp",
+        "host": "13.232.166.176",
+        "port": "",
+        "secureOptions": "",
+        "user": "iplon",
+        "connTimeout": "10000",
+        "pasvTimeout": "10000",
+        "keepalive": "10000"
+    }
+]
