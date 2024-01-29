@@ -1,0 +1,257 @@
+[
+    {
+        "id": "f933af34d0d2acd2",
+        "type": "influxdb in",
+        "z": "ac4efa4688dcaf56",
+        "influxdb": "4d05847b9ee5f29d",
+        "name": "sut influx",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "iplon",
+        "x": 440,
+        "y": 140,
+        "wires": [
+            [
+                "f3b6874f6f560845",
+                "a54cd6f98d13494f"
+            ]
+        ]
+    },
+    {
+        "id": "fe454e8274d03ef9",
+        "type": "inject",
+        "z": "ac4efa4688dcaf56",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "bdba55ad670df660"
+            ]
+        ]
+    },
+    {
+        "id": "bdba55ad670df660",
+        "type": "function",
+        "z": "ac4efa4688dcaf56",
+        "name": "function 2",
+        "func": "\n    let q = `from(bucket: \"iplon\") |> range(start: -1m) |> filter(fn: (r) => r[\"_measurement\"] == \"v\") |> filter(fn: (r) => r[\"_field\"] == \"value\") |> aggregateWindow(every:5m, fn: last, createEmpty: false) |> yield(name: \"alert\")`\n\n\n\n// Join the array of queries with a semicolon and assign to msg.query\nmsg.query = q\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 140,
+        "wires": [
+            [
+                "f933af34d0d2acd2"
+            ]
+        ]
+    },
+    {
+        "id": "70365c98bdb42258",
+        "type": "debug",
+        "z": "ac4efa4688dcaf56",
+        "name": "debug 1848",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "090ed72a76cb5b78",
+        "type": "function",
+        "z": "ac4efa4688dcaf56",
+        "name": "email",
+        "func": "var name=msg.name\nif (msg.payload==\"\")\n{\nmsg.payload=`Data not receiving in ${name}`\nmsg.payload.title=`Data not receiving in ${name}`\nmsg.payload.body=`Data not receiving in ${name}`\n\n msg.topic = `Data not receiving in ${name}`;\n msg.description = `Data not receiving in ${name}`\n \nmsg.content= [\n    {\n\n        value: msg.payload,\n\n    }\n],\nnode.warn(\"sucess\")\nreturn msg;\n}\nelse\n    { return null }\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 140,
+        "wires": [
+            [
+                "ef631cf9877778a1",
+                "3e4d1f85fe7f993e"
+            ]
+        ]
+    },
+    {
+        "id": "3e4d1f85fe7f993e",
+        "type": "e-mail",
+        "z": "ac4efa4688dcaf56",
+        "server": "smtp.yandex.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "naveenkumar@iplon.in",
+        "dname": "",
+        "x": 760,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "c71354bf7080ad20",
+        "type": "remote-notification",
+        "z": "ac4efa4688dcaf56",
+        "confignode": "12dcad48b506d2fb",
+        "name": "",
+        "notificationTitle": "payload.title",
+        "notificationTitleType": "msg",
+        "notificationBody": "payload.body",
+        "notificationBodyType": "msg",
+        "notificationSound": "chime",
+        "notificationSoundComputed": "payload.sound",
+        "notificationSoundComputedType": "msg",
+        "output": "2",
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "70365c98bdb42258"
+            ]
+        ]
+    },
+    {
+        "id": "ef631cf9877778a1",
+        "type": "debug",
+        "z": "ac4efa4688dcaf56",
+        "name": "debug 1849",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 950,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "f1d52646341482db",
+        "type": "function",
+        "z": "ac4efa4688dcaf56",
+        "name": "notifcation",
+        "func": "var name=msg.name\nif (msg.payload==\"\")\n{\n\nmsg.payload.title=`Data not receiving in ${name}`\nmsg.payload.body=`Data not receiving in ${name}`\nreturn msg;\n}\nelse\n    { return null }\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 280,
+        "wires": [
+            [
+                "c71354bf7080ad20"
+            ]
+        ]
+    },
+    {
+        "id": "f3b6874f6f560845",
+        "type": "change",
+        "z": "ac4efa4688dcaf56",
+        "name": "name",
+        "rules": [
+            {
+                "t": "set",
+                "p": "name",
+                "pt": "msg",
+                "to": "raspi cluster influxdb",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 140,
+        "wires": [
+            [
+                "090ed72a76cb5b78",
+                "f1d52646341482db"
+            ]
+        ]
+    },
+    {
+        "id": "a54cd6f98d13494f",
+        "type": "debug",
+        "z": "ac4efa4688dcaf56",
+        "name": "debug 1850",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4d05847b9ee5f29d",
+        "type": "influxdb",
+        "hostname": "192.168.1.91",
+        "port": "32002",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.1.93:32002",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "12dcad48b506d2fb",
+        "type": "remote-config",
+        "name": "Node-RED UI",
+        "host": "localhost",
+        "protocol": "http",
+        "port": "32012",
+        "baseurl": "/ui",
+        "instancehash": "2vtcykjz4hu2t64kzvt6hzfyomj68vim541i19jlw84veu350dmlhj3mvx82c4vd",
+        "server": "nodered02.remote-red.com",
+        "region": "de"
+    }
+]
