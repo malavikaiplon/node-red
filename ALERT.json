@@ -2,7 +2,7 @@
     {
         "id": "f933af34d0d2acd2",
         "type": "influxdb in",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "influxdb": "4d05847b9ee5f29d",
         "name": "sut influx",
         "query": "",
@@ -10,19 +10,18 @@
         "precision": "",
         "retentionPolicy": "",
         "org": "iplon",
-        "x": 440,
-        "y": 140,
+        "x": 460,
+        "y": 100,
         "wires": [
             [
-                "f3b6874f6f560845",
-                "a54cd6f98d13494f"
+                "f3b6874f6f560845"
             ]
         ]
     },
     {
         "id": "fe454e8274d03ef9",
         "type": "inject",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "",
         "props": [
             {
@@ -40,8 +39,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 160,
-        "y": 140,
+        "x": 140,
+        "y": 100,
         "wires": [
             [
                 "bdba55ad670df660"
@@ -51,17 +50,17 @@
     {
         "id": "bdba55ad670df660",
         "type": "function",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "function 2",
-        "func": "\n    let q = `from(bucket: \"iplon\") |> range(start: -1m) |> filter(fn: (r) => r[\"_measurement\"] == \"v\") |> filter(fn: (r) => r[\"_field\"] == \"value\") |> aggregateWindow(every:5m, fn: last, createEmpty: false) |> yield(name: \"alert\")`\n\n\n\n// Join the array of queries with a semicolon and assign to msg.query\nmsg.query = q\nreturn msg;",
+        "func": "\n    let q = `from(bucket: \"iplon\") |> range(start: -10m) |> filter(fn: (r) => r[\"_measurement\"] == \"v\") |> filter(fn: (r) => r[\"_field\"] == \"value\") |> aggregateWindow(every:5m, fn: last, createEmpty: false) |> yield(name: \"alert\")`\n\n\n\n// Join the array of queries with a semicolon and assign to msg.query\nmsg.query = q\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 300,
-        "y": 140,
+        "x": 320,
+        "y": 100,
         "wires": [
             [
                 "f933af34d0d2acd2"
@@ -71,7 +70,7 @@
     {
         "id": "70365c98bdb42258",
         "type": "debug",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "debug 1848",
         "active": true,
         "tosidebar": true,
@@ -81,14 +80,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
-        "y": 280,
+        "x": 810,
+        "y": 200,
         "wires": []
     },
     {
         "id": "090ed72a76cb5b78",
         "type": "function",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "email",
         "func": "var name=msg.name\nif (msg.payload==\"\")\n{\nmsg.payload=`Data not receiving in ${name}`\nmsg.payload.title=`Data not receiving in ${name}`\nmsg.payload.body=`Data not receiving in ${name}`\n\n msg.topic = `Data not receiving in ${name}`;\n msg.description = `Data not receiving in ${name}`\n \nmsg.content= [\n    {\n\n        value: msg.payload,\n\n    }\n],\nnode.warn(\"sucess\")\nreturn msg;\n}\nelse\n    { return null }\n",
         "outputs": 1,
@@ -97,8 +96,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
-        "y": 140,
+        "x": 770,
+        "y": 100,
         "wires": [
             [
                 "ef631cf9877778a1",
@@ -109,7 +108,7 @@
     {
         "id": "3e4d1f85fe7f993e",
         "type": "e-mail",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "server": "smtp.yandex.com",
         "port": "465",
         "authtype": "BASIC",
@@ -119,15 +118,15 @@
         "tls": true,
         "name": "naveenkumar@iplon.in",
         "dname": "",
-        "x": 760,
-        "y": 240,
+        "x": 980,
+        "y": 140,
         "wires": []
     },
     {
         "id": "c71354bf7080ad20",
         "type": "remote-notification",
-        "z": "ac4efa4688dcaf56",
-        "confignode": "12dcad48b506d2fb",
+        "z": "e31f6f2b34642a45",
+        "confignode": "5de98c9ac3ee7a64",
         "name": "",
         "notificationTitle": "payload.title",
         "notificationTitleType": "msg",
@@ -137,8 +136,8 @@
         "notificationSoundComputed": "payload.sound",
         "notificationSoundComputedType": "msg",
         "output": "2",
-        "x": 510,
-        "y": 280,
+        "x": 590,
+        "y": 200,
         "wires": [
             [
                 "70365c98bdb42258"
@@ -148,9 +147,9 @@
     {
         "id": "ef631cf9877778a1",
         "type": "debug",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "debug 1849",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -158,14 +157,14 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 950,
-        "y": 140,
+        "x": 970,
+        "y": 100,
         "wires": []
     },
     {
         "id": "f1d52646341482db",
         "type": "function",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "notifcation",
         "func": "var name=msg.name\nif (msg.payload==\"\")\n{\n\nmsg.payload.title=`Data not receiving in ${name}`\nmsg.payload.body=`Data not receiving in ${name}`\nreturn msg;\n}\nelse\n    { return null }\n",
         "outputs": 1,
@@ -174,8 +173,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 330,
-        "y": 280,
+        "x": 410,
+        "y": 200,
         "wires": [
             [
                 "c71354bf7080ad20"
@@ -185,7 +184,7 @@
     {
         "id": "f3b6874f6f560845",
         "type": "change",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "name",
         "rules": [
             {
@@ -201,8 +200,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 590,
-        "y": 140,
+        "x": 610,
+        "y": 100,
         "wires": [
             [
                 "090ed72a76cb5b78",
@@ -211,11 +210,70 @@
         ]
     },
     {
-        "id": "a54cd6f98d13494f",
+        "id": "fb712517259c6938",
+        "type": "mqtt in",
+        "z": "e31f6f2b34642a45",
+        "name": "",
+        "topic": "solar",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "919977924416c5c4",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "a4b863db389cf3aa",
+                "2b26d4bfdb1db3ff"
+            ]
+        ]
+    },
+    {
+        "id": "eacbad091531e242",
+        "type": "influxdb batch",
+        "z": "e31f6f2b34642a45",
+        "influxdb": "4d05847b9ee5f29d",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "iplon",
+        "bucket": "iplon",
+        "x": 550,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2b26d4bfdb1db3ff",
+        "type": "function",
+        "z": "e31f6f2b34642a45",
+        "name": "function 3",
+        "func": "\n\n       var obj = {};\n    \n    obj.payload =\n        [\n            {\n                measurement: \"v\",\n                \n                fields: {\n\n                    value: msg.payload.solarGeneration,\n                    text:\"0\",\n                    qu:\"0\"\n\n                },\n                tags: {\n                     b :\"B01\",\n                     d:\"INV01\",\n                     f:\"SOLAR_RADIATION\"\n\n                     \n\n                },\n\n                time: new Date().getTime()\n            }\n        ];\n\n    //plantObj.push(obj)\n    node.send(obj);\n\n\n//msg.payload = plantObj\n\n//return msg;\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 480,
+        "wires": [
+            [
+                "eacbad091531e242"
+            ]
+        ]
+    },
+    {
+        "id": "a4b863db389cf3aa",
         "type": "debug",
-        "z": "ac4efa4688dcaf56",
+        "z": "e31f6f2b34642a45",
         "name": "debug 1850",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -223,8 +281,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 550,
-        "y": 100,
+        "x": 390,
+        "y": 420,
         "wires": []
     },
     {
@@ -243,15 +301,46 @@
         "rejectUnauthorized": true
     },
     {
-        "id": "12dcad48b506d2fb",
+        "id": "5de98c9ac3ee7a64",
         "type": "remote-config",
         "name": "Node-RED UI",
         "host": "localhost",
         "protocol": "http",
         "port": "32012",
         "baseurl": "/ui",
-        "instancehash": "2vtcykjz4hu2t64kzvt6hzfyomj68vim541i19jlw84veu350dmlhj3mvx82c4vd",
+        "instancehash": "bdjox8qxpjnb46yg1rse7s7vw5ubr8beggwzwv932f8dawc5f7cgyqo055bpg0vb",
         "server": "nodered02.remote-red.com",
         "region": "de"
+    },
+    {
+        "id": "919977924416c5c4",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.26",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
     }
 ]
