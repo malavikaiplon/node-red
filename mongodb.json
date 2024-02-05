@@ -1,0 +1,117 @@
+[
+    {
+        "id": "a2977480580f2480",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test message",
+        "payloadType": "str",
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "e05e5289b3ea2b5b"
+            ]
+        ]
+    },
+    {
+        "id": "2b83d1e4e2e36bc6",
+        "type": "debug",
+        "z": "4c61d39da737ece6",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e05e5289b3ea2b5b",
+        "type": "mongodb in",
+        "z": "4c61d39da737ece6",
+        "mongodb": "d542110e60cecb34",
+        "name": "",
+        "collection": "v",
+        "operation": "find",
+        "x": 480,
+        "y": 300,
+        "wires": [
+            [
+                "2b83d1e4e2e36bc6"
+            ]
+        ]
+    },
+    {
+        "id": "85e99ea4c1fbf311",
+        "type": "mongodb out",
+        "z": "4c61d39da737ece6",
+        "mongodb": "d542110e60cecb34",
+        "name": "",
+        "collection": "v",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 560,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "f1329739b8d59f76",
+        "type": "inject",
+        "z": "4c61d39da737ece6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test message1",
+        "payloadType": "str",
+        "x": 320,
+        "y": 400,
+        "wires": [
+            [
+                "85e99ea4c1fbf311"
+            ]
+        ]
+    },
+    {
+        "id": "d542110e60cecb34",
+        "type": "mongodb",
+        "hostname": "192.168.1.98",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "test",
+        "name": ""
+    }
+]
