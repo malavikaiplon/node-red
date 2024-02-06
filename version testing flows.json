@@ -1,0 +1,814 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "test flow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e96d21de292e574b",
+        "type": "group",
+        "z": "f6f2187d.f17ca8",
+        "name": "Email test flow",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "e0386c32e54e15c2",
+            "c61a1c644afeba4f"
+        ],
+        "x": 914,
+        "y": 659,
+        "w": 332,
+        "h": 82
+    },
+    {
+        "id": "f8da6691b370c8f6",
+        "type": "group",
+        "z": "f6f2187d.f17ca8",
+        "name": "postgres test flow",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "71c4657336b2f3e1",
+            "5f5853f5735fe0ed",
+            "98343a4f810712a7",
+            "aea5f8297ec59863",
+            "8e468dc59d4f508e",
+            "fd28c57cfc982f47",
+            "916fcd2876943b33",
+            "559e61147302040f",
+            "4aba13f84c4afc0b",
+            "891c66a6cac0c9a3",
+            "67e931a76bf2512d"
+        ],
+        "x": 54,
+        "y": 619,
+        "w": 792,
+        "h": 202
+    },
+    {
+        "id": "dc47169c3fdeb06d",
+        "type": "group",
+        "z": "f6f2187d.f17ca8",
+        "name": "rabbitmq test flow",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "41a83eb3146e7d51",
+            "51a2e7f5040d9b8f",
+            "690c6936cc168a3d",
+            "6f13179bedf44b97"
+        ],
+        "x": 754,
+        "y": 399,
+        "w": 392,
+        "h": 142
+    },
+    {
+        "id": "7300cd1123c55d8d",
+        "type": "group",
+        "z": "f6f2187d.f17ca8",
+        "name": "mongodb test flow",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "a2977480580f2480",
+            "2b83d1e4e2e36bc6",
+            "e05e5289b3ea2b5b",
+            "85e99ea4c1fbf311",
+            "f1329739b8d59f76"
+        ],
+        "x": 34,
+        "y": 399,
+        "w": 652,
+        "h": 162
+    },
+    {
+        "id": "a46bbe223e55df5c",
+        "type": "group",
+        "z": "f6f2187d.f17ca8",
+        "name": "influxdb test flow",
+        "style": {
+            "label": true,
+            "color": "#000000"
+        },
+        "nodes": [
+            "bd0075c472f52037",
+            "680cdce8d978930e",
+            "4d8471aefcb37c1c",
+            "1f32ac1b780d10cc",
+            "fcdd64eb110a86d8"
+        ],
+        "x": 14,
+        "y": 199,
+        "w": 752,
+        "h": 142
+    },
+    {
+        "id": "d542110e60cecb34",
+        "type": "mongodb",
+        "hostname": "192.168.1.98",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "test",
+        "name": ""
+    },
+    {
+        "id": "6b05532ad9bdc671",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://192.168.1.93:32002",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "8b40649047e37d94",
+        "type": "postgresdb",
+        "cfgname": "",
+        "hostname": "192.168.1.26",
+        "port": "5432",
+        "db": "test",
+        "ssl": false
+    },
+    {
+        "id": "5783e5b75eb9c837",
+        "type": "amqp-broker",
+        "name": "",
+        "host": "192.168.1.96",
+        "port": "32008",
+        "vhost": "",
+        "tls": false,
+        "credsFromSettings": false
+    },
+    {
+        "id": "5d46bb5638d8b191",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "192.168.1.96",
+        "port": "32009",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bd0075c472f52037",
+        "type": "cronplus",
+        "z": "f6f2187d.f17ca8",
+        "g": "a46bbe223e55df5c",
+        "name": "",
+        "outputField": "payload",
+        "timeZone": "",
+        "storeName": "",
+        "commandResponseMsgOutput": "output1",
+        "defaultLocation": "",
+        "defaultLocationType": "default",
+        "outputs": 1,
+        "options": [
+            {
+                "name": "schedule1",
+                "topic": "topic1",
+                "payloadType": "default",
+                "payload": "",
+                "expressionType": "cron",
+                "expression": "0 */10 * * * *",
+                "location": "",
+                "offset": "0",
+                "solarType": "all",
+                "solarEvents": "sunrise,sunset"
+            }
+        ],
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "680cdce8d978930e"
+            ]
+        ]
+    },
+    {
+        "id": "680cdce8d978930e",
+        "type": "influxdb in",
+        "z": "f6f2187d.f17ca8",
+        "g": "a46bbe223e55df5c",
+        "influxdb": "6b05532ad9bdc671",
+        "name": "",
+        "query": "from(bucket: \"iplon\")|> range(start: -7d)|> filter(fn: (r) => r[\"_measurement\"] == \"v\")|> filter(fn: (r) => r[\"_field\"] == \"value\")|> aggregateWindow(every: 5m, fn: last, createEmpty: false)|> yield(name: \"last\")",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "iplon",
+        "x": 390,
+        "y": 240,
+        "wires": [
+            [
+                "4d8471aefcb37c1c"
+            ]
+        ]
+    },
+    {
+        "id": "a2977480580f2480",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "7300cd1123c55d8d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test message",
+        "payloadType": "str",
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "e05e5289b3ea2b5b"
+            ]
+        ]
+    },
+    {
+        "id": "2b83d1e4e2e36bc6",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "g": "7300cd1123c55d8d",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "e05e5289b3ea2b5b",
+        "type": "mongodb in",
+        "z": "f6f2187d.f17ca8",
+        "g": "7300cd1123c55d8d",
+        "mongodb": "d542110e60cecb34",
+        "name": "",
+        "collection": "v",
+        "operation": "find",
+        "x": 360,
+        "y": 440,
+        "wires": [
+            [
+                "2b83d1e4e2e36bc6"
+            ]
+        ]
+    },
+    {
+        "id": "85e99ea4c1fbf311",
+        "type": "mongodb out",
+        "z": "f6f2187d.f17ca8",
+        "g": "7300cd1123c55d8d",
+        "mongodb": "d542110e60cecb34",
+        "name": "",
+        "collection": "v",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 380,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "f1329739b8d59f76",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "7300cd1123c55d8d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "hello world",
+        "payloadType": "str",
+        "x": 160,
+        "y": 520,
+        "wires": [
+            [
+                "85e99ea4c1fbf311"
+            ]
+        ]
+    },
+    {
+        "id": "4d8471aefcb37c1c",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "g": "a46bbe223e55df5c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "41a83eb3146e7d51",
+        "type": "amqp-in",
+        "z": "f6f2187d.f17ca8",
+        "g": "dc47169c3fdeb06d",
+        "name": "",
+        "broker": "5783e5b75eb9c837",
+        "prefetch": 0,
+        "noAck": true,
+        "exchangeName": "amq.topic",
+        "exchangeType": "topic",
+        "exchangeRoutingKey": "test",
+        "exchangeDurable": true,
+        "queueName": "test",
+        "queueExclusive": false,
+        "queueDurable": true,
+        "queueAutoDelete": false,
+        "headers": "{}",
+        "x": 880,
+        "y": 440,
+        "wires": [
+            [
+                "51a2e7f5040d9b8f"
+            ]
+        ]
+    },
+    {
+        "id": "51a2e7f5040d9b8f",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "g": "dc47169c3fdeb06d",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "71c4657336b2f3e1",
+        "type": "postgres",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "postgresdb": "8b40649047e37d94",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 560,
+        "y": 660,
+        "wires": [
+            [
+                "aea5f8297ec59863"
+            ]
+        ]
+    },
+    {
+        "id": "5f5853f5735fe0ed",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "write",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test message",
+        "payloadType": "str",
+        "x": 150,
+        "y": 660,
+        "wires": [
+            [
+                "98343a4f810712a7"
+            ]
+        ]
+    },
+    {
+        "id": "98343a4f810712a7",
+        "type": "template",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "INSERT INTO test(name,age) VALUES('malavika','26')",
+        "output": "str",
+        "x": 340,
+        "y": 660,
+        "wires": [
+            [
+                "71c4657336b2f3e1"
+            ]
+        ]
+    },
+    {
+        "id": "aea5f8297ec59863",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "8e468dc59d4f508e",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "create table",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "CREATE TABLE test(name VARCHAR,age INT);",
+        "payloadType": "str",
+        "x": 170,
+        "y": 720,
+        "wires": [
+            [
+                "fd28c57cfc982f47"
+            ]
+        ]
+    },
+    {
+        "id": "fd28c57cfc982f47",
+        "type": "postgres",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "postgresdb": "8b40649047e37d94",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 340,
+        "y": 720,
+        "wires": [
+            [
+                "916fcd2876943b33"
+            ]
+        ]
+    },
+    {
+        "id": "916fcd2876943b33",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "559e61147302040f",
+        "type": "postgres",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "postgresdb": "8b40649047e37d94",
+        "name": "",
+        "output": true,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": true,
+        "x": 580,
+        "y": 780,
+        "wires": [
+            [
+                "67e931a76bf2512d"
+            ]
+        ]
+    },
+    {
+        "id": "4aba13f84c4afc0b",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "read",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test message",
+        "payloadType": "str",
+        "x": 170,
+        "y": 780,
+        "wires": [
+            [
+                "891c66a6cac0c9a3"
+            ]
+        ]
+    },
+    {
+        "id": "891c66a6cac0c9a3",
+        "type": "template",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "select * from test;",
+        "output": "str",
+        "x": 360,
+        "y": 780,
+        "wires": [
+            [
+                "559e61147302040f"
+            ]
+        ]
+    },
+    {
+        "id": "67e931a76bf2512d",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "g": "f8da6691b370c8f6",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "690c6936cc168a3d",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "dc47169c3fdeb06d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1324",
+        "payloadType": "num",
+        "x": 850,
+        "y": 500,
+        "wires": [
+            [
+                "6f13179bedf44b97"
+            ]
+        ]
+    },
+    {
+        "id": "6f13179bedf44b97",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "g": "dc47169c3fdeb06d",
+        "name": "",
+        "topic": "test",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "5d46bb5638d8b191",
+        "x": 1030,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "e0386c32e54e15c2",
+        "type": "e-mail",
+        "z": "f6f2187d.f17ca8",
+        "g": "e96d21de292e574b",
+        "server": "smtp.yandex.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "malavikavenugopal4@gmail.com",
+        "dname": "email",
+        "x": 1170,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "c61a1c644afeba4f",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "e96d21de292e574b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test message",
+        "payloadType": "str",
+        "x": 1030,
+        "y": 700,
+        "wires": [
+            [
+                "e0386c32e54e15c2"
+            ]
+        ]
+    },
+    {
+        "id": "1f32ac1b780d10cc",
+        "type": "influxdb out",
+        "z": "f6f2187d.f17ca8",
+        "g": "a46bbe223e55df5c",
+        "influxdb": "6b05532ad9bdc671",
+        "name": "",
+        "measurement": "v",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "iplon",
+        "bucket": "iplon",
+        "x": 400,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "fcdd64eb110a86d8",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "g": "a46bbe223e55df5c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "8976",
+        "payloadType": "num",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "1f32ac1b780d10cc"
+            ]
+        ]
+    }
+]
